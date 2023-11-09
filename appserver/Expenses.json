@@ -24,7 +24,7 @@
         "sumCost":200,
         "sumbill":"5/10",
         "typeContract": "หักได้",
-        "contract": "..."
+        "contractExpenses": "..."
     },
     {
         "id": "3f7e1c45-a2e9-4b08-a56d-e687ea79ba62",
@@ -51,6 +51,6 @@
         "sumCost":"",
         "sumbill":"",
         "typeContract": "",
-        "contract": "..."
+        "contractExpenses": "..."
     }
 ]

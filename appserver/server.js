@@ -67,6 +67,18 @@ app.put('/users/:id', (req, res) => {
     if (req.body.typeRoom) parsedData.typeRoom = req.body.typeRoom
     if (req.body.roomconditions) parsedData.roomconditions = req.body.roomconditions
     if (req.body.Checkintime) parsedData.Checkintime = req.body.Checkintime
+    if (req.body.roomnumber) parsedData.roomnumber = req.body.roomnumber
+    if (req.body.insurancecost) parsedData.insurancecost = req.body.insurancecost
+    if (req.body.installmentsRooom) parsedData.installmentsRooom = req.body.installmentsRooom
+    if (req.body.waterbill) parsedData.waterbill = req.body.waterbill
+    if (req.body.electricitybill) parsedData.electricitybill = req.body.electricitybill
+    if (req.body.central) parsedData.central = req.body.central
+    if (req.body.costs) parsedData.costs = req.body.costs
+    if (req.body.Maintenancefee) parsedData.Maintenancefee = req.body.Maintenancefee
+    if (req.body.sumCost) parsedData.sumCost = req.body.sumCost
+    if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
+    if (req.body.typeContract) parsedData.typeContract = req.body.typeContract
+    if (req.body.contractExpenses) parsedData.contractExpenses = req.body.contractExpenses
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -86,10 +98,7 @@ app.get('/buildings', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.json(building)
 })
-// app.get('/buildings/:buildingId', (req, res) => {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.json(building.find(buildings => buildings.buildingId === (req.params.buildingId)))
-// })
+
 app.post('/buildings', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
@@ -106,7 +115,7 @@ app.post('/buildings', (req, res) => {
 
 app.get('/expenses', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    res.json(Expenses)
+    res.json(users)
 })
 
 app.post('/expenses', (req, res) => {
