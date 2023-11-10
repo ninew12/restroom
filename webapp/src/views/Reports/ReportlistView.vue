@@ -99,7 +99,7 @@ export default {
       selectedAffiliation: "",
       selectedYear: "2023",
       selectedMonth: "พฤศจิกายน",
-      expensesList: []
+      expensesList: [],
     };
   },
   created() {
@@ -154,12 +154,12 @@ export default {
 <template>
   <Header>
     <div
-      class="page-header min-vh-70"
+      class="page-header min-vh-80"
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >
       <div class="container">
-        <div class="text-center" style="margin-top: -120px">
+        <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
         <div class="row pt-6">
@@ -169,7 +169,7 @@ export default {
               <br />
               <span
                 style="font-size: 24px; border-top: 4px solid #000; font-weight: normal"
-                >กองบัญชาการตำรวจตระเวนชายแดน</span
+                >งานสวัสดิการบ้านพัก ฝ่ายสนับสนุน1 กองบังคับการสนับสนุน</span
               >
             </h1>
           </div>
@@ -219,7 +219,6 @@ export default {
                   บันทึกค่าใช้จ่ายบ้านพัก บช.ตชด.
                 </button>
               </li>
-              
             </ul>
             <div class="tab-content" id="myTabContent">
               <div
@@ -307,7 +306,7 @@ export default {
                         <td>
                           {{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}
                         </td>
-                        
+
                         <td>{{ item?.affiliation }}</td>
                         <td>{{ item?.installments }}</td>
                         <td>{{ item?.insurancecost }}</td>
@@ -393,7 +392,7 @@ export default {
                         <td>
                           {{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}
                         </td>
-                        
+
                         <td>{{ item?.affiliation }}</td>
                         <td>{{ item?.installments }}</td>
                         <td>{{ item?.insurancecost }}</td>

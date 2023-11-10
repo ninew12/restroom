@@ -13,6 +13,7 @@ import MaterialButton from "@/components/MaterialButton.vue";
 import setMaterialInput from "@/assets/js/material-input";
 
 import axios from "axios";
+import { notify } from "@kyvg/vue3-notification";
 
 const userlist = [
   {
@@ -160,8 +161,8 @@ export default {
           .then((res) => {
             this.roomData = res.data;
             this.numberRoom = this.roomData.numberRoom;
-            this.selectedRoomtype = this.roomData.typeRoom
-            
+            this.selectedRoomtype = this.roomData.typeRoom;
+
             // this.oldData = this.roomData;
           })
           .catch((err) => {
@@ -187,6 +188,10 @@ export default {
           },
         })
         .then((res) => {
+          notify({
+            title: "แก้ไข้รายละเอียดห้องพักสำเร็จ",
+            type: "success",
+          });
           this.getRooms(this.id);
         })
         .catch((err) => {
@@ -196,12 +201,12 @@ export default {
 
     returnsubmitForm() {
       let body = {
-        roomStatus: 'free',
+        roomStatus: "free",
         firstName: " ",
         laststName: " ",
         ranks: " ",
         Affiliation: " ",
-        queue: "none"
+        queue: "none",
       };
       axios
         .put(`http://localhost:3001/rooms/${this.id}`, body, {
@@ -212,8 +217,12 @@ export default {
           },
         })
         .then((res) => {
+          notify({
+            title: "คืนห้องพักสำเร็จ",
+            type: "success",
+          });
           this.getRooms(this.id);
-          this.$router.push({ path: `/room/`});
+          this.$router.push({ path: `/room/` });
         })
         .catch((err) => {
           console.log(err);
@@ -225,12 +234,12 @@ export default {
 <template>
   <Header>
     <div
-      class="page-header min-vh-70"
+      class="page-header min-vh-80"
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >
       <div class="container">
-        <div class="text-center" style="margin-top: -120px">
+        <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
         <div class="row pt-6">
@@ -240,7 +249,7 @@ export default {
               <br />
               <span
                 style="font-size: 24px; border-top: 4px solid #000; font-weight: normal"
-                >กองบัญชาการตำรวจตระเวนชายแดน</span
+                >งานสวัสดิการบ้านพัก ฝ่ายสนับสนุน1 กองบังคับการสนับสนุน</span
               >
             </h1>
           </div>
@@ -263,6 +272,7 @@ export default {
           </div>
           <!-- d-flex justify-content-between -->
           <h4>จัดการห้องพัก</h4>
+          <notifications position="top center" width="400px" />
           <div class="row pt-4 min-vh-45">
             <div class="col-lg-3">
               <div
@@ -401,7 +411,7 @@ export default {
                         color="success"
                         data-bs-toggle="modal"
                         data-bs-target="#seleteUserBackdrop"
-                        >เพิ่มผู้เช่าลงคิว</MaterialButton
+                        >เพิ่มผู้พักอาศัยลงคิว</MaterialButton
                       >
                     </div>
                     <div class="text-center pt-4 table-responsive">
@@ -631,7 +641,7 @@ export default {
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">เพิ่มผู้เช่าลงคิว</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">เพิ่มผู้พักอาศัยลงคิว</h5>
             <button
               type="button"
               class="btn-close"
@@ -642,7 +652,7 @@ export default {
           <div class="modal-body">
             <div>
               <div class="mb-3">
-                <label>ชื่อผู้เช่า</label>
+                <label>ชื่อผู้พักอาศัย</label>
                 <v-select :options="optionsUser" v-model="selectedColor"></v-select>
               </div>
             </div>
@@ -902,5 +912,8 @@ export default {
 }
 .vs__actions {
   cursor: pointer;
+}
+.h-noti {
+  height: 250px;
 }
 </style>

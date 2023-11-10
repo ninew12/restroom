@@ -5,7 +5,9 @@ import vueMkHeader from "@/assets/img/bg.jpg";
 import MaterialInput from "@/components/MaterialInput.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
 import Breadcrumbs from "@/examples/Breadcrumbs.vue";
+import masterData from "@/assets/dataJson/masterData.json";
 import axios from "axios";
+import { notify } from "@kyvg/vue3-notification";
 
 export default {
   components: {
@@ -16,6 +18,7 @@ export default {
   setup() {
     return {
       vueMkHeader,
+      masterData,
     };
   },
 
@@ -50,6 +53,15 @@ export default {
       dateApproved: "",
       userList: [],
       selectedUser: "",
+      typeUser: "ตร.",
+      typeUserBytype: "",
+      typeUserByrankr: "",
+      typeAffiliation: "",
+      typeRanks: "",
+      queue: "",
+      selectedDataObtion: "โสด",
+      selectedRanks: "",
+      selectedAffiliation: "",
     };
   },
   created() {
@@ -260,6 +272,10 @@ export default {
           },
         })
         .then((res) => {
+          notify({
+            title: "เพิ่มข้อมูลสำเร็จ",
+            type: "success",
+          });
           this.getAllqueue();
           this.$router.push({ path: `/room` });
         })
@@ -289,6 +305,10 @@ export default {
           },
         })
         .then((res) => {
+          notify({
+            title: "เพิ่มข้อมูลสำเร็จ",
+            type: "success",
+          });
           this.getAllqueue();
           this.$router.push({ path: `/room` });
         })
@@ -302,12 +322,13 @@ export default {
 <template>
   <Header>
     <div
-      class="page-header min-vh-70"
+      class="page-header min-vh-80"
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >
       <div class="container">
-        <div class="text-center" style="margin-top: -120px">
+        <notifications position="top center" width="400px" />
+        <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
         <div class="row pt-6">
@@ -317,7 +338,7 @@ export default {
               <br />
               <span
                 style="font-size: 24px; border-top: 4px solid #000; font-weight: normal"
-                >กองบัญชาการตำรวจตระเวนชายแดน</span
+                >งานสวัสดิการบ้านพัก ฝ่ายสนับสนุน1 กองบังคับการสนับสนุน</span
               >
             </h1>
           </div>
@@ -362,7 +383,7 @@ export default {
                 <div class="col-md-10">
                   <div class="card-body">
                     <div class="row" v-if="this.mode !== 'add'">
-                      <h5 class="card-title">รายละเอียดผู้เช่า</h5>
+                      <h5 class="card-title">รายละเอียดผู้พักอาศัย</h5>
                       <div class="col-5">
                         <p class="card-text">
                           ชือ : {{ data?.rank }} {{ data?.firstName }}
@@ -428,7 +449,7 @@ export default {
                               data-bs-toggle="modal"
                               data-bs-target="#contractBackdrop"
                               @click="getAllusersByid(item.id)"
-                              >เพิ่มผู้เช่าห้องพัก</MaterialButton
+                              >เพิ่มผู้พักอาศัยห้องพัก</MaterialButton
                             >
                           </td>
                         </tr>
@@ -714,7 +735,9 @@ export default {
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">เลือกผู้เช่าเข้าห้องพัก</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">
+              เลือกผู้พักอาศัยเข้าห้องพัก
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -724,7 +747,7 @@ export default {
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <label>ชื่อผู้เช่า</label>
+              <label>ชื่อผู้พักอาศัย</label>
               <v-select :options="userList" v-model="selectedUser"></v-select>
             </div>
           </div>
@@ -738,6 +761,122 @@ export default {
               @click="submitForm('spacia')"
               data-bs-dismiss="modal"
               html-type="submit"
+              >บันทึก</MaterialButton
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="userBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">เพิ่มข้อมูลผู้พักอาศัย</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <div class="mb-1">
+                <label>สังกัด</label>
+                <v-select
+                  :options="masterData?.typeAffiliation"
+                  v-model="typeAffiliation"
+                ></v-select>
+              </div>
+              <div class="mb-3" v-if="typeAffiliation.label == 'บก.อก.'">
+                <label>สังกัด {{ typeAffiliation.label }}</label>
+                <v-select
+                  :options="masterData?.Affiliation"
+                  v-model="selectedAffiliation"
+                ></v-select>
+              </div>
+              <div class="mb-3" v-if="typeAffiliation.label == 'บก.สนน.'">
+                <label>สังกัด {{ typeAffiliation.label }}</label>
+                <v-select
+                  :options="masterData?.Affiliation2"
+                  v-model="selectedAffiliation"
+                ></v-select>
+              </div>
+              <div class="mb-1">
+                <label>ลำดับยศ</label>
+                <v-select :options="masterData?.typeranks" v-model="typeRanks"></v-select>
+              </div>
+              <div class="mb-3" v-if="typeRanks.label == 'ลูกจ้าง'">
+                <label> {{ typeRanks.label }}</label>
+                <v-select :options="masterData?.ranks" v-model="selectedRanks"></v-select>
+              </div>
+              <div class="mb-3" v-if="typeRanks.label == 'ประทวน'">
+                <label> {{ typeRanks.label }}</label>
+                <v-select
+                  :options="masterData?.ranks2"
+                  v-model="selectedRanks"
+                ></v-select>
+              </div>
+              <div class="mb-3" v-if="typeRanks.label == 'สัญญาบัตร'">
+                <label> {{ typeRanks.label }}</label>
+                <v-select
+                  :options="masterData?.ranks3"
+                  v-model="selectedRanks"
+                ></v-select>
+              </div>
+              <div class="mb-3 pt-1">
+                <MaterialInput
+                  name="firstName"
+                  :value="firstName"
+                  @input="(event) => (firstName = event.target.value)"
+                  class="input-group-static"
+                  label="ชื่อ"
+                  type="text"
+                  placeholder="ชื่อ"
+                  isRequired
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="lastName"
+                  @input="(event) => (lastName = event.target.value)"
+                  class="input-group-static"
+                  label="สกุล"
+                  type="text"
+                  placeholder="สกุล"
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="phone"
+                  @input="(event) => (phone = event.target.value)"
+                  class="input-group-static"
+                  label="เบอร์ติดต่อ"
+                  type="number"
+                  placeholder="เบอร์ติดต่อ"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              ปิดหน้าต่าง
+            </button>
+            <MaterialButton
+              variant="gradient"
+              color="success"
+              @click="submitForm('spacia')"
+              html-type="submit"
+              data-bs-dismiss="modal"
               >บันทึก</MaterialButton
             >
           </div>

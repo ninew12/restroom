@@ -79,6 +79,7 @@ app.put('/users/:id', (req, res) => {
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
     if (req.body.typeContract) parsedData.typeContract = req.body.typeContract
     if (req.body.contractExpenses) parsedData.contractExpenses = req.body.contractExpenses
+    if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -97,6 +98,29 @@ app.delete('/users/:id', (req, res) => {
 app.get('/buildings', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.json(building)
+})
+
+app.get('/buildings/:buildingId', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(building.find(building => building.buildingId === (req.params.buildingId)))
+})
+
+app.put('/buildings/:id', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    const updateIndex = building.findIndex(building => building.buildingId === (req.params.id))
+    let dataOld = building[updateIndex]
+    let filterdata = building.filter(building => building.buildingId !== (req.params.id))
+    const parsedData = dataOld;
+    if (req.body.committee) parsedData.committee = req.body.committee
+    filterdata.push(parsedData)
+    fs.writeFile('./building.json', JSON.stringify(filterdata, null, 2), (err) => {
+        if (err) {
+            console.log("Failed to write updated data to file");
+            return;
+        }
+        console.log("Updated file successfully");
+    });
+    res.send(`Update user id: '${req.params.id}' completed.`)
 })
 
 app.post('/buildings', (req, res) => {
@@ -143,11 +167,6 @@ app.get('/rooms/:id', (req, res) => {
     res.json(rooms.find(room => room.id == (req.params.id)))
 })
 
-app.get('/buildings/:buildingId', (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.json(rooms.find(room => room.buildingId === (req.params.buildingId)))
-})
-
 app.post('/rooms', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
@@ -183,6 +202,7 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.pickedBook) parsedData.pickedBook = req.body.pickedBook
     if (req.body.roomconditions) parsedData.roomconditions = req.body.roomconditions
     if (req.body.Checkintime) parsedData.Checkintime = req.body.Checkintime
+    if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
     filterdata.push(parsedData)
     fs.writeFile('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -224,7 +244,6 @@ app.put('/queue/:id', (req, res) => {
     let dataOld = users[updateIndex]
     let filterdata = users.filter(user => user.id !== (req.params.id))
     const parsedData = dataOld;
-    console.log(req.body);
     if (req.body.firstName) parsedData.firstName = req.body.firstName
     if (req.body.lastName) parsedData.lastName = req.body.lastName
     if (req.body.affiliation) parsedData.affiliation = req.body.affiliation
@@ -239,6 +258,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.bookNumber) parsedData.bookNumber = req.body.bookNumber
     if (req.body.pickedBook) parsedData.pickedBook = req.body.pickedBook
     if (req.body.typeRoom) parsedData.typeRoom = req.body.typeRoom
+    if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {

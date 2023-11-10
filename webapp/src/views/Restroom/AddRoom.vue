@@ -30,54 +30,54 @@ const NoRoom = [
   { title: "ชั้น 7" },
 ];
 
-     // {
-        //     "buil": "อาคารบ้านพักส่วนกลาง",
-        //     "name": "ลือชา ตร.",
-        //     "room": "-",
-        //     "floor": "-",
-        //     "roomnumber": "-",
-        //     "type": "-"
-        // },
-        // {
-        //     "buil": "อาคารบ้านพักส่วนกลาง",
-        //     "name": "ทุ่งสองห้อง",
-        //     "room": "-",
-        //     "floor": "-",
-        //     "roomnumber": "-",
-        //     "type": "-"
-        // },
-        // {
-        //     "buil": "อาคารบ้านพักส่วนกลาง",
-        //     "name": "วิภาวดี",
-        //     "room": "-",
-        //     "floor": "-",
-        //     "roomnumber": "-",
-        //     "type": "-"
-        // },
-        // {
-        //     "buil": "อาคารบ้านพักส่วนกลาง",
-        //     "name": "ถนอมมิตร",
-        //     "room": "-",
-        //     "floor": "-",
-        //     "roomnumber": "-",
-        //     "type": "-"
-        // },
-        // {
-        //     "buil": "อาคารบ้านพักส่วนกลาง",
-        //     "name": "อุดมสุข",
-        //     "room": "-",
-        //     "floor": "-",
-        //     "roomnumber": "-",
-        //     "type": "-"
-        // },
-        // {
-        //     "buil": "อาคารบ้านพักส่วนกลาง",
-        //     "name": "เฉลิมลาภ",
-        //     "room": "-",
-        //     "floor": "-",
-        //     "roomnumber": "-",
-        //     "type": "-"
-        // }
+// {
+//     "buil": "อาคารบ้านพักส่วนกลาง",
+//     "name": "ลือชา ตร.",
+//     "room": "-",
+//     "floor": "-",
+//     "roomnumber": "-",
+//     "type": "-"
+// },
+// {
+//     "buil": "อาคารบ้านพักส่วนกลาง",
+//     "name": "ทุ่งสองห้อง",
+//     "room": "-",
+//     "floor": "-",
+//     "roomnumber": "-",
+//     "type": "-"
+// },
+// {
+//     "buil": "อาคารบ้านพักส่วนกลาง",
+//     "name": "วิภาวดี",
+//     "room": "-",
+//     "floor": "-",
+//     "roomnumber": "-",
+//     "type": "-"
+// },
+// {
+//     "buil": "อาคารบ้านพักส่วนกลาง",
+//     "name": "ถนอมมิตร",
+//     "room": "-",
+//     "floor": "-",
+//     "roomnumber": "-",
+//     "type": "-"
+// },
+// {
+//     "buil": "อาคารบ้านพักส่วนกลาง",
+//     "name": "อุดมสุข",
+//     "room": "-",
+//     "floor": "-",
+//     "roomnumber": "-",
+//     "type": "-"
+// },
+// {
+//     "buil": "อาคารบ้านพักส่วนกลาง",
+//     "name": "เฉลิมลาภ",
+//     "room": "-",
+//     "floor": "-",
+//     "roomnumber": "-",
+//     "type": "-"
+// }
 
 const userlist = [
   {
@@ -197,11 +197,11 @@ export default {
               :routes="[
                 { label: 'หน้าหลัก', route: '/' },
                 { label: 'สถานะห้องพัก', route: '/room' },
-                { label: 'เพิ่มผู้เช่าห้องพัก' },
+                { label: 'เพิ่มผู้พักอาศัยห้องพัก' },
               ]"
             />
           </div>
-          <h4>เพิ่มผู้เช่าห้องพัก</h4>
+          <h4>เพิ่มผู้พักอาศัยห้องพัก</h4>
 
           <div class="row pt-4">
             <div class="card mb-3">
@@ -212,7 +212,7 @@ export default {
                   color="success"
                   data-bs-toggle="modal"
                   data-bs-target="#contractBackdrop"
-                  >เพิ่มผู้เช่าลงคิว</MaterialButton
+                  >เพิ่มผู้พักอาศัยลงคิว</MaterialButton
                 >
               </div>
               <div class="text-center pt-4 table-responsive">
@@ -248,7 +248,7 @@ export default {
                       <td>{{ item.Status }}</td>
                       <td>
                         <MaterialButton variant="gradient" color="success"
-                          >เพิ่มผู้เช่าห้องพัก</MaterialButton
+                          >เพิ่มผู้พักอาศัยห้องพัก</MaterialButton
                         >
                       </td>
                     </tr>
@@ -284,7 +284,7 @@ export default {
           <div class="modal-body">
             <div>
               <div class="mb-3">
-                <label>ชื่อผู้เช่า</label>
+                <label>ชื่อผู้พักอาศัย</label>
                 <v-select :options="options" v-model="selectedColor"></v-select>
               </div>
 
@@ -338,4 +338,3 @@ export default {
     </div>
   </section>
 </template>
-

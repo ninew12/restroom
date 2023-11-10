@@ -51,12 +51,12 @@ onUnmounted(() => {
   </div> -->
   <Header>
     <div
-      class="page-header min-vh-70"
+      class="page-header min-vh-80"
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >
       <div class="container">
-        <div class="text-center" style="margin-top: -120px">
+        <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
         <div class="row pt-6">
@@ -66,7 +66,7 @@ onUnmounted(() => {
               <br />
               <span
                 style="font-size: 24px; border-top: 4px solid #000; font-weight: normal"
-                >กองบัญชาการตำรวจตระเวนชายแดน</span
+                >งานสวัสดิการบ้านพัก ฝ่ายสนับสนุน1 กองบังคับการสนับสนุน</span
               >
             </h1>
           </div>

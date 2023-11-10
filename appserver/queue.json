@@ -13,23 +13,25 @@
         "typeRanks": "ลูกจ้าง",
         "bookNumber": "1234",
         "queue": "none",
-        "pickedBook":""
+        "pickedBook":"",
+        "buildingName":""
     },
     {
         "id": "8e81c39a-d50c-42f5-85c0-f9f773c2a4aa",
         "firstName": "สมชัย",
         "lastName": "แสงสุข",
-        "affiliation": "บช.ตซด.",
+        "affiliation": "บช.ตชด.",
         "rank": "ส.ต.อ.",
         "idcard": "134044411441178",
         "status": "โสด",
         "typeRoom": "ช1",
         "phone": "0325647845",
-        "typeAffiliation": "บช.ตซด.",
+        "typeAffiliation": "บช.ตชด.",
         "typeRanks": "ประทวน",
         "queue": "none",
         "bookNumber": "1234",
-        "pickedBook":""
+        "pickedBook":"",
+        "buildingName":""
     },
     {
         "id": "ebd367bf-396f-4bae-8130-1ce3fa130d38",
@@ -45,23 +47,25 @@
         "typeRanks": "ลูกจ้าง",
         "bookNumber": "1234",
         "queue": "none",
-        "pickedBook":""
+        "pickedBook":"",
+        "buildingName":""
     },
     {
         "id": "46685cde-8ea0-4cd2-ba94-7d86e6e893bd",
         "firstName": "สมชัย",
         "lastName": "แสงสุข",
-        "affiliation": "บช.ตซด.",
+        "affiliation": "บช.ตชด.",
         "rank": "ส.ต.อ.",
         "idcard": "134044411441178",
         "phone": "0325647845",
         "status": "สมรส",
         "typeRoom": "ช2",
-        "typeAffiliation": "บช.ตซด.",
+        "typeAffiliation": "บช.ตชด.",
         "typeRanks": "ประทวน",
         "queue": "none",
         "bookNumber": "14578963",
-        "pickedBook":""
+        "pickedBook":"",
+        "buildingName":""
     },
     {
         "id": "f5d0184e-3b79-4005-b873-543a45942c4c",
@@ -78,23 +82,25 @@
         "typeUser": "ตร.",
         "queue": "none",
         "bookNumber": "กกกกกกกกกก",
-        "pickedBook":""
+        "pickedBook":"",
+        "buildingName":""
     },
     {
         "id": "5615b6ac-de82-4ec2-b370-e7ddc830924c",
         "no": 5,
         "firstName": "สมชัย",
         "lastName": "แสงสุข",
-        "affiliation": "บช.ตซด.",
+        "affiliation": "บช.ตชด.",
         "rank": "ส.ต.อ.",
         "typeRoom": "ช3",
         "idcard": "134044411441178",
         "phone": "0325647845",
-        "typeAffiliation": "บช.ตซด.",
+        "typeAffiliation": "บช.ตชด.",
         "typeRanks": "ประทวน",
         "typeUser": "บช.ตชด.",
         "bookNumber": "56544444",
         "queue": "none",
-        "pickedBook":""
+        "pickedBook":"",
+        "buildingName":""
     }
 ]

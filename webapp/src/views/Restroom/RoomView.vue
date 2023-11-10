@@ -4,7 +4,7 @@ import MaterialButton from "@/components/MaterialButton.vue";
 import MaterialCheckbox from "@/components/MaterialCheckbox.vue";
 import vueMkHeader from "@/assets/img/bg.jpg";
 import Breadcrumbs from "@/examples/Breadcrumbs.vue";
-// import roomData from "@/assets/dataJson/rooms.json";
+import { notify } from "@kyvg/vue3-notification";
 // import posts from "../posts.json";
 import axios from "axios";
 
@@ -38,18 +38,18 @@ export default {
       statusreturn: false,
       statuseunavailable: false,
       statusewaiting: false,
+      statusall: true,
+      statusSpecial: false,
       selectedlistRoom: "",
       committee: "",
       selectedStatus: "",
-      selectedReturn: "",
-      selectedUnavailable: "",
-      selectedWaiting: "",
-      selectedScaple: "",
       roomData: [],
       buildingList: [],
       roomList: [],
       roomListOld: [],
       buidingId: "",
+      typeStatusroom: "ทั้งหมด",
+      typeRoomselect: [],
     };
   },
   created() {
@@ -78,7 +78,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t;
+          this.roomList = t.sort((a, b) => a.floor - b.floor);
         } else {
           this.roomList = this.roomListOld;
         }
@@ -86,9 +86,10 @@ export default {
     },
 
     selectedlistRoom: async function (newValue) {
-      let arr = []
-      arr = this.buildingList.find(e => e.buil == newValue.value )
-      this.buidingId = arr.listRoom[0].buildingId
+      let arr = [];
+      arr = this.buildingList.find((e) => e.buil == newValue.value);
+      this.buidingId = arr.listRoom[0].buildingId;
+      this.committee = arr.committee;
       this.buildById(this.buidingId);
     },
   },
@@ -114,11 +115,10 @@ export default {
         if (newValue.value !== "ทั้งหมด") {
           datalist = buildingList["listRoom"].map((ele, i) => {
             ele.rooms = ele.rooms.filter((c) => c.typeRoom == newValue.value);
-            return ele; // return ele;
+            return ele;
           });
 
           this.dataBuilding["listRoom"] = datalist;
-          console.log(this.dataBuilding);
         } else {
           // this.roomData = this.oldData;
         }
@@ -147,6 +147,7 @@ export default {
           let buidingRoom = res.data;
           // let buidingRoomOld = buidingRoom;
           broom = buidingRoom.filter((e) => e.buildingId == id);
+
           const groupByCategory = Object.groupBy(broom, (product) => {
             return product.floor;
           });
@@ -156,7 +157,7 @@ export default {
               data: groupByCategory[ele].sort((a, b) => a.index - b.index),
             };
           });
-          this.roomListOld = this.roomList;
+          this.roomListOld = this.roomList.sort((a, b) => a.floor - b.floor);
         });
       } catch (e) {
         console.error(e);
@@ -166,12 +167,13 @@ export default {
       try {
         axios.get(`http://localhost:3001/buildings/`).then((res) => {
           this.buildingList = res.data;
-          this.listRoom = this.buildingList.map(e => {
+          this.typeRoomselect = res.data;
+          this.listRoom = this.buildingList.map((e) => {
             return {
               label: e.buil,
-              value: e.buil
-            }
-          })
+              value: e.buil,
+            };
+          });
           let roomValue = this.buildingList[0];
           this.committee = roomValue.committee;
           this.selectedlistRoom = { label: roomValue.buil, value: roomValue.buil };
@@ -189,7 +191,7 @@ export default {
         committee: this.committee,
       };
       axios
-        .put(`http://localhost:3001/buildings`, body, {
+        .put(`http://localhost:3001/buildings/${this.buidingId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -197,13 +199,36 @@ export default {
           },
         })
         .then((res) => {
+          notify({
+            title: "แก้ไขข้อมูลสำเร็จ",
+            type: "success",
+          });
           this.getBuildings();
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    onChangeEvent(e, event, selectedStatus) {
+
+    onChangeEventRoom(e) {
+      this.typeStatusroom = e;
+      let data = [];
+      let mapdata = [];
+      if (e !== "ทั้งหมด") {
+        data = this.typeRoomselect.filter((el) => el.buil === e);
+        mapdata = data.map((e) => {
+          return {
+            label: e.buil,
+            value: e.buil,
+          };
+        });
+        this.listRoom = mapdata;
+      } else {
+        this.listRoom = this.typeRoomselect;
+      }
+    },
+
+    onChangeEvent(e, event) {
       this.roomList = this.roomListOld;
       let filldata = [];
       if (e == "free") {
@@ -271,6 +296,8 @@ export default {
           });
           this.roomList = t;
         }
+      } else {
+        this.roomList = this.roomListOld;
       }
     },
   },
@@ -279,12 +306,12 @@ export default {
 <template>
   <Header>
     <div
-      class="page-header min-vh-70"
+      class="page-header min-vh-80"
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >
       <div class="container">
-        <div class="text-center" style="margin-top: -120px">
+        <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
         <div class="row pt-6">
@@ -294,7 +321,7 @@ export default {
               <br />
               <span
                 style="font-size: 24px; border-top: 4px solid #000; font-weight: normal"
-                >กองบัญชาการตำรวจตระเวนชายแดน</span
+                >งานสวัสดิการบ้านพัก ฝ่ายสนับสนุน1 กองบังคับการสนับสนุน</span
               >
             </h1>
           </div>
@@ -307,14 +334,66 @@ export default {
       <div class="page-header min-vh-45">
         <div class="container-fluid">
           <!-- d-flex justify-content-between -->
+          <notifications position="top center" width="400px" />
           <div>
             <Breadcrumbs
               :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'สถานะห้องพัก' }]"
             />
           </div>
           <h4>สถานะห้องพัก</h4>
+
           <div class="row pt-4 align-items-baseline">
             <div class="col-4">
+              <div class="mb-3">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio22"
+                    value="ทั้งหมด"
+                    :checked="typeStatusroom == 'ทั้งหมด'"
+                    @click="onChangeEventRoom('ทั้งหมด')"
+                  />
+                  <label class="form-check-label" for="Radio22">ทั้งหมด</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio23"
+                    value="บช.ตชด."
+                    :checked="typeStatusroom == 'บช.ตชด.'"
+                    @click="onChangeEventRoom('บช.ตชด.')"
+                  />
+                  <label class="form-check-label" for="Radio23">บช.ตชด.</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio24"
+                    value="ลือชา"
+                    :checked="typeStatusroom == 'ลือชา'"
+                    @change="onChangeEventRoom('ลือชา')"
+                  />
+                  <label class="form-check-label" for="Radio24">ลือชา</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio25"
+                    value="บางเขน"
+                    :checked="typeStatusroom == 'บางเขน'"
+                    @change="onChangeEventRoom('บางเขน')"
+                  />
+                  <label class="form-check-label" for="Radio25">บางเขน</label>
+                </div>
+              </div>
               <div class="d-flex justify-content-start align-items-baseline">
                 <label class="w-30">
                   <i class="material-icons opacity-6 me-2 text-md">home</i>
@@ -349,7 +428,9 @@ export default {
 
           <div class="text-center pt-4">
             <div class="d-flex justify-content-start align-items-baseline pt-1 w-35">
-              <label class="w-30" style="margin-right: 5px; margin-left: -20px"> เลือกประเภทห้อง</label>
+              <label class="w-30" style="margin-right: 5px; margin-left: -20px">
+                เลือกประเภทห้อง</label
+              >
               <v-select
                 class="w-50"
                 :options="typeRoom"
@@ -361,7 +442,7 @@ export default {
                 <p class="d-flex align-items-baseline p-2">
                   <a data-bs-toggle="modal" data-bs-target="#Edituser">
                     <span style="font-weight: bold; text-decoration: underline">
-                      คณะกรรมการประจําตึก : {{ committee || "เพิ่มชื่อ" }}</span
+                      คณะกรรมการประจําตึก : {{ committee }}</span
                     >
                     <i
                       class="material-icons"
@@ -374,52 +455,92 @@ export default {
                 <h6 class="pt-1">{{ selectedlistRoom?.label || "อาคารแฟลต 1/11" }}</h6>
               </div>
 
-              <div class="d-flex">
-                <MaterialCheckbox
-                  id="terms"
-                  color="green"
-                  :checked="statusfree"
-                  v-model="selectedStatus"
-                  @click="onChangeEvent('free', $event, selectedStatus)"
-                >
-                  <a href="javascript:;" class="font-weight-bolder"> ว่าง</a>
-                </MaterialCheckbox>
-                <MaterialCheckbox
-                  id="terms2"
-                  color="red"
-                  :checked="statuseunavailable"
-                  v-model="selectedUnavailable"
-                  @click="onChangeEvent('unavailable', $event)"
-                >
-                  <a href="javascript:;" class="font-weight-bolder"> ไม่ว่าง</a>
-                </MaterialCheckbox>
-                <MaterialCheckbox
-                  id="terms3"
-                  color="warning2"
-                  :checked="statusewaiting"
-                  @change="onChangeEvent('waiting', $event)"
-                >
-                  <a href="javascript:;" class="font-weight-bolder"> ชำรุด</a>
-                </MaterialCheckbox>
-                <MaterialCheckbox
-                  id="terms4"
-                  color="return"
-                  :checked="statusreturn"
-                  @change="onChangeEvent('return', $event)"
-                >
-                  <a href="javascript:;" class="font-weight-bolder"> ผ่อนผัน</a>
-                </MaterialCheckbox>
-                <MaterialCheckbox
-                  id="terms6"
-                  color="special"
-                  @change="onChangeEvent('special', $event)"
-                >
-                  <a href="javascript:;" class="font-weight-bolder"> กรณีพิเศษ</a>
-                </MaterialCheckbox>
+              <div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio0"
+                    value="ทั้งหมด"
+                    :checked="statusall"
+                    @click="onChangeEvent('ทั้งหมด', $event)"
+                  />
+                  <label class="form-check-label" for="Radio0">ทั้งหมด</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio1"
+                    value="ว่าง"
+                    :checked="statusfree"
+                    @click="onChangeEvent('free', $event)"
+                  />
+                  <label class="form-check-label" for="Radio1" style="color: #4cbb17"
+                    >ว่าง</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio2"
+                    value="ไม่ว่าง"
+                    :checked="statuseunavailable"
+                    @change="onChangeEvent('unavailable', $event)"
+                  />
+                  <label class="form-check-label" for="Radio2" style="color: #d24c4a"
+                    >ไม่ว่าง</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio3"
+                    value="ชำรุด"
+                    :checked="statusewaiting"
+                    @change="onChangeEvent('waiting', $event)"
+                  />
+                  <label class="form-check-label" for="Radio3" style="color: #fb8c00"
+                    >ชำรุด</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio4"
+                    value="ผ่อนผัน"
+                    :checked="statusreturn"
+                    @change="onChangeEvent('return', $event)"
+                  />
+                  <label class="form-check-label" for="Radio4 " style="color: #816613"
+                    >ผ่อนผัน</label
+                  >
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio5"
+                    value="กรณีพิเศษ"
+                    :checked="statusSpecial"
+                    @change="onChangeEvent('special', $event)"
+                  />
+                  <label class="form-check-label" for="Radio5" style="color: #d24c4a"
+                    >กรณีพิเศษ</label
+                  >
+                </div>
               </div>
             </div>
 
-            <!-- v-for="(item, index) in NoRoom" :key="index" -->
             <div v-for="(item, index) in roomList" :key="index">
               <div class="card mb-2">
                 <div class="card-body">
@@ -551,7 +672,7 @@ export default {
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">เลือกผู้เช่าห้องพัก</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">เลือกผู้พักอาศัยห้องพัก</h5>
             <button
               type="button"
               class="btn-close"

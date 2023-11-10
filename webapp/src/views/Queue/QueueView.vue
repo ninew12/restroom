@@ -23,7 +23,7 @@ export default {
 
   data() {
     return {
-      selectedUser: "",
+      selectedUser: "เลือกชื่อผู้พักอาศัย",
       firstName: "",
       lastName: "",
       Affiliation: "", //สังกัด
@@ -42,16 +42,22 @@ export default {
       no: 0,
       userId: "",
       picked: new Date(),
+      buildingName: "",
+      building: [],
+      selectedBuildingName: "เลือกอาคารบ้านพัก",
     };
   },
   created() {
     this.getAllqueue();
-    // this.getAllusers();
+    this.getAllbuildings();
     this.getAllNoqueue();
   },
   watch: {
     selectedUser: function (newValue) {
-      this.getAllusersByid(newValue.value);
+      if (newValue !== null) this.getAllusersByid(newValue.value);
+    },
+    selectedBuildingName: function (newValue) {
+      if (newValue !== null) this.buildingName = newValue.value;
     },
   },
   computed: {
@@ -142,7 +148,26 @@ export default {
         console.error(error);
       }
     },
-
+    getAllbuildings() {
+      try {
+        axios
+          .get(`http://localhost:3001/buildings/`)
+          .then((res) => {
+            console.log(res);
+            this.building = res.data.map((ele) => {
+              return {
+                label: ele.name,
+                value: ele.name,
+              };
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
     getAllusers() {
       try {
         axios
@@ -170,6 +195,7 @@ export default {
         bookNumber: this.bookNumber,
         pickedBook: this.picked.toISOString(),
         typeRoom: this.typeroomByqueue,
+        buildingName: this.buildingName,
         queue: "inqueue",
       };
       delete body.id;
@@ -208,18 +234,38 @@ export default {
           console.log(err);
         });
     },
+    updateUser() {
+      let body = {
+        buildingName: this.buildingName,
+      };
+      delete body.id;
+      axios
+        .put(`http://localhost:3001/queue/${this.userId}`, body, {
+          headers: {
+            // remove headers
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        })
+        .then((res) => {
+          this.getAllqueue();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 };
 </script>
 <template>
   <Header>
     <div
-      class="page-header min-vh-70"
+      class="page-header min-vh-80"
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >
       <div class="container">
-        <div class="text-center" style="margin-top: -120px">
+        <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
         <div class="row pt-6">
@@ -229,7 +275,7 @@ export default {
               <br />
               <span
                 style="font-size: 24px; border-top: 4px solid #000; font-weight: normal"
-                >กองบัญชาการตำรวจตระเวนชายแดน</span
+                >งานสวัสดิการบ้านพัก ฝ่ายสนับสนุน1 กองบังคับการสนับสนุน</span
               >
             </h1>
           </div>
@@ -315,7 +361,7 @@ export default {
                 color="success"
                 data-bs-toggle="modal"
                 data-bs-target="#seleteUserBackdrop"
-                >เพิ่มผู้เช่าลงคิว</MaterialButton
+                >เพิ่มผู้พักอาศัยลงคิว</MaterialButton
               >
             </div>
           </div>
@@ -327,6 +373,7 @@ export default {
                   <!-- <th scope="col">ยศ</th> -->
                   <th scope="col">ชื่อ-สกุล</th>
                   <th scope="col">สังกัด</th>
+                  <th scope="col">อาคารบ้านพัก</th>
                   <th scope="col">สถานภาพ</th>
                   <th scope="col">เลขบัตรประชาชน</th>
                   <th scope="col">เบอร์ติดต่อ</th>
@@ -338,6 +385,7 @@ export default {
                   <th scope="row">{{ item?.no }}</th>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.affiliation }}</td>
+                  <td>{{ item?.buildingName }}</td>
                   <td>{{ item?.status }}</td>
                   <td>{{ item?.idcard }}</td>
                   <td>{{ item?.phone }}</td>
@@ -374,7 +422,7 @@ export default {
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">เพิ่มผู้เช่าลงคิว</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">เพิ่มผู้พักอาศัยลงคิว</h5>
             <button
               type="button"
               class="btn-close"
@@ -385,8 +433,12 @@ export default {
           <div class="modal-body">
             <div>
               <div class="mb-3">
-                <label>ชื่อผู้เช่า</label>
+                <label>ชื่อผู้พักอาศัย</label>
                 <v-select :options="userList" v-model="selectedUser"></v-select>
+              </div>
+              <div class="mb-3">
+                <label>อาคารบ้านพัก</label>
+                <v-select :options="building" v-model="selectedBuildingName"></v-select>
               </div>
               <div class="mb-3">
                 <label style="margin-left: -5px">กรอกเลขลงรับหนังสือ</label>
@@ -399,6 +451,7 @@ export default {
                   placeholder="ตัวอย่าง : 11244"
                 ></textarea>
               </div>
+
               <div class="mb-4">
                 <label style="margin-left: -5px">วันที่ลงรับหนังสือ</label>
                 <Datepicker style="text-align: center" v-model="picked" />

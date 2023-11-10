@@ -5,6 +5,7 @@ import Breadcrumbs from "@/examples/Breadcrumbs.vue";
 import vueMkHeader from "@/assets/img/bg.jpg";
 import masterData from "@/assets/dataJson/masterData.json";
 import axios from "axios";
+import { notify } from "@kyvg/vue3-notification";
 
 export default {
   components: {
@@ -26,6 +27,8 @@ export default {
         { label: "สมรส", value: "สมรส" },
       ],
       selectedDataObtion: "โสด",
+      selectedRanks: "",
+      selectedAffiliation: "",
       selectedColor: "",
       firstName: "สมชัย",
       lastName: "แสงสุข",
@@ -33,8 +36,6 @@ export default {
       rank: "", //ยศ
       idcard: "134044411441178",
       phone: "0325647845",
-      selectedRanks: "",
-      selectedAffiliation: "",
       birthday: "14/07/2534",
       typeAffiliation: "",
       typeRanks: "",
@@ -48,6 +49,7 @@ export default {
       typeUser: "ตร.",
       typeUserBytype: "",
       typeUserByrankr: "",
+      queue: "",
     };
   },
   created() {
@@ -108,7 +110,7 @@ export default {
             (this.phone = data.phone),
             (this.selectedDataObtion = data.status);
           (this.typeAffiliation = data.typeAffiliation),
-            (this.typeRanks = data.typeRanks);
+            (this.queue = data.queue)((this.typeRanks = data.typeRanks));
           this.modalShow = true;
         })
         .catch((err) => {
@@ -120,8 +122,8 @@ export default {
       let typeA;
       this.typeAffiliation.label == "ลูกจ้าง"
         ? (typeA = "ลูกจ้าง")
-        : this.typeAffiliation.label == "บช.ตซด."
-        ? (typeA = "บช.ตซด.")
+        : this.typeAffiliation.label == "บช.ตชด."
+        ? (typeA = "บช.ตชด.")
         : (typeA = this.selectedAffiliation.label);
       let body = {
         firstName: this.firstName,
@@ -133,6 +135,7 @@ export default {
         status: this.selectedDataObtion.value || "โสด",
         typeAffiliation: this.typeAffiliation.value,
         typeRanks: this.typeRanks.value,
+        queue: this.queue,
       };
 
       axios
@@ -144,6 +147,10 @@ export default {
           },
         })
         .then((res) => {
+          notify({
+            title: "แก้ไขข้อมูลสำเร็จ",
+            type: "success",
+          });
           this.getAlluser();
         })
         .catch((err) => {
@@ -154,8 +161,8 @@ export default {
       let typeA;
       this.typeAffiliation.label == "ลูกจ้าง"
         ? (typeA = "ลูกจ้าง")
-        : this.typeAffiliation.label == "บช.ตซด."
-        ? (typeA = "บช.ตซด.")
+        : this.typeAffiliation.label == "บช.ตชด."
+        ? (typeA = "บช.ตชด.")
         : (typeA = this.selectedAffiliation.label);
       let body = {
         firstName: this.firstName,
@@ -164,6 +171,7 @@ export default {
         rank: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
+        queue: "none",
         status: this.selectedDataObtion.value || "โสด",
         typeAffiliation: this.typeAffiliation.value,
         typeRanks: this.typeRanks.value,
@@ -177,6 +185,10 @@ export default {
           },
         })
         .then((res) => {
+          notify({
+            title: "เพิ่มข้อมูลสำเร็จ",
+            type: "success",
+          });
           this.getAlluser();
         })
         .catch((err) => {
@@ -207,12 +219,12 @@ export default {
 <template>
   <Header>
     <div
-      class="page-header min-vh-70"
+      class="page-header min-vh-80"
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >
       <div class="container">
-        <div class="text-center" style="margin-top: -120px">
+        <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
         <div class="row pt-6">
@@ -222,7 +234,7 @@ export default {
               <br />
               <span
                 style="font-size: 24px; border-top: 4px solid #000; font-weight: normal"
-                >กองบัญชาการตำรวจตระเวนชายแดน</span
+                >งานสวัสดิการบ้านพัก ฝ่ายสนับสนุน1 กองบังคับการสนับสนุน</span
               >
             </h1>
           </div>
@@ -234,6 +246,7 @@ export default {
     <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
       <div class="page-header min-vh-45">
         <div class="container">
+          <notifications position="top center" width="400px" />
           <div>
             <Breadcrumbs
               :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'ทะเบียน' }]"
@@ -355,7 +368,7 @@ export default {
               <tbody>
                 <tr v-for="(item, index) in dataUser" :key="index">
                   <th scope="row">{{ index + 1 }}</th>
-                  <td>{{ item?.rank }} </td>
+                  <td>{{ item?.rank }}</td>
                   <td>{{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.affiliation }}</td>
                   <td>{{ item?.status }}</td>
@@ -632,7 +645,6 @@ export default {
                   :value="firstName"
                   @input="(event) => (firstName = event.target.value)"
                   class="input-group-static"
-                 
                   type="text"
                 />
               </div>
@@ -723,6 +735,4 @@ input[type="number"] {
 .breadcrumb-item a:hover {
   color: #4caf50 !important;
 }
-
-
 </style>

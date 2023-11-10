@@ -6,6 +6,7 @@ import Breadcrumbs from "@/examples/Breadcrumbs.vue";
 import masterData from "@/assets/dataJson/masterData.json";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import { notify } from "@kyvg/vue3-notification";
 
 export default {
   components: {
@@ -30,6 +31,8 @@ export default {
       buildingList: [],
       searchName: "",
       FloorsList: [],
+      roomList: [],
+      building_Id: "",
       Area: "",
     };
   },
@@ -51,18 +54,18 @@ export default {
   methods: {
     changedFloors() {
       let array = [];
-      let idbuilding = uuidv4();
+      this.building_Id = uuidv4();
       for (let index = 0; index < this.Floors; index++) {
         array.push({
-          buildingId: idbuilding,
+          buildingId: this.building_Id,
           name: this.Building,
           floor: index + 1,
           committee: "",
           rooms: [
             {
-              buildingId: idbuilding,
+              buildingId: this.building_Id,
               id: uuidv4(),
-              name: this.Building,
+              name: this.building,
               floor: index + 1,
               index: 1,
               numberRoom: 1,
@@ -105,6 +108,7 @@ export default {
         sum += num.sumroom;
       });
       let body = {
+        buildingId: this.building_Id,
         buil: this.Area,
         name: this.Building,
         sumroom: sum,
@@ -132,23 +136,26 @@ export default {
 
     async submitRoom() {
       let floorsList = [];
+      let floorsLoop = [];
       await this.FloorsList.forEach((e) => {
         e.rooms.forEach((ele) => {
           floorsList.push(ele);
         });
       });
       // let body = floorsList
-      console.log(floorsList);
-      await floorsList.forEach(x => {
-         axios
-        .post(`http://localhost:3001/rooms`, x, {
+      floorsLoop = floorsList;
+      await floorsLoop.forEach((x) => {
+        axios.post(`http://localhost:3001/rooms`, x, {
           headers: {
-            // remove headers
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
           },
-        })
-      }) 
+        });
+      });
+      notify({
+        title: "เพิ่มข้อมูลสำเร็จ",
+        type: "success",
+      });
     },
 
     // buildings
@@ -166,18 +173,39 @@ export default {
         console.error(error);
       }
     },
+
+    async getBuildingByid(id) {
+      try {
+        await axios
+          .get(`http://localhost:3001/buildings/${id}`)
+          .then((res) => {
+            let data = res.data;
+            this.building_Id = data.buildingId;
+            this.Area = data.buil;
+            this.Building = data.name;
+            this.Floors = data.floor;
+            this.roomList = data.listRoom;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 };
 </script>
 <template>
   <Header>
     <div
-      class="page-header min-vh-70"
+      class="page-header min-vh-80"
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >
       <div class="container">
-        <div class="text-center" style="margin-top: -120px">
+        <notifications position="top center" width="400px" />
+        <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
         <div class="row pt-6">
@@ -187,7 +215,7 @@ export default {
               <br />
               <span
                 style="font-size: 24px; border-top: 4px solid #000; font-weight: normal"
-                >กองบัญชาการตำรวจตระเวนชายแดน</span
+                >งานสวัสดิการบ้านพัก ฝ่ายสนับสนุน1 กองบังคับการสนับสนุน</span
               >
             </h1>
           </div>
@@ -234,7 +262,7 @@ export default {
                   <th scope="col">ชื่ออาคาร</th>
                   <th scope="col">ชั้น</th>
                   <th scope="col">จำนวนห้อง</th>
-                  <!-- <th scope="col">เลขห้อง</th> -->
+                  <th scope="col"></th>
                   <!-- <th scope="col">ประเภทห้องพัก</th> -->
                 </tr>
               </thead>
@@ -245,7 +273,17 @@ export default {
                   <td>{{ item?.name }}</td>
                   <td>{{ item?.floor }}</td>
                   <td>{{ item?.sumroom }}</td>
-                  <!-- <td>{{ item?.roomnumber }}</td> -->
+                  <td>
+                    <i
+                      class="material-icons me-2"
+                      style="cursor: pointer"
+                      aria-hidden="true"
+                      @click="getBuildingByid(item?.buildingId)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#Viewroomplan"
+                      >visibility</i
+                    >
+                  </td>
                   <!-- <td>{{ item?.type }}</td> -->
                 </tr>
               </tbody>
@@ -359,6 +397,104 @@ export default {
               data-bs-dismiss="modal"
               >บันทึก</MaterialButton
             >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="Viewroomplan"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">รายละเอียดผังห้อง</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="Area"
+                  @input="(event) => (Area = event.target.value)"
+                  class="input-group-static"
+                  label="อาคารบ้านพัก"
+                  type="text"
+                  placeholder="อาคารบ้านพัก"
+                  :isDisabled="true"
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="Building"
+                  @input="(event) => (Building = event.target.value)"
+                  class="input-group-static"
+                  label="ชื่ออาคาร"
+                  type="text"
+                  placeholder="ชื่ออาคาร"
+                  :isDisabled="true"
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="Floors"
+                  @input="(event) => (Floors = event.target.value)"
+                  class="input-group-static"
+                  label="จำนวนชั้น"
+                  type="number"
+                  placeholder="จำนวนชั้น"
+                  :isDisabled="true"
+                />
+                <div class="card pt-4" v-for="(item, index) in roomList" :key="index">
+                  <ul
+                    class="list-group list-group-flush"
+                    style="border: 2px solid #2b572d"
+                  >
+                    <li class="list-group-item">
+                      <span style="font-size: 16px; font-weight: bold"
+                        >ชั้นที่ {{ item.floor }}</span
+                      >
+                      <div>
+                        <label
+                          style="font-size: 16px; font-weight: bold; margin-left: 20px"
+                        >
+                          จำนวนห้อง {{ item.sumroom }}
+                        </label>
+                      </div>
+                      <div class="flex-container2">
+                        <div v-for="(item2, index) in item?.rooms" :key="index">
+                          ห้อง {{ item2.numberRoom }}
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              ปิดหน้าต่าง
+            </button>
+            <!-- <MaterialButton
+              variant="gradient"
+              color="success"
+              @click="submitForm"
+              html-type="submit"
+              data-bs-dismiss="modal"
+              >บันทึก</MaterialButton
+            > -->
           </div>
         </div>
       </div>

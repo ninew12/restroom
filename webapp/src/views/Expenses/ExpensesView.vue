@@ -5,7 +5,7 @@ import Breadcrumbs from "@/examples/Breadcrumbs.vue";
 import vueMkHeader from "@/assets/img/bg.jpg";
 import masterData from "@/assets/dataJson/masterData.json";
 import axios from "axios";
-
+import { notify } from "@kyvg/vue3-notification";
 
 export default {
   components: {
@@ -22,7 +22,6 @@ export default {
 
   data() {
     return {
-
       optionMonth: [
         { label: "มกราคม", value: "มกราคม" },
         { label: "กุมภาพันธ์", value: "กุมภาพันธ์" },
@@ -80,7 +79,6 @@ export default {
     },
   },
   methods: {
-
     typeContractchange(e) {
       this.typeContract = e.target.value;
     },
@@ -154,6 +152,10 @@ export default {
           },
         })
         .then((res) => {
+          notify({
+            title: "แก้ไขข้อมูลสำเร็จ",
+            type: "success",
+          });
           this.getExpenses();
         })
         .catch((err) => {
@@ -166,12 +168,12 @@ export default {
 <template>
   <Header>
     <div
-      class="page-header min-vh-70"
+      class="page-header min-vh-80"
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >
       <div class="container">
-        <div class="text-center" style="margin-top: -120px">
+        <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
         <div class="row pt-6">
@@ -181,7 +183,7 @@ export default {
               <br />
               <span
                 style="font-size: 24px; border-top: 4px solid #000; font-weight: normal"
-                >กองบัญชาการตำรวจตระเวนชายแดน</span
+                >งานสวัสดิการบ้านพัก ฝ่ายสนับสนุน1 กองบังคับการสนับสนุน</span
               >
             </h1>
           </div>
@@ -202,6 +204,7 @@ export default {
             />
           </div>
           <h4>บันทึกค่าใช้จ่ายรายเดือน ตร.</h4>
+          <notifications position="top center" width="400px" />
           <!-- {{ this.expensesList }} -->
           <!-- <div class="d-flex justify-content-end align-items-baseline">
               <div class="mb-3 w-15" style="margin-right: 20px">
@@ -244,8 +247,6 @@ export default {
                   <th scope="col">ค่าไฟฟ้า</th>
                   <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
                   <th scope="col">ค่าบำรุงลิฟท์</th>
-                  <th scope="col">ค่าประกัน</th>
-                  <th scope="col">จำนวนงวดประกัน</th>
                   <th scope="col">หักได้</th>
                   <th scope="col">หักไม่ได้</th>
                   <th scope="col">สาเหตุที่หัก</th>
@@ -276,8 +277,7 @@ export default {
                   <td>{{ item?.electricitybill }}</td>
                   <td>{{ item?.central }}</td>
                   <td>{{ item?.costs }}</td>
-                  <td>{{ item?.sumCost }}</td>
-                  <td>{{ item?.sumbill }}</td>
+          
                   <td>
                     <span v-if="item?.typeContract == 'หักได้'">/</span>
                   </td>

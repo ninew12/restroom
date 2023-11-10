@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@kyvg/vue3-notification": "^3.0.2",
     "@popperjs/core": "2.11.5",
     "@trevoreyre/autocomplete-vue": "^2.4.1",
     "axios": "^1.5.1",
