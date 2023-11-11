@@ -80,6 +80,8 @@ app.put('/users/:id', (req, res) => {
     if (req.body.typeContract) parsedData.typeContract = req.body.typeContract
     if (req.body.contractExpenses) parsedData.contractExpenses = req.body.contractExpenses
     if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
+    if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
+
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -203,6 +205,7 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.roomconditions) parsedData.roomconditions = req.body.roomconditions
     if (req.body.Checkintime) parsedData.Checkintime = req.body.Checkintime
     if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
+    if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
     filterdata.push(parsedData)
     fs.writeFile('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -259,6 +262,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.pickedBook) parsedData.pickedBook = req.body.pickedBook
     if (req.body.typeRoom) parsedData.typeRoom = req.body.typeRoom
     if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
+    if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -312,6 +316,7 @@ app.put('/history/:id', (req, res) => {
     if (req.body.queue) parsedData.queue = req.body.queue
     if (req.body.no) parsedData.no = req.body.no
     if (req.body.bookNumber) parsedData.bookNumber = req.body.bookNumber
+    if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
     filterdata.push(parsedData)
     fs.writeFile('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -366,6 +371,7 @@ app.put('/layout/:id', (req, res) => {
     if (req.body.status) parsedData.status = req.body.status
     if (req.body.typeAffiliation) parsedData.typeAffiliation = req.body.typeAffiliation
     if (req.body.typeRanks) parsedData.typeRanks = req.body.typeRanks
+    if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {

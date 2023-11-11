@@ -11,23 +11,12 @@ import FilledInfoCard from "../../examples/cards/infoCards/FilledInfoCard.vue";
 import MaterialSocialButton from "@/components/MaterialSocialButton.vue";
 
 // sections
-import PresentationCounter from "./Sections/PresentationCounter.vue";
-import PresentationPages from "./Sections/PresentationPages.vue";
-import PresentationExample from "./Sections/PresentationExample.vue";
-import data from "./Sections/Data/designBlocksData";
-import BuiltByDevelopers from "./Components/BuiltByDevelopers.vue";
-import PresentationTestimonials from "./Sections/PresentationTestimonials.vue";
+
 import PresentationInformation from "./Sections/PresentationInformation.vue";
 
 //images
 import vueMkHeader from "@/assets/img/bg.jpg";
-import wavesWhite from "@/assets/img/waves-white.svg";
-import logoBootstrap from "@/assets/img/logos/bootstrap5.jpg";
-import logoTailwind from "@/assets/img/logos/icon-tailwind.jpg";
-import logoVue from "@/assets/img/logos/vue.jpg";
-import logoAngular from "@/assets/img/logos/angular.jpg";
-import logoReact from "@/assets/img/logos/react.jpg";
-import logoSketch from "@/assets/img/logos/sketch.jpg";
+
 
 //hooks
 const body = document.getElementsByTagName("body")[0];

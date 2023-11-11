@@ -138,7 +138,6 @@ export default {
       try {
         axios.get(`http://localhost:3001/rooms/${id}`).then((res) => {
           this.data = res.data;
-          console.log(this.data);
           this.dateApproved = this.convertDateTolocal(this.data.pickedBook);
           this.typeroom = this.data.typeRoom;
           if (this.data.affiliation) this.Affiliation = this.data.affiliation;
@@ -156,14 +155,18 @@ export default {
     },
 
     convertDateTolocal(index) {
-      const date = new Date(index);
-      const formatter = new Intl.DateTimeFormat("en-US", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      });
-      const formattedDate = formatter.format(date);
-      return formattedDate;
+      if (index !== "") {
+        const date = new Date(index);
+        const formatter = new Intl.DateTimeFormat("en-US", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+        const formattedDate = formatter.format(date);
+        return formattedDate;
+      } else {
+        return "";
+      }
     },
 
     getAllusersByid(id) {
@@ -193,6 +196,7 @@ export default {
         maintenance: this.Maintenance,
         insurance: this.insurance,
         installments: this.installments,
+        amountPaid: this.amountPaid,
       };
       await axios
         .post(`http://localhost:3001/history`, body, {
@@ -224,6 +228,7 @@ export default {
         maintenance: this.Maintenance,
         insurance: this.insurance,
         installments: this.installments,
+        amountPaid: this.amountPaid,
       };
 
       await axios.post(`http://localhost:3001/report`, body, {
@@ -243,6 +248,7 @@ export default {
         maintenance: this.Maintenance,
         insurance: this.insurance,
         installments: this.installments,
+        amountPaid: this.amountPaid,
       };
 
       await axios.put(`http://localhost:3001/queue/${this.userId}`, body, {
@@ -262,6 +268,7 @@ export default {
         maintenance: this.Maintenance,
         insurance: this.insurance,
         installments: this.installments,
+        amountPaid: this.amountPaid,
       };
 
       await axios
@@ -295,6 +302,7 @@ export default {
         maintenance: this.Maintenance,
         insurance: this.insurance,
         installments: this.installments,
+        amountPaid: this.amountPaid,
       };
 
       await axios
@@ -449,7 +457,7 @@ export default {
                               data-bs-toggle="modal"
                               data-bs-target="#contractBackdrop"
                               @click="getAllusersByid(item.id)"
-                              >เพิ่มผู้พักอาศัยห้องพัก</MaterialButton
+                              >เพิ่มผู้พักอาศัยเข้าห้องพัก</MaterialButton
                             >
                           </td>
                         </tr>
@@ -525,6 +533,16 @@ export default {
                   label="เงินค่าประกัน"
                   type="text"
                   placeholder="เงินค่าประกัน"
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="amountPaid"
+                  @input="(event) => (amountPaid = event.target.value)"
+                  class="input-group-static"
+                  label="จำนวนเงินค่าประกันที่ชำระแล้ว"
+                  type="text"
+                  placeholder="จำนวนเงินค่าประกันที่ชำระแล้ว"
                 />
               </div>
               <div class="mb-3">

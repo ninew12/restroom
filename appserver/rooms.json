@@ -385,7 +385,8 @@
     "phone": "0325647845",
     "status": "สมรส",
     "typeAffiliation": "บก.อก.",
-    "typeRanks": "สัญญาบัตร"
+    "typeRanks": "สัญญาบัตร",
+    "amountPaid":""
   },
   {
     "buildingId": "0e4913d1-0b54-4b70-811d-e976a13c5e07",
@@ -399,7 +400,9 @@
     "Affiliation": "",
     "typeRoom": "",
     "roomconditions": "ปกติ",
-    "roomStatus": "free"
+    "roomStatus": "free",
+    "pickedBook": "",
+    "amountPaid":""
   },
   {
     "buildingId": "0e4913d1-0b54-4b70-811d-e976a13c5e07",
@@ -414,7 +417,9 @@
     "Affiliation": "",
     "typeRoom": "",
     "roomconditions": "ปกติ",
-    "roomStatus": "free"
+    "roomStatus": "free",
+    "pickedBook": "",
+    "amountPaid":""
   },
   {
     "buildingId": "0e4913d1-0b54-4b70-811d-e976a13c5e07",
@@ -429,7 +434,9 @@
     "Affiliation": "",
     "typeRoom": "",
     "roomconditions": "ปกติ",
-    "roomStatus": "free"
+    "roomStatus": "free",
+    "pickedBook": "",
+    "amountPaid":""
   },
   {
     "buildingId": "0e4913d1-0b54-4b70-811d-e976a13c5e07",
@@ -443,7 +450,9 @@
     "Affiliation": "",
     "typeRoom": "",
     "roomconditions": "ปกติ",
-    "roomStatus": "free"
+    "roomStatus": "free",
+    "pickedBook": "",
+    "amountPaid":""
   },
   {
     "buildingId": "0e4913d1-0b54-4b70-811d-e976a13c5e07",
@@ -458,7 +467,9 @@
     "Affiliation": "",
     "typeRoom": "",
     "roomconditions": "ปกติ",
-    "roomStatus": "free"
+    "roomStatus": "free",
+    "pickedBook": "",
+    "amountPaid":""
   },
   {
     "buildingId": "8bc8b393-8ae2-4e65-9a35-32c0e76545b3",
@@ -474,6 +485,7 @@
     "typeRoom": "ช2",
     "roomconditions": "ปกติ",
     "roomStatus": "free",
-    "pickedBook": "2023-11-02T14:10:26.374Z"
+    "pickedBook": "",
+    "amountPaid":""
   }
 ]

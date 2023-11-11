@@ -34,6 +34,8 @@ export default {
       roomList: [],
       building_Id: "",
       Area: "",
+      typeStatusroom: "",
+      buildingType: "บช.ตชด.",
     };
   },
   created() {
@@ -102,6 +104,10 @@ export default {
       item.sumroom = item.sumroom + 1;
     },
 
+    onChangeEventRoom(e) {
+      this.buildingType = e;
+    },
+
     async submitForm() {
       let sum = 0;
       this.FloorsList.forEach((num) => {
@@ -109,6 +115,7 @@ export default {
       });
       let body = {
         buildingId: this.building_Id,
+        buildingType: this.buildingType,
         buil: this.Area,
         name: this.Building,
         sumroom: sum,
@@ -181,6 +188,7 @@ export default {
           .then((res) => {
             let data = res.data;
             this.building_Id = data.buildingId;
+            this.buildingType = data.buildingType
             this.Area = data.buil;
             this.Building = data.name;
             this.Floors = data.floor;
@@ -317,6 +325,56 @@ export default {
           <div class="modal-body">
             <div>
               <div class="mb-3">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio23"
+                    value="บช.ตชด."
+                    :checked="buildingType == 'บช.ตชด.'"
+                    @click="onChangeEventRoom('บช.ตชด.')"
+                  />
+                  <label class="form-check-label" for="Radio23">บช.ตชด.</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio24"
+                    value="ลือชา"
+                    :checked="buildingType == 'ลือชา'"
+                    @change="onChangeEventRoom('ลือชา')"
+                  />
+                  <label class="form-check-label" for="Radio24">ลือชา</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio25"
+                    value="บางเขน"
+                    :checked="buildingType == 'บางเขน'"
+                    @change="onChangeEventRoom('บางเขน')"
+                  />
+                  <label class="form-check-label" for="Radio25">บางเขน</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio22"
+                    value="อื่นๆ"
+                    :checked="buildingType == 'อื่นๆ'"
+                    @click="onChangeEventRoom('อื่นๆ')"
+                  />
+                  <label class="form-check-label" for="Radio22">อื่นๆ</label>
+                </div>
+              </div>
+              <div class="mb-3">
                 <MaterialInput
                   :value="Area"
                   @input="(event) => (Area = event.target.value)"
@@ -423,7 +481,56 @@ export default {
             ></button>
           </div>
           <div class="modal-body">
-            <div>
+            <div><div class="mb-3">
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio23"
+                    value="บช.ตชด."
+                    :checked="buildingType == 'บช.ตชด.'"
+                    disabled
+                  />
+                  <label class="form-check-label" for="Radio23">บช.ตชด.</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio24"
+                    value="ลือชา"
+                    :checked="buildingType == 'ลือชา'"
+                    disabled
+                  />
+                  <label class="form-check-label" for="Radio24">ลือชา</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio25"
+                    value="บางเขน"
+                    :checked="buildingType == 'บางเขน'"
+                    disabled
+                  />
+                  <label class="form-check-label" for="Radio25">บางเขน</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions1"
+                    id="Radio22"
+                    value="อื่นๆ"
+                    :checked="buildingType == 'อื่นๆ'"
+                    disabled
+                  />
+                  <label class="form-check-label" for="Radio22">อื่นๆ</label>
+                </div>
+              </div>
               <div class="mb-3">
                 <MaterialInput
                   :value="Area"

@@ -34,6 +34,7 @@ import Reports from "../views/Reports/ReportlistView.vue"
 import searchFilter from "../views/SearchAll/SearchView.vue"
 import Queue from "../views/Queue/QueueView.vue"
 import Expenses from "../views/Expenses/ExpensesView.vue"
+import AmountPaid from "../views/AmountPaid/AmountPaidview.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -86,6 +87,11 @@ const router = createRouter({
       path: "/queue",
       name: "queue", 
       component: Queue,
+    },
+    {
+      path: "/amountpaid",
+      name: "amountPaid", 
+      component: AmountPaid,
     },
     {
       path: '/room/detail/:id',

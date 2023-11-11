@@ -82,26 +82,21 @@ export default {
     typeContractchange(e) {
       this.typeContract = e.target.value;
     },
-    getMonths(){
-      this.months = ""
-    },
     async getExpenses() {
       try {
         await axios
           .get("http://localhost:3001/expenses")
           .then((res) => {
             let data = [];
-            let data2 = [];
             this.expensesListOld = res.data;
             this.expensesList = res.data;
-            data = this.expensesList.filter((ele) => ele.typeUser == "ตร.");
-            data2 = data.map(el => {
+            data = this.expensesList.map(el => {
                 return {
                     ...el,
                     sumCost : this.countSum(el)
                 }
             })
-            this.expensesList = data2;
+            this.expensesList = data;
           })
           .catch((err) => {
             console.log(err);
@@ -109,10 +104,6 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    },
-
-    countSum(e){
-        return e.insurancecost - e.installmentsRooom || 0
     },
 
     async getRoomsByid(id) {
@@ -141,6 +132,10 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+
+    countSum(e){
+        return e.insurancecost - e.installmentsRooom || 0
     },
 
     async submitForm() {
@@ -211,16 +206,12 @@ export default {
         <div class="container">
           <div>
             <Breadcrumbs
-              :routes="[
-                { label: 'หน้าหลัก', route: '/' },
-                { label: 'บันทึกค่าใช้จ่ายรายเดือน ตร.' },
-              ]"
+              :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'คืนเงินประกัน' }]"
             />
           </div>
-          <h4>บันทึกค่าใช้จ่ายรายเดือน ตร. ประจำเดือน {{ months }}</h4>
+          <h4>คืนเงินประกัน</h4>
           <notifications position="top center" width="400px" />
-
-            <!-- <div class="d-flex justify-content-end align-items-baseline pt-1">
+          <div class="d-flex justify-content-end align-items-baseline pt-1">
               <label  style="margin-right:20px;">
                 เดือน</label
               >
@@ -229,8 +220,8 @@ export default {
                 :options="optionMonth"
                 v-model="selectedMonth"
               ></v-select>
-            </div> -->
-      
+            </div>
+
           <div class="text-center pt-4 table-responsive">
             <table class="table table-hover border border-2 border-success">
               <thead class="border border-2 border-success border-bottom">
@@ -264,7 +255,7 @@ export default {
                       data-bs-toggle="modal"
                       data-bs-target="#staticBackdrop11"
                       @click="getRoomsByid(item?.id)"
-                      >บันทึกค่าใช้จ่ายรายเดือน</MaterialButton
+                      >บันทึกคืนเงินประกัน</MaterialButton
                     >
                   </td>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
@@ -278,7 +269,7 @@ export default {
                   <td>{{ item?.electricitybill }}</td>
                   <td>{{ item?.central }}</td>
                   <td>{{ item?.costs }}</td>
-          
+
                   <td>
                     <span v-if="item?.typeContract == 'หักได้'">/</span>
                   </td>

@@ -82,6 +82,17 @@
                     </div>
                 </div>
             </div>
+            <div class="col-sm-3 mt-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <p class="card-title" style="font-weight: bold; color: #000">คืนเงินประกัน</p>
+                        <img src="../../../assets/img/pay.png" alt="title" loading="lazy" class="w-50" />
+                        <RouterLink :to="{ name: 'amountPaid' }" class="dropdown-item border-radius-md">
+                          <a href="#" class="btn btn-success mt-4">คืนเงินประกัน</a>
+                        </RouterLink>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

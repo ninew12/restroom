@@ -40,7 +40,7 @@ export default {
       statusewaiting: false,
       statusall: true,
       statusSpecial: false,
-      selectedlistRoom: "",
+      selectedlistRoom: "เลือกตึก",
       committee: "",
       selectedStatus: "",
       roomData: [],
@@ -87,10 +87,12 @@ export default {
 
     selectedlistRoom: async function (newValue) {
       let arr = [];
-      arr = this.buildingList.find((e) => e.buil == newValue.value);
-      this.buidingId = arr.listRoom[0].buildingId;
-      this.committee = arr.committee;
-      this.buildById(this.buidingId);
+      if (newValue !== null) {
+        arr = this.buildingList.find((e) => e.buil == newValue.value);
+        this.buidingId = arr.listRoom[0].buildingId;
+        this.committee = arr.committee;
+        this.buildById(this.buidingId);
+      }
     },
   },
   methods: {
@@ -120,7 +122,7 @@ export default {
 
           this.dataBuilding["listRoom"] = datalist;
         } else {
-          // this.roomData = this.oldData;
+          this.roomData = this.oldData;
         }
       }
     },
@@ -176,7 +178,8 @@ export default {
           });
           let roomValue = this.buildingList[0];
           this.committee = roomValue.committee;
-          this.selectedlistRoom = { label: roomValue.buil, value: roomValue.buil };
+          // this.onChangeEventRoom("ทั้งหมด")
+          // this.selectedlistRoom = { label: roomValue.buil, value: roomValue.buil };
           this.buidingId = roomValue.listRoom[0].buildingId;
           this.dataBuilding = { ...roomValue };
           this.getRooms();
@@ -215,7 +218,7 @@ export default {
       let data = [];
       let mapdata = [];
       if (e !== "ทั้งหมด") {
-        data = this.typeRoomselect.filter((el) => el.buil === e);
+        data = this.typeRoomselect.filter((el) => el.buildingType === e);
         mapdata = data.map((e) => {
           return {
             label: e.buil,
@@ -224,7 +227,13 @@ export default {
         });
         this.listRoom = mapdata;
       } else {
-        this.listRoom = this.typeRoomselect;
+        mapdata = this.typeRoomselect.map((e) => {
+          return {
+            label: e.buil,
+            value: e.buil,
+          };
+        });
+        this.listRoom = mapdata;
       }
     },
 
@@ -350,48 +359,48 @@ export default {
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions1"
-                    id="Radio22"
+                    id="Radio225"
                     value="ทั้งหมด"
-                    :checked="typeStatusroom == 'ทั้งหมด'"
                     @click="onChangeEventRoom('ทั้งหมด')"
+                    :checked="typeStatusroom == 'ทั้งหมด'"
                   />
-                  <label class="form-check-label" for="Radio22">ทั้งหมด</label>
+                  <label class="form-check-label" for="Radio225">ทั้งหมด</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions1"
-                    id="Radio23"
+                    id="Radio235"
                     value="บช.ตชด."
-                    :checked="typeStatusroom == 'บช.ตชด.'"
                     @click="onChangeEventRoom('บช.ตชด.')"
+                    :checked="typeStatusroom == 'บช.ตชด.'"
                   />
-                  <label class="form-check-label" for="Radio23">บช.ตชด.</label>
+                  <label class="form-check-label" for="Radio235">บช.ตชด.</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions1"
-                    id="Radio24"
+                    id="Radio245"
                     value="ลือชา"
-                    :checked="typeStatusroom == 'ลือชา'"
                     @change="onChangeEventRoom('ลือชา')"
+                    :checked="typeStatusroom == 'ลือชา'"
                   />
-                  <label class="form-check-label" for="Radio24">ลือชา</label>
+                  <label class="form-check-label" for="Radio245">ลือชา</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions1"
-                    id="Radio25"
+                    id="Radio255"
                     value="บางเขน"
-                    :checked="typeStatusroom == 'บางเขน'"
                     @change="onChangeEventRoom('บางเขน')"
+                    :checked="typeStatusroom == 'บางเขน'"
                   />
-                  <label class="form-check-label" for="Radio25">บางเขน</label>
+                  <label class="form-check-label" for="Radio255">บางเขน</label>
                 </div>
               </div>
               <div class="d-flex justify-content-start align-items-baseline">
@@ -452,7 +461,7 @@ export default {
                     ></a
                   >
                 </p>
-                <h6 class="pt-1">{{ selectedlistRoom?.label || "อาคารแฟลต 1/11" }}</h6>
+                <h6 class="pt-1">{{ selectedlistRoom?.label }}</h6>
               </div>
 
               <div>
@@ -460,11 +469,11 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions1"
+                    name="inlineRadioOptions2"
                     id="Radio0"
                     value="ทั้งหมด"
-                    :checked="statusall"
                     @click="onChangeEvent('ทั้งหมด', $event)"
+                    :checked="statusall"
                   />
                   <label class="form-check-label" for="Radio0">ทั้งหมด</label>
                 </div>
@@ -472,11 +481,11 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions1"
+                    name="inlineRadioOptions2"
                     id="Radio1"
                     value="ว่าง"
-                    :checked="statusfree"
                     @click="onChangeEvent('free', $event)"
+                    :checked="statusfree"
                   />
                   <label class="form-check-label" for="Radio1" style="color: #4cbb17"
                     >ว่าง</label
@@ -486,11 +495,11 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions1"
+                    name="inlineRadioOptions2"
                     id="Radio2"
                     value="ไม่ว่าง"
-                    :checked="statuseunavailable"
                     @change="onChangeEvent('unavailable', $event)"
+                    :checked="statuseunavailable"
                   />
                   <label class="form-check-label" for="Radio2" style="color: #d24c4a"
                     >ไม่ว่าง</label
@@ -500,11 +509,11 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions1"
+                    name="inlineRadioOptions2"
                     id="Radio3"
                     value="ชำรุด"
-                    :checked="statusewaiting"
                     @change="onChangeEvent('waiting', $event)"
+                    :checked="statusewaiting"
                   />
                   <label class="form-check-label" for="Radio3" style="color: #fb8c00"
                     >ชำรุด</label
@@ -514,11 +523,11 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions1"
+                    name="inlineRadioOptions2"
                     id="Radio4"
                     value="ผ่อนผัน"
-                    :checked="statusreturn"
                     @change="onChangeEvent('return', $event)"
+                    :checked="statusreturn"
                   />
                   <label class="form-check-label" for="Radio4 " style="color: #816613"
                     >ผ่อนผัน</label
@@ -528,11 +537,11 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions1"
+                    name="inlineRadioOptions2"
                     id="Radio5"
                     value="กรณีพิเศษ"
-                    :checked="statusSpecial"
                     @change="onChangeEvent('special', $event)"
+                    :checked="statusSpecial"
                   />
                   <label class="form-check-label" for="Radio5" style="color: #d24c4a"
                     >กรณีพิเศษ</label

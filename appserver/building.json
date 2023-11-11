@@ -7,6 +7,7 @@
     "roomnumber": "",
     "committee": "sss",
     "type": "",
+    "buildingType":"อื่นๆ",
     "buildingId": "8bc8b393-8ae2-4e65-9a35-32c0e76545b3",
     "listRoom": [
       {
@@ -133,6 +134,7 @@
     "floor": "2",
     "roomnumber": "",
     "type": "",
+    "buildingType":"บางเขน",
     "listRoom": [
       {
         "buildingId": "0e4913d1-0b54-4b70-811d-e976a13c5e07",
@@ -229,6 +231,7 @@
     "committee": "นายมาก"
   },
   {
+    "buildingType":"บช.ตชด.",
     "buil": "test02",
     "name": "01",
     "sumroom": 6,
