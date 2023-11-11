@@ -60,7 +60,7 @@ export default {
       userByid: {},
       contractExpenses: "",
       id: "",
-      months: ""
+      months: "",
     };
   },
   created() {
@@ -89,7 +89,21 @@ export default {
       let m = this.optionMonth[d.getMonth()];
       let y = d.getFullYear();
       this.months = m;
-      this.years = y
+      this.years = y;
+    },
+
+
+    sumInstallments(e) {
+      // console.log(e);
+      if (e !== "") {
+        let a = e.insurance / e.installments; // จำนวนเงินต่องวด
+        let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
+        let b = c / a; //จำนวนงวดคงเหลือ
+        console.log(a);
+        console.log(b);
+        console.log(c);
+      }
+ 
     },
     async getExpenses() {
       try {
@@ -100,7 +114,7 @@ export default {
             let data2 = [];
             this.expensesListOld = res.data;
             this.expensesList = res.data;
-            data = this.expensesList.filter((ele) => ele.typeUser == "ตร.");
+            data = this.expensesList.filter((ele) => ele.typeUser == "บช.ตชด.");
             data2 = data.map((el) => {
               return {
                 ...el,
@@ -108,6 +122,7 @@ export default {
               };
             });
             this.expensesList = data2;
+            console.log(data2);
           })
           .catch((err) => {
             console.log(err);
@@ -164,7 +179,7 @@ export default {
         typeContract: this.typeContract,
         contractExpenses: this.contractExpenses,
         sumCost: this.sumCost,
-        monthly: `${this.months}/${this.years}`
+        monthly: `${this.months}/${this.years}`,
       };
       await axios
         .put(`http://localhost:3001/users/${this.id}`, body, {
@@ -179,7 +194,7 @@ export default {
             title: "แก้ไขข้อมูลสำเร็จ",
             type: "success",
           });
-          this.saveToreport()
+          this.saveToreport();
           this.getExpenses();
         })
         .catch((err) => {
@@ -200,15 +215,14 @@ export default {
         typeContract: this.typeContract,
         contractExpenses: this.contractExpenses,
         sumCost: this.sumCost,
-        monthly: `${this.months}/${this.years}`
+        monthly: `${this.months}/${this.years}`,
       };
-      await axios
-        .put(`http://localhost:3001/report/${this.id}`, body, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        })
+      await axios.put(`http://localhost:3001/report/${this.id}`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
     },
   },
 };
@@ -251,70 +265,40 @@ export default {
               ]"
             />
           </div>
-          <h4>บันทึกค่าใช้จ่ายรายเดือน ตร. &nbsp;  ประจำเดือน {{ months }} </h4>
+          <h4>บันทึกค่าใช้จ่ายรายเดือน บช.ตชด. &nbsp; ประจำเดือน {{ months }}</h4>
           <notifications position="top center" width="400px" />
-
-          <!-- <div class="d-flex justify-content-end align-items-baseline pt-1">
-              <label  style="margin-right:20px;">
-                เดือน</label
-              >
-              <v-select
-                class="w-15"
-                :options="optionMonth"
-                v-model="selectedMonth"
-              ></v-select>
-            </div> -->
+          <div class="d-flex justify-content-end align-items-baseline pt-1">
+            <MaterialButton
+              style="margin-bottom: 0px"
+              variant="gradient"
+              color="success"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop11"
+              @click="getRoomsByid(item?.id)"
+              >ยอดหักเงินประกันสะสม</MaterialButton
+            >
+          </div>
 
           <div class="text-center pt-4 table-responsive">
             <table class="table table-hover border border-2 border-success">
               <thead class="border border-2 border-success border-bottom">
                 <tr>
-                  <th></th>
-                  <!-- <th scope="col">ลำดับ</th> -->
                   <th>ชื่อ-สกุล</th>
-                  <!-- <th scope="col">อาคาร</th>
-                  <th scope="col">ชั้น</th>
-                  <th scope="col">เลขที่ห้อง</th> -->
-                  <th scope="col">เลขก่อน</th>
-                  <th scope="col">เลขหลัง</th>
-                  <th scope="col">ยอดใช้</th>
-                  <th scope="col">ค่าน้ำประปา</th>
-                  <th scope="col">ค่าไฟฟ้า</th>
-                  <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
-                  <th scope="col">ค่าบำรุงลิฟท์</th>
-                  <th scope="col">หักได้</th>
-                  <th scope="col">หักไม่ได้</th>
-                  <th scope="col">สาเหตุที่หัก</th>
+                  <th scope="col">ค่าบำรุง</th>
+                  <th scope="col">เงินค่าประกัน</th>
+                  <th scope="col">จำนวนเงินประกันที่ชำระแล้ว</th>
+                  <th scope="col">จำนวนงวดเงินประกัน</th>
+                  <th scope="col">ยอดคงเหลือ</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(item, index) in this.expensesList" :key="index">
-                  <!-- <th scope="row">{{ index + 1 }}</th> -->
-                  <td>
-                    <MaterialButton
-                      style="margin-bottom: 0px"
-                      variant="gradient"
-                      color="success"
-                      data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop11"
-                      @click="getRoomsByid(item?.id)"
-                      >บันทึกค่าใช้จ่ายรายเดือน</MaterialButton
-                    >
-                  </td>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
-                  <td>{{ item?.numberfirst }}</td>
-                  <td>{{ item?.lastnumber }}</td>
-                  <td>{{ item?.sumCost }}</td>
-                  <td>{{ item?.waterbill }}</td>
-                  <td>{{ item?.electricitybill }}</td>
-                  <td>{{ item?.central }}</td>
-                  <td>{{ item?.costs }}</td>
-
-                  <td>
-                    <span v-if="item?.typeContract == 'หักได้'">/</span>
-                  </td>
-                  <td><span v-if="item?.typeContract == 'หักไม่ได้'">/</span></td>
-                  <td>{{ item?.contractExpenses }}</td>
+                  <td>{{ item?.maintenance }}</td>
+                  <td>{{ item?.insurance }}</td>
+                  <td>{{ item?.amountPaid }}</td>
+                  <td>{{ item?.installments }}</td>
+                  <td>{{ 0 }}</td>
                 </tr>
               </tbody>
             </table>
@@ -367,8 +351,8 @@ export default {
               <div class="mb-3">
                 <label>เลขที่ห้อง</label>
                 <v-select :options="optionsRoom" v-model="selectedRoom"></v-select>
-              </div> --> 
-                 
+              </div> -->
+
               <div class="mb-3">
                 <MaterialInput
                   :value="numberfirst"
@@ -487,8 +471,6 @@ export default {
         </div>
       </div>
     </div>
-
-
   </section>
 </template>
 <style>

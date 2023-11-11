@@ -34,6 +34,7 @@ import Reports from "../views/Reports/ReportlistView.vue"
 import searchFilter from "../views/SearchAll/SearchView.vue"
 import Queue from "../views/Queue/QueueView.vue"
 import Expenses from "../views/Expenses/ExpensesView.vue"
+import ExpensesTCD from "../views/Expenses/ExpensesTCDView.vue"
 import AmountPaid from "../views/AmountPaid/AmountPaidview.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -82,6 +83,11 @@ const router = createRouter({
       path: "/expenses",
       name: "expenses", 
       component: Expenses,
+    },
+    {
+      path: "/expensesTCD",
+      name: "expensesTCD", 
+      component: ExpensesTCD,
     },
     {
       path: "/queue",

@@ -270,7 +270,7 @@ export default {
                         <th scope="col">อาคาร</th>
                         <th scope="col">ชั้น</th>
                         <th scope="col">เลขที่ห้อง</th>
-                        <th scope="col">ค่าธรรมเนียม</th>
+                        <th scope="col">ค่าบำรุง</th>
                         <th scope="col">ค่าน้ำประปา</th>
                         <th scope="col">ค่าไฟฟ้า</th>
                         <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
@@ -536,9 +536,9 @@ export default {
                   :value="fee"
                   @input="(event) => (fee = event.target.value)"
                   class="input-group-static"
-                  label="ค่าธรรมเนียม"
+                  label="ค่าบำรุง"
                   type="text"
-                  placeholder="ค่าธรรมเนียม"
+                  placeholder="ค่าบำรุง"
                 />
               </div>
               <div class="mb-3">
@@ -659,9 +659,9 @@ export default {
                   :value="Maintenance"
                   @input="(event) => (Maintenance = event.target.value)"
                   class="input-group-static"
-                  label="ค่าธรรมเนียม"
+                  label="ค่าบำรุง"
                   type="text"
-                  placeholder="ค่าธรรมเนียม"
+                  placeholder="ค่าบำรุง"
                 />
               </div>
               <!-- <div class="mb-3">
@@ -737,9 +737,9 @@ export default {
                   :value="Maintenance"
                   @input="(event) => (Maintenance = event.target.value)"
                   class="input-group-static"
-                  label="ค่าธรรมเนียม"
+                  label="ค่าบำรุง"
                   type="text"
-                  placeholder="ค่าธรรมเนียม"
+                  placeholder="ค่าบำรุง"
                 />
               </div>
               <div class="mb-3">

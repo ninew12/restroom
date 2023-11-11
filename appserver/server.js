@@ -6,7 +6,7 @@ const building = require('./building.json')
 const Expenses = require('./Expenses.json')
 const history = require('./้history.json')
 const reports = require('./report.json')
-const masterData = require('./masterData.json')
+// const masterData = require('./masterData.json')
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -30,6 +30,12 @@ app.get('/users/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.json(users.find(user => user.id === (req.params.id)))
 })
+
+app.get('/usersRoom/:roomId', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(users.find(user => user.roomId == (req.params.roomId)))
+})
+
 app.post('/users', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let id = uuidv4();
@@ -81,6 +87,22 @@ app.put('/users/:id', (req, res) => {
     if (req.body.contractExpenses) parsedData.contractExpenses = req.body.contractExpenses
     if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
+    if (req.body.monthly) parsedData.monthly = req.body.monthly
+    if (req.body.numberfirst) parsedData.numberfirst = req.body.numberfirst
+    if (req.body.lastnumber) parsedData.lastnumber = req.body.lastnumber
+    if (req.body.houseRegistration) parsedData.houseRegistration = req.body.houseRegistration
+    if (req.body.payMonth) parsedData.payMonth = req.body.payMonth
+    if (req.body.roomKey) parsedData.roomKey = req.body.roomKey
+    if (req.body.houseRegistrationcause) parsedData.houseRegistrationcause = req.body.houseRegistrationcause
+    if (req.body.payMonthcause) parsedData.payMonthcause = req.body.payMonthcause
+    if (req.body.payMonthcausetwo) parsedData.payMonthcausetwo = req.body.payMonthcausetwo
+    if (req.body.roomKeycause) parsedData.roomKeycause = req.body.roomKeycause
+    if (req.body.dateApproved) parsedData.dateApproved = req.body.dateApproved
+    if (req.body.insurance) parsedData.insurance = req.body.insurance
+    if (req.body.installments) parsedData.installments = req.body.installments
+    if (req.body.maintenance) parsedData.maintenance = req.body.maintenance
+    if (req.body.deposit) parsedData.deposit = req.body.deposit
+    if (req.body.roomId) parsedData.roomId = req.body.roomId
 
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -182,6 +204,7 @@ app.post('/rooms', (req, res) => {
     })
     res.json(rooms)
 })
+
 app.put('/rooms/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const updateIndex = rooms.findIndex(user => user.id === (req.params.id))
@@ -206,6 +229,22 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.Checkintime) parsedData.Checkintime = req.body.Checkintime
     if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
+    if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
+    if (req.body.monthly) parsedData.monthly = req.body.monthly
+    if (req.body.houseRegistration) parsedData.houseRegistration = req.body.houseRegistration
+    if (req.body.payMonth) parsedData.payMonth = req.body.payMonth
+    if (req.body.roomKey) parsedData.roomKey = req.body.roomKey
+    if (req.body.houseRegistrationcause) parsedData.houseRegistrationcause = req.body.houseRegistrationcause
+    if (req.body.payMonthcause) parsedData.payMonthcause = req.body.payMonthcause
+    if (req.body.payMonthcausetwo) parsedData.payMonthcausetwo = req.body.payMonthcausetwo
+    if (req.body.roomKeycause) parsedData.roomKeycause = req.body.roomKeycause
+    if (req.body.dateApproved) parsedData.dateApproved = req.body.dateApproved
+    if (req.body.insurance) parsedData.insurance = req.body.insurance
+    if (req.body.installments) parsedData.installments = req.body.installments
+    if (req.body.maintenance) parsedData.maintenance = req.body.maintenance
+    if (req.body.deposit) parsedData.deposit = req.body.deposit
+    if (req.body.roomId) parsedData.roomId = req.body.roomId
+
     filterdata.push(parsedData)
     fs.writeFile('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -263,6 +302,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.typeRoom) parsedData.typeRoom = req.body.typeRoom
     if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
+    if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -317,6 +357,16 @@ app.put('/history/:id', (req, res) => {
     if (req.body.no) parsedData.no = req.body.no
     if (req.body.bookNumber) parsedData.bookNumber = req.body.bookNumber
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
+    if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
+    if (req.body.monthly) parsedData.monthly = req.body.monthly
+    if (req.body.numberfirst) parsedData.numberfirst = req.body.numberfirst
+    if (req.body.lastnumber) parsedData.lastnumber = req.body.lastnumber
+    if (req.body.dateApproved) parsedData.dateApproved = req.body.dateApproved
+    if (req.body.insurance) parsedData.insurance = req.body.insurance
+    if (req.body.installments) parsedData.installments = req.body.installments
+    if (req.body.maintenance) parsedData.maintenance = req.body.maintenance
+    if (req.body.deposit) parsedData.deposit = req.body.deposit
+    if (req.body.roomId) parsedData.roomId = req.body.roomId
     filterdata.push(parsedData)
     fs.writeFile('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -372,6 +422,7 @@ app.put('/layout/:id', (req, res) => {
     if (req.body.typeAffiliation) parsedData.typeAffiliation = req.body.typeAffiliation
     if (req.body.typeRanks) parsedData.typeRanks = req.body.typeRanks
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
+    if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -425,8 +476,25 @@ app.put('/report/:id', (req, res) => {
     if (req.body.status) parsedData.status = req.body.status
     if (req.body.typeAffiliation) parsedData.typeAffiliation = req.body.typeAffiliation
     if (req.body.typeRanks) parsedData.typeRanks = req.body.typeRanks
+    if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
+    if (req.body.monthly) parsedData.monthly = req.body.monthly
+    if (req.body.numberfirst) parsedData.numberfirst = req.body.numberfirst
+    if (req.body.lastnumber) parsedData.lastnumber = req.body.lastnumber
+    if (req.body.houseRegistration) parsedData.houseRegistration = req.body.houseRegistration
+    if (req.body.payMonth) parsedData.payMonth = req.body.payMonth
+    if (req.body.roomKey) parsedData.roomKey = req.body.roomKey
+    if (req.body.houseRegistrationcause) parsedData.houseRegistrationcause = req.body.houseRegistrationcause
+    if (req.body.payMonthcause) parsedData.payMonthcause = req.body.payMonthcause
+    if (req.body.payMonthcausetwo) parsedData.payMonthcausetwo = req.body.payMonthcausetwo
+    if (req.body.roomKeycause) parsedData.roomKeycause = req.body.roomKeycause
+    if (req.body.dateApproved) parsedData.dateApproved = req.body.dateApproved
+    if (req.body.insurance) parsedData.insurance = req.body.insurance
+    if (req.body.installments) parsedData.installments = req.body.installments
+    if (req.body.maintenance) parsedData.maintenance = req.body.maintenance
+    if (req.body.deposit) parsedData.deposit = req.body.deposit
+    if (req.body.roomId) parsedData.roomId = req.body.roomId
     filterdata.push(parsedData)
-    fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFile('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -435,6 +503,7 @@ app.put('/report/:id', (req, res) => {
     });
     res.send(`Update user id: '${req.params.id}' completed.`)
 })
+
 app.delete('/report/:id', (req, res) => {
     const deletedIndex = reports.findIndex(user => user.id === Number(req.params.id))
     res.send(`Delete user '${users[deletedIndex].username}' completed.`)

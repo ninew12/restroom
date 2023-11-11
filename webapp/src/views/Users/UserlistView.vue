@@ -30,12 +30,12 @@ export default {
       selectedRanks: "",
       selectedAffiliation: "",
       selectedColor: "",
-      firstName: "สมชัย",
-      lastName: "แสงสุข",
+      firstName: "",
+      lastName: "",
       Affiliation: "", //สังกัด
       rank: "", //ยศ
-      idcard: "134044411441178",
-      phone: "0325647845",
+      idcard: "",
+      phone: "",
       birthday: "14/07/2534",
       typeAffiliation: "",
       typeRanks: "",

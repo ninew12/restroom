@@ -153,7 +153,6 @@ export default {
         axios
           .get(`http://localhost:3001/buildings/`)
           .then((res) => {
-            console.log(res);
             this.building = res.data.map((ele) => {
               return {
                 label: ele.name,

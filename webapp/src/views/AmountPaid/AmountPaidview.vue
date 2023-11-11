@@ -23,18 +23,18 @@ export default {
   data() {
     return {
       optionMonth: [
-        { label: "มกราคม", value: "มกราคม" },
-        { label: "กุมภาพันธ์", value: "กุมภาพันธ์" },
-        { label: "มีนาคม", value: "มีนาคม" },
-        { label: "เมษายน", value: "เมษายน" },
-        { label: "พฤษภาคม", value: "พฤษภาคม" },
-        { label: "มิถุนายน", value: "มิถุนายน" },
-        { label: "กรกฎาคม", value: "กรกฎาคม" },
-        { label: "สิงหาคม", value: "สิงหาคม" },
-        { label: "กันยายน", value: "กันยายน" },
-        { label: "ตุลาคม", value: "ตุลาคม" },
-        { label: "พฤศจิกายน", value: "พฤศจิกายน" },
-        { label: "ธันวาคม", value: "ธันวาคม" },
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม",
       ],
       selectedBuilding: "อาคารแฟลต 1/11",
       selectedFloor: "ชั้น 1",
@@ -60,10 +60,13 @@ export default {
       userByid: {},
       contractExpenses: "",
       id: "",
+      months: "",
     };
   },
   created() {
     this.getExpenses();
+    this.getMonths();
+    this.getRoomsByid();
   },
   watch: {
     selectedColor: function (newValue) {
@@ -82,20 +85,31 @@ export default {
     typeContractchange(e) {
       this.typeContract = e.target.value;
     },
+    getMonths() {
+      const d = new Date();
+      let m = this.optionMonth[d.getMonth()];
+      let y = d.getFullYear();
+      this.months = m;
+      this.years = y;
+    },
     async getExpenses() {
       try {
         await axios
           .get("http://localhost:3001/expenses")
           .then((res) => {
             let data = [];
+            let arr = [];
             this.expensesListOld = res.data;
             this.expensesList = res.data;
-            data = this.expensesList.map(el => {
-                return {
-                    ...el,
-                    sumCost : this.countSum(el)
-                }
-            })
+            arr = this.expensesList.filter((el) => el.deposit == "รอคืนเงินประกัน");
+            data = arr.map((el) => {
+              return {
+                ...el,
+                sumCost: this.countSum(el),
+              };
+            });
+            // "deposit": "รอคืนเงินประกัน"
+            console.log(data);
             this.expensesList = data;
           })
           .catch((err) => {
@@ -106,25 +120,26 @@ export default {
       }
     },
 
-    async getRoomsByid(id) {
-      this.id = id;
+    async getRoomsByid() {
+      //   this.id = id;
       try {
         await axios
-          .get(`http://localhost:3001/users/${id}`)
+          .get(`http://localhost:3001/users/`)
           .then((res) => {
-            this.userByid = res.data;
-            this.rank = this.userByid.rank;
-            (this.firstName = this.userByid.firstName),
-              (this.lastName = this.userByid.firstName);
-            (this.Insurancecost = this.userByid.insurancecost),
-              (this.installmentsRooom = this.userByid.installmentsRooom),
-              (this.Waterbill = this.userByid.Waterbill),
-              (this.Electricitybill = this.userByid.Electricitybill),
-              (this.Central = this.userByid.Central),
-              (this.Costs = this.userByid.Costs),
-              (this.typeContract = this.userByid.typeContract),
-              (this.contractExpenses = this.userByid.contractExpenses),
-              (this.sumCost = this.userByid.sumCost);
+            console.log(res);
+            // this.userByid = res.data;
+            // this.rank = this.userByid.rank;
+            // (this.firstName = this.userByid.firstName),
+            //   (this.lastName = this.userByid.firstName);
+            // (this.Insurancecost = this.userByid.insurancecost),
+            //   (this.installmentsRooom = this.userByid.installmentsRooom),
+            //   (this.Waterbill = this.userByid.Waterbill),
+            //   (this.Electricitybill = this.userByid.Electricitybill),
+            //   (this.Central = this.userByid.Central),
+            //   (this.Costs = this.userByid.Costs),
+            //   (this.typeContract = this.userByid.typeContract),
+            //   (this.contractExpenses = this.userByid.contractExpenses),
+            //   (this.sumCost = this.userByid.sumCost);
           })
           .catch((err) => {
             console.log(err);
@@ -134,26 +149,28 @@ export default {
       }
     },
 
-    countSum(e){
-        return e.insurancecost - e.installmentsRooom || 0
+    countSum(e) {
+      return e.lastnumber - e.numberfirst || 0;
     },
 
-    async submitForm() {
+    async summitdeposit(data) {
       let body = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        insurancecost: this.Insurancecost,
-        installmentsRooom: this.installmentsRooom,
-        waterbill: this.Waterbill,
-        electricitybill: this.Electricitybill,
-        central: this.Central,
-        costs: this.Costs,
-        typeContract: this.typeContract,
-        contractExpenses: this.contractExpenses,
-        sumCost: this.sumCost,
+        houseRegistration: " ",
+        payMonth: " ",
+        houseRegistrationcause: " ",
+        payMonthcause: " ",
+        payMonthcausetwo: " ",
+        roomKeycause: " ",
+        maintenance: " ",
+        insurance: " ",
+        installments: " ",
+        roomnumber: "",
+        roomKey: "",
+        roomId: "",
+        deposit: "คืนเงินประกันแล้ว",
       };
       await axios
-        .put(`http://localhost:3001/users/${this.id}`, body, {
+        .put(`http://localhost:3001/users/${data.id}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -162,14 +179,37 @@ export default {
         })
         .then((res) => {
           notify({
-            title: "แก้ไขข้อมูลสำเร็จ",
+            title: "ทำรายการสำเร็จ",
             type: "success",
           });
+          this.updateRoom(data.roomId);
           this.getExpenses();
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+
+    updateRoom(id) {
+      let body = {
+        houseRegistration: " ",
+        payMonth: " ",
+        houseRegistrationcause: " ",
+        payMonthcause: " ",
+        payMonthcausetwo: " ",
+        roomKeycause: " ",
+        maintenance: " ",
+        insurance: " ",
+        installments: " ",
+        deposit: " ",
+      };
+      axios.put(`http://localhost:3001/rooms/${id}`, body, {
+        headers: {
+          // remove headers
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
     },
   },
 };
@@ -209,9 +249,9 @@ export default {
               :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'คืนเงินประกัน' }]"
             />
           </div>
-          <h4>คืนเงินประกัน</h4>
+          <h4>คืนเงินประกัน &nbsp; ประจำเดือน {{ months }}</h4>
           <notifications position="top center" width="400px" />
-          <div class="d-flex justify-content-end align-items-baseline pt-1">
+          <!-- <div class="d-flex justify-content-end align-items-baseline pt-1">
               <label  style="margin-right:20px;">
                 เดือน</label
               >
@@ -220,28 +260,20 @@ export default {
                 :options="optionMonth"
                 v-model="selectedMonth"
               ></v-select>
-            </div>
+            </div> -->
 
           <div class="text-center pt-4 table-responsive">
             <table class="table table-hover border border-2 border-success">
               <thead class="border border-2 border-success border-bottom">
                 <tr>
                   <th></th>
-                  <!-- <th scope="col">ลำดับ</th> -->
-                  <th>ชื่อ-สกุล</th>
-                  <!-- <th scope="col">อาคาร</th>
-                  <th scope="col">ชั้น</th>
-                  <th scope="col">เลขที่ห้อง</th> -->
-                  <th scope="col">เลขก่อน</th>
-                  <th scope="col">เลขหลัง</th>
-                  <th scope="col">ยอดใช้</th>
-                  <th scope="col">ค่าน้ำประปา</th>
-                  <th scope="col">ค่าไฟฟ้า</th>
-                  <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
-                  <th scope="col">ค่าบำรุงลิฟท์</th>
-                  <th scope="col">หักได้</th>
-                  <th scope="col">หักไม่ได้</th>
-                  <th scope="col">สาเหตุที่หัก</th>
+                  <th scope="col">ชื่อ-สกุล</th>
+                  <th scope="col">กุญแจห้อง</th>
+                  <th scope="col">สาเหตุ</th>
+                  <th scope="col">ทะเบียนบ้าน</th>
+                  <th scope="col">สาเหตุ</th>
+                  <th scope="col">หลักฐานแสดงการชําระค่าไฟเดือนล่าสุด</th>
+                  <th scope="col">สาเหตุ</th>
                 </tr>
               </thead>
               <tbody>
@@ -252,29 +284,17 @@ export default {
                       style="margin-bottom: 0px"
                       variant="gradient"
                       color="success"
-                      data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop11"
-                      @click="getRoomsByid(item?.id)"
-                      >บันทึกคืนเงินประกัน</MaterialButton
+                      @click="summitdeposit(item)"
+                      >บันทึกคืนเงินประกันครบจำนวน</MaterialButton
                     >
                   </td>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
-                  <!-- <td>{{ item?.building }}</td>
-                  <td>{{ item?.floor }}</td>
-                  <td>{{ item?.roomnumber }}</td> -->
-                  <td>{{ item?.installmentsRooom }}</td>
-                  <td>{{ item?.insurancecost }}</td>
-                  <td>{{ item?.sumCost }}</td>
-                  <td>{{ item?.waterbill }}</td>
-                  <td>{{ item?.electricitybill }}</td>
-                  <td>{{ item?.central }}</td>
-                  <td>{{ item?.costs }}</td>
-
-                  <td>
-                    <span v-if="item?.typeContract == 'หักได้'">/</span>
-                  </td>
-                  <td><span v-if="item?.typeContract == 'หักไม่ได้'">/</span></td>
-                  <td>{{ item?.contractExpenses }}</td>
+                  <td>{{ item?.roomKey }}</td>
+                  <td>{{ item?.roomKeycause || "-" }}</td>
+                  <td>{{ item?.houseRegistration }}</td>
+                  <td>{{ item?.houseRegistrationcause || "-" }}</td>
+                  <td>{{ item?.payMonth }}</td>
+                  <td>{{ item?.payMonthcause || item?.payMonthcausetwo || "-" }}</td>
                 </tr>
               </tbody>
             </table>
@@ -293,12 +313,10 @@ export default {
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">
-              บันทึกค่าใช้จ่ายบ้านพัก ตร.
-            </h5>
+            <h5 class="modal-title" id="staticBackdropLabel">บันทึกคืนเงินประกัน</h5>
             <button
               type="button"
               class="btn-close"
@@ -308,125 +326,132 @@ export default {
           </div>
           <div class="modal-body">
             <div>
-              <div class="mb-1">
-                <label style="font-size: large"
-                  >{{ rank }} {{ firstName }} {{ lastName }}</label
-                >
-              </div>
-              <!-- <div class="mb-3">
-                <label>อาคาร</label>
-                <v-select
-                  :options="optionsBuilding"
-                  v-model="selectedBuilding"
-                ></v-select>
-              </div>
-              <div class="mb-3">
-                <label>ชั้น</label>
-                <v-select :options="optionsFloor" v-model="selectedFloor"></v-select>
-              </div>
-              <div class="mb-3">
-                <label>เลขที่ห้อง</label>
-                <v-select :options="optionsRoom" v-model="selectedRoom"></v-select>
-              </div> -->
-              <div class="mb-3">
-                <MaterialInput
-                  :value="Insurancecost"
-                  @input="(event) => (Insurancecost = event.target.value)"
-                  class="input-group-static"
-                  label="เลขก่อน"
-                  type="text"
-                  placeholder="เลขก่อน"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="installmentsRooom"
-                  @input="(event) => (installmentsRooom = event.target.value)"
-                  class="input-group-static"
-                  label="เลขหลัง"
-                  type="text"
-                  placeholder="เลขหลัง"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="Waterbill"
-                  @input="(event) => (Waterbill = event.target.value)"
-                  class="input-group-static"
-                  label="ค่าน้ำประปา"
-                  type="text"
-                  placeholder="ค่าน้ำประปา"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="Electricitybill"
-                  @input="(event) => (Electricitybill = event.target.value)"
-                  class="input-group-static"
-                  label="ค่าไฟฟ้า"
-                  type="text"
-                  placeholder="ค่าไฟฟ้า"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="Central"
-                  @input="(event) => (Central = event.target.value)"
-                  class="input-group-static"
-                  label="ค่าไฟฟ้าส่วนกลาง"
-                  type="text"
-                  placeholder="ค่าไฟฟ้าส่วนกลาง"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="Costs"
-                  @input="(event) => (Costs = event.target.value)"
-                  class="input-group-static"
-                  label="ค่าบำรุงลิฟท์"
-                  type="text"
-                  placeholder="ค่าบำรุงลิฟท์"
-                />
-              </div>
-
               <div
                 class="mb-3"
-                style="display: flex; justify-content: flex-start; align-items: center"
+                style="display: flex; justify-content: space-between; align-items: center"
+              >
+                <div class="form-check form-check-inline">
+                  <label style="margin-right: 20px">กุญแจห้อง</label>
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions4"
+                    id="inlineRadio11"
+                    value="มี"
+                  />
+                  <label class="form-check-label" for="inlineRadio11">มี</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions4"
+                    id="inlineRadio12"
+                    value="ไม่มี"
+                  />
+                  <label class="form-check-label" for="inlineRadio12">ไม่มี</label>
+                </div>
+                <div style="width: 360px; margin-bottom: 10px">
+                  <MaterialInput
+                    name="contract"
+                    :value="contract"
+                    @input="(event) => (contract = event.target.value)"
+                    class="input-group-static"
+                    type="text"
+                    placeholder="สาเหตุ"
+                  />
+                </div>
+              </div>
+              <div
+                class="mb-3"
+                style="display: flex; justify-content: space-between; align-items: center"
+              >
+                <div class="form-check form-check-inline">
+                  <label style="margin-right: 20px">ทะเบียนบ้าน</label>
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions11"
+                    id="inlineRadio27"
+                    value="มี"
+                  />
+                  <label class="form-check-label" for="inlineRadio27">มี</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions11"
+                    id="inlineRadio28"
+                    value="ไม่มี"
+                  />
+                  <label class="form-check-label" for="inlineRadio28">ไม่มี</label>
+                </div>
+                <div style="width: 360px; margin-bottom: 10px">
+                  <MaterialInput
+                    name="contract"
+                    :value="contract"
+                    @input="(event) => (contract = event.target.value)"
+                    class="input-group-static"
+                    type="text"
+                    placeholder="สาเหตุ"
+                  />
+                </div>
+              </div>
+              <div>
+                <label style="padding-left: 30px"
+                  >หลักฐานแสดงการชําระค่าไฟเดือนล่าสุด</label
+                >
+              </div>
+              <div
+                class="mb-3"
+                style="
+                  margin-left: 10px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
               >
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio1"
-                    value="หักได้"
-                    @change="typeContractchange($event)"
-                    :checked="typeContract == 'หักได้'"
+                    name="inlineRadioOptions2"
+                    id="inlineRadio22"
+                    value="มี"
                   />
-                  <label class="form-check-label" for="inlineRadio1">หักได้</label>
+                  <label class="form-check-label" for="inlineRadio22">มี</label>
+                </div>
+                <div style="width: 250px; margin-bottom: 10px">
+                  <MaterialInput
+                    name="contract"
+                    :value="contract"
+                    @input="(event) => (contract = event.target.value)"
+                    class="input-group-static"
+                    type="text"
+                    placeholder="สาเหตุ"
+                  />
                 </div>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio2"
-                    value="หักไม่ได้"
-                    @change="typeContractchange($event)"
-                    :checked="typeContract == 'หักไม่ได้'"
+                    name="inlineRadioOptions2"
+                    id="inlineRadio23"
+                    value="ไม่มี"
                   />
-                  <label class="form-check-label" for="inlineRadio2">หักไม่ได้</label>
+                  <label class="form-check-label" for="inlineRadio23">ไม่มี</label>
                 </div>
-              </div>
-              <div style="margin-bottom: 10px">
-                <MaterialInput
-                  name="contractExpenses"
-                  :value="contractExpenses"
-                  @input="(event) => (contractExpenses = event.target.value)"
-                  class="input-group-static"
-                  type="text"
-                  placeholder="สาเหตุ"
-                />
+                <div style="width: 250px; margin-bottom: 10px">
+                  <MaterialInput
+                    name="contract"
+                    :value="contract"
+                    @input="(event) => (contract = event.target.value)"
+                    class="input-group-static"
+                    type="text"
+                    placeholder="สาเหตุ"
+                  />
+                </div>
               </div>
             </div>
           </div>

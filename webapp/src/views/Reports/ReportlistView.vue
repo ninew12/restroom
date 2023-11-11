@@ -290,7 +290,7 @@ export default {
                         <th scope="col">สังกัด</th>
                         <th scope="col">เลขก่อน</th>
                         <th scope="col">เลขหลัง</th>
-                        <th scope="col">ค่าธรรมเนียม</th>
+                        <th scope="col">ค่าบำรุง</th>
                         <!-- <th scope="col">ค่าบำรุง</th> -->
                         <th scope="col">ค่าน้ำประปา</th>
                         <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
@@ -376,7 +376,7 @@ export default {
                         <th scope="col">สังกัด</th>
                         <th scope="col">เลขก่อน</th>
                         <th scope="col">เลขหลัง</th>
-                        <th scope="col">ค่าธรรมเนียม</th>
+                        <th scope="col">ค่าบำรุง</th>
                         <!-- <th scope="col">ค่าบำรุง</th> -->
                         <th scope="col">ค่าน้ำประปา</th>
                         <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>

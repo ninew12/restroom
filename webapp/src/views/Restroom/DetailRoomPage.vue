@@ -62,6 +62,9 @@ export default {
       selectedDataObtion: "โสด",
       selectedRanks: "",
       selectedAffiliation: "",
+      dateApp: new Date(),
+      numberRoom: "",
+      roomId: "",
     };
   },
   created() {
@@ -90,7 +93,7 @@ export default {
             this.queuefilter = this.queueList.filter((e) => e.typeRoom === this.typeroom);
           })
           .catch((err) => {
-            console.log(err.response);
+            console.log(err);
           });
       } catch (error) {
         console.error(error);
@@ -138,8 +141,11 @@ export default {
       try {
         axios.get(`http://localhost:3001/rooms/${id}`).then((res) => {
           this.data = res.data;
-          this.dateApproved = this.convertDateTolocal(this.data.pickedBook);
+          this.dateApproved = this.convertDateTolocal(this.data.dateApproved);
+          // this.installments = this.sumInstallments(this.data)
           this.typeroom = this.data.typeRoom;
+          this.numberRoom = this.data.numberRoom;
+          this.roomId = this.data.id
           if (this.data.affiliation) this.Affiliation = this.data.affiliation;
           if (this.data.roomStatus == "return") this.statusRoom = "ผ่อนผัน";
           if (this.data.roomStatus == "special") this.statusRoom = "กรณีพิเศษ";
@@ -169,6 +175,23 @@ export default {
       }
     },
 
+    sumInstallments(e) {
+      console.log(e);
+      if (e !== "") {
+        let a = parseInt(e.insurance) / parseInt(e.installments);
+        let b = parseInt(e.maintenance);
+        let c = parseInt(e.insurance) - parseInt(e.maintenance);
+        console.log(a);
+        console.log(b);
+        console.log(parseInt(e.insurance) % parseInt(e.installments));
+        let numConut = parseInt(e);
+        const formattedDate = parseInt(e);
+        return formattedDate;
+      } else {
+        return "";
+      }
+    },
+
     getAllusersByid(id) {
       this.userId = id;
       try {
@@ -177,6 +200,7 @@ export default {
           .then((res) => {
             let data = res.data;
             this.userByid = data;
+            console.log(this.userByid);
           })
           .catch((err) => {
             console.log(err.response);
@@ -197,6 +221,7 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        dateApproved: this.dateApp.toISOString(),
       };
       await axios
         .post(`http://localhost:3001/history`, body, {
@@ -208,6 +233,7 @@ export default {
         .then((res) => {
           this.submitForm2();
           this.submitForm3();
+          this.submitFormUser();
           if (index == "spacia") {
             this.submitRoomScapia();
           } else if (index == "normal") {
@@ -217,6 +243,24 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+
+    async submitFormUser() {
+      let body = {
+        roomnumber: this.numberRoom,
+        maintenance: this.Maintenance,
+        insurance: this.insurance,
+        installments: this.installments,
+        amountPaid: this.amountPaid,
+        dateApproved: this.dateApp.toISOString(),
+        roomId : this.roomId
+      };
+      await axios.put(`http://localhost:3001/users/${this.userId}`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
     },
 
     async submitForm2() {
@@ -229,8 +273,27 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        dateApproved: this.dateApp.toISOString(),
       };
-
+      await axios.post(`http://localhost:3001/report`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
+    },
+    async submitRoom() {
+      let body = {
+        ...this.userByid,
+        queue: "inroom",
+        contract: this.contract,
+        checkintime: this.Checkintime,
+        maintenance: this.Maintenance,
+        insurance: this.insurance,
+        installments: this.installments,
+        amountPaid: this.amountPaid,
+        dateApproved: this.dateApp.toISOString(),
+      };
       await axios.post(`http://localhost:3001/report`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -269,6 +332,7 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        dateApproved: this.dateApp.toISOString(),
       };
 
       await axios
@@ -292,7 +356,6 @@ export default {
     },
 
     async submitRoomScapia() {
-      // this.data.roomStatus == "special"
       let body = {
         ...this.userByid,
         queue: "inroom",
@@ -303,6 +366,7 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        dateApproved: this.dateApp.toISOString(),
       };
 
       await axios
@@ -369,7 +433,7 @@ export default {
           </div>
           <!-- d-flex justify-content-between -->
           <div class="d-flex justify-content-between align-items-baseline">
-            <h4>รายละเอียดห้องพัก {{ data?.numberRoom }}</h4>
+            <h4>รายละเอียดห้องพัก {{ numberRoom }}</h4>
             <div>
               <MaterialButton
                 v-if="this.mode == 'add'"
@@ -408,7 +472,7 @@ export default {
                       <div class="col-7">
                         <p class="card-text">นามสกุล : {{ data?.lastName }}</p>
                         <p class="card-text">เบอร์โทร : {{ data?.phone }}</p>
-                        <p class="card-text">เงินค่าประกัน : {{ data?.Insurancecost }}</p>
+                        <p class="card-text">เงินค่าประกัน : {{ data?.insurance }}</p>
                         <p class="card-text">งวดค่าประกัน : {{ data?.installments }}</p>
                         <!-- <p class="card-text">จำนวนงวดค่าประกัน : {{ data?.phone }}</p> -->
                         <!-- <p class="card-text">ยอดคงเหลือค่าประกัน : {{ data?.phone }}</p> -->
@@ -520,9 +584,9 @@ export default {
                   :value="Maintenance"
                   @input="(event) => (Maintenance = event.target.value)"
                   class="input-group-static"
-                  label="ค่าธรรมเนียม"
+                  label="ค่าบำรุง"
                   type="text"
-                  placeholder="ค่าธรรมเนียม"
+                  placeholder="ค่าบำรุง"
                 />
               </div>
               <div class="mb-3">
@@ -540,7 +604,7 @@ export default {
                   :value="amountPaid"
                   @input="(event) => (amountPaid = event.target.value)"
                   class="input-group-static"
-                  label="จำนวนเงินค่าประกันที่ชำระแล้ว"
+                  label="จำนวนเงินประกันที่ชำระแล้ว"
                   type="text"
                   placeholder="จำนวนเงินค่าประกันที่ชำระแล้ว"
                 />
@@ -550,7 +614,7 @@ export default {
                   :value="installments"
                   @input="(event) => (installments = event.target.value)"
                   class="input-group-static"
-                  label="จำนวนงวดเงินค่าประกัน"
+                  label="จำนวนงวดเงินประกัน"
                   type="text"
                   placeholder="จำนวนงวดเงินค่าประกัน"
                 />
