@@ -92,7 +92,6 @@ export default {
       this.years = y;
     },
 
-
     sumInstallments(e) {
       // console.log(e);
       if (e !== "") {
@@ -103,7 +102,6 @@ export default {
         console.log(b);
         console.log(c);
       }
- 
     },
     async getExpenses() {
       try {
@@ -119,6 +117,9 @@ export default {
               return {
                 ...el,
                 sumCost: this.countSum(el),
+                installmentsCost: this.countinstallments(el),
+                amountPaidCost: this.countinsamountPaid(el),
+                maintenanceCost: this.countinsamaintenance(el),
               };
             });
             this.expensesList = data2;
@@ -134,6 +135,25 @@ export default {
 
     countSum(e) {
       return e.lastnumber - e.numberfirst || 0;
+    },
+
+    countinstallments(e) {
+      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
+      let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
+      let b = c / a; //จำนวนงวดคงเหลือ
+      let d = e.installments - b;
+      return a * d || 0;
+    },
+
+    countinsamountPaid(e) {
+      return e.insurance - e.amountPaid;
+    },
+
+    countinsamaintenance(e) {
+      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
+      let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
+      let b = c / a; //จำนวนงวดคงเหลือ
+      return b || 0;
     },
 
     async getRoomsByid(id) {
@@ -272,9 +292,7 @@ export default {
               style="margin-bottom: 0px"
               variant="gradient"
               color="success"
-              data-bs-toggle="modal"
-              data-bs-target="#staticBackdrop11"
-              @click="getRoomsByid(item?.id)"
+              @click="genInsurance()"
               >ยอดหักเงินประกันสะสม</MaterialButton
             >
           </div>
@@ -294,11 +312,16 @@ export default {
               <tbody>
                 <tr v-for="(item, index) in this.expensesList" :key="index">
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
-                  <td>{{ item?.maintenance }}</td>
-                  <td>{{ item?.insurance }}</td>
-                  <td>{{ item?.amountPaid }}</td>
-                  <td>{{ item?.installments }}</td>
-                  <td>{{ 0 }}</td>
+                  <td>{{ item?.maintenance || "-" }}</td>
+                  <td>{{ item?.insurance || "-" }}</td>
+                  <td>{{ item?.installmentsCost || "-" }}</td>
+                  <td>
+                    <span v-if="item?.installments > 0">
+                      {{ item?.maintenanceCost }}/{{ item?.installments }}
+                    </span>
+                    <span v-if="item?.installments == 0"> - </span>
+                  </td>
+                  <td>{{ item?.amountPaidCost || "-" }}</td>
                 </tr>
               </tbody>
             </table>

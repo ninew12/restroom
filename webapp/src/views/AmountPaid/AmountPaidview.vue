@@ -106,10 +106,19 @@ export default {
               return {
                 ...el,
                 sumCost: this.countSum(el),
+                installmentsCost : this.countinstallments(el),
+                amountPaidCost : this.countinsamountPaid(el),
+                maintenanceCost :this.countinsamaintenance(el)
               };
             });
             // "deposit": "รอคืนเงินประกัน"
             console.log(data);
+            // this.installmentsCost = this.countinstallments(data[0])
+            // let t2 = this.countinsamountPaid(data[0])
+            // let t3 = this.countinsamaintenance(data[0])
+            // console.log(t);
+            // console.log(t2);
+            // console.log(t3);
             this.expensesList = data;
           })
           .catch((err) => {
@@ -151,6 +160,25 @@ export default {
 
     countSum(e) {
       return e.lastnumber - e.numberfirst || 0;
+    },
+
+    countinstallments(e) {
+        let a = e.insurance / e.installments; // จำนวนเงินต่องวด
+        let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
+        let b = c / a; //จำนวนงวดคงเหลือ
+        let d = e.installments - b
+        return a*d || 0;
+    },
+
+    countinsamountPaid(e) {
+      return e.insurance - e.amountPaid || 0; 
+    },
+
+    countinsamaintenance(e) {
+        let a = e.insurance / e.installments; // จำนวนเงินต่องวด
+        let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
+        let b = c / a; //จำนวนงวดคงเหลือ
+      return b || 0;
     },
 
     async summitdeposit(data) {
@@ -268,12 +296,13 @@ export default {
                 <tr>
                   <th></th>
                   <th scope="col">ชื่อ-สกุล</th>
-                  <th scope="col">กุญแจห้อง</th>
-                  <th scope="col">สาเหตุ</th>
+                  <th scope="col">เงินประกันทั้งหมด</th>
+                  <th scope="col">เงินประกันที่ชำระแล้ว</th>
+                  <th scope="col">งวดเงินประกัน</th>
+                  <th scope="col">ยอดเงินประกันคงเหลือ</th>
                   <th scope="col">ทะเบียนบ้าน</th>
-                  <th scope="col">สาเหตุ</th>
+                  <th scope="col">กุญแจห้อง</th>
                   <th scope="col">หลักฐานแสดงการชําระค่าไฟเดือนล่าสุด</th>
-                  <th scope="col">สาเหตุ</th>
                 </tr>
               </thead>
               <tbody>
@@ -289,12 +318,18 @@ export default {
                     >
                   </td>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
+                  <td>{{ item?.insurance  || "-"}}</td>
+                  <td>{{ item?.installmentsCost || "-"}}</td>
+                  <td>
+                    <span v-if="item?.installments > 0">
+                      {{ item?.maintenanceCost }}/{{ item?.installments }}
+                    </span>
+                    <span v-if="item?.installments == 0"> - </span>
+                  </td>
+                  <td>{{ item?.amountPaidCost || "-"}}</td>
                   <td>{{ item?.roomKey }}</td>
-                  <td>{{ item?.roomKeycause || "-" }}</td>
                   <td>{{ item?.houseRegistration }}</td>
-                  <td>{{ item?.houseRegistrationcause || "-" }}</td>
                   <td>{{ item?.payMonth }}</td>
-                  <td>{{ item?.payMonthcause || item?.payMonthcausetwo || "-" }}</td>
                 </tr>
               </tbody>
             </table>
