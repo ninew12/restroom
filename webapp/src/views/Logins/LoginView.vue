@@ -1,5 +1,4 @@
 <script>
-
 //Vue Material Kit 2 components
 import MaterialInput from "@/components/MaterialInput.vue";
 import MaterialButton from "@/components/MaterialButton.vue";
@@ -9,12 +8,10 @@ import { notify } from "@kyvg/vue3-notification";
 export default {
   components: {
     MaterialInput,
-    MaterialButton
+    MaterialButton,
   },
   setup() {
-    return {
-      
-    };
+    return {};
   },
 
   data() {
@@ -24,8 +21,8 @@ export default {
     };
   },
   created() {
-    let userold =  localStorage.getItem("user");
-    console.log(userold);
+    let userold = localStorage.getItem("user");
+    if (userold === null) this.$router.push({ path: `/login` });
   },
   methods: {
     async submitForm() {
@@ -41,8 +38,9 @@ export default {
           },
         })
         .then((res) => {
-          localStorage.setItem("user",JSON.stringify(body));
-          this.$router.push({ path: `/room/` });
+          localStorage.setItem("user", JSON.stringify(body));
+          this.$router.push({ path: `/home` });
+
           notify({
             title: "login สำเร็จ",
             type: "success",
@@ -57,9 +55,7 @@ export default {
 </script>
 <template>
   <Header>
-    <div
-      class="page-header align-items-start min-vh-100"
-    >
+    <div class="page-header align-items-start min-vh-100 bg">
       <span class="mask bg-gradient-dark opacity-6"></span>
       <div class="container my-auto">
         <div class="row">
@@ -76,25 +72,24 @@ export default {
               </div>
               <notifications position="top center" width="400px" />
               <div class="card-body">
-                <form  class="text-start">
-                  <label>ชื่อผู้ใช้งาน</label>
-                  <MaterialInput
-                    id="email"
-                    class="input-group-outline my-3"
-                    type="text"
-                    :value="userName"
-                    @input="(event) => (userName = event.target.value)"
-                  />
-                  <label>รหัสผ่าน</label>
-                  <MaterialInput
-                    id="password"
-                    class="input-group-outline mb-3"
-                    
-                    type="password"
-                    :value="password"
-                    @input="(event) => (password = event.target.value)"
-                  />
-                  <!-- <MaterialSwitch
+                <!-- <form  class="text-start"> -->
+                <label>ชื่อผู้ใช้งาน</label>
+                <MaterialInput
+                  id="email"
+                  class="input-group-outline my-3"
+                  type="text"
+                  :value="userName"
+                  @input="(event) => (userName = event.target.value)"
+                />
+                <label>รหัสผ่าน</label>
+                <MaterialInput
+                  id="password"
+                  class="input-group-outline mb-3"
+                  type="password"
+                  :value="password"
+                  @input="(event) => (password = event.target.value)"
+                />
+                <!-- <MaterialSwitch
                     class="d-flex align-items-center mb-3"
                     id="rememberMe"
                     labelClass="mb-0 ms-3"
@@ -102,19 +97,19 @@ export default {
                     >Remember me</MaterialSwitch
                   > -->
 
-                  <div class="text-center">
-                    <!-- fullWidth -->
-                    <MaterialButton
-                      class="my-4 mb-2"
-                      variant="gradient"
-                      color="success"
-                      
-                      html-type="submit"
-                      @click="submitForm"
-                      >เข้าสู่ระบบ</MaterialButton
-                    >
-                  </div>
-                </form>
+                <div class="text-center">
+                  <!-- fullWidth -->
+                  <MaterialButton
+                    class="my-4 mb-2"
+                    variant="gradient"
+                    color="success"
+                    fullWidth
+                    html-type="submit"
+                    @click="submitForm"
+                    >เข้าสู่ระบบ</MaterialButton
+                  >
+                </div>
+                <!-- </form> -->
               </div>
             </div>
           </div>
@@ -123,3 +118,8 @@ export default {
     </div>
   </Header>
 </template>
+<style>
+.bg{
+  background-image: url("../../assets/img/bg.jpg");
+}
+</style>

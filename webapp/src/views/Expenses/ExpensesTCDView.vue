@@ -65,6 +65,8 @@ export default {
     };
   },
   created() {
+    let userold = localStorage.getItem("user");
+    if (userold === null) this.$router.push({ path: `/login` });
     this.getExpenses();
     this.getMonths();
   },
@@ -290,8 +292,8 @@ export default {
           <div>
             <Breadcrumbs
               :routes="[
-                { label: 'หน้าหลัก', route: '/' },
-                { label: 'บันทึกค่าใช้จ่ายรายเดือน ตร.' },
+                { label: 'หน้าหลัก', route: '/home' },
+                { label: 'บันทึกค่าใช้จ่ายรายเดือน บช.ตชด.' },
               ]"
             />
           </div>
@@ -304,7 +306,7 @@ export default {
               color="success"
               @click="genInsurance()"
               :disabled="openBtn"
-              >ยอดหักเงินประกันสะสม</MaterialButton
+              >คำนวณค่าใช้จ่าย</MaterialButton
             >
           </div>
 

@@ -187,7 +187,7 @@ export default {
         <div class="container">
           <div>
             <Breadcrumbs
-              :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'ค่าสาธารณุปโภค' }]"
+              :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ค่าสาธารณุปโภค' }]"
             />
           </div>
           <div>

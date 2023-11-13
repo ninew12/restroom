@@ -103,6 +103,8 @@ export default {
     };
   },
   created() {
+    let userold = localStorage.getItem("user");
+    if (userold === null) this.$router.push({ path: `/login` });
     // this.getAllusers();
     this.getExpenses();
   },
@@ -190,7 +192,7 @@ export default {
         <div class="container-fluid">
           <div>
             <Breadcrumbs
-              :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'ระบบเรียกรายงาน' }]"
+              :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ระบบเรียกรายงาน' }]"
             />
           </div>
           <h4>ระบบเรียกรายงาน ประจำเดือน พฤศจิกายน</h4>

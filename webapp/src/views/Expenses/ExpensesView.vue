@@ -64,6 +64,8 @@ export default {
     };
   },
   created() {
+    let userold = localStorage.getItem("user");
+    if (userold === null) this.$router.push({ path: `/login` });
     this.getExpenses();
     this.getMonths();
   },
@@ -86,7 +88,7 @@ export default {
     },
     getMonths() {
       const d = new Date();
-      let m = this.optionMonth[d.getMonth()];
+      let m = this.optionMonth[d.getMonth()-1];
       let y = d.getFullYear();
       this.months = m;
       this.years = y
@@ -246,7 +248,7 @@ export default {
           <div>
             <Breadcrumbs
               :routes="[
-                { label: 'หน้าหลัก', route: '/' },
+                { label: 'หน้าหลัก', route: '/home' },
                 { label: 'บันทึกค่าใช้จ่ายรายเดือน ตร.' },
               ]"
             />

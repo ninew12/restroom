@@ -37,11 +37,20 @@ import Expenses from "../views/Expenses/ExpensesView.vue"
 import ExpensesTCD from "../views/Expenses/ExpensesTCDView.vue"
 import AmountPaid from "../views/AmountPaid/AmountPaidview.vue"
 import ReportsOne from "../views/Reports/pdfView.vue"
+import Login from "../views/Logins/LoginView.vue"
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
+      path: "/login",
+      // name: "presentation",
+      // component: PresentationView,
+      name: "login",
+      component: Login,
+    },
+    {
+      path: "/home",
       name: "presentation",
       component: PresentationView,
     },
@@ -52,57 +61,57 @@ const router = createRouter({
     },
     {
       path: "/users",
-      name: "users", 
+      name: "users",
       component: UserlistView,
     },
     {
       path: "/layout",
-      name: "layout", 
+      name: "layout",
       component: RoomLayoutView,
     },
     {
       path: "/addUserRoom",
-      name: "addUserRoom", 
+      name: "addUserRoom",
       component: addUserRoom,
     },
     {
       path: "/utilities",
-      name: "utilities", 
+      name: "utilities",
       component: UtilitiesRoom,
     },
     {
       path: "/reports",
-      name: "reports", 
+      name: "reports",
       component: Reports,
     },
     {
       path: "/reportsOne",
-      name: "reportsOne", 
+      name: "reportsOne",
       component: ReportsOne,
     },
     {
       path: "/searchfilter",
-      name: "searchfilter", 
+      name: "searchfilter",
       component: searchFilter,
     },
     {
       path: "/expenses",
-      name: "expenses", 
+      name: "expenses",
       component: Expenses,
     },
     {
       path: "/expensesTCD",
-      name: "expensesTCD", 
+      name: "expensesTCD",
       component: ExpensesTCD,
     },
     {
       path: "/queue",
-      name: "queue", 
+      name: "queue",
       component: Queue,
     },
     {
       path: "/amountpaid",
-      name: "amountPaid", 
+      name: "amountPaid",
       component: AmountPaid,
     },
     {

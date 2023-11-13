@@ -79,9 +79,13 @@ export default {
       payMonthcausetwo: "",
       deposit: "รอคืนเงินประกัน",
       roomId: "",
+      dateApp: new Date(),
+      historyOld: [],
     };
   },
   created() {
+    let userold = localStorage.getItem("user");
+    if (userold === null) this.$router.push({ path: `/login` });
     this.mode = this.$route.query.mode;
     if (this.$route.params.id) {
       this.id = this.$route.params.id;
@@ -119,9 +123,10 @@ export default {
           .then((res) => {
             this.roomData = res.data;
             this.numberRoom = this.roomData.numberRoom;
-            this.roomId = this.roomData.id
+            this.roomId = this.roomData.id;
             this.selectedRoomtype = this.roomData.typeRoom;
             this.getRoomsBynumberRoom(this.roomId);
+            this.getHistoryRoom(this.roomData.id);
           })
           .catch((err) => {
             console.log(err);
@@ -143,6 +148,46 @@ export default {
           });
       } catch (error) {
         console.error(error);
+      }
+    },
+
+    async getHistoryRoom(id) {
+      try {
+        await axios
+          .get(`http://localhost:3001/history/${id}`)
+          .then((res) => {
+            if (res.data.customerOld == "คืนห้องพักแล้ว") {
+              this.historyOld = res.data;
+              this.historyOld["dateApproved"] = this.convertDateTolocal(
+                this.historyOld.dateApproved
+              );
+              this.historyOld["dateReturn"] = this.convertDateTolocal(
+                this.historyOld.dateReturn
+              );
+            } else {
+              this.historyOld = [];
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    convertDateTolocal(index) {
+      if (index !== undefined) {
+        const date = new Date(index);
+        const formatter = new Intl.DateTimeFormat("en-US", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        });
+        const formattedDate = formatter.format(date);
+        return formattedDate;
+      } else {
+        return "";
       }
     },
 
@@ -211,6 +256,8 @@ export default {
         payMonthcausetwo: this.payMonthcausetwo,
         roomKeycause: this.roomKeycause,
         deposit: "รอคืนเงินประกัน",
+        dateReturn: this.dateApp.toISOString(),
+        customerOld: "คืนห้องพักแล้ว",
       };
       axios
         .put(`http://localhost:3001/rooms/${this.id}`, body, {
@@ -233,6 +280,7 @@ export default {
           console.log(err);
         });
     },
+
     updatedataUser() {
       let body = {
         queue: "none",
@@ -243,7 +291,32 @@ export default {
         houseRegistrationcause: this.houseRegistrationcause,
         payMonthcause: this.payMonthcause,
         payMonthcausetwo: this.payMonthcausetwo,
-        roomId: this.roomId
+        roomId: this.roomId,
+        dateReturn: this.dateApp.toISOString(),
+        customerOld: "คืนห้องพักแล้ว",
+      };
+      axios.put(`http://localhost:3001/users/${this.userId}`, body, {
+        headers: {
+          // remove headers
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
+    },
+
+    updatedataHistory() {
+      let body = {
+        queue: "none",
+        deposit: this.deposit,
+        roomKey: this.roomKey,
+        houseRegistration: this.houseRegistration,
+        payMonth: this.payMonth,
+        houseRegistrationcause: this.houseRegistrationcause,
+        payMonthcause: this.payMonthcause,
+        payMonthcausetwo: this.payMonthcausetwo,
+        roomId: this.roomId,
+        dateReturn: this.dateApp.toISOString(),
+        customerOld: "คืนห้องพักแล้ว",
       };
       axios.put(`http://localhost:3001/users/${this.userId}`, body, {
         headers: {
@@ -289,7 +362,7 @@ export default {
           <div>
             <Breadcrumbs
               :routes="[
-                { label: 'หน้าหลัก', route: '/' },
+                { label: 'หน้าหลัก', route: '/home' },
                 { label: 'สถานะห้องพัก', route: '/room' },
                 { label: 'จัดการห้องพัก' },
               ]"
@@ -317,6 +390,18 @@ export default {
                   aria-selected="true"
                 >
                   แก้ไขรายละเอียดห้องพัก
+                </button>
+                <button
+                  class="nav-link"
+                  id="v-pills-history-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-history"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills-history"
+                  aria-selected="false"
+                >
+                  ประวัติการเข้าพัก
                 </button>
                 <button
                   v-if="this.mode !== 'add'"
@@ -415,7 +500,30 @@ export default {
                     </div>
                   </div>
                 </div>
-
+                <div
+                  class="tab-pane fade show"
+                  id="v-pills-history"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-history-tab"
+                >
+                  <div class="p-4">
+                    <div>
+                      <h5>ประวัติการเข้าพัก</h5>
+                      <div class="col-5">
+                        <p class="card-text">
+                          ชือ-สกุล : {{ historyOld?.rank }} {{ historyOld?.firstName }}
+                          {{ historyOld?.lastName }}
+                        </p>
+                        <p class="card-text">
+                          วันที่เข้าพัก : {{ historyOld?.dateApproved || "-" }}
+                        </p>
+                        <p class="card-text">
+                          วันที่คืนห้องพัก : {{ historyOld?.dateReturn || "-" }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div
                   class="tab-pane fade"
                   id="v-pills-messages"
@@ -698,5 +806,10 @@ export default {
 }
 .h-noti {
   height: 250px;
+}
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff !important;
+  background-color: #4cbb17 !important;
 }
 </style>

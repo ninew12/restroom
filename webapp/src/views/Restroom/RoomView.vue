@@ -54,6 +54,8 @@ export default {
   },
   created() {
     // this.$route.query
+    let userold = localStorage.getItem("user");
+    if (userold === null) this.$router.push({ path: `/login` });
     try {
       axios.get(`http://localhost:3001/users/`).then();
     } catch (e) {
@@ -346,7 +348,7 @@ export default {
           <notifications position="top center" width="400px" />
           <div>
             <Breadcrumbs
-              :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'สถานะห้องพัก' }]"
+              :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'สถานะห้องพัก' }]"
             />
           </div>
           <h4>สถานะห้องพัก</h4>

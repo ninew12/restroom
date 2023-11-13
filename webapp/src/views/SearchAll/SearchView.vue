@@ -134,7 +134,7 @@ export default {
         <div class="container">
             <div>
               <Breadcrumbs
-                :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'ระบบค้นหา' }]"
+                :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ระบบค้นหา' }]"
               />
             </div>
           <div class="d-flex justify-content-end">

@@ -53,6 +53,8 @@ export default {
     };
   },
   created() {
+    let userold = localStorage.getItem("user");
+    if (userold === null) this.$router.push({ path: `/login` });
     this.getAlluser();
   },
   watch: {
@@ -209,6 +211,16 @@ export default {
             this.olddata = res.data;
             this.typeUserfilter("ทั้งหมด");
             // this.rankrfilter("ประทวน");
+            (this.firstName = ""),
+              (this.lastName = ""),
+              (this.typeAffiliation = ""),
+              (this.selectedRanks = ""),
+              (this.idcard = ""),
+              (this.phone = ""),
+              (this.selectedDataObtion = "โสด"),
+              (this.typeAffiliation = ""),
+              (this.typeRanks = ""),
+              (this.typeUser = "ตร.");
           })
           .catch((err) => {
             console.log(err);
@@ -253,7 +265,7 @@ export default {
           <notifications position="top center" width="400px" />
           <div>
             <Breadcrumbs
-              :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'ทะเบียน' }]"
+              :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ทะเบียน' }]"
             />
           </div>
           <h4>ทะเบียน</h4>

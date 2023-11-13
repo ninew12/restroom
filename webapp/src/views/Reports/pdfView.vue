@@ -205,7 +205,7 @@ export default {
         <div class="container">
           <div>
             <Breadcrumbs
-              :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'ระบบเรียกรายงาน' }]"
+              :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ระบบเรียกรายงาน' }]"
             />
           </div>
           <h4>ระบบเรียกรายงาน</h4>

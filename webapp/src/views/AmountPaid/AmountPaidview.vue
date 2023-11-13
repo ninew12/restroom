@@ -64,6 +64,8 @@ export default {
     };
   },
   created() {
+    let userold = localStorage.getItem("user");
+    if (userold === null) this.$router.push({ path: `/login` });
     this.getExpenses();
     this.getMonths();
     this.getRoomsByid();
@@ -106,9 +108,9 @@ export default {
               return {
                 ...el,
                 sumCost: this.countSum(el),
-                installmentsCost : this.countinstallments(el),
-                amountPaidCost : this.countinsamountPaid(el),
-                maintenanceCost :this.countinsamaintenance(el)
+                installmentsCost: this.countinstallments(el),
+                amountPaidCost: this.countinsamountPaid(el),
+                maintenanceCost: this.countinsamaintenance(el),
               };
             });
             // "deposit": "รอคืนเงินประกัน"
@@ -163,21 +165,21 @@ export default {
     },
 
     countinstallments(e) {
-        let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-        let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
-        let b = c / a; //จำนวนงวดคงเหลือ
-        let d = e.installments - b
-        return a*d || 0;
+      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
+      let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
+      let b = c / a; //จำนวนงวดคงเหลือ
+      let d = e.installments - b;
+      return a * d || 0;
     },
 
     countinsamountPaid(e) {
-      return e.insurance - e.amountPaid || 0; 
+      return e.insurance - e.amountPaid || 0;
     },
 
     countinsamaintenance(e) {
-        let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-        let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
-        let b = c / a; //จำนวนงวดคงเหลือ
+      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
+      let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
+      let b = c / a; //จำนวนงวดคงเหลือ
       return b || 0;
     },
 
@@ -274,7 +276,10 @@ export default {
         <div class="container">
           <div>
             <Breadcrumbs
-              :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'คืนเงินประกัน' }]"
+              :routes="[
+                { label: 'หน้าหลัก', route: '/home' },
+                { label: 'คืนเงินประกัน' },
+              ]"
             />
           </div>
           <h4>คืนเงินประกัน &nbsp; ประจำเดือน {{ months }}</h4>
@@ -318,15 +323,15 @@ export default {
                     >
                   </td>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
-                  <td>{{ item?.insurance  || "-"}}</td>
-                  <td>{{ item?.installmentsCost || "-"}}</td>
+                  <td>{{ item?.insurance || "-" }}</td>
+                  <td>{{ item?.installmentsCost || "-" }}</td>
                   <td>
                     <span v-if="item?.installments > 0">
                       {{ item?.maintenanceCost }}/{{ item?.installments }}
                     </span>
                     <span v-if="item?.installments == 0"> - </span>
                   </td>
-                  <td>{{ item?.amountPaidCost || "-"}}</td>
+                  <td>{{ item?.amountPaidCost || "-" }}</td>
                   <td>{{ item?.roomKey }}</td>
                   <td>{{ item?.houseRegistration }}</td>
                   <td>{{ item?.payMonth }}</td>

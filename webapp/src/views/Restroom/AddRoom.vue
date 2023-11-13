@@ -195,7 +195,7 @@ export default {
           <div>
             <Breadcrumbs
               :routes="[
-                { label: 'หน้าหลัก', route: '/' },
+                { label: 'หน้าหลัก', route: '/home' },
                 { label: 'สถานะห้องพัก', route: '/room' },
                 { label: 'เพิ่มผู้พักอาศัยห้องพัก' },
               ]"
@@ -242,7 +242,7 @@ export default {
                       <td>{{ item.rank }}</td>
                       <td>{{ item.idcard }}</td>
                       <td>{{ item.phone }}</td>
-                      <td>{{ item.ContractDate }}</td>
+                      <td>{{ item.ContractDate || 0}} เดือน</td>
                       <td>{{ item.Lengthofstay }}</td>
                       <td>{{ item.InsuranceMoney }}</td>
                       <td>{{ item.Status }}</td>
@@ -306,7 +306,7 @@ export default {
                   class="input-group-static"
                   label="ระยะเวลาที่เข้าพัก"
                   type="text"
-                  placeholder="ระยะเวลาที่เข้าพัก"
+                  placeholder="ระยะเวลาที่เข้าพัก/เดือน"
                 />
               </div>
               <div class="mb-3">

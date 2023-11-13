@@ -4,8 +4,9 @@ const rooms = require('./rooms.json')
 const queue = require('./queue.json')
 const building = require('./building.json')
 const Expenses = require('./Expenses.json')
-const history = require('./้history.json')
+const history = require('./history.json')
 const reports = require('./report.json')
+const userlogin = require('./login.json')
 // const masterData = require('./masterData.json')
 const express = require("express");
 const app = express();
@@ -21,6 +22,24 @@ app.options('*', cors())
 app.get("/", (req, res) => {
     res.send("Hello! Node.js");
 });
+
+app.post('/login', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    let filterdata = userlogin.filter(user => user.userName === (req.body.userName))
+    
+    if (filterdata.length > 0) {
+        if (filterdata[0].userName === req.body.userName && filterdata[0].password === req.body.password) {
+            res.send(`เข้าสู่ระบบสำเร็จ`)
+        } else {
+            res.send(`ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง`)
+        }
+
+    } else {
+        res.send(`ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง`)
+    }
+    // res.json(userlogin)
+})
+
 app.get('/users', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.json(users)
@@ -53,7 +72,6 @@ app.post('/users', (req, res) => {
 })
 app.put('/users/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    console.log(req.body);
     const updateIndex = users.findIndex(user => user.id === (req.params.id))
     let dataOld = users[updateIndex]
     let filterdata = users.filter(user => user.id !== (req.params.id))
@@ -104,6 +122,8 @@ app.put('/users/:id', (req, res) => {
     if (req.body.maintenance) parsedData.maintenance = req.body.maintenance
     if (req.body.deposit) parsedData.deposit = req.body.deposit
     if (req.body.roomId) parsedData.roomId = req.body.roomId
+    if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
+    if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
 
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -245,6 +265,9 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.maintenance) parsedData.maintenance = req.body.maintenance
     if (req.body.deposit) parsedData.deposit = req.body.deposit
     if (req.body.roomId) parsedData.roomId = req.body.roomId
+    if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
+    if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
+
 
     filterdata.push(parsedData)
     fs.writeFile('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -304,6 +327,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
     if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
+    if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -317,12 +341,11 @@ app.put('/queue/:id', (req, res) => {
 
 app.get('/history', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    let list = users.filter(history => history.queue === req.params.name)
-    res.json(list)
+    res.json(history)
 })
-app.get('/history/:id', (req, res) => {
+app.get('/history/:roomId', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    res.json(history.find(history => history.id === (req.params.id)))
+    res.json(history.find(history => history.roomId == (req.params.roomId)))
 })
 app.post('/history', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -368,6 +391,8 @@ app.put('/history/:id', (req, res) => {
     if (req.body.maintenance) parsedData.maintenance = req.body.maintenance
     if (req.body.deposit) parsedData.deposit = req.body.deposit
     if (req.body.roomId) parsedData.roomId = req.body.roomId
+    if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
+    if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
     filterdata.push(parsedData)
     fs.writeFile('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -494,6 +519,8 @@ app.put('/report/:id', (req, res) => {
     if (req.body.maintenance) parsedData.maintenance = req.body.maintenance
     if (req.body.deposit) parsedData.deposit = req.body.deposit
     if (req.body.roomId) parsedData.roomId = req.body.roomId
+    if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
+    if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
     filterdata.push(parsedData)
     fs.writeFile('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {

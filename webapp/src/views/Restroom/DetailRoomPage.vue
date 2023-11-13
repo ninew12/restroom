@@ -103,7 +103,7 @@ export default {
     getAllinqueue() {
       try {
         axios
-          .get(`http://localhost:3001/queue/inqueue`)
+          .get(`http://localhost:3001/users`)
           .then((res) => {
             this.userList = res.data.map((ele) => {
               return {
@@ -142,10 +142,10 @@ export default {
         axios.get(`http://localhost:3001/rooms/${id}`).then((res) => {
           this.data = res.data;
           this.dateApproved = this.convertDateTolocal(this.data.dateApproved);
-          // this.installments = this.sumInstallments(this.data)
+
           this.typeroom = this.data.typeRoom;
           this.numberRoom = this.data.numberRoom;
-          this.roomId = this.data.id
+          this.roomId = this.data.id;
           if (this.data.affiliation) this.Affiliation = this.data.affiliation;
           if (this.data.roomStatus == "return") this.statusRoom = "ผ่อนผัน";
           if (this.data.roomStatus == "special") this.statusRoom = "กรณีพิเศษ";
@@ -161,7 +161,7 @@ export default {
     },
 
     convertDateTolocal(index) {
-      if (index !== "") {
+      if (index !== undefined) {
         const date = new Date(index);
         const formatter = new Intl.DateTimeFormat("en-US", {
           day: "2-digit",
@@ -169,23 +169,6 @@ export default {
           year: "numeric",
         });
         const formattedDate = formatter.format(date);
-        return formattedDate;
-      } else {
-        return "";
-      }
-    },
-
-    sumInstallments(e) {
-      console.log(e);
-      if (e !== "") {
-        let a = parseInt(e.insurance) / parseInt(e.installments);
-        let b = parseInt(e.maintenance);
-        let c = parseInt(e.insurance) - parseInt(e.maintenance);
-        console.log(a);
-        console.log(b);
-        console.log(parseInt(e.insurance) % parseInt(e.installments));
-        let numConut = parseInt(e);
-        const formattedDate = parseInt(e);
         return formattedDate;
       } else {
         return "";
@@ -221,6 +204,8 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        roomId: this.roomId,
+        roomnumber: this.numberRoom,
         dateApproved: this.dateApp.toISOString(),
       };
       await axios
@@ -247,13 +232,13 @@ export default {
 
     async submitFormUser() {
       let body = {
-        roomnumber: this.numberRoom,
         maintenance: this.Maintenance,
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
         dateApproved: this.dateApp.toISOString(),
-        roomId : this.roomId
+        roomId: this.roomId,
+        roomnumber: this.numberRoom,
       };
       await axios.put(`http://localhost:3001/users/${this.userId}`, body, {
         headers: {
@@ -273,6 +258,8 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        roomId: this.roomId,
+        roomnumber: this.numberRoom,
         dateApproved: this.dateApp.toISOString(),
       };
       await axios.post(`http://localhost:3001/report`, body, {
@@ -292,6 +279,8 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        roomId: this.roomId,
+        roomnumber: this.numberRoom,
         dateApproved: this.dateApp.toISOString(),
       };
       await axios.post(`http://localhost:3001/report`, body, {
@@ -356,8 +345,24 @@ export default {
     },
 
     async submitRoomScapia() {
+      let typeA;
+      this.typeAffiliation.label == "ลูกจ้าง"
+        ? (typeA = "ลูกจ้าง")
+        : this.typeAffiliation.label == "บช.ตชด."
+        ? (typeA = "บช.ตชด.")
+        : (typeA = this.selectedAffiliation.label);
+      if (this.typeRanks == "ประทวน") maintenance = "60";
+      if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
       let body = {
-        ...this.userByid,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        affiliation: typeA,
+        rank: this.selectedRanks.value,
+        idcard: this.idcard,
+        phone: this.phone,
+        status: this.selectedDataObtion.value || "โสด",
+        typeAffiliation: this.typeAffiliation.value,
+        typeRanks: this.typeRanks.value,
         queue: "inroom",
         roomStatus: "special",
         contract: this.contract,
@@ -425,7 +430,7 @@ export default {
           <div>
             <Breadcrumbs
               :routes="[
-                { label: 'หน้าหลัก', route: '/' },
+                { label: 'หน้าหลัก', route: '/home' },
                 { label: 'สถานะห้องพัก', route: '/room' },
                 { label: 'รายละเอียดห้องพัก' },
               ]"
@@ -441,7 +446,7 @@ export default {
                 variant="gradient"
                 color="danger"
                 data-bs-toggle="modal"
-                data-bs-target="#addSpaciaBackdrop"
+                data-bs-target="#userBackdrop"
                 >กรณีพิเศษ</MaterialButton
               >
               <MaterialButton variant="gradient" color="success" @click="gotoAction()"
@@ -491,6 +496,17 @@ export default {
               </div>
               <div class="row pt-4">
                 <div class="card mb-3" v-if="mode == 'add'">
+                  <div style="text-align: right">
+                    <MaterialButton
+                      style="width: 300px"
+                      variant="gradient"
+                      color="success"
+                      data-bs-toggle="modal"
+                      data-bs-target="#addSpaciaBackdrop"
+                      >เพิ่มผู้พักอาศัยนอกคิวเข้าห้องพัก</MaterialButton
+                    >
+                  </div>
+
                   <div class="text-center pt-4 table-responsive">
                     <table class="table border border-2 border-success">
                       <thead class="border border-2 border-success border-bottom">
@@ -576,9 +592,9 @@ export default {
                   :value="Checkintime"
                   @input="(event) => (Checkintime = event.target.value)"
                   class="input-group-static"
-                  label="ระยะเวลาที่เข้าพัก"
+                  label="ระยะเวลาที่เข้าพัก(เดือน)"
                   type="text"
-                  placeholder="ระยะเวลาที่เข้าพัก"
+                  placeholder="จำนวนเดือนที่เข้าพัก"
                 />
               </div>
               <div class="mb-3">
@@ -864,7 +880,9 @@ export default {
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">เพิ่มข้อมูลผู้พักอาศัย</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">
+              เพิ่มผู้พักอาศัยเข้าห้องพัก
+            </h5>
             <button
               type="button"
               class="btn-close"

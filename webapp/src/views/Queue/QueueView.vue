@@ -5,8 +5,11 @@ import Breadcrumbs from "@/examples/Breadcrumbs.vue";
 import vueMkHeader from "@/assets/img/bg.jpg";
 import userData from "@/assets/dataJson/users.json";
 import axios from "axios";
-import Datepicker from "vue3-datepicker";
-
+// import Datepicker from "vue3-datepicker";
+import Datepicker from "@vuepic/vue-datepicker";
+import "@vuepic/vue-datepicker/dist/main.css";
+import { notify } from "@kyvg/vue3-notification";
+// const date = ref();
 export default {
   components: {
     MaterialInput,
@@ -48,6 +51,8 @@ export default {
     };
   },
   created() {
+    let userold = localStorage.getItem("user");
+    if (userold === null) this.$router.push({ path: `/login` });
     this.getAllqueue();
     this.getAllbuildings();
     this.getAllNoqueue();
@@ -207,6 +212,10 @@ export default {
           },
         })
         .then((res) => {
+          notify({
+            title: "ทำรายการสำเร็จ",
+            type: "success",
+          });
           this.getAllqueue();
         })
         .catch((err) => {
@@ -247,6 +256,10 @@ export default {
           },
         })
         .then((res) => {
+          notify({
+            title: "แก้ไขสำเร็จ",
+            type: "success",
+          });
           this.getAllqueue();
         })
         .catch((err) => {
@@ -288,9 +301,10 @@ export default {
         <div class="container">
           <div>
             <Breadcrumbs
-              :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'ระบบคิว' }]"
+              :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ระบบคิว' }]"
             />
           </div>
+          <notifications position="top center" width="400px" />
           <h4>ระบบคิว</h4>
           <div class="d-flex justify-content-between align-items-baseline">
             <div class="mb-3">
@@ -452,7 +466,7 @@ export default {
               </div>
 
               <div class="mb-4">
-                <label style="margin-left: -5px">วันที่ลงรับหนังสือ</label>
+                <label style="margin-left: -5px">วันเวลาที่ลงรับหนังสือ</label>
                 <Datepicker style="text-align: center" v-model="picked" />
               </div>
               <div class="mb-3">

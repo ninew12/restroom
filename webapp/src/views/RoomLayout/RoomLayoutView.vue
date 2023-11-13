@@ -39,6 +39,8 @@ export default {
     };
   },
   created() {
+    let userold = localStorage.getItem("user");
+    if (userold === null) this.$router.push({ path: `/login` });
     // console.log(this.masterData);
     this.getBuildings();
   },
@@ -238,7 +240,7 @@ export default {
           <div>
             <Breadcrumbs
               style="padding"
-              :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'ผังห้องพัก' }]"
+              :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ผังห้องพัก' }]"
             />
           </div>
           <h4>ผังห้องพัก</h4>
@@ -373,16 +375,6 @@ export default {
                   />
                   <label class="form-check-label" for="Radio22">อื่นๆ</label>
                 </div>
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="Area"
-                  @input="(event) => (Area = event.target.value)"
-                  class="input-group-static"
-                  label="อาคารบ้านพัก"
-                  type="text"
-                  placeholder="อาคารบ้านพัก"
-                />
               </div>
               <div class="mb-3">
                 <MaterialInput
