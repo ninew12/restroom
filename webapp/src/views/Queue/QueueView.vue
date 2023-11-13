@@ -44,7 +44,7 @@ export default {
       picked: new Date(),
       buildingName: "",
       building: [],
-      selectedBuildingName: "เลือกอาคารบ้านพัก",
+      selectedBuildingName: "เลือกอาคาร",
     };
   },
   created() {
@@ -372,7 +372,7 @@ export default {
                   <!-- <th scope="col">ยศ</th> -->
                   <th scope="col">ชื่อ-สกุล</th>
                   <th scope="col">สังกัด</th>
-                  <th scope="col">อาคารบ้านพัก</th>
+                  <th scope="col">ชื่ออาคาร</th>
                   <th scope="col">สถานภาพ</th>
                   <th scope="col">เลขบัตรประชาชน</th>
                   <th scope="col">เบอร์ติดต่อ</th>
@@ -436,7 +436,7 @@ export default {
                 <v-select :options="userList" v-model="selectedUser"></v-select>
               </div>
               <div class="mb-3">
-                <label>อาคารบ้านพัก</label>
+                <label>ชื่ออาคาร</label>
                 <v-select :options="building" v-model="selectedBuildingName"></v-select>
               </div>
               <div class="mb-3">

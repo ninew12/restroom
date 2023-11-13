@@ -96,7 +96,7 @@ export default {
       rank: "", //ยศ
       idcard: "",
       phone: "",
-      selectedAffiliation: "",
+      selectedAffiliation: "เลือกสังกัด",
       selectedYear: "2023",
       selectedMonth: "พฤศจิกายน",
       expensesList: [],
