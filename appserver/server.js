@@ -53,6 +53,7 @@ app.post('/users', (req, res) => {
 })
 app.put('/users/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
+    console.log(req.body);
     const updateIndex = users.findIndex(user => user.id === (req.params.id))
     let dataOld = users[updateIndex]
     let filterdata = users.filter(user => user.id !== (req.params.id))

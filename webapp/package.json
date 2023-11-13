@@ -26,7 +26,8 @@
     "vue-prism-editor": "2.0.0-alpha.2",
     "vue-router": "4.0.15",
     "vue-select": "^4.0.0-beta.6",
-    "vue3-datepicker": "^0.4.0"
+    "vue3-datepicker": "^0.4.0",
+    "vue3-excel-editor": "^1.0.20"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "1.1.0",

@@ -61,6 +61,7 @@ export default {
       contractExpenses: "",
       id: "",
       months: "",
+      openBtn: false,
     };
   },
   created() {
@@ -92,17 +93,6 @@ export default {
       this.years = y;
     },
 
-    sumInstallments(e) {
-      // console.log(e);
-      if (e !== "") {
-        let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-        let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
-        let b = c / a; //จำนวนงวดคงเหลือ
-        console.log(a);
-        console.log(b);
-        console.log(c);
-      }
-    },
     async getExpenses() {
       try {
         await axios
@@ -122,8 +112,17 @@ export default {
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
+
+            const myString = data2[0].monthly;
+            const splits = myString.split("/");
+            if (splits[0] !== undefined) {
+              const d = new Date();
+              let m = this.optionMonth[d.getMonth()];
+              if (m == splits[0]) this.openBtn = true;
+            }
+
+            // พฤศจิกายน/2023
             this.expensesList = data2;
-            console.log(data2);
           })
           .catch((err) => {
             console.log(err);
@@ -186,35 +185,51 @@ export default {
       }
     },
 
-    async submitForm() {
+    async genInsurance() {
+      let arr = [];
+      let data = [];
+      arr = this.expensesList;
+      data = await arr.map((el) => {
+        return {
+          ...el,
+          amountPaid: this.callInsurance(el),
+        };
+      });
+      this.expensesList = data;
+      this.loopData();
+    },
+
+    async loopData() {
+      await this.expensesList.forEach((element) => {
+        this.submitForm(element);
+      });
+    },
+
+    callInsurance(e) {
+      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
+      let c = parseInt(e.amountPaid) + parseInt(a); // จำนวนจ่ายแล้ว
+      return c;
+    },
+
+    async submitForm(index) {
+      let id = index.id;
       let body = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        numberfirst: this.numberfirst,
-        lastnumber: this.lastnumber,
-        waterbill: this.Waterbill,
-        electricitybill: this.Electricitybill,
-        central: this.Central,
-        costs: this.Costs,
-        typeContract: this.typeContract,
-        contractExpenses: this.contractExpenses,
-        sumCost: this.sumCost,
+        amountPaid: index.amountPaid,
         monthly: `${this.months}/${this.years}`,
       };
       await axios
-        .put(`http://localhost:3001/users/${this.id}`, body, {
+        .put(`http://localhost:3001/users/${id}`, body, {
           headers: {
-            // remove headers
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
           },
         })
         .then((res) => {
-          notify({
-            title: "แก้ไขข้อมูลสำเร็จ",
-            type: "success",
-          });
-          this.saveToreport();
+          // notify({
+          //   title: "แก้ไขข้อมูลสำเร็จ",
+          //   type: "success",
+          // });
+          this.saveToreport(index);
           this.getExpenses();
         })
         .catch((err) => {
@@ -222,22 +237,13 @@ export default {
         });
     },
 
-    async saveToreport() {
+    async saveToreport(index) {
+      let id = index.id;
       let body = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        numberfirst: this.numberfirst,
-        lastnumber: this.lastnumber,
-        waterbill: this.Waterbill,
-        electricitybill: this.Electricitybill,
-        central: this.Central,
-        costs: this.Costs,
-        typeContract: this.typeContract,
-        contractExpenses: this.contractExpenses,
-        sumCost: this.sumCost,
+        amountPaid: index.amountPaid,
         monthly: `${this.months}/${this.years}`,
       };
-      await axios.put(`http://localhost:3001/report/${this.id}`, body, {
+      await axios.put(`http://localhost:3001/report/${id}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -293,6 +299,7 @@ export default {
               variant="gradient"
               color="success"
               @click="genInsurance()"
+              :disabled="openBtn"
               >ยอดหักเงินประกันสะสม</MaterialButton
             >
           </div>

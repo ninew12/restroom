@@ -159,11 +159,14 @@ export default {
     },
     async submitForm() {
       let typeA;
+      let maintenance;
       this.typeAffiliation.label == "ลูกจ้าง"
         ? (typeA = "ลูกจ้าง")
         : this.typeAffiliation.label == "บช.ตชด."
         ? (typeA = "บช.ตชด.")
         : (typeA = this.selectedAffiliation.label);
+      if (this.typeRanks == "ประทวน") maintenance = "60";
+      if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -176,6 +179,7 @@ export default {
         typeAffiliation: this.typeAffiliation.value,
         typeRanks: this.typeRanks.value,
         typeUser: this.typeUser,
+        maintenance: maintenance,
       };
       axios
         .post(`http://localhost:3001/users`, body, {
