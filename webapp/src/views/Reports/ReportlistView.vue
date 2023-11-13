@@ -96,7 +96,7 @@ export default {
       rank: "", //ยศ
       idcard: "",
       phone: "",
-      selectedAffiliation: "เลือกสังกัด",
+      selectedAffiliation: "",
       selectedYear: "2023",
       selectedMonth: "พฤศจิกายน",
       expensesList: [],
@@ -286,84 +286,226 @@ export default {
                   aria-labelledby="v-pills-home-tab"
                 >
                   <div>
-                    <div class="pt-4 text-start">
-                      <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
-                      <div class="mb-3">
-                        <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px">ประเภท</label>
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="typeUser"
-                            id="inlinetypeUser1"
-                            value="ตร."
-                            @change="typeUserchange($event)"
-                            checked
-                          />
-                          <label class="form-check-label" for="inlinetypeUser1"
-                            >บัญชีหน้างบ</label
+                    <div class="text-center pt-4 table-responsive">
+                      <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button
+                            class="nav-link active"
+                            style="color: #57b05b"
+                            id="nav-home-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-home"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-home"
+                            aria-selected="true"
                           >
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="typeUser"
-                            id="inlinetypeUser"
-                            value="บช.ตชด."
-                            @change="typeUserchange($event)"
-                          />
-                          <label class="form-check-label" for="inlinetypeUser">
-                            รายละเอียดการหักเงินค่าบํารุงสถานที่
-                            และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                            ตร.
+                          </button>
+                          <button
+                            class="nav-link"
+                            style="color: #57b05b"
+                            id="nav-profile-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-profile"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-profile"
+                            aria-selected="false"
                           >
+                            บช.ตชด.
+                          </button>
                         </div>
-                      </div>
-                      <div class="d-flex justify-content-end align-items-center">
-                        <div class="mb-3 w-20" style="margin-right: 5px">
-                          <label>เดือน</label>
-                          <v-select
-                            :options="optionMonth"
-                            v-model="selectedMonth"
-                          ></v-select>
-                        </div>
-                        <div class="mb-3 w-20">
-                          <label>สังกัด</label>
-                          <v-select
-                            :options="masterData?.Affiliation"
-                            v-model="selectedAffiliation"
-                          ></v-select>
-                        </div>
+                      </nav>
+                      <div class="tab-content" id="nav-tabContent">
+                        <div
+                          class="tab-pane fade show active"
+                          id="nav-home"
+                          role="tabpanel"
+                          aria-labelledby="nav-home-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser"
+                                    id="inlinetypeUser1"
+                                    value="ตร."
+                                    @change="typeUserchange($event)"
+                                    checked
+                                  />
+                                  <label class="form-check-label" for="inlinetypeUser1"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser"
+                                    id="inlinetypeUser"
+                                    value="บช.ตชด."
+                                    @change="typeUserchange($event)"
+                                  />
+                                  <label class="form-check-label" for="inlinetypeUser">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
 
-                        <div>
-                          <MaterialButton
-                            size="lg"
-                            class="btn-icon"
-                            style="margin-right: -30px"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/pdf.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
                             </div>
-                          </MaterialButton>
-                          <MaterialButton size="lg" class="btn-icon">
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
+
+                            <div>
+                          <p class="text-center mt-4" style="text-decoration: underline">
+                          บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด.
+                        </p>
+                        <p class="text-center" style="text-decoration: underline">
+                          ที่หักเงินเดือนเป็นค่าบำรุงรักษาสถานที่
+                          และค่าประกันทรัพย์สินเสียหาย
+                        </p>
+                        <p class="text-center" style="text-decoration: underline">
+                          ประจำเดือน ตุลาคม พ.ศ. 2566 หน่วยงาน บช.ตชด.
+                        </p>
+                          <table class="table table table-bordered">
+                            <thead>
+                              <tr>
+                                <th rowspan="2">ลำดับ</th>
+                                <th scope="col">ยศ</th>
+                                <th scope="col">ชื่อ</th>
+                                <th scope="col">ชื่อสกุล</th>
+                                <th scope="col">อาคาร</th>
+                                <th scope="col">ห้อง</th>
+                                <th scope="col">ค่าบำรุง</th>
+                                <th scope="col">ยอดหัก</th>
+                                <th scope="col">ยอดหักสะสม</th>
+                                <th scope="col">หมายเหตุ</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">3</th>
+                                <td colspan="2">Larry the Bird</td>
+                                <td>@twitter</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                          </div>
+                        </div>
+                        <div
+                          class="tab-pane fade"
+                          id="nav-profile"
+                          role="tabpanel"
+                          aria-labelledby="nav-profile-tab"
+                        >
+                          ...
+                        </div>
+                        <div
+                          class="tab-pane fade"
+                          id="nav-contact"
+                          role="tabpanel"
+                          aria-labelledby="nav-contact-tab"
+                        >
+                          ...
                         </div>
                       </div>
+                      <!-- <table class="table table-hover border border-2 border-success">
+                    <thead class="border border-2 border-success border-bottom">
+                      <tr>
+                        <th scope="col">ชื่อ-สกุล</th>
+                        <th scope="col">สังกัด</th>
+                        <th scope="col">เลขก่อน</th>
+                        <th scope="col">เลขหลัง</th>
+                        <th scope="col">ค่าบำรุง</th>
+                        <th scope="col">ค่าน้ำประปา</th>
+                        <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                        <th scope="col">รวม</th>
+                        <th scope="col">หักได้</th>
+                        <th scope="col">หักไม่ได้</th>
+                        <th scope="col">สาเหตุหักไม่ได้</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, index) in expensesList" :key="index">
+                        <td>
+                          {{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}
+                        </td>
+
+                        <td>{{ item?.affiliation }}</td>
+                        <td>{{ item?.installments }}</td>
+                        <td>{{ item?.insurancecost }}</td>
+                        <td>{{ item?.sumCost }}</td>
+                        <td>{{ item?.waterbill }}</td>
+                        <td>{{ item?.central }}</td>
+                        <td>{{ item?.costs }}</td>
+                        <td>/</td>
+                        <td>-</td>
+                        <td>{{ item?.contract }}</td>
+                      </tr>
+                    </tbody>
+                  </table> -->
                     </div>
 
                     <!-- <div>
@@ -458,7 +600,6 @@ export default {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>
