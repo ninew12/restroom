@@ -187,220 +187,186 @@ export default {
   <section>
     <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
       <div class="page-header min-vh-45">
-        <div class="container">
+        <div class="container-fluid">
           <div>
             <Breadcrumbs
               :routes="[{ label: 'หน้าหลัก', route: '/' }, { label: 'ระบบเรียกรายงาน' }]"
             />
           </div>
           <h4>ระบบเรียกรายงาน ประจำเดือน พฤศจิกายน</h4>
-          <div>
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item" role="presentation">
+          <div class="row pt-4 min-vh-45">
+            <div class="col-lg-3">
+              <div
+                class="nav flex-column nav-pills me-3"
+                id="v-pills-tab"
+                role="tablist"
+                aria-orientation="vertical"
+              >
                 <button
                   class="nav-link active"
-                  style="color: #57b05b"
-                  id="home-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#home"
+                  id="v-pills-home-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-home"
                   type="button"
                   role="tab"
-                  aria-controls="home"
+                  aria-controls="v-pills-home"
                   aria-selected="true"
                 >
                   บัญชีรายชื่อผู้พักอาศัยที่ถอนเงินเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง
                   ตร
                 </button>
-              </li>
-              <li class="nav-item" role="presentation">
                 <button
                   class="nav-link"
-                  style="color: #57b05b"
-                  id="home2-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#home2"
+                  id="v-pills-messages-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-messages"
                   type="button"
                   role="tab"
-                  aria-controls="home"
-                  aria-selected="true"
+                  aria-controls="v-pills-messages"
+                  aria-selected="false"
                 >
                   บัญชียอดหักค่าไฟฟ่าส่วนกลาง และค่าบํารุงลิฟตเพิ่มเติมประจําเดือน
                 </button>
-              </li>
-              <li class="nav-item" role="presentation">
                 <button
                   class="nav-link"
-                  style="color: #57b05b"
-                  id="home3-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#home3"
+                  id="v-pills2-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills2-tab"
                   type="button"
                   role="tab"
-                  aria-controls="home"
-                  aria-selected="true"
+                  aria-controls="v-pills2-tab"
+                  aria-selected="false"
                 >
                   บัญชีถอนค่าไฟฟ่าส่วนกลาง และค่าบํารุงลิฟตเพิ่มเติมประจําเดือน
                 </button>
-              </li>
-              <li class="nav-item" role="presentation">
                 <button
                   class="nav-link"
-                  style="color: #57b05b"
-                  id="home4-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#home4"
+                  id="v-pills3-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills3-tab"
                   type="button"
                   role="tab"
-                  aria-controls="home"
-                  aria-selected="true"
+                  aria-controls="v-pills3-tab"
+                  aria-selected="false"
                 >
                   บัญชีสรุป ยอดเงิน แยกตามบ้านพัก ของ ตร กับ ตชด
                 </button>
-              </li>
-              <li class="nav-item" role="presentation">
                 <button
                   class="nav-link"
-                  style="color: #57b05b"
-                  id="home5-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#home5"
+                  id="v-pills4-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills4-tab"
                   type="button"
                   role="tab"
-                  aria-controls="home"
-                  aria-selected="true"
+                  aria-controls="v-pills4-tab"
+                  aria-selected="false"
+                >
+                  บัญชีการหักเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย
+                </button>
+                <button
+                  class="nav-link"
+                  id="v-pills5-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills5-tab"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills5-tab"
+                  aria-selected="false"
                 >
                   บัญชีสรุปส่งการเงิน
                 </button>
-              </li>
-            </ul>
-            <div class="tab-content" id="myTabContent">
-              <div
-                class="tab-pane fade show active"
-                id="home"
-                role="tabpanel"
-                aria-labelledby="home-tab"
-              >
-                <div class="text-center pt-4 table-responsive">
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <button
-                        class="nav-link active"
-                        style="color: #57b05b"
-                        id="nav-home-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#nav-home"
-                        type="button"
-                        role="tab"
-                        aria-controls="nav-home"
-                        aria-selected="true"
-                      >
-                        ตร.
-                      </button>
-                      <button
-                        class="nav-link"
-                        style="color: #57b05b"
-                        id="nav-profile-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#nav-profile"
-                        type="button"
-                        role="tab"
-                        aria-controls="nav-profile"
-                        aria-selected="false"
-                      >
-                        บช.ตชด.
-                      </button>
-                    </div>
-                  </nav>
-                  <div class="tab-content" id="nav-tabContent">
-                    <div
-                      class="tab-pane fade show active"
-                      id="nav-home"
-                      role="tabpanel"
-                      aria-labelledby="nav-home-tab"
-                    >
-                      <div>
-                        <div class="pt-4 text-start">
-                          <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
-                          <div class="mb-3">
-                            <div class="form-check form-check-inline">
-                              <label style="margin-right: 20px">ประเภท</label>
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="typeUser"
-                                id="inlinetypeUser1"
-                                value="ตร."
-                                @change="typeUserchange($event)"
-                                checked
-                              />
-                              <label class="form-check-label" for="inlinetypeUser1"
-                                >บัญชีหน้างบ</label
-                              >
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="typeUser"
-                                id="inlinetypeUser"
-                                value="บช.ตชด."
-                                @change="typeUserchange($event)"
-                              />
-                              <label class="form-check-label" for="inlinetypeUser">
-                                รายละเอียดการหักเงินค่าบํารุงสถานที่
-                                และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
-                              >
-                            </div>
-                          </div>
-                          <div class="d-flex justify-content-end align-items-center">
-                            <div class="mb-3 w-20" style="margin-right: 5px">
-                              <label>เดือน</label>
-                              <v-select
-                                :options="optionMonth"
-                                v-model="selectedMonth"
-                              ></v-select>
-                            </div>
-                            <div class="mb-3 w-20">
-                              <label>สังกัด</label>
-                              <v-select
-                                :options="masterData?.Affiliation"
-                                v-model="selectedAffiliation"
-                              ></v-select>
-                            </div>
-
-                            <div>
-                              <MaterialButton
-                                size="lg"
-                                class="btn-icon"
-                                style="margin-right: -30px"
-                              >
-                                <div class="d-flex align-items-center">
-                                  <span style="margin-right: 5px">บันทึก</span>
-                                  <img
-                                    src="../../assets/img/pdf.png"
-                                    alt="title"
-                                    loading="lazy"
-                                    width="40"
-                                  />
-                                </div>
-                              </MaterialButton>
-                              <MaterialButton size="lg" class="btn-icon">
-                                <div class="d-flex align-items-center">
-                                  <span style="margin-right: 5px">บันทึก</span>
-                                  <img
-                                    src="../../assets/img/excel.png"
-                                    alt="title"
-                                    loading="lazy"
-                                    width="40"
-                                  />
-                                </div>
-                              </MaterialButton>
-                            </div>
-                          </div>
+              </div>
+            </div>
+            <div class="col-lg-9">
+              <div class="tab-content" id="v-pills-tabContent">
+                <div
+                  class="tab-pane fade show active"
+                  id="v-pills-home"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-home-tab"
+                >
+                  <div>
+                    <div class="pt-4 text-start">
+                      <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                      <div class="mb-3">
+                        <div class="form-check form-check-inline">
+                          <label style="margin-right: 20px">ประเภท</label>
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="typeUser"
+                            id="inlinetypeUser1"
+                            value="ตร."
+                            @change="typeUserchange($event)"
+                            checked
+                          />
+                          <label class="form-check-label" for="inlinetypeUser1"
+                            >บัญชีหน้างบ</label
+                          >
                         </div>
-                      
-                  
-                        <!-- <div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="typeUser"
+                            id="inlinetypeUser"
+                            value="บช.ตชด."
+                            @change="typeUserchange($event)"
+                          />
+                          <label class="form-check-label" for="inlinetypeUser">
+                            รายละเอียดการหักเงินค่าบํารุงสถานที่
+                            และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                          >
+                        </div>
+                      </div>
+                      <div class="d-flex justify-content-end align-items-center">
+                        <div class="mb-3 w-20" style="margin-right: 5px">
+                          <label>เดือน</label>
+                          <v-select
+                            :options="optionMonth"
+                            v-model="selectedMonth"
+                          ></v-select>
+                        </div>
+                        <div class="mb-3 w-20">
+                          <label>สังกัด</label>
+                          <v-select
+                            :options="masterData?.Affiliation"
+                            v-model="selectedAffiliation"
+                          ></v-select>
+                        </div>
+
+                        <div>
+                          <MaterialButton
+                            size="lg"
+                            class="btn-icon"
+                            style="margin-right: -30px"
+                          >
+                            <div class="d-flex align-items-center">
+                              <span style="margin-right: 5px">บันทึก</span>
+                              <img
+                                src="../../assets/img/pdf.png"
+                                alt="title"
+                                loading="lazy"
+                                width="40"
+                              />
+                            </div>
+                          </MaterialButton>
+                          <MaterialButton size="lg" class="btn-icon">
+                            <div class="d-flex align-items-center">
+                              <span style="margin-right: 5px">บันทึก</span>
+                              <img
+                                src="../../assets/img/excel.png"
+                                alt="title"
+                                loading="lazy"
+                                width="40"
+                              />
+                            </div>
+                          </MaterialButton>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- <div>
                           <p class="text-center mt-4" style="text-decoration: underline">
                           บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด.
                         </p>
@@ -447,270 +413,52 @@ export default {
                             </tbody>
                           </table>
                         </div> -->
-                      </div>
-                    </div>
-                    <div
-                      class="tab-pane fade"
-                      id="nav-profile"
-                      role="tabpanel"
-                      aria-labelledby="nav-profile-tab"
-                    >
-                      ...
-                    </div>
-                    <div
-                      class="tab-pane fade"
-                      id="nav-contact"
-                      role="tabpanel"
-                      aria-labelledby="nav-contact-tab"
-                    >
-                      ...
-                    </div>
                   </div>
-                  <!-- <table class="table table-hover border border-2 border-success">
-                    <thead class="border border-2 border-success border-bottom">
-                      <tr>
-                        <th scope="col">ชื่อ-สกุล</th>
-                        <th scope="col">สังกัด</th>
-                        <th scope="col">เลขก่อน</th>
-                        <th scope="col">เลขหลัง</th>
-                        <th scope="col">ค่าบำรุง</th>
-                        <th scope="col">ค่าน้ำประปา</th>
-                        <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
-                        <th scope="col">รวม</th>
-                        <th scope="col">หักได้</th>
-                        <th scope="col">หักไม่ได้</th>
-                        <th scope="col">สาเหตุหักไม่ได้</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item, index) in expensesList" :key="index">
-                        <td>
-                          {{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}
-                        </td>
-
-                        <td>{{ item?.affiliation }}</td>
-                        <td>{{ item?.installments }}</td>
-                        <td>{{ item?.insurancecost }}</td>
-                        <td>{{ item?.sumCost }}</td>
-                        <td>{{ item?.waterbill }}</td>
-                        <td>{{ item?.central }}</td>
-                        <td>{{ item?.costs }}</td>
-                        <td>/</td>
-                        <td>-</td>
-                        <td>{{ item?.contract }}</td>
-                      </tr>
-                    </tbody>
-                  </table> -->
                 </div>
               </div>
-              <div
-                class="tab-pane fade"
-                id="profile"
-                role="tabpanel"
-                aria-labelledby="profile-tab"
-              >
-                <div class="d-flex justify-content-between align-items-baseline">
-                  <div>
-                    <h5>ประจำเดือน พฤศจิกายน</h5>
-                    <br />
-                    <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5>
-                  </div>
-                  <div class="d-flex pt-4">
-                    <MaterialButton
-                      size="lg"
-                      class="btn-icon"
-                      style="margin-right: -30px"
-                    >
-                      <div class="d-flex align-items-center">
-                        <span style="margin-right: 5px">บันทึก</span>
-                        <img
-                          src="../../assets/img/pdf.png"
-                          alt="title"
-                          loading="lazy"
-                          width="40"
-                        />
-                      </div>
-                    </MaterialButton>
-                    <MaterialButton size="lg" class="btn-icon">
-                      <div class="d-flex align-items-center">
-                        <span style="margin-right: 5px">บันทึก</span>
-                        <img
-                          src="../../assets/img/excel.png"
-                          alt="title"
-                          loading="lazy"
-                          width="40"
-                        />
-                      </div>
-                    </MaterialButton>
-                  </div>
-                </div>
-                <div class="text-center pt-4">
-                  <table class="table table-hover border border-2 border-success">
-                    <thead class="border border-2 border-success border-bottom">
-                      <tr>
-                        <th scope="col">ชื่อ-สกุล</th>
-                        <th scope="col">สังกัด</th>
-                        <th scope="col">เลขก่อน</th>
-                        <th scope="col">เลขหลัง</th>
-                        <th scope="col">ค่าบำรุง</th>
-                        <!-- <th scope="col">ค่าบำรุง</th> -->
-                        <th scope="col">ค่าน้ำประปา</th>
-                        <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
-                        <th scope="col">รวม</th>
-                        <th scope="col">หักได้</th>
-                        <th scope="col">หักไม่ได้</th>
-                        <th scope="col">สาเหตุหักไม่ได้</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item, index) in expensesList" :key="index">
-                        <!-- <th scope="row">{{ index + 1 }}</th> -->
-                        <td>
-                          {{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}
-                        </td>
-
-                        <td>{{ item?.affiliation }}</td>
-                        <td>{{ item?.installments }}</td>
-                        <td>{{ item?.insurancecost }}</td>
-                        <td>{{ item?.sumCost }}</td>
-                        <!-- <td>{{ item?.Maintenancefee }}</td> -->
-                        <td>{{ item?.waterbill }}</td>
-                        <!-- <td>{{ item?.waterbill }}</td> -->
-                        <td>{{ item?.central }}</td>
-                        <td>{{ item?.costs }}</td>
-                        <!-- <td>{{ item?.sumCost }}</td>
-                        <td>{{ item?.sumbill }}</td> -->
-                        <td>/</td>
-                        <td>-</td>
-                        <!-- {{ item?.typeContract }} -->
-                        <td>{{ item?.contract }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+              <div class="tab-content" id="v-pills-tabContent">
+                <div
+                  class="tab-pane fade show"
+                  id="v-pills-messages-tab"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-messages-tab"
+                ></div>
               </div>
-              <div
-                class="tab-pane fade"
-                id="bill"
-                role="tabpanel"
-                aria-labelledby="bill-tab"
-              >
-                <div class="text-center pt-4">
-                  <table class="table table-hover border border-2 border-success">
-                    <thead class="border border-2 border-success border-bottom">
-                      <tr>
-                        <th scope="col">ลำดับ</th>
-                        <th scope="col">เดือน</th>
-                        <th scope="col">อาคารบ้านพัก</th>
-                        <th scope="col"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>พฤศจิกายน</td>
-                        <td>อาคารบ้านพัก บช. ตชด.</td>
-                        <td>
-                          <MaterialButton
-                            size="lg"
-                            class="btn-icon"
-                            style="margin-right: -0px"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/pdf.png"
-                                alt="title"
-                                loading="lazy"
-                                width="24"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton size="lg" class="btn-icon">
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="24"
-                              />
-                            </div>
-                          </MaterialButton>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>พฤศจิกายน</td>
-                        <td>อาคารบ้านพักส่วนกลาง</td>
-                        <td>
-                          <MaterialButton
-                            size="lg"
-                            class="btn-icon"
-                            style="margin-right: -0px"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/pdf.png"
-                                alt="title"
-                                loading="lazy"
-                                width="24"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton size="lg" class="btn-icon">
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="24"
-                              />
-                            </div>
-                          </MaterialButton>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>พฤศจิกายน</td>
-                        <td>อาคารบ้านพัก ตร.</td>
-                        <td>
-                          <MaterialButton
-                            size="lg"
-                            class="btn-icon"
-                            style="margin-right: -0px"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/pdf.png"
-                                alt="title"
-                                loading="lazy"
-                                width="24"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton size="lg" class="btn-icon">
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="24"
-                              />
-                            </div>
-                          </MaterialButton>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
+              <div class="tab-content" id="v-pills-tabContent">
+                <div
+                  class="tab-pane fade show"
+                  id="v-pills2-tab"
+                  role="tabpanel"
+                  aria-labelledby="v-pills2-tab"
+                ></div>
+              </div>
+              <div class="tab-content" id="v-pills-tabContent">
+                <div
+                  class="tab-pane fade show"
+                  id="v-pills3-tab"
+                  role="tabpanel"
+                  aria-labelledby="v-pills3-tab"
+                ></div>
+              </div>
+              <div class="tab-content" id="v-pills-tabContent">
+                <div
+                  class="tab-pane fade show"
+                  id="v-pills4-tab"
+                  role="tabpanel"
+                  aria-labelledby="v-pills4-tab"
+                ></div>
+              </div>
+              <div class="tab-content" id="v-pills-tabContent">
+                <div
+                  class="tab-pane fade show"
+                  id="v-pills5-tab"
+                  role="tabpanel"
+                  aria-labelledby="v-pills5-tab"
+                ></div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>

@@ -99,11 +99,13 @@ export default {
           .get("http://localhost:3001/expenses")
           .then((res) => {
             let data = [];
+            let arr = [];
             let data2 = [];
             this.expensesListOld = res.data;
             this.expensesList = res.data;
             data = this.expensesList.filter((ele) => ele.typeUser == "บช.ตชด.");
-            data2 = data.map((el) => {
+            arr = data.filter((ele) => ele.queue == "inroom");
+            data2 = arr.map((el) => {
               return {
                 ...el,
                 sumCost: this.countSum(el),
@@ -112,7 +114,7 @@ export default {
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
-
+            console.log( data2);
             const myString = data2[0].monthly;
             const splits = myString.split("/");
             if (splits[0] !== undefined) {
