@@ -406,7 +406,7 @@ export default {
                             </div>
 
                             <div>
-                          <p class="text-center mt-4" style="text-decoration: underline">
+                          <!-- <p class="text-center mt-4" style="text-decoration: underline">
                           บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด.
                         </p>
                         <p class="text-center" style="text-decoration: underline">
@@ -415,7 +415,7 @@ export default {
                         </p>
                         <p class="text-center" style="text-decoration: underline">
                           ประจำเดือน ตุลาคม พ.ศ. 2566 หน่วยงาน บช.ตชด.
-                        </p>
+                        </p> -->
                           <table class="table table table-bordered">
                             <thead>
                               <tr>
