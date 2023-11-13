@@ -114,14 +114,16 @@ export default {
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
-            console.log( data2);
-            const myString = data2[0].monthly;
+            
+            data2.forEach(element => {
+            const myString = element.monthly;
             const splits = myString.split("/");
             if (splits[0] !== undefined) {
               const d = new Date();
               let m = this.optionMonth[d.getMonth()];
               if (m == splits[0]) this.openBtn = true;
             }
+            });
 
             // พฤศจิกายน/2023
             this.expensesList = data2;
