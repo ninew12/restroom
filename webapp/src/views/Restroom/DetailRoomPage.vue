@@ -498,6 +498,7 @@ export default {
                           <th scope="col">ลำดับ</th>
                           <th scope="col">ชื่อ-สกุล</th>
                           <th scope="col">สังกัด</th>
+                          <th scope="col">ชื่ออาคาร</th>
                           <th scope="col">เลขบัตรประชาชน</th>
                           <th scope="col">เบอร์ติดต่อ</th>
                           <th scope="col">เลขลงรับหนังสือ</th>
@@ -508,12 +509,13 @@ export default {
                         <tr v-for="(item, index) in queuefilter" :key="index">
                           <th scope="row">{{ item.no }}</th>
                           <td>
-                            {{ item.rank }} {{ item.firstName }} {{ item.lastName }}
+                            {{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}
                           </td>
-                          <td>{{ item.Affiliation }}</td>
-                          <td>{{ item.idcard }}</td>
-                          <td>{{ item.phone }}</td>
-                          <td>{{ item.bookNumber }}</td>
+                          <td>{{ item?.Affiliation }}</td>
+                          <td>{{ item?.buildingName }}</td>
+                          <td>{{ item?.idcard }}</td>
+                          <td>{{ item?.phone }}</td>
+                          <td>{{ item?.bookNumber }}</td>
                           <td>
                             <MaterialButton
                               variant="gradient"
