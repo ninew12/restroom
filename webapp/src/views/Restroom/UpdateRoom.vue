@@ -119,7 +119,7 @@ export default {
     async getRooms(id) {
       try {
         await axios
-          .get(`http://localhost:3001/rooms/${id}`)
+          .get(`http://localhost:3897/rooms/${id}`)
           .then((res) => {
             this.roomData = res.data;
             this.numberRoom = this.roomData.numberRoom;
@@ -139,7 +139,7 @@ export default {
     async getRoomsBynumberRoom(roomId) {
       try {
         await axios
-          .get(`http://localhost:3001/usersRoom/${roomId}`)
+          .get(`http://localhost:3897/usersRoom/${roomId}`)
           .then((res) => {
             this.userId = res.data.id;
           })
@@ -154,7 +154,7 @@ export default {
     async getHistoryRoom(id) {
       try {
         await axios
-          .get(`http://localhost:3001/history/${id}`)
+          .get(`http://localhost:3897/history/${id}`)
           .then((res) => {
             if (res.data.customerOld == "คืนห้องพักแล้ว") {
               this.historyOld = res.data;
@@ -198,7 +198,7 @@ export default {
         roomconditions: this.Roomconditions,
       };
       axios
-        .put(`http://localhost:3001/rooms/${this.id}`, body, {
+        .put(`http://localhost:3897/rooms/${this.id}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -222,7 +222,7 @@ export default {
         leniency: this.leniency,
       };
       axios
-        .put(`http://localhost:3001/rooms/${this.id}`, body, {
+        .put(`http://localhost:3897/rooms/${this.id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -260,7 +260,7 @@ export default {
         customerOld: "คืนห้องพักแล้ว",
       };
       axios
-        .put(`http://localhost:3001/rooms/${this.id}`, body, {
+        .put(`http://localhost:3897/rooms/${this.id}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -295,7 +295,7 @@ export default {
         dateReturn: this.dateApp.toISOString(),
         customerOld: "คืนห้องพักแล้ว",
       };
-      axios.put(`http://localhost:3001/users/${this.userId}`, body, {
+      axios.put(`http://localhost:3897/users/${this.userId}`, body, {
         headers: {
           // remove headers
           "Access-Control-Allow-Origin": "*",
@@ -318,7 +318,7 @@ export default {
         dateReturn: this.dateApp.toISOString(),
         customerOld: "คืนห้องพักแล้ว",
       };
-      axios.put(`http://localhost:3001/users/${this.userId}`, body, {
+      axios.put(`http://localhost:3897/users/${this.userId}`, body, {
         headers: {
           // remove headers
           "Access-Control-Allow-Origin": "*",

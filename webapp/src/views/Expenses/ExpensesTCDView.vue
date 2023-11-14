@@ -98,7 +98,7 @@ export default {
     async getExpenses() {
       try {
         await axios
-          .get("http://localhost:3001/expenses")
+          .get("http://localhost:3897/expenses")
           .then((res) => {
             let data = [];
             let arr = [];
@@ -165,7 +165,7 @@ export default {
       this.id = id;
       try {
         await axios
-          .get(`http://localhost:3001/users/${id}`)
+          .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
             this.userByid = res.data;
             this.rank = this.userByid.rank;
@@ -224,7 +224,7 @@ export default {
         monthly: `${this.months}/${this.years}`,
       };
       await axios
-        .put(`http://localhost:3001/users/${id}`, body, {
+        .put(`http://localhost:3897/users/${id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -249,7 +249,7 @@ export default {
         amountPaid: index.amountPaid,
         monthly: `${this.months}/${this.years}`,
       };
-      await axios.put(`http://localhost:3001/report/${id}`, body, {
+      await axios.put(`http://localhost:3897/report/${id}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",

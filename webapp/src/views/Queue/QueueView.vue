@@ -101,7 +101,7 @@ export default {
     getAllqueue() {
       try {
         axios
-          .get(`http://localhost:3001/queue/inqueue`)
+          .get(`http://localhost:3897/queue/inqueue`)
           .then((res) => {
             this.queueList = res.data;
             this.olddatatypeQueue = this.queueList;
@@ -121,7 +121,7 @@ export default {
       this.userId = id;
       try {
         axios
-          .get(`http://localhost:3001/users/${id}`)
+          .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
             let data = res.data;
             this.userByid = data;
@@ -137,7 +137,7 @@ export default {
     getAllNoqueue() {
       try {
         axios
-          .get(`http://localhost:3001/queue/none`)
+          .get(`http://localhost:3897/queue/none`)
           .then((res) => {
             this.userList = res.data.map((ele) => {
               return {
@@ -156,7 +156,7 @@ export default {
     getAllbuildings() {
       try {
         axios
-          .get(`http://localhost:3001/buildings/`)
+          .get(`http://localhost:3897/buildings/`)
           .then((res) => {
             this.building = res.data.map((ele) => {
               return {
@@ -175,7 +175,7 @@ export default {
     getAllusers() {
       try {
         axios
-          .get("http://localhost:3001/users")
+          .get("http://localhost:3897/users")
           .then((res) => {
             this.userList = res.data.map((ele) => {
               return {
@@ -204,7 +204,7 @@ export default {
       };
       delete body.id;
       axios
-        .put(`http://localhost:3001/queue/${this.userId}`, body, {
+        .put(`http://localhost:3897/queue/${this.userId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -228,7 +228,7 @@ export default {
       };
       delete body.id;
       axios
-        .put(`http://localhost:3001/queue/${this.userId}`, body, {
+        .put(`http://localhost:3897/queue/${this.userId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -248,7 +248,7 @@ export default {
       };
       delete body.id;
       axios
-        .put(`http://localhost:3001/queue/${this.userId}`, body, {
+        .put(`http://localhost:3897/queue/${this.userId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",

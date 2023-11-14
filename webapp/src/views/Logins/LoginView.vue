@@ -31,20 +31,28 @@ export default {
         password: this.password,
       };
       axios
-        .post(`http://localhost:3001/login`, body, {
+        .post(`http://localhost:3897/login`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
           },
         })
         .then((res) => {
-          localStorage.setItem("user", JSON.stringify(body));
-          this.$router.push({ path: `/home` });
+          console.log(res);
+          if (res.data == "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง") {
+            notify({
+              title: "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง",
+              type: "error",
+            });
+          } else {
+            localStorage.setItem("user", JSON.stringify(body));
+            this.$router.push({ path: `/home` });
 
-          notify({
-            title: "login สำเร็จ",
-            type: "success",
-          });
+            notify({
+              title: "เข้าสู่ระบบสำเร็จ",
+              type: "success",
+            });
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -119,7 +127,7 @@ export default {
   </Header>
 </template>
 <style>
-.bg{
+.bg {
   background-image: url("../../assets/img/bg.jpg");
 }
 </style>

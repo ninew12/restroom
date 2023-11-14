@@ -87,7 +87,7 @@ export default {
     getAllqueue() {
       try {
         axios
-          .get(`http://localhost:3001/queue/inqueue`)
+          .get(`http://localhost:3897/queue/inqueue`)
           .then((res) => {
             this.queueList = res.data;
             this.queuefilter = this.queueList.filter((e) => e.typeRoom === this.typeroom);
@@ -103,7 +103,7 @@ export default {
     getAllinqueue() {
       try {
         axios
-          .get(`http://localhost:3001/users`)
+          .get(`http://localhost:3897/users`)
           .then((res) => {
             this.userList = res.data.map((ele) => {
               return {
@@ -124,7 +124,7 @@ export default {
       this.userId = id;
       try {
         axios
-          .get(`http://localhost:3001/users/${id}`)
+          .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
             let data = res.data;
             this.userByid = data;
@@ -139,7 +139,7 @@ export default {
 
     async getroomByid(id) {
       try {
-        axios.get(`http://localhost:3001/rooms/${id}`).then((res) => {
+        axios.get(`http://localhost:3897/rooms/${id}`).then((res) => {
           this.data = res.data;
           this.dateApproved = this.convertDateTolocal(this.data.dateApproved);
 
@@ -179,7 +179,7 @@ export default {
       this.userId = id;
       try {
         axios
-          .get(`http://localhost:3001/users/${id}`)
+          .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
             let data = res.data;
             this.userByid = data;
@@ -209,7 +209,7 @@ export default {
         dateApproved: this.dateApp.toISOString(),
       };
       await axios
-        .post(`http://localhost:3001/history`, body, {
+        .post(`http://localhost:3897/history`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -240,7 +240,7 @@ export default {
         roomId: this.roomId,
         roomnumber: this.numberRoom,
       };
-      await axios.put(`http://localhost:3001/users/${this.userId}`, body, {
+      await axios.put(`http://localhost:3897/users/${this.userId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -262,7 +262,7 @@ export default {
         roomnumber: this.numberRoom,
         dateApproved: this.dateApp.toISOString(),
       };
-      await axios.post(`http://localhost:3001/report`, body, {
+      await axios.post(`http://localhost:3897/report`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -283,7 +283,7 @@ export default {
         roomnumber: this.numberRoom,
         dateApproved: this.dateApp.toISOString(),
       };
-      await axios.post(`http://localhost:3001/report`, body, {
+      await axios.post(`http://localhost:3897/report`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -303,7 +303,7 @@ export default {
         amountPaid: this.amountPaid,
       };
 
-      await axios.put(`http://localhost:3001/queue/${this.userId}`, body, {
+      await axios.put(`http://localhost:3897/queue/${this.userId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -325,7 +325,7 @@ export default {
       };
 
       await axios
-        .put(`http://localhost:3001/rooms/${this.id}`, body, {
+        .put(`http://localhost:3897/rooms/${this.id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -375,7 +375,7 @@ export default {
       };
 
       await axios
-        .put(`http://localhost:3001/rooms/${this.id}`, body, {
+        .put(`http://localhost:3897/rooms/${this.id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",

@@ -127,7 +127,7 @@ export default {
         listRoom: this.FloorsList,
       };
       await axios
-        .post(`http://localhost:3001/buildings`, body, {
+        .post(`http://localhost:3897/buildings`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -154,7 +154,7 @@ export default {
       // let body = floorsList
       floorsLoop = floorsList;
       await floorsLoop.forEach((x) => {
-        axios.post(`http://localhost:3001/rooms`, x, {
+        axios.post(`http://localhost:3897/rooms`, x, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -171,7 +171,7 @@ export default {
     async getBuildings() {
       try {
         await axios
-          .get("http://localhost:3001/buildings")
+          .get("http://localhost:3897/buildings")
           .then((res) => {
             this.buildingList = res.data;
           })
@@ -186,7 +186,7 @@ export default {
     async getBuildingByid(id) {
       try {
         await axios
-          .get(`http://localhost:3001/buildings/${id}`)
+          .get(`http://localhost:3897/buildings/${id}`)
           .then((res) => {
             let data = res.data;
             this.building_Id = data.buildingId;

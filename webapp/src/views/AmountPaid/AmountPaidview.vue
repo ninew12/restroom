@@ -97,7 +97,7 @@ export default {
     async getExpenses() {
       try {
         await axios
-          .get("http://localhost:3001/expenses")
+          .get("http://localhost:3897/expenses")
           .then((res) => {
             let data = [];
             let arr = [];
@@ -135,7 +135,7 @@ export default {
       //   this.id = id;
       try {
         await axios
-          .get(`http://localhost:3001/users/`)
+          .get(`http://localhost:3897/users/`)
           .then((res) => {
             console.log(res);
             // this.userByid = res.data;
@@ -200,7 +200,7 @@ export default {
         deposit: "คืนเงินประกันแล้ว",
       };
       await axios
-        .put(`http://localhost:3001/users/${data.id}`, body, {
+        .put(`http://localhost:3897/users/${data.id}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -233,7 +233,7 @@ export default {
         installments: " ",
         deposit: " ",
       };
-      axios.put(`http://localhost:3001/rooms/${id}`, body, {
+      axios.put(`http://localhost:3897/rooms/${id}`, body, {
         headers: {
           // remove headers
           "Access-Control-Allow-Origin": "*",

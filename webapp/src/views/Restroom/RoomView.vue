@@ -57,7 +57,7 @@ export default {
     let userold = localStorage.getItem("user");
     if (userold === null) this.$router.push({ path: `/login` });
     try {
-      axios.get(`http://localhost:3001/users/`).then();
+      axios.get(`http://localhost:3897/users/`).then();
     } catch (e) {
       console.error(e);
     }
@@ -111,7 +111,7 @@ export default {
     async roomType() {
       this.dataBuilding["listRoom"] = [];
       let buildingList = [];
-      let datalist = await axios.get(`http://localhost:3001/buildings/`);
+      let datalist = await axios.get(`http://localhost:3897/buildings/`);
       buildingList = await datalist.data.find(
         (el) => el.name == this.selectedlistRoom.value
       );
@@ -131,7 +131,7 @@ export default {
     async getRooms() {
       try {
         await axios
-          .get("http://localhost:3001/rooms")
+          .get("http://localhost:3897/rooms")
           .then((res) => {
             this.roomData = res.data;
             this.oldData = this.roomData;
@@ -146,7 +146,7 @@ export default {
     },
     async buildById(id) {
       try {
-        axios.get(`http://localhost:3001/rooms/`).then((res) => {
+        axios.get(`http://localhost:3897/rooms/`).then((res) => {
           let broom = [];
           let buidingRoom = res.data;
           // let buidingRoomOld = buidingRoom;
@@ -169,7 +169,7 @@ export default {
     },
     async getBuildings() {
       try {
-        axios.get(`http://localhost:3001/buildings/`).then((res) => {
+        axios.get(`http://localhost:3897/buildings/`).then((res) => {
           this.buildingList = res.data;
           this.typeRoomselect = res.data;
           this.listRoom = this.buildingList.map((e) => {
@@ -196,7 +196,7 @@ export default {
         committee: this.committee,
       };
       axios
-        .put(`http://localhost:3001/buildings/${this.buidingId}`, body, {
+        .put(`http://localhost:3897/buildings/${this.buidingId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",

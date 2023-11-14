@@ -100,7 +100,7 @@ export default {
 
     async editUser(id) {
       await axios
-        .get(`http://localhost:3001/users/${id}`)
+        .get(`http://localhost:3897/users/${id}`)
         .then((res) => {
           let data = res.data;
           this.id = id;
@@ -141,7 +141,7 @@ export default {
       };
 
       axios
-        .put(`http://localhost:3001/users/${this.id}`, body, {
+        .put(`http://localhost:3897/users/${this.id}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -184,7 +184,7 @@ export default {
         maintenance: maintenance,
       };
       axios
-        .post(`http://localhost:3001/users`, body, {
+        .post(`http://localhost:3897/users`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -205,7 +205,7 @@ export default {
     async getAlluser() {
       try {
         await axios
-          .get("http://localhost:3001/users")
+          .get("http://localhost:3897/users")
           .then((res) => {
             this.dataUser = res.data;
             this.olddata = res.data;

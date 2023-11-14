@@ -123,7 +123,7 @@ export default {
     async getExpenses() {
       try {
         await axios
-          .get("http://localhost:3001/expenses")
+          .get("http://localhost:3897/expenses")
           .then((res) => {
             this.expensesList = res.data;
             // console.log(res.data);
