@@ -100,6 +100,7 @@ export default {
       selectedYear: "2023",
       selectedMonth: "พฤศจิกายน",
       expensesList: [],
+      reportType: "บัญชีหน้างบ",
     };
   },
   created() {
@@ -107,6 +108,7 @@ export default {
     if (userold === null) this.$router.push({ path: `/login` });
     // this.getAllusers();
     this.getExpenses();
+    this.getReport();
   },
   watch: {
     selectedColor: function (newValue) {
@@ -127,6 +129,33 @@ export default {
           .then((res) => {
             this.expensesList = res.data;
             // console.log(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    typeUserchange(e) {
+      this.reportType = e;
+    },
+
+    async getReport() {
+      try {
+        await axios
+          .get("http://localhost:3897/report")
+          .then((res) => {
+            let data = [];
+            let data2 = [];
+            let data3 = res.data;
+            let data4 = res.data;
+            this.reportList = res.data;
+            data = data3.filter((el) => el.typeUser == "บช.ตชด.");
+            data2 = data4.filter((el) => el.typeUser == "ตร.");
+            console.log(data);
+            console.log(data2);
           })
           .catch((err) => {
             console.log(err);
@@ -192,7 +221,10 @@ export default {
         <div class="container-fluid">
           <div>
             <Breadcrumbs
-              :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ระบบเรียกรายงาน' }]"
+              :routes="[
+                { label: 'หน้าหลัก', route: '/home' },
+                { label: 'ระบบเรียกรายงาน' },
+              ]"
             />
           </div>
           <h4>ระบบเรียกรายงาน ประจำเดือน พฤศจิกายน</h4>
@@ -214,8 +246,7 @@ export default {
                   aria-controls="v-pills-home"
                   aria-selected="true"
                 >
-                  บัญชีรายชื่อผู้พักอาศัยที่ถอนเงินเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง
-                  ตร
+                  บัญชีสรุปส่งการเงิน
                 </button>
                 <button
                   class="nav-link"
@@ -233,10 +264,10 @@ export default {
                   class="nav-link"
                   id="v-pills2-tab"
                   data-bs-toggle="pill"
-                  data-bs-target="#v-pills2-tab"
+                  data-bs-target="#v-pills2"
                   type="button"
                   role="tab"
-                  aria-controls="v-pills2-tab"
+                  aria-controls="v-pills2"
                   aria-selected="false"
                 >
                   บัญชีถอนค่าไฟฟ่าส่วนกลาง และค่าบํารุงลิฟตเพิ่มเติมประจําเดือน
@@ -245,10 +276,10 @@ export default {
                   class="nav-link"
                   id="v-pills3-tab"
                   data-bs-toggle="pill"
-                  data-bs-target="#v-pills3-tab"
+                  data-bs-target="#v-pills3"
                   type="button"
                   role="tab"
-                  aria-controls="v-pills3-tab"
+                  aria-controls="v-pills3"
                   aria-selected="false"
                 >
                   บัญชีสรุป ยอดเงิน แยกตามบ้านพัก ของ ตร กับ ตชด
@@ -257,10 +288,10 @@ export default {
                   class="nav-link"
                   id="v-pills4-tab"
                   data-bs-toggle="pill"
-                  data-bs-target="#v-pills4-tab"
+                  data-bs-target="#v-pills4"
                   type="button"
                   role="tab"
-                  aria-controls="v-pills4-tab"
+                  aria-controls="v-pills4"
                   aria-selected="false"
                 >
                   บัญชีการหักเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย
@@ -269,13 +300,14 @@ export default {
                   class="nav-link"
                   id="v-pills5-tab"
                   data-bs-toggle="pill"
-                  data-bs-target="#v-pills5-tab"
+                  data-bs-target="#v-pills5"
                   type="button"
                   role="tab"
-                  aria-controls="v-pills5-tab"
+                  aria-controls="v-pills5"
                   aria-selected="false"
                 >
-                  บัญชีสรุปส่งการเงิน
+                  บัญชีรายชื่อผู้พักอาศัยที่ถอนเงินเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง
+                  ตร
                 </button>
               </div>
             </div>
@@ -335,13 +367,13 @@ export default {
                                   <input
                                     class="form-check-input"
                                     type="radio"
-                                    name="typeUser"
-                                    id="inlinetypeUser1"
-                                    value="ตร."
-                                    @change="typeUserchange($event)"
-                                    checked
+                                    name="typeUser1"
+                                    id="typeUser1"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
                                   />
-                                  <label class="form-check-label" for="inlinetypeUser1"
+                                  <label class="form-check-label" for="typeUser1"
                                     >บัญชีหน้างบ</label
                                   >
                                 </div>
@@ -349,12 +381,13 @@ export default {
                                   <input
                                     class="form-check-input"
                                     type="radio"
-                                    name="typeUser"
-                                    id="inlinetypeUser"
-                                    value="บช.ตชด."
-                                    @change="typeUserchange($event)"
+                                    name="typeUser2"
+                                    id="typeUser2"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
                                   />
-                                  <label class="form-check-label" for="inlinetypeUser">
+                                  <label class="form-check-label" for="typeUser2">
                                     รายละเอียดการหักเงินค่าบํารุงสถานที่
                                     และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
                                   >
@@ -406,54 +439,48 @@ export default {
                                 </div>
                               </div>
                             </div>
-
                             <div>
-                          <!-- <p class="text-center mt-4" style="text-decoration: underline">
-                          บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด.
-                        </p>
-                        <p class="text-center" style="text-decoration: underline">
-                          ที่หักเงินเดือนเป็นค่าบำรุงรักษาสถานที่
-                          และค่าประกันทรัพย์สินเสียหาย
-                        </p>
-                        <p class="text-center" style="text-decoration: underline">
-                          ประจำเดือน ตุลาคม พ.ศ. 2566 หน่วยงาน บช.ตชด.
-                        </p> -->
-                          <table class="table table table-bordered">
-                            <thead>
-                              <tr>
-                                <th rowspan="2">ลำดับ</th>
-                                <th scope="col">ยศ</th>
-                                <th scope="col">ชื่อ</th>
-                                <th scope="col">ชื่อสกุล</th>
-                                <th scope="col">อาคาร</th>
-                                <th scope="col">ห้อง</th>
-                                <th scope="col">ค่าบำรุง</th>
-                                <th scope="col">ยอดหัก</th>
-                                <th scope="col">ยอดหักสะสม</th>
-                                <th scope="col">หมายเหตุ</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">รายการ</th>
+                                    <th colspan="3">จำนวนเงิน(บาท)</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าธรรมเนียม</th>
+                                    <th>ค่าน้ําประปา</th>
+                                    <th>ค่าไฟฟ้าฯ</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>500</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                    <td>1100</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                    <td>1000</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมเงิน</th>
+                                    <th>900</th>
+                                    <th>200</th>
+                                    <th>1000</th>
+                                    <th>2100</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
                           </div>
                         </div>
                         <div
@@ -462,143 +489,2322 @@ export default {
                           role="tabpanel"
                           aria-labelledby="nav-profile-tab"
                         >
-                          ...
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser3"
+                                    id="inlinetypeUser11"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="inlinetypeUser11"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser4"
+                                    id="typeUser3"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser3">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">หน่วยงาน</th>
+                                    <th colspan="3">จำนวนเงิน</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าประกัน</th>
+                                    <th>ค่าบำรุง</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>900</td>
+                                    <td>-</td>
+                                    <td>900</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>500</td>
+                                    <td>900</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมเงิน</th>
+                                    <th>1300</th>
+                                    <th>500</th>
+                                    <th>1800</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade show"
+                  id="v-pills-messages"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-messages-tab"
+                >
+                  <div>
+                    <div class="text-center pt-4 table-responsive">
+                      <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button
+                            class="nav-link active"
+                            style="color: #57b05b"
+                            id="nav-home-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-home"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-home"
+                            aria-selected="true"
+                          >
+                            ตร.
+                          </button>
+                          <button
+                            class="nav-link"
+                            style="color: #57b05b"
+                            id="nav-profile-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-profile"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-profile"
+                            aria-selected="false"
+                          >
+                            บช.ตชด.
+                          </button>
+                        </div>
+                      </nav>
+                      <div class="tab-content" id="nav-tabContent">
+                        <div
+                          class="tab-pane fade show active"
+                          id="nav-home"
+                          role="tabpanel"
+                          aria-labelledby="nav-home-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser5"
+                                    id="typeUser5"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser5"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser6"
+                                    id="typeUser6"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser6">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div v-if="reportType == 'บัญชีหน้างบ'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">รายการ</th>
+                                    <th colspan="3">จำนวนเงิน(บาท)</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าธรรมเนียม</th>
+                                    <th>ค่าน้ําประปา</th>
+                                    <th>ค่าไฟฟ้าฯ</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>500</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                    <td>1100</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                    <td>1000</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมเงิน</th>
+                                    <th>900</th>
+                                    <th>200</th>
+                                    <th>1000</th>
+                                    <th>2100</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div v-if="reportType == 'ประกันทรัพย์สิน'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ลำดับ</th>
+                                    <th scope="col">เลขที่ห้อง</th>
+                                    <th scope="col">ชื่อ-สกุล</th>
+                                    <th scope="col">เลขก่อน</th>
+                                    <th scope="col">เลขหลัง</th>
+                                    <th scope="col">ยอดใช้</th>
+                                    <th scope="col">ค่าธรรมเนียม</th>
+                                    <th scope="col">ค่าน้ำ</th>
+                                    <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                                    <th scope="col">รวม</th>
+                                    <th scope="col">หักได้</th>
+                                    <th scope="col">หักไม่ได้</th>
+                                    <th scope="col">สาเหตุที่หักไม่ได้</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>/</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>202</td>
+                                    <td>ร.ต.อ.หญิง สุจิตรา ไพรสุวรรณ</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>-</td>
+                                    <td>/</td>
+                                    <td>ย้ายหน่วยงาน</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="6">รวมเงิน</th>
+                                    <th>400</th>
+                                    <th>200</th>
+                                    <th>400</th>
+                                    <th>1000</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
                         </div>
                         <div
                           class="tab-pane fade"
-                          id="nav-contact"
+                          id="nav-profile"
                           role="tabpanel"
-                          aria-labelledby="nav-contact-tab"
+                          aria-labelledby="nav-profile-tab"
                         >
-                          ...
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser7"
+                                    id="typeUser7"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser7"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser8"
+                                    id="typeUser8"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser8">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">หน่วยงาน</th>
+                                    <th colspan="3">จำนวนเงิน</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าประกัน</th>
+                                    <th>ค่าบำรุง</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>900</td>
+                                    <td>-</td>
+                                    <td>900</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>500</td>
+                                    <td>900</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมเงิน</th>
+                                    <th>1300</th>
+                                    <th>500</th>
+                                    <th>1800</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <!-- <table class="table table-hover border border-2 border-success">
-                    <thead class="border border-2 border-success border-bottom">
-                      <tr>
-                        <th scope="col">ชื่อ-สกุล</th>
-                        <th scope="col">สังกัด</th>
-                        <th scope="col">เลขก่อน</th>
-                        <th scope="col">เลขหลัง</th>
-                        <th scope="col">ค่าบำรุง</th>
-                        <th scope="col">ค่าน้ำประปา</th>
-                        <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
-                        <th scope="col">รวม</th>
-                        <th scope="col">หักได้</th>
-                        <th scope="col">หักไม่ได้</th>
-                        <th scope="col">สาเหตุหักไม่ได้</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(item, index) in expensesList" :key="index">
-                        <td>
-                          {{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}
-                        </td>
-
-                        <td>{{ item?.affiliation }}</td>
-                        <td>{{ item?.installments }}</td>
-                        <td>{{ item?.insurancecost }}</td>
-                        <td>{{ item?.sumCost }}</td>
-                        <td>{{ item?.waterbill }}</td>
-                        <td>{{ item?.central }}</td>
-                        <td>{{ item?.costs }}</td>
-                        <td>/</td>
-                        <td>-</td>
-                        <td>{{ item?.contract }}</td>
-                      </tr>
-                    </tbody>
-                  </table> -->
                     </div>
-
-                    <!-- <div>
-                          <p class="text-center mt-4" style="text-decoration: underline">
-                          บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด.
-                        </p>
-                        <p class="text-center" style="text-decoration: underline">
-                          ที่หักเงินเดือนเป็นค่าบำรุงรักษาสถานที่
-                          และค่าประกันทรัพย์สินเสียหาย
-                        </p>
-                        <p class="text-center" style="text-decoration: underline">
-                          ประจำเดือน ตุลาคม พ.ศ. 2566 หน่วยงาน บช.ตชด.
-                        </p>
-                          <table class="table table table-bordered">
-                            <thead>
-                              <tr>
-                                <th rowspan="2">ลำดับ</th>
-                                <th scope="col">ยศ</th>
-                                <th scope="col">ชื่อ</th>
-                                <th scope="col">ชื่อสกุล</th>
-                                <th scope="col">อาคาร</th>
-                                <th scope="col">ห้อง</th>
-                                <th scope="col">ค่าบำรุง</th>
-                                <th scope="col">ยอดหัก</th>
-                                <th scope="col">ยอดหักสะสม</th>
-                                <th scope="col">หมายเหตุ</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                              </tr>
-                              <tr>
-                                <th scope="row">3</th>
-                                <td colspan="2">Larry the Bird</td>
-                                <td>@twitter</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div> -->
                   </div>
                 </div>
-              </div>
-              <div class="tab-content" id="v-pills-tabContent">
                 <div
                   class="tab-pane fade show"
-                  id="v-pills-messages-tab"
-                  role="tabpanel"
-                  aria-labelledby="v-pills-messages-tab"
-                ></div>
-              </div>
-              <div class="tab-content" id="v-pills-tabContent">
-                <div
-                  class="tab-pane fade show"
-                  id="v-pills2-tab"
+                  id="v-pills2"
                   role="tabpanel"
                   aria-labelledby="v-pills2-tab"
-                ></div>
-              </div>
-              <div class="tab-content" id="v-pills-tabContent">
+                >
+                  <div>
+                    <div class="text-center pt-4 table-responsive">
+                      <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button
+                            class="nav-link active"
+                            style="color: #57b05b"
+                            id="nav-home-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-home"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-home"
+                            aria-selected="true"
+                          >
+                            ตร.
+                          </button>
+                          <button
+                            class="nav-link"
+                            style="color: #57b05b"
+                            id="nav-profile-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-profile"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-profile"
+                            aria-selected="false"
+                          >
+                            บช.ตชด.
+                          </button>
+                        </div>
+                      </nav>
+                      <div class="tab-content" id="nav-tabContent">
+                        <div
+                          class="tab-pane fade show active"
+                          id="nav-home"
+                          role="tabpanel"
+                          aria-labelledby="nav-home-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser9"
+                                    id="typeUser9"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser9"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser10"
+                                    id="typeUser10"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser10">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div v-if="reportType == 'บัญชีหน้างบ'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">รายการ</th>
+                                    <th colspan="3">จำนวนเงิน(บาท)</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าไฟฟ้าส่วนกลาง</th>
+                                    <th>ค่าบำรุงลิฟต์</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>500</td>
+                                    <td>100</td>
+                                    <td>600</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมเงิน</th>
+                                    <th>900</th>
+                                    <th>200</th>
+                                    <th>1100</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div v-if="reportType == 'ประกันทรัพย์สิน'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ลำดับ</th>
+                                    <th scope="col">บ้านพัก</th>
+                                    <th scope="col">เลขที่ห้อง</th>
+                                    <th scope="col">ชื่อ-สกุล</th>
+                                    <th scope="col">หน่วย</th>
+                                    <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                                    <th scope="col">ค่าบำรุงลิฟต์</th>
+                                    <th scope="col">รวม</th>
+                                    <th scope="col">หักได้</th>
+                                    <th scope="col">หักไม่ได้</th>
+                                    <th scope="col">สาเหตุที่หักไม่ได้</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>ลือชา</td>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>บช.ตชด.</td>
+                                    <td>70</td>
+                                    <td>100</td>
+                                    <td>170</td>
+                                    <td>/</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>ลือชา</td>
+                                    <td>202</td>
+                                    <td>ร.ต.อ.หญิง สุจิตรา ไพรสุวรรณ</td>
+                                    <td>บช.ตชด.</td>
+                                    <td>70</td>
+                                    <td>100</td>
+                                    <td>170</td>
+                                    <td>/</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="5">รวมเงิน</th>
+                                    <th>140</th>
+                                    <th>200</th>
+                                    <th>340</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="tab-pane fade"
+                          id="nav-profile"
+                          role="tabpanel"
+                          aria-labelledby="nav-profile-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser11"
+                                    id="typeUser11"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser11"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser12"
+                                    id="typeUser12"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser12">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">หน่วยงาน</th>
+                                    <th colspan="3">จำนวนเงิน</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าประกัน</th>
+                                    <th>ค่าบำรุง</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>900</td>
+                                    <td>-</td>
+                                    <td>900</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>500</td>
+                                    <td>900</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมเงิน</th>
+                                    <th>1300</th>
+                                    <th>500</th>
+                                    <th>1800</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div
                   class="tab-pane fade show"
-                  id="v-pills3-tab"
+                  id="v-pills-messages"
+                  role="tabpanel"
+                  aria-labelledby="v-pills-messages-tab"
+                >
+                  <div>
+                    <div class="text-center pt-4 table-responsive">
+                      <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button
+                            class="nav-link active"
+                            style="color: #57b05b"
+                            id="nav-home-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-home"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-home"
+                            aria-selected="true"
+                          >
+                            ตร.
+                          </button>
+                          <button
+                            class="nav-link"
+                            style="color: #57b05b"
+                            id="nav-profile-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-profile"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-profile"
+                            aria-selected="false"
+                          >
+                            บช.ตชด.
+                          </button>
+                        </div>
+                      </nav>
+                      <div class="tab-content" id="nav-tabContent">
+                        <div
+                          class="tab-pane fade show active"
+                          id="nav-home"
+                          role="tabpanel"
+                          aria-labelledby="nav-home-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser13"
+                                    id="typeUser13"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser13"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser14"
+                                    id="typeUser14"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser14">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div v-if="reportType == 'บัญชีหน้างบ'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">รายการ</th>
+                                    <th colspan="3">จำนวนเงิน(บาท)</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าธรรมเนียม</th>
+                                    <th>ค่าน้ําประปา</th>
+                                    <th>ค่าไฟฟ้าฯ</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>500</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                    <td>1100</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                    <td>1000</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมเงิน</th>
+                                    <th>900</th>
+                                    <th>200</th>
+                                    <th>1000</th>
+                                    <th>2100</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div v-if="reportType == 'ประกันทรัพย์สิน'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ลำดับ</th>
+                                    <th scope="col">เลขที่ห้อง</th>
+                                    <th scope="col">ชื่อ-สกุล</th>
+                                    <th scope="col">เลขก่อน</th>
+                                    <th scope="col">เลขหลัง</th>
+                                    <th scope="col">ยอดใช้</th>
+                                    <th scope="col">ค่าธรรมเนียม</th>
+                                    <th scope="col">ค่าน้ำ</th>
+                                    <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                                    <th scope="col">รวม</th>
+                                    <th scope="col">หักได้</th>
+                                    <th scope="col">หักไม่ได้</th>
+                                    <th scope="col">สาเหตุที่หักไม่ได้</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>/</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>-</td>
+                                    <td>/</td>
+                                    <td>ย้ายหน่วยงาน</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="6">รวมเงิน</th>
+                                    <th>400</th>
+                                    <th>200</th>
+                                    <th>400</th>
+                                    <th>1000</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="tab-pane fade"
+                          id="nav-profile"
+                          role="tabpanel"
+                          aria-labelledby="nav-profile-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser15"
+                                    id="typeUser15"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser15"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser16"
+                                    id="typeUser16"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser16">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">หน่วยงาน</th>
+                                    <th colspan="3">จำนวนเงิน</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าประกัน</th>
+                                    <th>ค่าบำรุง</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>900</td>
+                                    <td>-</td>
+                                    <td>900</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>500</td>
+                                    <td>900</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมเงิน</th>
+                                    <th>1300</th>
+                                    <th>500</th>
+                                    <th>1800</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="tab-pane fade show"
+                  id="v-pills3"
                   role="tabpanel"
                   aria-labelledby="v-pills3-tab"
-                ></div>
-              </div>
-              <div class="tab-content" id="v-pills-tabContent">
+                >
+                  <div>
+                    <div class="text-center pt-4 table-responsive">
+                      <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button
+                            class="nav-link active"
+                            style="color: #57b05b"
+                            id="nav-home-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-home"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-home"
+                            aria-selected="true"
+                          >
+                            ตร.
+                          </button>
+                          <button
+                            class="nav-link"
+                            style="color: #57b05b"
+                            id="nav-profile-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-profile"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-profile"
+                            aria-selected="false"
+                          >
+                            บช.ตชด.
+                          </button>
+                        </div>
+                      </nav>
+                      <div class="tab-content" id="nav-tabContent">
+                        <div
+                          class="tab-pane fade show active"
+                          id="nav-home"
+                          role="tabpanel"
+                          aria-labelledby="nav-home-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser17"
+                                    id="typeUser17"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser17"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser18"
+                                    id="typeUser18"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser18">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div v-if="reportType == 'บัญชีหน้างบ'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">รายงาน</th>
+                                    <th colspan="3">จำนวนเงิน (บาท)</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าธรรมเนียม</th>
+                                    <th>ค่านำประปา</th>
+                                    <th>ค่าไฟฟ้าฯ</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>900</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>1600</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                    <td>1000</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมยอดส่งหัก</th>
+                                    <th>1300</th>
+                                    <th>300</th>
+                                    <th>1000</th>
+                                    <th>2600</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div v-if="reportType == 'ประกันทรัพย์สิน'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">ชื่อ-สกุล</th>
+                                    <th rowspan="2">อาคาร</th>
+                                    <th rowspan="2">เลขที่ห้อง</th>
+                                    <th rowspan="2">การหักเงินค่าบำรุง</th>
+                                    <th colspan="3">การหักเงินค่าประกัน</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ยอดหัก</th>
+                                    <th>ยอดหักสะสม</th>
+                                    <th>หมายเหตุ</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>ลือชา</td>
+                                    <td>16</td>
+                                    <td>100</td>
+                                    <td>-</td>
+                                    <td>3000</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>พ.ต.ท. อภินันท์ พันธุ์หิม</td>
+                                    <td>ลือชา</td>
+                                    <td>17</td>
+                                    <td>100</td>
+                                    <td>-</td>
+                                    <td>3000</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="4">รวมเงิน</th>
+                                    <th>200</th>
+                                    <th>-</th>
+                                    <th colspan="2">200</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="tab-pane fade"
+                          id="nav-profile"
+                          role="tabpanel"
+                          aria-labelledby="nav-profile-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser19"
+                                    id="typeUser19"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser19"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser20"
+                                    id="typeUser20"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser20">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ลำดับ</th>
+                                    <th scope="col">เลขที่ห้อง</th>
+                                    <th scope="col">ชื่อ-สกุล</th>
+                                    <th scope="col">เลขก่อน</th>
+                                    <th scope="col">เลขหลัง</th>
+                                    <th scope="col">ยอดใช้</th>
+                                    <th scope="col">ค่าธรรมเนียม</th>
+                                    <th scope="col">ค่าน้ำ</th>
+                                    <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                                    <th scope="col">รวม</th>
+                                    <th scope="col">หักได้</th>
+                                    <th scope="col">หักไม่ได้</th>
+                                    <th scope="col">สาเหตุที่หักไม่ได้</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>/</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>-</td>
+                                    <td>/</td>
+                                    <td>ย้ายหน่วยงาน</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="6">รวมเงิน</th>
+                                    <th>400</th>
+                                    <th>200</th>
+                                    <th>400</th>
+                                    <th>1000</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div
                   class="tab-pane fade show"
-                  id="v-pills4-tab"
+                  id="v-pills4"
                   role="tabpanel"
                   aria-labelledby="v-pills4-tab"
-                ></div>
-              </div>
-              <div class="tab-content" id="v-pills-tabContent">
+                >
+                  <div>
+                    <div class="text-center pt-4 table-responsive">
+                      <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button
+                            class="nav-link active"
+                            style="color: #57b05b"
+                            id="nav-home-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-home"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-home"
+                            aria-selected="true"
+                          >
+                            ตร.
+                          </button>
+                          <button
+                            class="nav-link"
+                            style="color: #57b05b"
+                            id="nav-profile-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-profile"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-profile"
+                            aria-selected="false"
+                          >
+                            บช.ตชด.
+                          </button>
+                        </div>
+                      </nav>
+                      <div class="tab-content" id="nav-tabContent">
+                        <div
+                          class="tab-pane fade show active"
+                          id="nav-home"
+                          role="tabpanel"
+                          aria-labelledby="nav-home-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser31"
+                                    id="typeUser31"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser31"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser32"
+                                    id="typeUser32"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser32">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div v-if="reportType == 'บัญชีหน้างบ'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">หน่วยงาน</th>
+                                    <th colspan="3">จำนวนเงิน (บาท)</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าบำรุง</th>
+                                    <th>ค่าประกัน</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>900</td>
+                                    <td>200</td>
+                                    <td>1100</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมยอดส่งหัก</th>
+                                    <th>1300</th>
+                                    <th>300</th>
+                                    <th>1600</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div v-if="reportType == 'ประกันทรัพย์สิน'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">ชื่อ-สกุล</th>
+                                    <th rowspan="2">อาคาร</th>
+                                    <th rowspan="2">เลขที่ห้อง</th>
+                                    <th rowspan="2">การหักเงินค่าบำรุง</th>
+                                    <th colspan="3">การหักเงินค่าประกัน</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ยอดหัก</th>
+                                    <th>ยอดหักสะสม</th>
+                                    <th>หมายเหตุ</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>ลือชา</td>
+                                    <td>16</td>
+                                    <td>100</td>
+                                    <td>-</td>
+                                    <td>3000</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>พ.ต.ท. อภินันท์ พันธุ์หิม</td>
+                                    <td>ลือชา</td>
+                                    <td>17</td>
+                                    <td>100</td>
+                                    <td>-</td>
+                                    <td>3000</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="4">รวมเงิน</th>
+                                    <th>200</th>
+                                    <th>-</th>
+                                    <th colspan="2">200</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="tab-pane fade"
+                          id="nav-profile"
+                          role="tabpanel"
+                          aria-labelledby="nav-profile-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser21"
+                                    id="typeUser21"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser21"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser22"
+                                    id="typeUser22"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser22">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ลำดับ</th>
+                                    <th scope="col">เลขที่ห้อง</th>
+                                    <th scope="col">ชื่อ-สกุล</th>
+                                    <th scope="col">เลขก่อน</th>
+                                    <th scope="col">เลขหลัง</th>
+                                    <th scope="col">ยอดใช้</th>
+                                    <th scope="col">ค่าธรรมเนียม</th>
+                                    <th scope="col">ค่าน้ำ</th>
+                                    <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                                    <th scope="col">รวม</th>
+                                    <th scope="col">หักได้</th>
+                                    <th scope="col">หักไม่ได้</th>
+                                    <th scope="col">สาเหตุที่หักไม่ได้</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>/</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>-</td>
+                                    <td>/</td>
+                                    <td>ย้ายหน่วยงาน</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="6">รวมเงิน</th>
+                                    <th>400</th>
+                                    <th>200</th>
+                                    <th>400</th>
+                                    <th>1000</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div
                   class="tab-pane fade show"
-                  id="v-pills5-tab"
+                  id="v-pills5"
                   role="tabpanel"
                   aria-labelledby="v-pills5-tab"
-                ></div>
+                >
+                  <div>
+                    <div class="text-center pt-4 table-responsive">
+                      <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                          <button
+                            class="nav-link active"
+                            style="color: #57b05b"
+                            id="nav-home-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-home"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-home"
+                            aria-selected="true"
+                          >
+                            ตร.
+                          </button>
+                          <button
+                            class="nav-link"
+                            style="color: #57b05b"
+                            id="nav-profile-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#nav-profile"
+                            type="button"
+                            role="tab"
+                            aria-controls="nav-profile"
+                            aria-selected="false"
+                          >
+                            บช.ตชด.
+                          </button>
+                        </div>
+                      </nav>
+                      <div class="tab-content" id="nav-tabContent">
+                        <div
+                          class="tab-pane fade show active"
+                          id="nav-home"
+                          role="tabpanel"
+                          aria-labelledby="nav-home-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser23"
+                                    id="typeUser23"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser23"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser24"
+                                    id="typeUser24"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser24">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div v-if="reportType == 'บัญชีหน้างบ'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th rowspan="2">ลำดับ</th>
+                                    <th rowspan="2">รายการ</th>
+                                    <th colspan="3">จำนวนเงิน(บาท)</th>
+                                  </tr>
+                                  <tr>
+                                    <th>ค่าธรรมเนียม</th>
+                                    <th>ค่าน้ําประปา</th>
+                                    <th>ค่าไฟฟ้าฯ</th>
+                                    <th>รวม</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>บช.ตชด.</td>
+                                    <td>500</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                    <td>1100</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>บก.อก.บช.ตชด.</td>
+                                    <td>400</td>
+                                    <td>100</td>
+                                    <td>500</td>
+                                    <td>1000</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="2">รวมเงิน</th>
+                                    <th>900</th>
+                                    <th>200</th>
+                                    <th>1000</th>
+                                    <th>2100</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div v-if="reportType == 'ประกันทรัพย์สิน'">
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ลำดับ</th>
+                                    <th scope="col">เลขที่ห้อง</th>
+                                    <th scope="col">ชื่อ-สกุล</th>
+                                    <th scope="col">เลขก่อน</th>
+                                    <th scope="col">เลขหลัง</th>
+                                    <th scope="col">ยอดใช้</th>
+                                    <th scope="col">ค่าธรรมเนียม</th>
+                                    <th scope="col">ค่าน้ำ</th>
+                                    <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                                    <th scope="col">รวม</th>
+                                    <th scope="col">หักได้</th>
+                                    <th scope="col">หักไม่ได้</th>
+                                    <th scope="col">สาเหตุที่หักไม่ได้</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>/</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>-</td>
+                                    <td>/</td>
+                                    <td>ย้ายหน่วยงาน</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="6">รวมเงิน</th>
+                                    <th>400</th>
+                                    <th>200</th>
+                                    <th>400</th>
+                                    <th>1000</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="tab-pane fade"
+                          id="nav-profile"
+                          role="tabpanel"
+                          aria-labelledby="nav-profile-tab"
+                        >
+                          <div>
+                            <div class="pt-4 text-start">
+                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                              <div class="mb-3">
+                                <div class="form-check form-check-inline">
+                                  <label style="margin-right: 20px">ประเภท</label>
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser25"
+                                    id="typeUser25"
+                                    value="บัญชีหน้างบ"
+                                    :checked="reportType == 'บัญชีหน้างบ'"
+                                    @change="typeUserchange('บัญชีหน้างบ')"
+                                  />
+                                  <label class="form-check-label" for="typeUser25"
+                                    >บัญชีหน้างบ</label
+                                  >
+                                </div>
+                                <div class="form-check form-check-inline">
+                                  <input
+                                    class="form-check-input"
+                                    type="radio"
+                                    name="typeUser26"
+                                    id="typeUser26"
+                                    value="ประกันทรัพย์สิน"
+                                    :checked="reportType == 'ประกันทรัพย์สิน'"
+                                    @change="typeUserchange('ประกันทรัพย์สิน')"
+                                  />
+                                  <label class="form-check-label" for="typeUser26">
+                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                                  >
+                                </div>
+                              </div>
+                              <div class="d-flex justify-content-end align-items-center">
+                                <div class="mb-3 w-20" style="margin-right: 5px">
+                                  <label>เดือน</label>
+                                  <v-select
+                                    :options="optionMonth"
+                                    v-model="selectedMonth"
+                                  ></v-select>
+                                </div>
+                                <div class="mb-3 w-20">
+                                  <label>สังกัด</label>
+                                  <v-select
+                                    :options="masterData?.Affiliation"
+                                    v-model="selectedAffiliation"
+                                  ></v-select>
+                                </div>
+
+                                <div>
+                                  <MaterialButton
+                                    size="lg"
+                                    class="btn-icon"
+                                    style="margin-right: -30px"
+                                  >
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/pdf.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                  <MaterialButton size="lg" class="btn-icon">
+                                    <div class="d-flex align-items-center">
+                                      <span style="margin-right: 5px">บันทึก</span>
+                                      <img
+                                        src="../../assets/img/excel.png"
+                                        alt="title"
+                                        loading="lazy"
+                                        width="40"
+                                      />
+                                    </div>
+                                  </MaterialButton>
+                                </div>
+                              </div>
+                            </div>
+                            <div>
+                              <table class="table table table-bordered">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ลำดับ</th>
+                                    <th scope="col">เลขที่ห้อง</th>
+                                    <th scope="col">ชื่อ-สกุล</th>
+                                    <th scope="col">เลขก่อน</th>
+                                    <th scope="col">เลขหลัง</th>
+                                    <th scope="col">ยอดใช้</th>
+                                    <th scope="col">ค่าธรรมเนียม</th>
+                                    <th scope="col">ค่าน้ำ</th>
+                                    <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                                    <th scope="col">รวม</th>
+                                    <th scope="col">หักได้</th>
+                                    <th scope="col">หักไม่ได้</th>
+                                    <th scope="col">สาเหตุที่หักไม่ได้</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>/</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td>202</td>
+                                    <td>พล.ต.ต.พันธ์พงษ์ สุขศิริมัช</td>
+                                    <td>250</td>
+                                    <td>270</td>
+                                    <td>20</td>
+                                    <td>200</td>
+                                    <td>100</td>
+                                    <td>200</td>
+                                    <td>500</td>
+                                    <td>-</td>
+                                    <td>/</td>
+                                    <td>ย้ายหน่วยงาน</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row" colspan="6">รวมเงิน</th>
+                                    <th>400</th>
+                                    <th>200</th>
+                                    <th>400</th>
+                                    <th>1000</th>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

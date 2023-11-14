@@ -104,15 +104,16 @@ export default {
         .then((res) => {
           let data = res.data;
           this.id = id;
-          (this.firstName = data.firstName),
-            (this.lastName = data.lastName),
-            (this.selectedAffiliation = data.affiliation),
-            (this.selectedRanks = data.rank),
-            (this.idcard = data.idcard),
-            (this.phone = data.phone),
-            (this.selectedDataObtion = data.status);
-          (this.typeAffiliation = data.typeAffiliation),
-            (this.queue = data.queue)((this.typeRanks = data.typeRanks));
+          this.firstName = data.firstName
+          this.lastName = data.lastName
+          this.selectedAffiliation = data.affiliation
+          this.selectedRanks = data.rank
+          this.idcard = data.idcard
+          this.phone = data.phone
+          this.selectedDataObtion = data.status
+          this.typeAffiliation = data.typeAffiliation
+          this.queue = data.queue
+          this.typeRanks = data.typeRanks
           this.modalShow = true;
         })
         .catch((err) => {
@@ -202,6 +203,25 @@ export default {
         });
     },
 
+    deleteUser(id) {
+      this.userId = id;
+    },
+
+    submitDelete() {
+      axios
+        .delete(`http://localhost:3897/users/${this.userId}`)
+        .then((res) => {
+          this.getAlluser();
+          notify({
+            title: "ลบข้อมูลสำเร็จ",
+            type: "success",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
     async getAlluser() {
       try {
         await axios
@@ -211,16 +231,17 @@ export default {
             this.olddata = res.data;
             this.typeUserfilter("ทั้งหมด");
             // this.rankrfilter("ประทวน");
-            (this.firstName = ""),
-              (this.lastName = ""),
-              (this.typeAffiliation = ""),
-              (this.selectedRanks = ""),
-              (this.idcard = ""),
-              (this.phone = ""),
-              (this.selectedDataObtion = "โสด"),
-              (this.typeAffiliation = ""),
-              (this.typeRanks = ""),
-              (this.typeUser = "ตร.");
+            this.searchName = ""
+            this.firstName = ""
+            this.lastName = ""
+            this.typeAffiliation = ""
+            this.selectedRanks = ""
+            this.idcard = ""
+            this.phone = ""
+            this.selectedDataObtion = "โสด"
+            this.typeAffiliation = ""
+            this.typeRanks = ""
+            this.typeUser = "ตร."
           })
           .catch((err) => {
             console.log(err);
@@ -391,7 +412,6 @@ export default {
                   <!-- <td>{{ item.idcard }}</td> -->
                   <td>{{ item?.phone }}</td>
                   <td>
-                    <!-- data-bs-toggle="modal" data-bs-target="#EdituserBackdrop" -->
                     <a
                       @click="editUser(item?.id)"
                       data-bs-toggle="modal"
@@ -401,6 +421,19 @@ export default {
                         style="cursor: pointer"
                         aria-hidden="true"
                         >edit</i
+                      ></a
+                    >
+                  </td>
+                  <td>
+                    <a
+                      @click="deleteUser(item?.id)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteuserBackdrop"
+                      ><i
+                        class="material-icons me-2"
+                        style="cursor: pointer"
+                        aria-hidden="true"
+                        >delete</i
                       ></a
                     >
                   </td>
@@ -570,6 +603,7 @@ export default {
     </div>
 
     <!-- modal -->
+
     <div
       class="modal fade"
       id="EdituserBackdrop"
@@ -711,6 +745,44 @@ export default {
               html-type="submit"
               data-bs-dismiss="modal"
               >บันทึก</MaterialButton
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="deleteuserBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">ลบสมาชิก</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">คุณต้องการที่จะลบสมาชิกใช่หรือไม่</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              ยกเลิก
+            </button>
+            <MaterialButton
+              variant="gradient"
+              color="danger"
+              @click="submitDelete"
+              html-type="submit"
+              data-bs-dismiss="modal"
+              >ตกลง</MaterialButton
             >
           </div>
         </div>

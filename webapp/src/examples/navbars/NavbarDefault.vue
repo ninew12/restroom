@@ -120,7 +120,7 @@ watch(
         title="Designed and Coded by Creative Tim"
         data-placement="bottom"
       >
-        Material Kit 2
+      โปรแกรมทะเบียนบ้านพัก
       </RouterLink>
       <RouterLink
         class="navbar-brand d-block d-md-none"
@@ -160,7 +160,7 @@ watch(
         class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0"
         id="navigation"
       >
-        <ul class="navbar-nav navbar-nav-hover ms-auto">
+        <!-- <ul class="navbar-nav navbar-nav-hover ms-auto">
           <li class="nav-item dropdown dropdown-hover mx-2">
             <a
               role="button"
@@ -940,7 +940,7 @@ watch(
               >{{ action.label }}</a
             >
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </nav>

@@ -85,7 +85,7 @@ export default {
           sumroom: 1,
         });
       }
-      this.FloorsList = array;
+      this.FloorsList = array.reverse();
     },
     addRoom(item) {
       item.rooms.push({
@@ -118,7 +118,7 @@ export default {
       let body = {
         buildingId: this.building_Id,
         buildingType: this.buildingType,
-        buil: this.Area,
+        buil: this.buildingType,
         name: this.Building,
         sumroom: sum,
         floor: this.Floors,
@@ -331,49 +331,49 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions1"
-                    id="Radio23"
+                    name="inlineRadioOptions10"
+                    id="Radio43"
                     value="บช.ตชด."
                     :checked="buildingType == 'บช.ตชด.'"
                     @click="onChangeEventRoom('บช.ตชด.')"
                   />
-                  <label class="form-check-label" for="Radio23">บช.ตชด.</label>
+                  <label class="form-check-label" for="Radio43">บช.ตชด.</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions1"
-                    id="Radio24"
+                    name="inlineRadioOptions10"
+                    id="Radio44"
                     value="ลือชา"
                     :checked="buildingType == 'ลือชา'"
                     @change="onChangeEventRoom('ลือชา')"
                   />
-                  <label class="form-check-label" for="Radio24">ลือชา</label>
+                  <label class="form-check-label" for="Radio44">ลือชา</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions1"
-                    id="Radio25"
+                    name="inlineRadioOptions10"
+                    id="Radio45"
                     value="บางเขน"
                     :checked="buildingType == 'บางเขน'"
                     @change="onChangeEventRoom('บางเขน')"
                   />
-                  <label class="form-check-label" for="Radio25">บางเขน</label>
+                  <label class="form-check-label" for="Radio45">บางเขน</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions1"
-                    id="Radio22"
+                    name="inlineRadioOptions10"
+                    id="Radio42"
                     value="อื่นๆ"
                     :checked="buildingType == 'อื่นๆ'"
                     @click="onChangeEventRoom('อื่นๆ')"
                   />
-                  <label class="form-check-label" for="Radio22">อื่นๆ</label>
+                  <label class="form-check-label" for="Radio42">อื่นๆ</label>
                 </div>
               </div>
               <div class="mb-3">

@@ -136,8 +136,17 @@ app.put('/users/:id', (req, res) => {
     res.send(`Update user id: '${req.params.id}' completed.`)
 })
 app.delete('/users/:id', (req, res) => {
-    const deletedIndex = users.findIndex(user => user.id === Number(req.params.id))
-    res.send(`Delete user '${users[deletedIndex].username}' completed.`)
+    res.header("Access-Control-Allow-Origin", "*");
+    const deletedIndex = users.filter(user => user.id !== (req.params.id))
+    console.log(deletedIndex);
+    fs.writeFile('./users.json', JSON.stringify(deletedIndex, null, 2), (err) => {
+        if (err) {
+            console.log("Failed to write updated data to file");
+            return;
+        }
+        console.log("Updated file successfully");
+    });
+    res.send(`Delete user completed.`)
 })
 
 app.get('/buildings', (req, res) => {

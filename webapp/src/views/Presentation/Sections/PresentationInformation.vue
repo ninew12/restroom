@@ -1,8 +1,28 @@
-<script setup>
+<script >
+
+import MaterialButton from "@/components/MaterialButton.vue";
+export default {
+  components: {
+    // MaterialInput,
+    MaterialButton,
+    // Breadcrumbs,
+  },
+  methods: {
+    logouts(){
+      localStorage.removeItem("user")
+      this.$router.push({ path: `/login` });
+    }
+  }
+  }
 </script>
 <template>
-  <section class="my-4 py-4">
+  <section class="my-4 ">
     <div class="container">
+      <div style="display: flex; justify-content: end">
+      <MaterialButton vvariant="outline" color="success" @click="logouts"
+        >ออกจากระบบ</MaterialButton
+      >
+    </div>
         <div class="row">
             <div class="col-sm-3">
                 <div class="card">
