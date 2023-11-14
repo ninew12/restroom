@@ -1,23 +1,23 @@
 [
     {
-        "userName": "admin",
-        "password": "admin1234"
+        "userName": "bpp001",
+        "password": "52113"
     },
     {
-        "userName": "admin2",
-        "password": "admin1234"
+        "userName": "bpp002",
+        "password": "52113"
     },
     {
-        "userName": "admin3",
-        "password": "admin1234"
+        "userName": "bpp003",
+        "password": "52113"
     },
     {
-        "userName": "admin4",
-        "password": "admin1234"
+        "userName": "bpp004",
+        "password": "52113"
     },
     {
-        "userName": "admin5",
-        "password": "admin1234"
+        "userName": "bpp005",
+        "password": "52113"
     }
 
 ]
