@@ -45,7 +45,7 @@ export default {
       userByid: {},
       searchName: "",
       typeUserByqueue: "ทั้งหมด",
-      typeroomByqueue: "",
+      typeroomByqueue: "ช1",
       olddatatypeQueue: [],
       datatypeQueue: [],
       no: 0,
@@ -150,12 +150,17 @@ export default {
         axios
           .get(`http://localhost:3897/queue/none`)
           .then((res) => {
-            this.userList = res.data.map((ele) => {
+            let arr = res.data
+            let arr2 = []
+            arr2 = arr.filter(e=> e.typeUser == "บช.ตชด.")
+            this.userList = arr2.map((ele) => {
               return {
                 label: ele.rank + " " + ele.firstName + " " + ele.lastName,
                 value: ele.id,
               };
             });
+            
+            console.log(this.userList);
           })
           .catch((err) => {
             console.log(err);

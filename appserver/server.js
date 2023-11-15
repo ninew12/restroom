@@ -70,6 +70,7 @@ app.post('/users', (req, res) => {
     })
     res.json(users)
 })
+
 app.put('/users/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const updateIndex = users.findIndex(user => user.id === (req.params.id))
@@ -91,7 +92,7 @@ app.put('/users/:id', (req, res) => {
     if (req.body.pickedBook) parsedData.pickedBook = req.body.pickedBook
     if (req.body.typeRoom) parsedData.typeRoom = req.body.typeRoom
     if (req.body.roomconditions) parsedData.roomconditions = req.body.roomconditions
-    if (req.body.Checkintime) parsedData.Checkintime = req.body.Checkintime
+    if (req.body.checkintime) parsedData.checkintime = req.body.checkintime
     if (req.body.roomnumber) parsedData.roomnumber = req.body.roomnumber
     if (req.body.insurancecost) parsedData.insurancecost = req.body.insurancecost
     if (req.body.installmentsRooom) parsedData.installmentsRooom = req.body.installmentsRooom
@@ -124,7 +125,8 @@ app.put('/users/:id', (req, res) => {
     if (req.body.roomId) parsedData.roomId = req.body.roomId
     if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
     if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
-
+    if (req.body.userId) parsedData.userId = req.body.userId
+    
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -256,7 +258,7 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.typeRoom) parsedData.typeRoom = req.body.typeRoom
     if (req.body.pickedBook) parsedData.pickedBook = req.body.pickedBook
     if (req.body.roomconditions) parsedData.roomconditions = req.body.roomconditions
-    if (req.body.Checkintime) parsedData.Checkintime = req.body.Checkintime
+    if (req.body.checkintime) parsedData.checkintime = req.body.checkintime
     if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
     if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
@@ -276,6 +278,8 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.roomId) parsedData.roomId = req.body.roomId
     if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
     if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
+    if (req.body.queue) parsedData.queue = req.body.queue
+    if (req.body.userId) parsedData.userId = req.body.userId
 
 
     filterdata.push(parsedData)
@@ -337,6 +341,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
     if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
     if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
+    if (req.body.userId) parsedData.userId = req.body.userId
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -402,6 +407,7 @@ app.put('/history/:id', (req, res) => {
     if (req.body.roomId) parsedData.roomId = req.body.roomId
     if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
     if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
+    if (req.body.userId) parsedData.userId = req.body.userId
     filterdata.push(parsedData)
     fs.writeFile('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -413,8 +419,8 @@ app.put('/history/:id', (req, res) => {
     res.send(`Update user id: '${req.params.id}' completed.`)
 })
 app.delete('/history/:id', (req, res) => {
-    const deletedIndex = history.findIndex(history => user.id === Number(req.params.id))
-    res.send(`Delete user '${users[deletedIndex].username}' completed.`)
+    const deletedIndex = history.findIndex(history => history.id === Number(req.params.id))
+    res.send(`Delete user  completed.`)
 })
 
 
@@ -486,8 +492,8 @@ app.post('/report', (req, res) => {
     let id = uuidv4();
     let body = req.body
     let data = { id: id, ...body }
-    users.push(data)
-    fs.writeFile('./report.json', JSON.stringify(users), err => {
+    reports.push(data)
+    fs.writeFile('./report.json', JSON.stringify(reports), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -530,6 +536,8 @@ app.put('/report/:id', (req, res) => {
     if (req.body.roomId) parsedData.roomId = req.body.roomId
     if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
     if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
+    if (req.body.queue) parsedData.queue = req.body.queue
+    if (req.body.userId) parsedData.userId = req.body.userId
     filterdata.push(parsedData)
     fs.writeFile('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {

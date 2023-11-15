@@ -116,15 +116,17 @@ export default {
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
-            
-            data2.forEach(element => {
-            const myString = element.monthly;
-            const splits = myString.split("/");
-            if (splits[0] !== undefined) {
-              const d = new Date();
-              let m = this.optionMonth[d.getMonth()];
-              if (m == splits[0]) this.openBtn = true;
-            }
+
+            data2.forEach((element) => {
+              if (element.monthly) {
+                const myString = element.monthly;
+                const splits = myString.split("/");
+                if (splits[0] !== undefined) {
+                  const d = new Date();
+                  let m = this.optionMonth[d.getMonth()];
+                  if (m == splits[0]) this.openBtn = true;
+                }
+              }
             });
 
             // พฤศจิกายน/2023
@@ -236,11 +238,27 @@ export default {
           //   type: "success",
           // });
           this.saveToreport(index);
+          this.submitRoom(index)
           this.getExpenses();
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+
+    async submitRoom(index) {
+      let id = index.id;
+      let body = {
+        amountPaid: index.amountPaid,
+        monthly: `${this.months}/${this.years}`,
+      };
+      await axios
+        .put(`http://localhost:3897/rooms/${id}`, body, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        })
     },
 
     async saveToreport(index) {

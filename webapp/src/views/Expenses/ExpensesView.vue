@@ -60,7 +60,8 @@ export default {
       userByid: {},
       contractExpenses: "",
       id: "",
-      months: ""
+      months: "",
+      typeUser: ""
     };
   },
   created() {
@@ -71,7 +72,7 @@ export default {
   },
   watch: {
     selectedColor: function (newValue) {
-      // this.updateColor(newValue)
+      // this.updateColor(newValue) 
       console.log(newValue);
     },
   },
@@ -131,6 +132,7 @@ export default {
           .then((res) => {
             this.userByid = res.data;
             this.rank = this.userByid.rank;
+            this.typeUser = this.userByid.typeUser
             (this.firstName = this.userByid.firstName),
               (this.lastName = this.userByid.firstName);
             (this.Insurancecost = this.userByid.insurancecost),
@@ -155,6 +157,7 @@ export default {
 
     async submitForm() {
       let body = {
+        buildingType: this.buildingType,
         firstName: this.firstName,
         lastName: this.lastName,
         numberfirst: this.numberfirst,
@@ -191,6 +194,8 @@ export default {
 
     async saveToreport() {
       let body = {
+        typeUser: "บช.ตชด.",
+        buildingType: this.buildingType,
         firstName: this.firstName,
         lastName: this.lastName,
         numberfirst: this.numberfirst,
@@ -274,7 +279,8 @@ export default {
                   <th></th>
                   <!-- <th scope="col">ลำดับ</th> -->
                   <th>ชื่อ-สกุล</th>
-                  <!-- <th scope="col">อาคาร</th>
+                  <th scope="col">อาคารบ้านพัก</th>
+                  <!-- 
                   <th scope="col">ชั้น</th>
                   <th scope="col">เลขที่ห้อง</th> -->
                   <th scope="col">เลขก่อน</th>
@@ -304,6 +310,7 @@ export default {
                     >
                   </td>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
+                  <td>{{ item?.buildingType }}</td>
                   <td>{{ item?.numberfirst }}</td>
                   <td>{{ item?.lastnumber }}</td>
                   <td>{{ item?.sumCost }}</td>
@@ -370,7 +377,16 @@ export default {
                 <label>เลขที่ห้อง</label>
                 <v-select :options="optionsRoom" v-model="selectedRoom"></v-select>
               </div> --> 
-                 
+              <div class="mb-3">
+                <MaterialInput
+                  :value="buildingType"
+                  @input="(event) => (buildingType = event.target.value)"
+                  class="input-group-static"
+                  label="อาคารบ้านพัก"
+                  type="number"
+                  placeholder="อาคารบ้านพัก"
+                />
+              </div>
               <div class="mb-3">
                 <MaterialInput
                   :value="numberfirst"

@@ -124,24 +124,10 @@ export default {
             this.roomData = res.data;
             this.numberRoom = this.roomData.numberRoom;
             this.roomId = this.roomData.id;
+            this.userId = this.roomData.userId
             this.selectedRoomtype = this.roomData.typeRoom;
-            this.getRoomsBynumberRoom(this.roomId);
             this.getHistoryRoom(this.roomData.id);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    async getRoomsBynumberRoom(roomId) {
-      try {
-        await axios
-          .get(`http://localhost:3897/usersRoom/${roomId}`)
-          .then((res) => {
-            this.userId = res.data.id;
+            console.log(res.data);
           })
           .catch((err) => {
             console.log(err);
@@ -177,7 +163,7 @@ export default {
     },
 
     convertDateTolocal(index) {
-      if (index !== undefined) {
+      if (index !== undefined && index !== "") {
         const date = new Date(index);
         const formatter = new Intl.DateTimeFormat("en-US", {
           day: "2-digit",

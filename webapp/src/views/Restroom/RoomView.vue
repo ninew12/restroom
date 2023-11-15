@@ -552,7 +552,7 @@ export default {
               </div>
             </div>
 
-            <div v-for="(item, index) in roomList" :key="index">
+            <div v-for="(item, index) in roomList.reverse()" :key="index">
               <div class="card mb-2">
                 <div class="card-body">
                   <p class="text-start">

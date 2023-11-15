@@ -90,6 +90,7 @@ export default {
           .get(`http://localhost:3897/queue/inqueue`)
           .then((res) => {
             this.queueList = res.data;
+            console.log( res.data);
             this.queuefilter = this.queueList.filter((e) => e.typeRoom === this.typeroom);
           })
           .catch((err) => {
@@ -105,7 +106,10 @@ export default {
         axios
           .get(`http://localhost:3897/users`)
           .then((res) => {
-            this.userList = res.data.map((ele) => {
+            let arr = res.data
+            let arr2 = []
+            arr2 = arr.filter(e=> e.typeUser == "บช.ตชด.")
+            this.userList = arr2.map((ele) => {
               return {
                 label: ele.rank + " " + ele.firstName + " " + ele.lastName,
                 value: ele.id,
@@ -128,10 +132,12 @@ export default {
           .then((res) => {
             let data = res.data;
             this.userByid = data;
+            console.log(this.userByid);
           })
           .catch((err) => {
             console.log(err);
           });
+          console.log(this.userId);
       } catch (error) {
         console.error(error);
       }
@@ -142,7 +148,6 @@ export default {
         axios.get(`http://localhost:3897/rooms/${id}`).then((res) => {
           this.data = res.data;
           this.dateApproved = this.convertDateTolocal(this.data.dateApproved);
-
           this.typeroom = this.data.typeRoom;
           this.numberRoom = this.data.numberRoom;
           this.roomId = this.data.id;
@@ -152,7 +157,8 @@ export default {
           if (this.data.roomStatus == "waiting") this.statusRoom = "ชำรุด";
           if (this.data.roomStatus == "unavailable") this.statusRoom = "ไม่ว่าง";
           if (this.data.roomStatus == "free") this.statusRoom = "ว่าง";
-
+          this.data['maintenanceCost'] = this.countinsamaintenance(this.data)
+          console.log(this.data);
           this.getAllqueue();
         });
       } catch (e) {
@@ -161,7 +167,7 @@ export default {
     },
 
     convertDateTolocal(index) {
-      if (index !== undefined) {
+      if (index !== undefined && index !== "") {
         const date = new Date(index);
         const formatter = new Intl.DateTimeFormat("en-US", {
           day: "2-digit",
@@ -175,28 +181,20 @@ export default {
       }
     },
 
-    getAllusersByid(id) {
-      this.userId = id;
-      try {
-        axios
-          .get(`http://localhost:3897/users/${id}`)
-          .then((res) => {
-            let data = res.data;
-            this.userByid = data;
-            console.log(this.userByid);
-          })
-          .catch((err) => {
-            console.log(err.response);
-          });
-      } catch (error) {
-        console.error(error);
-      }
+    
+
+    countinsamaintenance(e) {
+      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
+      let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
+      let b = c / a; //จำนวนงวดคงเหลือ
+      return b || 0;
     },
 
     async submitForm(index) {
       let body = {
         ...this.userByid,
         queue: "inroom",
+        // firstName: this.firstName,
         Affiliation: this.Affiliation,
         contract: this.contract,
         checkintime: this.Checkintime,
@@ -250,28 +248,16 @@ export default {
 
     async submitForm2() {
       let body = {
-        ...this.userByid,
-        queue: "inroom",
-        contract: this.contract,
-        checkintime: this.Checkintime,
-        maintenance: this.Maintenance,
-        insurance: this.insurance,
-        installments: this.installments,
-        amountPaid: this.amountPaid,
-        roomId: this.roomId,
-        roomnumber: this.numberRoom,
-        dateApproved: this.dateApp.toISOString(),
-      };
-      await axios.post(`http://localhost:3897/report`, body, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json",
-        },
-      });
-    },
-    async submitRoom() {
-      let body = {
-        ...this.userByid,
+        userId: this.userId,
+        firstName : this.data.firstName,
+        lastName :  this.data.lastName,
+        selectedAffiliation :  this.data.affiliation,
+        selectedRanks :  this.data.rank,
+        idcard :  this.data.idcard,
+        phone :  this.data.phone,
+        selectedDataObtion :  this.data.status,
+        typeAffiliation :  this.data.typeAffiliation,
+        typeRanks :  this.data.typeRanks,
         queue: "inroom",
         contract: this.contract,
         checkintime: this.Checkintime,
@@ -313,6 +299,7 @@ export default {
     async submitFormRoom() {
       let body = {
         ...this.userByid,
+        userId: this.userId,
         queue: "inroom",
         roomStatus: "unavailable",
         contract: this.contract,
@@ -354,6 +341,7 @@ export default {
       if (this.typeRanks == "ประทวน") maintenance = "60";
       if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
       let body = {
+        userId: this.userId,
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: typeA,
@@ -471,14 +459,14 @@ export default {
                         <p class="card-text">วันที่ได้รับอนุมัติ : {{ dateApproved }}</p>
 
                         <p class="card-text">
-                          ระยะเวลาที่เข้าพัก : {{ data?.Checkintime || 0 }} เดือน
+                          ระยะเวลาที่เข้าพัก : {{ data?.checkintime || 0 }} เดือน
                         </p>
                       </div>
                       <div class="col-7">
                         <p class="card-text">นามสกุล : {{ data?.lastName }}</p>
                         <p class="card-text">เบอร์โทร : {{ data?.phone }}</p>
                         <p class="card-text">เงินค่าประกัน : {{ data?.insurance }}</p>
-                        <p class="card-text">งวดค่าประกัน : {{ data?.installments }}</p>
+                        <p class="card-text">งวดค่าประกัน : {{ data?.maintenanceCost }}</p>
                         <!-- <p class="card-text">จำนวนงวดค่าประกัน : {{ data?.phone }}</p> -->
                         <!-- <p class="card-text">ยอดคงเหลือค่าประกัน : {{ data?.phone }}</p> -->
                       </div>
@@ -858,7 +846,7 @@ export default {
             <MaterialButton
               variant="gradient"
               color="success"
-              @click="submitForm('spacia')"
+              @click="submitForm('normal'); getAllusersByid(item.id)"
               data-bs-dismiss="modal"
               html-type="submit"
               >บันทึก</MaterialButton
