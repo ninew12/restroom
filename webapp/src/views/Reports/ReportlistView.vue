@@ -160,9 +160,9 @@ export default {
             data2 = data4.filter((el) => el.typeUser == "ตร.");
             // arr1 = data3.filter((el) => el.installmentsRooom !== undefined);
             // arr2 = data4.filter((el) => el.installmentsRooom !== undefined);
-            this.reportlistCTD = data2;
+            this.reportlistCTD = data;
             console.log(this.reportlistCTD);
-            // this.reportlistTD = data2;
+            this.reportlistTD = data2;
             // console.log(this.reportlistTD);
             console.log(data);
             console.log(data2);
@@ -429,7 +429,7 @@ export default {
                           </thead>
                           <!-- reportlistCTD -->
                           <tbody>
-                            <tr v-for="(item, index) in reportlistCTD" :key="index">
+                            <tr v-for="(item, index) in reportlistTD" :key="index">
                               <th scope="row">{{ index + 1 }}</th>
                               <td>{{ item?.typeAffiliation || "-" }}</td>
                               <td>{{ item?.maintenance || "-" }}</td>
@@ -556,7 +556,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.typeAffiliation || "-" }}</td>
                             <td>{{ item?.maintenance || "-" }}</td>
@@ -597,7 +597,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.roomnumber }}</td>
                             <td>
@@ -736,7 +736,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.typeAffiliation || "-" }}</td>
                             <td>
@@ -777,7 +777,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.buildingName || "-" }}</td>
                             <td>{{ item?.roomnumber || "-" }}</td>
@@ -916,7 +916,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.typeAffiliation }}</td>
                             <td>{{ item?.maintenance || "-" }}</td>
@@ -957,7 +957,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.roomnumber || "-" }}</td>
                             <td>
@@ -1099,7 +1099,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.typeAffiliation || "-" }}</td>
                             <td>{{ item?.maintenance || "-" }}</td>
@@ -1138,7 +1138,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>
                               {{ item?.rank }} {{ item?.firstName }}
@@ -1308,7 +1308,7 @@ export default {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr v-for="(item, index) in reportlistCTD" :key="index">
+                                  <tr v-for="(item, index) in reportlistTD" :key="index">
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>{{ item?.typeAffiliation || "-" }}</td>
                                     <td>{{ item?.insurance || "-" }}</td>
@@ -1345,7 +1345,7 @@ export default {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr v-for="(item, index) in reportlistCTD" :key="index">
+                                  <tr v-for="(item, index) in reportlistTD" :key="index">
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>
                                       {{ item?.rank }} {{ item?.firstName }}
@@ -1651,7 +1651,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>
                               {{ item?.typeAffiliation || "-" }}
@@ -1695,7 +1695,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.roomnumber || "-" }}</td>
                             <td>
