@@ -26,11 +26,11 @@ export default {
 
   data() {
     return {
-      obtionBuil : [
-        {label:"บช.ตชด.",value:"บช.ตชด."},
-        {label:"ลือชา",value:"ลือชา"},
-        {label:"บางเขน",value:"บางเขน"},
-        {label:"อื่นๆ",value:"อื่นๆ"}
+      obtionBuil: [
+        { label: "บช.ตชด.", value: "บช.ตชด." },
+        { label: "ลือชา", value: "ลือชา" },
+        { label: "บางเขน", value: "บางเขน" },
+        { label: "อื่นๆ", value: "อื่นๆ" },
       ],
       selectedUser: "เลือกชื่อผู้พักอาศัย",
       firstName: "",
@@ -53,9 +53,10 @@ export default {
       picked: new Date(),
       buildingName: "",
       buildingType: "",
+      buildingType2: "",
       building: [],
       selectedBuildingName: "เลือกอาคาร2",
-      seleteBuildingType: "เลือกอาคาร1"
+      seleteBuildingType: "เลือกอาคาร1",
     };
   },
   created() {
@@ -69,8 +70,8 @@ export default {
     selectedUser: function (newValue) {
       if (newValue !== null) this.getAllusersByid(newValue.value);
     },
-    selectedBuildingName: function (newValue) {
-      if (newValue !== null) this.buildingName = newValue.value;
+    seleteBuildingType2: function (newValue) {
+      if (newValue !== null) this.buildingType2 = newValue.value;
     },
     seleteBuildingType: function (newValue) {
       if (newValue !== null) this.buildingType = newValue.value;
@@ -150,16 +151,16 @@ export default {
         axios
           .get(`http://localhost:3897/queue/none`)
           .then((res) => {
-            let arr = res.data
-            let arr2 = []
-            arr2 = arr.filter(e=> e.typeUser == "บช.ตชด.")
+            let arr = res.data;
+            let arr2 = [];
+            arr2 = arr.filter((e) => e.typeUser == "บช.ตชด.");
             this.userList = arr2.map((ele) => {
               return {
                 label: ele.rank + " " + ele.firstName + " " + ele.lastName,
                 value: ele.id,
               };
             });
-            
+
             console.log(this.userList);
           })
           .catch((err) => {
@@ -215,7 +216,7 @@ export default {
         bookNumber: this.bookNumber,
         pickedBook: this.picked.toISOString(),
         typeRoom: this.typeroomByqueue,
-        buildingName: this.buildingName,
+        buildingType2: this.buildingType2,
         buildingType: this.buildingType,
         queue: "inqueue",
       };
@@ -283,6 +284,9 @@ export default {
           console.log(err);
         });
     },
+    Previous() {
+      window.history.back();
+    },
   },
 };
 </script>
@@ -321,7 +325,17 @@ export default {
               :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ระบบคิว' }]"
             />
           </div>
-          <notifications position="top right" width="400px" />
+          <notifications class="pt-6" position="top center" width="400px" />
+
+          <div class="mb-3">
+            <a
+              style="display: flex; align-items: center; cursor: pointer"
+              @click="Previous"
+            >
+              <span class="material-icons"> arrow_back_ios_new </span>
+              <span>ย้อนกลับ</span>
+            </a>
+          </div>
           <h4>ระบบคิว</h4>
           <div class="d-flex justify-content-between align-items-baseline">
             <div class="mb-3">
@@ -417,7 +431,7 @@ export default {
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.affiliation }}</td>
                   <td>{{ item?.buildingType }}</td>
-                  <td>{{ item?.buildingName }}</td>
+                  <td>{{ item?.buildingType2 }}</td>
                   <td>{{ item?.status }}</td>
                   <td>{{ item?.idcard }}</td>
                   <td>{{ item?.phone }}</td>
@@ -465,16 +479,16 @@ export default {
           <div class="modal-body">
             <div>
               <div class="mb-3">
-                <label>ชื่อผู้พักอาศัย</label>
+                <label class="starRed">ชื่อผู้พักอาศัย</label>
                 <v-select :options="userList" v-model="selectedUser"></v-select>
               </div>
               <div class="mb-3">
-                <label>อาคาร1</label>
+                <label class="starRed">อาคาร1</label>
                 <v-select :options="obtionBuil" v-model="seleteBuildingType"></v-select>
               </div>
               <div class="mb-3">
-                <label>อาคาร2</label>
-                <v-select :options="building" v-model="selectedBuildingName"></v-select>
+                <label class="starRed">อาคาร2</label>
+                <v-select :options="obtionBuil" v-model="seleteBuildingType2"></v-select>
               </div>
               <div class="mb-3">
                 <label style="margin-left: -5px">กรอกเลขลงรับหนังสือ</label>
@@ -493,7 +507,7 @@ export default {
                 <Datepicker style="text-align: center" v-model="picked" />
               </div>
               <div class="mb-3">
-                <label style="margin-right: 20px">ประเภทห้องพัก</label>
+                <label style="margin-right: 20px" class="starRed">ประเภทห้องพัก</label>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
@@ -585,7 +599,7 @@ export default {
           <div class="modal-body">
             <div>
               <div class="mb-3">
-                <label style="margin-right: 20px">ประเภทห้องพัก</label>
+                <label style="margin-right: 20px" class="starRed">ประเภทห้องพัก</label>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"

@@ -217,6 +217,9 @@ export default {
           },
         })
     },
+    Previous() {
+      window.history.back();
+    },
   },
 };
 </script>
@@ -258,8 +261,17 @@ export default {
               ]"
             />
           </div>
+          <div class="mb-3">
+            <a
+              style="display: flex; align-items: center; cursor: pointer"
+              @click="Previous"
+            >
+              <span class="material-icons"> arrow_back_ios_new </span>
+              <span>ย้อนกลับ</span>
+            </a>
+          </div>
           <h4>บันทึกค่าใช้จ่ายรายเดือน ตร. &nbsp;  ประจำเดือน {{ months }} </h4>
-          <notifications position="top right" width="400px" />
+          <notifications class="pt-6 " position="top center" width="400px" />
 
           <!-- <div class="d-flex justify-content-end align-items-baseline pt-1">
               <label  style="margin-right:20px;">
@@ -378,11 +390,11 @@ export default {
                 <v-select :options="optionsRoom" v-model="selectedRoom"></v-select>
               </div> --> 
               <div class="mb-3">
+                <label class="starRed">อาคารบ้านพัก</label>
                 <MaterialInput
                   :value="buildingType"
                   @input="(event) => (buildingType = event.target.value)"
                   class="input-group-static"
-                  label="อาคารบ้านพัก"
                   type="number"
                   placeholder="อาคารบ้านพัก"
                 />
@@ -398,51 +410,51 @@ export default {
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">เลขหลัง</label>
                 <MaterialInput
                   :value="lastnumber"
                   @input="(event) => (lastnumber = event.target.value)"
                   class="input-group-static"
-                  label="เลขหลัง"
                   type="text"
                   placeholder="เลขหลัง"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">ค่าน้ำประปา</label>
                 <MaterialInput
                   :value="Waterbill"
                   @input="(event) => (Waterbill = event.target.value)"
                   class="input-group-static"
-                  label="ค่าน้ำประปา"
                   type="text"
                   placeholder="ค่าน้ำประปา"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">ค่าไฟฟ้า</label>
                 <MaterialInput
                   :value="Electricitybill"
                   @input="(event) => (Electricitybill = event.target.value)"
                   class="input-group-static"
-                  label="ค่าไฟฟ้า"
                   type="text"
                   placeholder="ค่าไฟฟ้า"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">ค่าไฟฟ้าส่วนกลาง</label>
                 <MaterialInput
                   :value="Central"
                   @input="(event) => (Central = event.target.value)"
                   class="input-group-static"
-                  label="ค่าไฟฟ้าส่วนกลาง"
                   type="text"
                   placeholder="ค่าไฟฟ้าส่วนกลาง"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">ค่าบำรุงลิฟท์</label>
                 <MaterialInput
                   :value="Costs"
                   @input="(event) => (Costs = event.target.value)"
                   class="input-group-static"
-                  label="ค่าบำรุงลิฟท์"
                   type="text"
                   placeholder="ค่าบำรุงลิฟท์"
                 />

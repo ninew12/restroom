@@ -203,6 +203,9 @@ export default {
         console.error(error);
       }
     },
+    Previous() {
+      window.history.back();
+    },
   },
 };
 </script>
@@ -214,7 +217,7 @@ export default {
       loading="lazy"
     >
       <div class="container">
-        <notifications position="top right" width="400px" />
+        <notifications class="pt-6 " position="top center" width="400px" />
         <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
@@ -242,6 +245,15 @@ export default {
               style="padding"
               :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ผังห้องพัก' }]"
             />
+          </div>
+          <div class="mb-3">
+            <a
+              style="display: flex; align-items: center; cursor: pointer"
+              @click="Previous"
+            >
+              <span class="material-icons"> arrow_back_ios_new </span>
+              <span>ย้อนกลับ</span>
+            </a>
           </div>
           <h4>ผังห้องพัก</h4>
           <div class="d-flex justify-content-end align-items-baseline">
@@ -377,21 +389,21 @@ export default {
                 </div>
               </div>
               <div class="mb-3">
+                <label class="starRed">ชื่ออาคาร</label>
                 <MaterialInput
                   :value="Building"
                   @input="(event) => (Building = event.target.value)"
                   class="input-group-static"
-                  label="ชื่ออาคาร"
                   type="text"
                   placeholder="ชื่ออาคาร"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">จำนวนชั้น</label>
                 <MaterialInput
                   :value="Floors"
                   @input="(event) => (Floors = event.target.value)"
                   class="input-group-static"
-                  label="จำนวนชั้น"
                   type="number"
                   placeholder="จำนวนชั้น"
                   @change="changedFloors()"

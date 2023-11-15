@@ -381,6 +381,9 @@ export default {
           console.log(err);
         });
     },
+    Previous() {
+      window.history.back();
+    },
   },
 };
 </script>
@@ -392,7 +395,7 @@ export default {
       loading="lazy"
     >
       <div class="container">
-        <notifications position="top right" width="400px" />
+        <notifications class="pt-6 " position="top center" width="400px" />
         <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
@@ -425,6 +428,15 @@ export default {
             />
           </div>
           <!-- d-flex justify-content-between -->
+          <div class="mb-3">
+            <a
+              style="display: flex; align-items: center; cursor: pointer"
+              @click="Previous"
+            >
+              <span class="material-icons"> arrow_back_ios_new </span>
+              <span>ย้อนกลับ</span>
+            </a>
+          </div>
           <div class="d-flex justify-content-between align-items-baseline">
             <h4>รายละเอียดห้องพัก {{ numberRoom }}</h4>
             <div>
@@ -565,27 +577,27 @@ export default {
           <div class="modal-body">
             <div>
               <div class="mb-3">
+                <label class="starRed">วันที่ได้รับอนุมัติ</label>
                 <MaterialInput
                   name="contract"
                   :value="contract"
                   @input="(event) => (contract = event.target.value)"
                   class="input-group-static"
-                  label="วันที่ได้รับอนุมัติ"
                   type="text"
                   placeholder="วันที่ได้รับอนุมัติ"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">ระยะเวลาที่เข้าพัก(เดือน)</label>
                 <MaterialInput
                   :value="Checkintime"
                   @input="(event) => (Checkintime = event.target.value)"
                   class="input-group-static"
-                  label="ระยะเวลาที่เข้าพัก(เดือน)"
                   type="text"
                   placeholder="จำนวนเดือนที่เข้าพัก"
                 />
               </div>
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <MaterialInput
                   :value="Maintenance"
                   @input="(event) => (Maintenance = event.target.value)"
@@ -594,33 +606,33 @@ export default {
                   type="text"
                   placeholder="ค่าบำรุง"
                 />
-              </div>
+              </div> -->
               <div class="mb-3">
+                <label class="starRed">เงินค่าประกัน</label>
                 <MaterialInput
                   :value="insurance"
                   @input="(event) => (insurance = event.target.value)"
                   class="input-group-static"
-                  label="เงินค่าประกัน"
                   type="text"
                   placeholder="เงินค่าประกัน"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">จำนวนเงินประกันที่ชำระแล้ว</label>
                 <MaterialInput
                   :value="amountPaid"
                   @input="(event) => (amountPaid = event.target.value)"
                   class="input-group-static"
-                  label="จำนวนเงินประกันที่ชำระแล้ว"
                   type="text"
                   placeholder="จำนวนเงินค่าประกันที่ชำระแล้ว"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">จำนวนงวดเงินประกัน</label>
                 <MaterialInput
                   :value="installments"
                   @input="(event) => (installments = event.target.value)"
                   class="input-group-static"
-                  label="จำนวนงวดเงินประกัน"
                   type="text"
                   placeholder="จำนวนงวดเงินค่าประกัน"
                 />
@@ -839,27 +851,27 @@ export default {
               <v-select :options="userList" v-model="selectedUser"></v-select>
             </div>
             <div class="mb-3">
+                <label class="starRed">วันที่ได้รับอนุมัติ</label>
                 <MaterialInput
                   name="contract"
                   :value="contract"
                   @input="(event) => (contract = event.target.value)"
                   class="input-group-static"
-                  label="วันที่ได้รับอนุมัติ"
                   type="text"
                   placeholder="วันที่ได้รับอนุมัติ"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">ระยะเวลาที่เข้าพัก(เดือน)</label>
                 <MaterialInput
                   :value="Checkintime"
                   @input="(event) => (Checkintime = event.target.value)"
                   class="input-group-static"
-                  label="ระยะเวลาที่เข้าพัก(เดือน)"
                   type="text"
                   placeholder="จำนวนเดือนที่เข้าพัก"
                 />
               </div>
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <MaterialInput
                   :value="Maintenance"
                   @input="(event) => (Maintenance = event.target.value)"
@@ -868,33 +880,33 @@ export default {
                   type="text"
                   placeholder="ค่าบำรุง"
                 />
-              </div>
+              </div> -->
               <div class="mb-3">
+                <label class="starRed">เงินค่าประกัน</label>
                 <MaterialInput
                   :value="insurance"
                   @input="(event) => (insurance = event.target.value)"
                   class="input-group-static"
-                  label="เงินค่าประกัน"
                   type="text"
                   placeholder="เงินค่าประกัน"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">จำนวนเงินประกันที่ชำระแล้ว</label>
                 <MaterialInput
                   :value="amountPaid"
                   @input="(event) => (amountPaid = event.target.value)"
                   class="input-group-static"
-                  label="จำนวนเงินประกันที่ชำระแล้ว"
                   type="text"
                   placeholder="จำนวนเงินค่าประกันที่ชำระแล้ว"
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">จำนวนงวดเงินประกัน</label>
                 <MaterialInput
                   :value="installments"
                   @input="(event) => (installments = event.target.value)"
                   class="input-group-static"
-                  label="จำนวนงวดเงินประกัน"
                   type="text"
                   placeholder="จำนวนงวดเงินค่าประกัน"
                 />
@@ -942,7 +954,7 @@ export default {
           <div class="modal-body">
             <div>
               <div class="mb-1">
-                <label>สังกัด</label>
+                <label class="starRed">สังกัด</label>
                 <v-select
                   :options="masterData?.typeAffiliation"
                   v-model="typeAffiliation"
@@ -963,7 +975,7 @@ export default {
                 ></v-select>
               </div>
               <div class="mb-1">
-                <label>ลำดับยศ</label>
+                <label class="starRed">ลำดับยศ</label>
                 <v-select :options="masterData?.typeranks" v-model="typeRanks"></v-select>
               </div>
               <div class="mb-3" v-if="typeRanks.label == 'ลูกจ้าง'">
@@ -985,23 +997,23 @@ export default {
                 ></v-select>
               </div>
               <div class="mb-3 pt-1">
+                <label class="starRed">ชื่อ</label>
                 <MaterialInput
                   name="firstName"
                   :value="firstName"
                   @input="(event) => (firstName = event.target.value)"
                   class="input-group-static"
-                  label="ชื่อ"
                   type="text"
                   placeholder="ชื่อ"
                   isRequired
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">สกุล</label>
                 <MaterialInput
                   :value="lastName"
                   @input="(event) => (lastName = event.target.value)"
                   class="input-group-static"
-                  label="สกุล"
                   type="text"
                   placeholder="สกุล"
                 />

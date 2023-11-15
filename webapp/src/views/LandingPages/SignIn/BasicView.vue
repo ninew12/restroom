@@ -74,7 +74,7 @@ export default {
                   </h4>
                 </div>
               </div>
-              <notifications position="top right" width="400px" />
+              <notifications class="pt-6 " position="top center" width="400px" />
               <div class="card-body">
                 <form  class="text-start">
                   <label>ชื่อผู้ใช้งาน</label>

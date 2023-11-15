@@ -81,6 +81,8 @@ export default {
       roomId: "",
       dateApp: new Date(),
       historyOld: [],
+      bankbookName: "",
+      bankbookNumber: "",
     };
   },
   created() {
@@ -124,7 +126,7 @@ export default {
             this.roomData = res.data;
             this.numberRoom = this.roomData.numberRoom;
             this.roomId = this.roomData.id;
-            this.userId = this.roomData.userId
+            this.userId = this.roomData.userId;
             this.selectedRoomtype = this.roomData.typeRoom;
             this.getHistoryRoom(this.roomData.id);
             console.log(res.data);
@@ -244,6 +246,8 @@ export default {
         deposit: "รอคืนเงินประกัน",
         dateReturn: this.dateApp.toISOString(),
         customerOld: "คืนห้องพักแล้ว",
+        bankbookName: this.bankbookName,
+        bankbookNumber: this.bankbookNumber,
       };
       axios
         .put(`http://localhost:3897/rooms/${this.id}`, body, {
@@ -280,6 +284,8 @@ export default {
         roomId: this.roomId,
         dateReturn: this.dateApp.toISOString(),
         customerOld: "คืนห้องพักแล้ว",
+        bankbookName: this.bankbookName,
+        bankbookNumber: this.bankbookNumber,
       };
       axios.put(`http://localhost:3897/users/${this.userId}`, body, {
         headers: {
@@ -311,6 +317,9 @@ export default {
           "Content-Type": "application/json",
         },
       });
+    },
+    Previous() {
+      window.history.back();
     },
   },
 };
@@ -355,8 +364,17 @@ export default {
             />
           </div>
           <!-- d-flex justify-content-between -->
+          <div class="mb-3">
+            <a
+              style="display: flex; align-items: center; cursor: pointer"
+              @click="Previous"
+            >
+              <span class="material-icons"> arrow_back_ios_new </span>
+              <span>ย้อนกลับ</span>
+            </a>
+          </div>
           <h4>จัดการห้องพัก</h4>
-          <notifications position="top right" width="400px" />
+          <notifications class="pt-6" position="top center" width="400px" />
           <div class="row pt-4 min-vh-45">
             <div class="col-lg-3">
               <div
@@ -429,17 +447,17 @@ export default {
                     <div>
                       <h5>แก้ไขรายละเอียด ห้อง {{ numberRoom }}</h5>
                       <div class="mb-3">
+                        <label class="starRed">เลขห้อง</label>
                         <MaterialInput
                           :value="numberRoom"
                           @input="(event) => (numberRoom = event.target.value)"
                           class="input-group-static"
-                          label="เลขห้อง"
                           type="text"
                           placeholder="เลขห้อง"
                         />
                       </div>
                       <div class="mb-3">
-                        <label>ประเภทห้องพัก</label>
+                        <label class="starRed">ประเภทห้องพัก</label>
                         <v-select
                           :options="optionsRoomtype"
                           v-model="selectedRoomtype"
@@ -448,7 +466,7 @@ export default {
 
                       <div class="mb-3">
                         <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px">สภาพห้อง</label>
+                          <label style="margin-right: 20px" class="starRed">สภาพห้อง</label>
                           <input
                             class="form-check-input"
                             type="radio"
@@ -527,7 +545,7 @@ export default {
                         "
                       >
                         <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px">กุญแจห้อง</label>
+                          <label style="margin-right: 20px" class="starRed">กุญแจห้อง</label>
                           <input
                             class="form-check-input"
                             type="radio"
@@ -573,7 +591,7 @@ export default {
                         "
                       >
                         <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px">ทะเบียนบ้าน</label>
+                          <label style="margin-right: 20px" class="starRed">ทะเบียนบ้าน</label>
                           <input
                             class="form-check-input"
                             type="radio"
@@ -613,7 +631,7 @@ export default {
                         </div>
                       </div>
                       <div>
-                        <label style="padding-left: 30px"
+                        <label style="padding-left: 30px" class="starRed"
                           >หลักฐานแสดงการชําระค่าไฟเดือนล่าสุด</label
                         >
                       </div>
@@ -670,6 +688,39 @@ export default {
                             class="input-group-static"
                             type="text"
                             placeholder="สาเหตุ"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="mb-3"
+                        style="
+                          margin-left: 40px;
+                          display: flex;
+                          justify-content: flex-start;
+                          align-items: center;
+                        "
+                      >
+                      <label class="starRed" style="margin-right: 20px">ข้อมูลธนาคาร</label>
+                        <div
+                          style="width: 250px; margin-bottom: 10px; margin-right: 20px"
+                        >
+                          <MaterialInput
+                            name="bankbookName"
+                            :value="bankbookName"
+                            @input="(event) => (bankbookName = event.target.value)"
+                            class="input-group-static"
+                            type="text"
+                            placeholder="ชื่อธนาคาร"
+                          />
+                        </div>
+                        <div style="width: 250px; margin-bottom: 10px">
+                          <MaterialInput
+                            name="bankbookNumber"
+                            :value="bankbookNumber"
+                            @input="(event) => (bankbookNumber = event.target.value)"
+                            class="input-group-static"
+                            type="text"
+                            placeholder="เลขบัญชีธนาคาร"
                           />
                         </div>
                       </div>

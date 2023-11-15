@@ -311,6 +311,10 @@ export default {
         this.roomList = this.roomListOld;
       }
     },
+
+    Previous() {
+      window.history.back();
+    },
   },
 };
 </script>
@@ -345,11 +349,20 @@ export default {
       <div class="page-header min-vh-45">
         <div class="container-fluid">
           <!-- d-flex justify-content-between -->
-          <notifications position="top right" width="400px" />
+          <notifications class="pt-6 " position="top center" width="400px" />
           <div>
             <Breadcrumbs
               :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'สถานะห้องพัก' }]"
             />
+          </div>
+          <div class="mb-3">
+            <a
+              style="display: flex; align-items: center; cursor: pointer"
+              @click="Previous"
+            >
+              <span class="material-icons"> arrow_back_ios_new </span>
+              <span>ย้อนกลับ</span>
+            </a>
           </div>
           <h4>สถานะห้องพัก</h4>
 

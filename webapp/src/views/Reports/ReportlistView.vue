@@ -5,6 +5,8 @@ import Breadcrumbs from "@/examples/Breadcrumbs.vue";
 import vueMkHeader from "@/assets/img/bg.jpg";
 import masterData from "@/assets/dataJson/masterData.json";
 import axios from "axios";
+import pdfMake from "pdfmake";
+// import pdfFonts from '@/assets/vfs_fonts.js'
 
 const listRoom = [
   { title: "ตึก 1" },
@@ -195,6 +197,58 @@ export default {
       }
       return str;
     },
+    Previous() {
+      window.history.back();
+    },
+
+    exportPdf() {
+      // pdfMake.vfs = pdfFonts.pdfMake.vfs // 2. set vfs pdf font
+      pdfMake.fonts = {
+        // download default Roboto font from cdnjs.com
+        Roboto: {
+          normal:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+          bold:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+          italics:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+          bolditalics:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+        },
+        // Kanit Font
+        // Kanit: { // 3. set Kanit font
+        //   normal: 'Kanit-Regular.ttf',
+        //   bold: 'Kanit-Medium.ttf',
+        //   italics: 'Kanit-Italic.ttf',
+        //   bolditalics: 'Kanit-MediumItalic.ttf'
+        // }
+      };
+      const docDefinition = {
+        content: [
+          {
+            layout: "lightHorizontalLines", // optional
+            table: {
+              // headers are automatically repeated if the table spans over multiple pages
+              // you can declare how many rows should be treated as headers
+              headerRows: 1,
+              widths: ["*", "auto", 100, "*"],
+
+              body: [
+                ["First", "Second", "Third", "The last one"],
+                ["Value 1", "Value 2", "Value 3", "Value 4"],
+                [{ text: "Bold value", bold: true }, "Val 2", "Val 3", "Val 4"],
+              ],
+            },
+          },
+        ],
+        defaultStyle: {
+          // 4. default style 'KANIT' font to test
+          font: "Roboto",
+        },
+      };
+      // pdfMake.createPdf(docDefinition).open({}, window);
+      pdfMake.createPdf(docDefinition).open();
+    },
 
     // var thaiNum = thaiNumber(12345);
   },
@@ -237,6 +291,15 @@ export default {
                 { label: 'ระบบเรียกรายงาน' },
               ]"
             />
+          </div>
+          <div class="mb-3">
+            <a
+              style="display: flex; align-items: center; cursor: pointer"
+              @click="Previous"
+            >
+              <span class="material-icons"> arrow_back_ios_new </span>
+              <span>ย้อนกลับ</span>
+            </a>
           </div>
           <h4>ระบบเรียกรายงาน ประจำเดือน พฤศจิกายน</h4>
           <div class="row pt-4 min-vh-45">

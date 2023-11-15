@@ -274,6 +274,9 @@ export default {
         },
       });
     },
+    Previous() {
+      window.history.back();
+    },
   },
 };
 </script>
@@ -315,8 +318,17 @@ export default {
               ]"
             />
           </div>
+          <div class="mb-3">
+            <a
+              style="display: flex; align-items: center; cursor: pointer"
+              @click="Previous"
+            >
+              <span class="material-icons"> arrow_back_ios_new </span>
+              <span>ย้อนกลับ</span>
+            </a>
+          </div>
           <h4>บันทึกค่าใช้จ่ายรายเดือน บช.ตชด. &nbsp; ประจำเดือน {{ months }}</h4>
-          <notifications position="top right" width="400px" />
+          <notifications class="pt-6 " position="top center" width="400px" />
           <div class="d-flex justify-content-end align-items-baseline pt-1">
             <MaterialButton
               style="margin-bottom: 0px"
@@ -361,170 +373,6 @@ export default {
       </div>
     </div>
 
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="staticBackdrop11"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">
-              บันทึกค่าใช้จ่ายบ้านพัก ตร.
-            </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div>
-              <div class="mb-1">
-                <label style="font-size: large"
-                  >{{ rank }} {{ firstName }} {{ lastName }}</label
-                >
-              </div>
-              <!-- <div class="mb-3">
-                <label>อาคาร</label>
-                <v-select
-                  :options="optionsBuilding"
-                  v-model="selectedBuilding"
-                ></v-select>
-              </div>
-              <div class="mb-3">
-                <label>ชั้น</label>
-                <v-select :options="optionsFloor" v-model="selectedFloor"></v-select>
-              </div>
-              <div class="mb-3">
-                <label>เลขที่ห้อง</label>
-                <v-select :options="optionsRoom" v-model="selectedRoom"></v-select>
-              </div> -->
-
-              <div class="mb-3">
-                <MaterialInput
-                  :value="numberfirst"
-                  @input="(event) => (numberfirst = event.target.value)"
-                  class="input-group-static"
-                  label="เลขก่อน"
-                  type="text"
-                  placeholder="เลขก่อน"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="lastnumber"
-                  @input="(event) => (lastnumber = event.target.value)"
-                  class="input-group-static"
-                  label="เลขหลัง"
-                  type="text"
-                  placeholder="เลขหลัง"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="Waterbill"
-                  @input="(event) => (Waterbill = event.target.value)"
-                  class="input-group-static"
-                  label="ค่าน้ำประปา"
-                  type="text"
-                  placeholder="ค่าน้ำประปา"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="Electricitybill"
-                  @input="(event) => (Electricitybill = event.target.value)"
-                  class="input-group-static"
-                  label="ค่าไฟฟ้า"
-                  type="text"
-                  placeholder="ค่าไฟฟ้า"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="Central"
-                  @input="(event) => (Central = event.target.value)"
-                  class="input-group-static"
-                  label="ค่าไฟฟ้าส่วนกลาง"
-                  type="text"
-                  placeholder="ค่าไฟฟ้าส่วนกลาง"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="Costs"
-                  @input="(event) => (Costs = event.target.value)"
-                  class="input-group-static"
-                  label="ค่าบำรุงลิฟท์"
-                  type="text"
-                  placeholder="ค่าบำรุงลิฟท์"
-                />
-              </div>
-
-              <div
-                class="mb-3"
-                style="display: flex; justify-content: flex-start; align-items: center"
-              >
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio1"
-                    value="หักได้"
-                    @change="typeContractchange($event)"
-                    :checked="typeContract == 'หักได้'"
-                  />
-                  <label class="form-check-label" for="inlineRadio1">หักได้</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio2"
-                    value="หักไม่ได้"
-                    @change="typeContractchange($event)"
-                    :checked="typeContract == 'หักไม่ได้'"
-                  />
-                  <label class="form-check-label" for="inlineRadio2">หักไม่ได้</label>
-                </div>
-              </div>
-              <div style="margin-bottom: 10px">
-                <MaterialInput
-                  name="contractExpenses"
-                  :value="contractExpenses"
-                  @input="(event) => (contractExpenses = event.target.value)"
-                  class="input-group-static"
-                  type="text"
-                  placeholder="สาเหตุ"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              ปิดหน้าต่าง
-            </button>
-            <MaterialButton
-              variant="gradient"
-              color="success"
-              @click="submitForm"
-              html-type="submit"
-              data-bs-dismiss="modal"
-              >บันทึก</MaterialButton
-            >
-          </div>
-        </div>
-      </div>
-    </div>
   </section>
 </template>
 <style>

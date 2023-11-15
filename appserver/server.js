@@ -126,6 +126,9 @@ app.put('/users/:id', (req, res) => {
     if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
     if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
     if (req.body.userId) parsedData.userId = req.body.userId
+    if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
+    if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
+    if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -280,7 +283,9 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
     if (req.body.queue) parsedData.queue = req.body.queue
     if (req.body.userId) parsedData.userId = req.body.userId
-
+    if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
+    if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
+    if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
 
     filterdata.push(parsedData)
     fs.writeFile('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -342,6 +347,9 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
     if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
     if (req.body.userId) parsedData.userId = req.body.userId
+    if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
+    if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
+    if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -408,6 +416,9 @@ app.put('/history/:id', (req, res) => {
     if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
     if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
     if (req.body.userId) parsedData.userId = req.body.userId
+    if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
+    if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
+    if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     filterdata.push(parsedData)
     fs.writeFile('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -538,6 +549,9 @@ app.put('/report/:id', (req, res) => {
     if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
     if (req.body.queue) parsedData.queue = req.body.queue
     if (req.body.userId) parsedData.userId = req.body.userId
+    if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
+    if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
+    if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     filterdata.push(parsedData)
     fs.writeFile('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -592,6 +606,8 @@ app.put('/utilitie/:id', (req, res) => {
     if (req.body.status) parsedData.status = req.body.status
     if (req.body.typeAffiliation) parsedData.typeAffiliation = req.body.typeAffiliation
     if (req.body.typeRanks) parsedData.typeRanks = req.body.typeRanks
+    
+    
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {

@@ -87,6 +87,9 @@ export default {
     typeContractchange(e) {
       this.typeContract = e.target.value;
     },
+    Previous() {
+      window.history.back();
+    },
     getMonths() {
       const d = new Date();
       let m = this.optionMonth[d.getMonth()];
@@ -113,14 +116,7 @@ export default {
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
-            // "deposit": "รอคืนเงินประกัน"
             console.log(data);
-            // this.installmentsCost = this.countinstallments(data[0])
-            // let t2 = this.countinsamountPaid(data[0])
-            // let t3 = this.countinsamaintenance(data[0])
-            // console.log(t);
-            // console.log(t2);
-            // console.log(t3);
             this.expensesList = data;
           })
           .catch((err) => {
@@ -282,8 +278,18 @@ export default {
               ]"
             />
           </div>
+          <div class="mb-3">
+            <a
+              style="display: flex; align-items: center; cursor: pointer"
+              @click="Previous"
+            >
+              <span class="material-icons"> arrow_back_ios_new </span>
+              <span>ย้อนกลับ</span>
+            </a>
+          </div>
+
           <h4>คืนเงินประกัน &nbsp; ประจำเดือน {{ months }}</h4>
-          <notifications position="top right" width="400px" />
+          <notifications class="pt-6" position="top center" width="400px" />
           <!-- <div class="d-flex justify-content-end align-items-baseline pt-1">
               <label  style="margin-right:20px;">
                 เดือน</label
@@ -301,13 +307,22 @@ export default {
                 <tr>
                   <th></th>
                   <th scope="col">ชื่อ-สกุล</th>
+                  <th scope="col">สังกัด</th>
+                  <th scope="col">อาคาร</th>
+                  <th scope="col">เลขที่ห้อง</th>
+                  <th scope="col">ประเภทห้อง</th>
+                  <th scope="col">ธนาคาร</th>
+                  <th scope="col">เลขบัญชีธนาคาร</th>
                   <th scope="col">เงินประกันทั้งหมด</th>
                   <th scope="col">เงินประกันที่ชำระแล้ว</th>
                   <th scope="col">งวดเงินประกัน</th>
                   <th scope="col">ยอดเงินประกันคงเหลือ</th>
                   <th scope="col">ทะเบียนบ้าน</th>
+                  <th scope="col">หมายเหตุ(ทะเบียนบ้าน)</th>
                   <th scope="col">กุญแจห้อง</th>
+                  <th scope="col">หมายเหตุ(กุญแจห้อง)</th>
                   <th scope="col">หลักฐานแสดงการชําระค่าไฟเดือนล่าสุด</th>
+                  <th scope="col">หมายเหตุ(หลักฐานแสดงการชําระ)</th>
                 </tr>
               </thead>
               <tbody>
@@ -323,6 +338,12 @@ export default {
                     >
                   </td>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
+                  <td>{{ item?.typeAffiliation || "-" }}</td>
+                  <td>{{ item?.buildingName || "-" }}</td>
+                  <td>{{ item?.roomnumber || "-" }}</td>
+                  <td>{{ item?.typeRoom || "-" }}</td>
+                  <td>{{ item?.bankbookName || "-" }}</td>
+                  <td>{{ item?.bankbookNumber || "-" }}</td>
                   <td>{{ item?.insurance || "-" }}</td>
                   <td>{{ item?.installmentsCost || "-" }}</td>
                   <td>
@@ -332,9 +353,12 @@ export default {
                     <span v-if="item?.installments == 0"> - </span>
                   </td>
                   <td>{{ item?.amountPaidCost || "-" }}</td>
-                  <td>{{ item?.roomKey }}</td>
-                  <td>{{ item?.houseRegistration }}</td>
-                  <td>{{ item?.payMonth }}</td>
+                  <td>{{ item?.roomKey || "-" }}</td>
+                  <td>{{ item?.roomKeycause || "-" }}</td>
+                  <td>{{ item?.houseRegistration || "-" }}</td>
+                  <td>{{ item?.houseRegistrationcause || "-" }}</td>
+                  <td>{{ item?.payMonth || "-" }}</td>
+                  <td>{{ item?.payMonthcause || "-" }}</td>
                 </tr>
               </tbody>
             </table>
@@ -343,267 +367,8 @@ export default {
       </div>
     </div>
 
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="staticBackdrop11"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">บันทึกคืนเงินประกัน</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div>
-              <div
-                class="mb-3"
-                style="display: flex; justify-content: space-between; align-items: center"
-              >
-                <div class="form-check form-check-inline">
-                  <label style="margin-right: 20px">กุญแจห้อง</label>
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions4"
-                    id="inlineRadio11"
-                    value="มี"
-                  />
-                  <label class="form-check-label" for="inlineRadio11">มี</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions4"
-                    id="inlineRadio12"
-                    value="ไม่มี"
-                  />
-                  <label class="form-check-label" for="inlineRadio12">ไม่มี</label>
-                </div>
-                <div style="width: 360px; margin-bottom: 10px">
-                  <MaterialInput
-                    name="contract"
-                    :value="contract"
-                    @input="(event) => (contract = event.target.value)"
-                    class="input-group-static"
-                    type="text"
-                    placeholder="สาเหตุ"
-                  />
-                </div>
-              </div>
-              <div
-                class="mb-3"
-                style="display: flex; justify-content: space-between; align-items: center"
-              >
-                <div class="form-check form-check-inline">
-                  <label style="margin-right: 20px">ทะเบียนบ้าน</label>
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions11"
-                    id="inlineRadio27"
-                    value="มี"
-                  />
-                  <label class="form-check-label" for="inlineRadio27">มี</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions11"
-                    id="inlineRadio28"
-                    value="ไม่มี"
-                  />
-                  <label class="form-check-label" for="inlineRadio28">ไม่มี</label>
-                </div>
-                <div style="width: 360px; margin-bottom: 10px">
-                  <MaterialInput
-                    name="contract"
-                    :value="contract"
-                    @input="(event) => (contract = event.target.value)"
-                    class="input-group-static"
-                    type="text"
-                    placeholder="สาเหตุ"
-                  />
-                </div>
-              </div>
-              <div>
-                <label style="padding-left: 30px"
-                  >หลักฐานแสดงการชําระค่าไฟเดือนล่าสุด</label
-                >
-              </div>
-              <div
-                class="mb-3"
-                style="
-                  margin-left: 10px;
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                "
-              >
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions2"
-                    id="inlineRadio22"
-                    value="มี"
-                  />
-                  <label class="form-check-label" for="inlineRadio22">มี</label>
-                </div>
-                <div style="width: 250px; margin-bottom: 10px">
-                  <MaterialInput
-                    name="contract"
-                    :value="contract"
-                    @input="(event) => (contract = event.target.value)"
-                    class="input-group-static"
-                    type="text"
-                    placeholder="สาเหตุ"
-                  />
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="inlineRadioOptions2"
-                    id="inlineRadio23"
-                    value="ไม่มี"
-                  />
-                  <label class="form-check-label" for="inlineRadio23">ไม่มี</label>
-                </div>
-                <div style="width: 250px; margin-bottom: 10px">
-                  <MaterialInput
-                    name="contract"
-                    :value="contract"
-                    @input="(event) => (contract = event.target.value)"
-                    class="input-group-static"
-                    type="text"
-                    placeholder="สาเหตุ"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              ปิดหน้าต่าง
-            </button>
-            <MaterialButton
-              variant="gradient"
-              color="success"
-              @click="submitForm"
-              html-type="submit"
-              data-bs-dismiss="modal"
-              >บันทึก</MaterialButton
-            >
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- modal -->
-    <div
-      class="modal fade"
-      id="EdituserBackdrop"
-      data-bs-backdrop="static"
-      data-bs-keyboard="false"
-      tabindex="-1"
-      aria-labelledby="staticBackdropLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">แก้ไขสมาชิก</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <div>
-              <div class="mb-3">
-                <label>สังกัด</label>
-                <v-select
-                  :options="masterData?.Affiliation"
-                  v-model="selectedAffiliation"
-                ></v-select>
-              </div>
-              <div class="mb-3">
-                <label>ยศ</label>
-                <v-select :options="masterData?.ranks" v-model="selectedRanks"></v-select>
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  name="firstName"
-                  :value="firstName"
-                  @input="(event) => (firstName = event.target.value)"
-                  class="input-group-static"
-                  label="ชื่อ"
-                  type="text"
-                  placeholder="ชื่อ"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="lastName"
-                  @input="(event) => (lastName = event.target.value)"
-                  class="input-group-static"
-                  label="สกุล"
-                  type="text"
-                  placeholder="สกุล"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="idcard"
-                  @input="(event) => (idcard = event.target.value)"
-                  class="input-group-static"
-                  label="เลขบัตรประชาชน"
-                  type="number"
-                  placeholder="เลขบัตรประชาชน"
-                />
-              </div>
-              <div class="mb-3">
-                <MaterialInput
-                  :value="phone"
-                  @input="(event) => (phone = event.target.value)"
-                  class="input-group-static"
-                  label="เบอร์ติดต่อ"
-                  type="number"
-                  placeholder="เบอร์ติดต่อ"
-                />
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              ปิดหน้าต่าง
-            </button>
-            <MaterialButton
-              variant="gradient"
-              color="success"
-              @click="submitForm"
-              html-type="submit"
-              >บันทึก</MaterialButton
-            >
-          </div>
-        </div>
-      </div>
-    </div>
+
   </section>
 </template>
 <style>

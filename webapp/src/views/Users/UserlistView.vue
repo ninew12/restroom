@@ -250,6 +250,10 @@ export default {
         console.error(error);
       }
     },
+
+    Previous() {
+      window.history.back();
+    },
   },
 };
 </script>
@@ -283,11 +287,20 @@ export default {
     <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
       <div class="page-header min-vh-45">
         <div class="container">
-          <notifications position="top right" width="400px" />
+          <notifications class="pt-6 " position="top center" width="400px" />
           <div>
             <Breadcrumbs
               :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ทะเบียน' }]"
             />
+          </div>
+          <div class="mb-3">
+            <a
+              style="display: flex; align-items: center; cursor: pointer"
+              @click="Previous"
+            >
+              <span class="material-icons"> arrow_back_ios_new </span>
+              <span>ย้อนกลับ</span>
+            </a>
           </div>
           <h4>ทะเบียน</h4>
           <div class="mb-1">
@@ -470,7 +483,7 @@ export default {
             <div>
               <div class="mb-3">
                 <div class="form-check form-check-inline">
-                  <label style="margin-right: 20px">ประเภท</label>
+                  <label style="margin-right: 20px" class="starRed">ประเภท</label>
                   <input
                     class="form-check-input"
                     type="radio"
@@ -495,7 +508,7 @@ export default {
                 </div>
               </div>
               <div class="mb-1">
-                <label>สังกัด</label>
+                <label class="starRed">สังกัด</label>
                 <v-select
                   :options="masterData?.typeAffiliation"
                   v-model="typeAffiliation"
@@ -516,7 +529,7 @@ export default {
                 ></v-select>
               </div>
               <div class="mb-1">
-                <label>ลำดับยศ</label>
+                <label class="starRed">ลำดับยศ</label>
                 <v-select :options="masterData?.typeranks" v-model="typeRanks"></v-select>
               </div>
               <div class="mb-3" v-if="typeRanks.label == 'ลูกจ้าง'">
@@ -538,37 +551,37 @@ export default {
                 ></v-select>
               </div>
               <div class="mb-3 pt-1">
+                <label class="starRed">ชื่อ</label>
                 <MaterialInput
                   name="firstName"
                   :value="firstName"
                   @input="(event) => (firstName = event.target.value)"
                   class="input-group-static"
-                  label="ชื่อ"
                   type="text"
                   placeholder="ชื่อ"
                   isRequired
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">สกุล</label>
                 <MaterialInput
                   :value="lastName"
                   @input="(event) => (lastName = event.target.value)"
                   class="input-group-static"
-                  label="สกุล"
                   type="text"
                   placeholder="สกุล"
                 />
               </div>
               <div class="mb-3">
-                <label>สถานภาพ</label>
+                <label class="starRed">สถานภาพ</label>
                 <v-select :options="DataObtion" v-model="selectedDataObtion"></v-select>
               </div>
               <div class="mb-3">
+                <label class="starRed">เลขบัตรประชาชน</label>
                 <MaterialInput
                   :value="idcard"
                   @input="(event) => (idcard = event.target.value)"
                   class="input-group-static"
-                  label="เลขบัตรประชาชน"
                   type="number"
                   placeholder="เลขบัตรประชาชน"
                 />
@@ -627,7 +640,7 @@ export default {
           <div class="modal-body">
             <div>
               <div class="mb-1">
-                <label>สังกัด</label>
+                <label class="starRed">สังกัด</label>
                 <v-select
                   :options="masterData?.typeAffiliation"
                   v-model="typeAffiliation"
@@ -658,7 +671,7 @@ export default {
                 ></v-select>
               </div>
               <div class="mb-1">
-                <label>ลำดับยศ</label>
+                <label class="starRed">ลำดับยศ</label>
                 <v-select :options="masterData?.typeranks" v-model="typeRanks"></v-select>
               </div>
               <div
@@ -689,7 +702,7 @@ export default {
                 ></v-select>
               </div>
               <div class="mb-3">
-                <h6 class="input-required">ชื่อ</h6>
+                <label class="starRed">ชื่อ</label>
                 <MaterialInput
                   name="firstName"
                   :value="firstName"
@@ -699,25 +712,25 @@ export default {
                 />
               </div>
               <div class="mb-3">
+                <label class="starRed">สกุล</label>
                 <MaterialInput
                   :value="lastName"
                   @input="(event) => (lastName = event.target.value)"
                   class="input-group-static"
-                  label="สกุล"
                   type="text"
                   placeholder="สกุล"
                 />
               </div>
               <div class="mb-3">
-                <label>สถานภาพ</label>
+                <label class="starRed">สถานภาพ</label>
                 <v-select :options="DataObtion" v-model="selectedDataObtion"></v-select>
               </div>
               <div class="mb-3">
+                <label class="starRed">เลขบัตรประชาชน</label>
                 <MaterialInput
                   :value="idcard"
                   @input="(event) => (idcard = event.target.value)"
-                  class="input-group-static"
-                  label="เลขบัตรประชาชน"
+                  class="input-group-static "
                   type="number"
                   placeholder="เลขบัตรประชาชน"
                 />
@@ -822,5 +835,18 @@ input[type="number"] {
 }
 .breadcrumb-item a:hover {
   color: #4caf50 !important;
+}
+.vue-notification {
+  margin: 0 10px 10px;
+  padding: 20px;
+  font-size: 16px;
+  color: #ffffff;
+  /* background: #44a4fc; */
+  /* border-left: 5px solid #187fe7; */
+}
+.starRed::after { 
+  content: " *";
+  color: red;
+  font-weight: bold;
 }
 </style>

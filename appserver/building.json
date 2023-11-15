@@ -348,55 +348,5 @@
         "sumroom": 2
       }
     ]
-  },
-  {
-    "buildingId": "ba006ac6-bc08-4df2-8416-49ebb327d818",
-    "buildingType": "ลือชา",
-    "buil": "ลือชา",
-    "name": "l",
-    "sumroom": 2,
-    "floor": "1",
-    "roomnumber": "",
-    "type": "",
-    "listRoom": [
-      {
-        "buildingId": "ba006ac6-bc08-4df2-8416-49ebb327d818",
-        "name": "l",
-        "floor": 1,
-        "committee": "",
-        "rooms": [
-          {
-            "buildingId": "ba006ac6-bc08-4df2-8416-49ebb327d818",
-            "id": "051cc40f-c509-4656-9d4b-891a9e528fa3",
-            "floor": 1,
-            "index": 1,
-            "numberRoom": 1,
-            "ranks": "",
-            "firstName": "",
-            "laststName": "",
-            "Affiliation": "",
-            "typeRoom": "",
-            "roomconditions": "ปกติ",
-            "roomStatus": "free"
-          },
-          {
-            "buildingId": "ba006ac6-bc08-4df2-8416-49ebb327d818",
-            "id": "164bb2af-524a-44e0-a56f-07a155dd0ef1",
-            "name": "l",
-            "floor": 1,
-            "index": 2,
-            "numberRoom": 2,
-            "ranks": "",
-            "firstName": "",
-            "laststName": "",
-            "Affiliation": "",
-            "typeRoom": "",
-            "roomconditions": "ปกติ",
-            "roomStatus": "free"
-          }
-        ],
-        "sumroom": 2
-      }
-    ]
   }
 ]
