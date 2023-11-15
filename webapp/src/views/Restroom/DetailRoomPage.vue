@@ -52,7 +52,7 @@ export default {
       statusRoom: "",
       dateApproved: "",
       userList: [],
-      selectedUser: "",
+      selectedUser: "เลือกผู้พักอาศัย",
       typeUser: "ตร.",
       typeUserBytype: "",
       typeUserByrankr: "",
@@ -392,7 +392,7 @@ export default {
       loading="lazy"
     >
       <div class="container">
-        <notifications position="top center" width="400px" />
+        <notifications position="top right" width="400px" />
         <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
@@ -838,6 +838,67 @@ export default {
               <label>ชื่อผู้พักอาศัย</label>
               <v-select :options="userList" v-model="selectedUser"></v-select>
             </div>
+            <div class="mb-3">
+                <MaterialInput
+                  name="contract"
+                  :value="contract"
+                  @input="(event) => (contract = event.target.value)"
+                  class="input-group-static"
+                  label="วันที่ได้รับอนุมัติ"
+                  type="text"
+                  placeholder="วันที่ได้รับอนุมัติ"
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="Checkintime"
+                  @input="(event) => (Checkintime = event.target.value)"
+                  class="input-group-static"
+                  label="ระยะเวลาที่เข้าพัก(เดือน)"
+                  type="text"
+                  placeholder="จำนวนเดือนที่เข้าพัก"
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="Maintenance"
+                  @input="(event) => (Maintenance = event.target.value)"
+                  class="input-group-static"
+                  label="ค่าบำรุง"
+                  type="text"
+                  placeholder="ค่าบำรุง"
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="insurance"
+                  @input="(event) => (insurance = event.target.value)"
+                  class="input-group-static"
+                  label="เงินค่าประกัน"
+                  type="text"
+                  placeholder="เงินค่าประกัน"
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="amountPaid"
+                  @input="(event) => (amountPaid = event.target.value)"
+                  class="input-group-static"
+                  label="จำนวนเงินประกันที่ชำระแล้ว"
+                  type="text"
+                  placeholder="จำนวนเงินค่าประกันที่ชำระแล้ว"
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
+                  :value="installments"
+                  @input="(event) => (installments = event.target.value)"
+                  class="input-group-static"
+                  label="จำนวนงวดเงินประกัน"
+                  type="text"
+                  placeholder="จำนวนงวดเงินค่าประกัน"
+                />
+              </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

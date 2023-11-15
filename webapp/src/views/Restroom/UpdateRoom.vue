@@ -356,7 +356,7 @@ export default {
           </div>
           <!-- d-flex justify-content-between -->
           <h4>จัดการห้องพัก</h4>
-          <notifications position="top center" width="400px" />
+          <notifications position="top right" width="400px" />
           <div class="row pt-4 min-vh-45">
             <div class="col-lg-3">
               <div

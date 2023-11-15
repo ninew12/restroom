@@ -283,7 +283,7 @@ export default {
     <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
       <div class="page-header min-vh-45">
         <div class="container">
-          <notifications position="top center" width="400px" />
+          <notifications position="top right" width="400px" />
           <div>
             <Breadcrumbs
               :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ทะเบียน' }]"

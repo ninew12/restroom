@@ -345,7 +345,7 @@ export default {
       <div class="page-header min-vh-45">
         <div class="container-fluid">
           <!-- d-flex justify-content-between -->
-          <notifications position="top center" width="400px" />
+          <notifications position="top right" width="400px" />
           <div>
             <Breadcrumbs
               :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'สถานะห้องพัก' }]"
@@ -420,6 +420,17 @@ export default {
             <div class="col-8">
               <div class="d-flex justify-content-end align-items-baseline">
                 <div class="d-flex">
+                  <MaterialButton size="lg" class="btn-icon" style="margin-right: -30px">
+                    <div class="d-flex align-items-center">
+                      <span style="margin-right: 5px">บันทึก</span>
+                      <img
+                        src="../../assets/img/pdf.png"
+                        alt="title"
+                        loading="lazy"
+                        width="40"
+                      />
+                    </div>
+                  </MaterialButton>
                   <!-- <MaterialCheckbox id="terms6">
                     <a href="javascript:;" class="font-weight-bolder"> ตึกทั้งหมด</a>
                   </MaterialCheckbox> -->

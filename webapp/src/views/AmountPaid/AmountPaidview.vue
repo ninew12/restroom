@@ -283,7 +283,7 @@ export default {
             />
           </div>
           <h4>คืนเงินประกัน &nbsp; ประจำเดือน {{ months }}</h4>
-          <notifications position="top center" width="400px" />
+          <notifications position="top right" width="400px" />
           <!-- <div class="d-flex justify-content-end align-items-baseline pt-1">
               <label  style="margin-right:20px;">
                 เดือน</label

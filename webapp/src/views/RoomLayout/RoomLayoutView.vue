@@ -214,7 +214,7 @@ export default {
       loading="lazy"
     >
       <div class="container">
-        <notifications position="top center" width="400px" />
+        <notifications position="top right" width="400px" />
         <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>

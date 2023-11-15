@@ -321,7 +321,7 @@ export default {
               :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ระบบคิว' }]"
             />
           </div>
-          <notifications position="top center" width="400px" />
+          <notifications position="top right" width="400px" />
           <h4>ระบบคิว</h4>
           <div class="d-flex justify-content-between align-items-baseline">
             <div class="mb-3">
