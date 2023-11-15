@@ -143,7 +143,6 @@ app.put('/users/:id', (req, res) => {
 app.delete('/users/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const deletedIndex = users.filter(user => user.id !== (req.params.id))
-    console.log(deletedIndex);
     fs.writeFile('./users.json', JSON.stringify(deletedIndex, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
@@ -194,6 +193,20 @@ app.post('/buildings', (req, res) => {
         }
     })
     res.json(building)
+})
+
+app.delete('/buildings/:builId', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    const deletedIndex = building.filter(buil => buil.buildingId !== (req.params.builId))
+    console.log(deletedIndex);
+    fs.writeFile('./building.json', JSON.stringify(deletedIndex, null, 2), (err) => {
+        if (err) {
+            console.log("Failed to write updated data to file");
+            return;
+        }
+        console.log("Updated file successfully");
+    });
+    res.send(`Delete user completed.`)
 })
 
 app.get('/expenses', (req, res) => {

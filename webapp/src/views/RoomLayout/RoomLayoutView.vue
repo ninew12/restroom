@@ -174,6 +174,7 @@ export default {
           .get("http://localhost:3897/buildings")
           .then((res) => {
             this.buildingList = res.data;
+            console.log(res.data);
           })
           .catch((err) => {
             console.log(err);
@@ -190,7 +191,7 @@ export default {
           .then((res) => {
             let data = res.data;
             this.building_Id = data.buildingId;
-            this.buildingType = data.buildingType
+            this.buildingType = data.buildingType;
             this.Area = data.buil;
             this.Building = data.name;
             this.Floors = data.floor;
@@ -206,6 +207,41 @@ export default {
     Previous() {
       window.history.back();
     },
+    deleteLayour(id) {
+      this.builId = id;
+      console.log(this.builId);
+    },
+
+    async submitDelete() {
+      await axios
+        .delete(`http://localhost:3897/buildings/${this.builId}`)
+        .then((res) => {
+          notify({
+            title: "ลบข้อมูลสำเร็จ",
+            type: "success",
+          });
+          this.getAlluser();
+
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    async getAlluser() {
+      try {
+        await axios
+          .get("http://localhost:3897/buildings")
+          .then((res) => {
+            this.buildingList = res.data;
+            
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 };
 </script>
@@ -217,7 +253,7 @@ export default {
       loading="lazy"
     >
       <div class="container">
-        <notifications class="pt-6 " position="top center" width="400px" />
+        <notifications class="pt-6" position="top center" width="400px" />
         <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
@@ -304,6 +340,19 @@ export default {
                       data-bs-toggle="modal"
                       data-bs-target="#Viewroomplan"
                       >visibility</i
+                    >
+                  </td>
+                  <td>
+                    <a
+                      @click="deleteLayour(item?.buildingId)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#deleteLayoutBackdrop"
+                      ><i
+                        class="material-icons me-2"
+                        style="cursor: pointer"
+                        aria-hidden="true"
+                        >delete</i
+                      ></a
                     >
                   </td>
                   <!-- <td>{{ item?.type }}</td> -->
@@ -485,7 +534,8 @@ export default {
             ></button>
           </div>
           <div class="modal-body">
-            <div><div class="mb-3">
+            <div>
+              <div class="mb-3">
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
@@ -606,6 +656,44 @@ export default {
               data-bs-dismiss="modal"
               >บันทึก</MaterialButton
             > -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="deleteLayoutBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">ลบผังห้อง</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">คุณต้องการที่จะลบผังห้องใช่หรือไม่</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              ยกเลิก
+            </button>
+            <MaterialButton
+              variant="gradient"
+              color="danger"
+              @click="submitDelete"
+              html-type="submit"
+              data-bs-dismiss="modal"
+              >ตกลง</MaterialButton
+            >
           </div>
         </div>
       </div>
