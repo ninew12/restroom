@@ -26,6 +26,12 @@ export default {
 
   data() {
     return {
+      obtionBuil : [
+        {label:"บช.ตชด.",value:"บช.ตชด."},
+        {label:"ลือชา",value:"ลือชา"},
+        {label:"บางเขน",value:"บางเขน"},
+        {label:"อื่นๆ",value:"อื่นๆ"}
+      ],
       selectedUser: "เลือกชื่อผู้พักอาศัย",
       firstName: "",
       lastName: "",
@@ -46,8 +52,10 @@ export default {
       userId: "",
       picked: new Date(),
       buildingName: "",
+      buildingType: "",
       building: [],
-      selectedBuildingName: "เลือกอาคาร",
+      selectedBuildingName: "เลือกอาคาร2",
+      seleteBuildingType: "เลือกอาคาร1"
     };
   },
   created() {
@@ -63,6 +71,9 @@ export default {
     },
     selectedBuildingName: function (newValue) {
       if (newValue !== null) this.buildingName = newValue.value;
+    },
+    seleteBuildingType: function (newValue) {
+      if (newValue !== null) this.buildingType = newValue.value;
     },
   },
   computed: {
@@ -200,6 +211,7 @@ export default {
         pickedBook: this.picked.toISOString(),
         typeRoom: this.typeroomByqueue,
         buildingName: this.buildingName,
+        buildingType: this.buildingType,
         queue: "inqueue",
       };
       delete body.id;
@@ -386,7 +398,8 @@ export default {
                   <!-- <th scope="col">ยศ</th> -->
                   <th scope="col">ชื่อ-สกุล</th>
                   <th scope="col">สังกัด</th>
-                  <th scope="col">ชื่ออาคาร</th>
+                  <th scope="col">อาคาร1</th>
+                  <th scope="col">อาคาร2</th>
                   <th scope="col">สถานภาพ</th>
                   <th scope="col">เลขบัตรประชาชน</th>
                   <th scope="col">เบอร์ติดต่อ</th>
@@ -398,6 +411,7 @@ export default {
                   <th scope="row">{{ item?.no }}</th>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.affiliation }}</td>
+                  <td>{{ item?.buildingType }}</td>
                   <td>{{ item?.buildingName }}</td>
                   <td>{{ item?.status }}</td>
                   <td>{{ item?.idcard }}</td>
@@ -450,7 +464,11 @@ export default {
                 <v-select :options="userList" v-model="selectedUser"></v-select>
               </div>
               <div class="mb-3">
-                <label>ชื่ออาคาร</label>
+                <label>อาคาร1</label>
+                <v-select :options="obtionBuil" v-model="seleteBuildingType"></v-select>
+              </div>
+              <div class="mb-3">
+                <label>อาคาร2</label>
                 <v-select :options="building" v-model="selectedBuildingName"></v-select>
               </div>
               <div class="mb-3">
