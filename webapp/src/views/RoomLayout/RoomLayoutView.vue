@@ -110,6 +110,14 @@ export default {
       this.buildingType = e;
     },
 
+    clearData(){
+      this.FloorsList = []
+      this.building_Id = "",
+      this.buildingType = "",
+      this.Building = "",
+      this.Floors = ""
+    },
+
     async submitForm() {
       let sum = 0;
       this.FloorsList.forEach((num) => {
@@ -168,9 +176,9 @@ export default {
     },
 
     // buildings
-    async getBuildings() {
+    getBuildings() {
       try {
-        await axios
+        axios
           .get("http://localhost:3897/buildings")
           .then((res) => {
             this.buildingList = res.data;
@@ -210,28 +218,26 @@ export default {
       this.builId = id;
     },
 
-    async submitDelete() {
-      await axios
+    submitDelete() {
+      axios
         .delete(`http://localhost:3897/buildings/${this.builId}`)
         .then((res) => {
+          this.getAlluser();
           notify({
             title: "ลบข้อมูลสำเร็จ",
             type: "success",
           });
-          this.getAlluser();
-
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    async getAlluser() {
+    getAlluser() {
       try {
-        await axios
+        axios
           .get("http://localhost:3897/buildings")
           .then((res) => {
             this.buildingList = res.data;
-            
           })
           .catch((err) => {
             console.log(err);
@@ -251,7 +257,7 @@ export default {
       loading="lazy"
     >
       <div class="container">
-        <notifications class="pt-6" position="top center" width="400px" />
+        <notifications class="pt-6" position="top right" width="400px" />
         <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
@@ -306,6 +312,7 @@ export default {
               color="success"
               data-bs-toggle="modal"
               data-bs-target="#Addroomplan"
+              @click="clearData"
               >สร้างผังห้อง</MaterialButton
             >
           </div>
