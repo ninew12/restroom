@@ -94,10 +94,10 @@ export default {
             <div class="col-sm-3 mt-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <p class="card-title" style="font-weight: bold; color: #000">บันทึกค่าใช้จ่ายรายเดือน ตร</p>
+                        <p class="card-title" style="font-weight: bold; color: #000">บันทึกค่าใช้จ่ายรายเดือน ตร.</p>
                         <img src="../../../assets/img/accounting.png" alt="title" loading="lazy" class="w-50" />
                         <RouterLink :to="{ name: 'expenses' }" class="dropdown-item border-radius-md">
-                          <a href="#" class="btn btn-success mt-4">บันทึกค่าใช้จ่ายรายเดือน ตร</a>
+                          <a href="#" class="btn btn-success mt-4">บันทึกค่าใช้จ่ายรายเดือน ตร.</a>
                         </RouterLink>
                     </div>
                 </div>

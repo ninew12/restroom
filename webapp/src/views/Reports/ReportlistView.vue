@@ -497,7 +497,7 @@ export default {
                           <div class="mb-3 w-20">
                             <label>สังกัด</label>
                             <v-select
-                              :options="masterData?.Affiliation"
+                              :options="masterData?.AffiliationList"
                               v-model="selectedAffiliation"
                             ></v-select>
                           </div>

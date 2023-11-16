@@ -312,17 +312,15 @@ export default {
                   <th scope="col">เลขที่ห้อง</th>
                   <th scope="col">ประเภทห้อง</th>
                   <th scope="col">ธนาคาร</th>
-                  <th scope="col">เลขบัญชีธนาคาร</th>
-                  <th scope="col">เงินประกันทั้งหมด</th>
                   <th scope="col">เงินประกันที่ชำระแล้ว</th>
                   <th scope="col">งวดเงินประกัน</th>
                   <th scope="col">ยอดเงินประกันคงเหลือ</th>
+                  <th scope="col">ธนาคาร</th>
+                  <th scope="col">เลขบัญชีธนาคาร</th>
                   <th scope="col">ทะเบียนบ้าน</th>
-                  <th scope="col">หมายเหตุ(ทะเบียนบ้าน)</th>
                   <th scope="col">กุญแจห้อง</th>
-                  <th scope="col">หมายเหตุ(กุญแจห้อง)</th>
                   <th scope="col">หลักฐานแสดงการชําระค่าไฟเดือนล่าสุด</th>
-                  <th scope="col">หมายเหตุ(หลักฐานแสดงการชําระ)</th>
+                  <th scope="col">หมายเหตุ</th>
                 </tr>
               </thead>
               <tbody>
@@ -342,8 +340,6 @@ export default {
                   <td>{{ item?.buildingName || "-" }}</td>
                   <td>{{ item?.roomnumber || "-" }}</td>
                   <td>{{ item?.typeRoom || "-" }}</td>
-                  <td>{{ item?.bankbookName || "-" }}</td>
-                  <td>{{ item?.bankbookNumber || "-" }}</td>
                   <td>{{ item?.insurance || "-" }}</td>
                   <td>{{ item?.installmentsCost || "-" }}</td>
                   <td>
@@ -353,10 +349,10 @@ export default {
                     <span v-if="item?.installments == 0"> - </span>
                   </td>
                   <td>{{ item?.amountPaidCost || "-" }}</td>
-                  <td>{{ item?.roomKey || "-" }}</td>
-                  <td>{{ item?.roomKeycause || "-" }}</td>
+                  <td>{{ item?.bankbookName || "-" }}</td>
+                  <td>{{ item?.bankbookNumber || "-" }}</td>
                   <td>{{ item?.houseRegistration || "-" }}</td>
-                  <td>{{ item?.houseRegistrationcause || "-" }}</td>
+                  <td>{{ item?.roomKey || "-" }}</td>
                   <td>{{ item?.payMonth || "-" }}</td>
                   <td>{{ item?.payMonthcause || "-" }}</td>
                 </tr>

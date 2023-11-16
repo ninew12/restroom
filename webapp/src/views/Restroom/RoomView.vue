@@ -69,6 +69,7 @@ export default {
     selectedtypeRoom: function (newValue) {
       this.roomList = this.roomListOld;
       let filldata = [];
+      let filldata2 = [];
       if (newValue !== null) {
         if (newValue.value !== "ทั้งหมด") {
           filldata = this.roomList.map((ele, i) => {
@@ -80,9 +81,10 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.sort((a, b) => a.floor - b.floor);
+          filldata2 = t.sort((a, b) => a.floor - b.floor);
+          this.roomList = filldata2.reverse();
         } else {
-          this.roomList = this.roomListOld;
+          this.roomList = this.roomListOld
         }
       }
     },
@@ -148,6 +150,7 @@ export default {
       try {
         axios.get(`http://localhost:3897/rooms/`).then((res) => {
           let broom = [];
+          let datalist = []
           let buidingRoom = res.data;
           // let buidingRoomOld = buidingRoom;
           broom = buidingRoom.filter((e) => e.buildingId == id);
@@ -161,7 +164,8 @@ export default {
               data: groupByCategory[ele].sort((a, b) => a.index - b.index),
             };
           });
-          this.roomListOld = this.roomList.sort((a, b) => a.floor - b.floor);
+          datalist = this.roomList.sort((a, b) => a.floor - b.floor);
+          this.roomListOld = datalist.reverse()
         });
       } catch (e) {
         console.error(e);
@@ -170,6 +174,7 @@ export default {
     async getBuildings() {
       try {
         axios.get(`http://localhost:3897/buildings/`).then((res) => {
+          let listData = []
           this.buildingList = res.data;
           this.typeRoomselect = res.data;
           this.listRoom = this.buildingList.map((e) => {
@@ -178,12 +183,13 @@ export default {
               value: e.buil,
             };
           });
+          listData = this.listRoom.reverse()
           let roomValue = this.buildingList[0];
           this.committee = roomValue.committee;
           // this.onChangeEventRoom("ทั้งหมด")
           // this.selectedlistRoom = { label: roomValue.buil, value: roomValue.buil };
           this.buidingId = roomValue.listRoom[0].buildingId;
-          this.dataBuilding = { ...roomValue };
+          this.dataBuilding = roomValue;
           this.getRooms();
         });
       } catch (e) {
@@ -253,7 +259,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t;
+          this.roomList = t.reverse()
         }
       } else if (e == "unavailable") {
         if (event.target.checked) {
@@ -266,7 +272,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t;
+          this.roomList = t.reverse()
         }
       } else if (e == "waiting") {
         if (event.target.checked) {
@@ -279,7 +285,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t;
+          this.roomList = t.reverse()
         }
       } else if (e == "return") {
         if (event.target.checked) {
@@ -292,7 +298,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t;
+          this.roomList = t.reverse()
         }
       } else if (e == "special") {
         if (event.target.checked) {
@@ -305,13 +311,12 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t;
+          this.roomList = t.reverse()
         }
       } else {
         this.roomList = this.roomListOld;
       }
     },
-
     Previous() {
       window.history.back();
     },
@@ -576,7 +581,7 @@ export default {
               </div>
             </div>
 
-            <div v-for="(item, index) in roomList.reverse()" :key="index">
+            <div v-for="(item, index) in roomList" :key="index">
               <div class="card mb-2">
                 <div class="card-body">
                   <p class="text-start">
