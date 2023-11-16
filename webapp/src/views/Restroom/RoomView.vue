@@ -84,7 +84,7 @@ export default {
           filldata2 = t.sort((a, b) => a.floor - b.floor);
           this.roomList = filldata2.reverse();
         } else {
-          this.roomList = this.roomListOld
+          this.roomList = this.roomListOld;
         }
       }
     },
@@ -150,7 +150,7 @@ export default {
       try {
         axios.get(`http://localhost:3897/rooms/`).then((res) => {
           let broom = [];
-          let datalist = []
+          let datalist = [];
           let buidingRoom = res.data;
           // let buidingRoomOld = buidingRoom;
           broom = buidingRoom.filter((e) => e.buildingId == id);
@@ -165,7 +165,7 @@ export default {
             };
           });
           datalist = this.roomList.sort((a, b) => a.floor - b.floor);
-          this.roomListOld = datalist.reverse()
+          this.roomListOld = datalist.reverse();
         });
       } catch (e) {
         console.error(e);
@@ -174,16 +174,17 @@ export default {
     async getBuildings() {
       try {
         axios.get(`http://localhost:3897/buildings/`).then((res) => {
-          let listData = []
+          let listData = [];
           this.buildingList = res.data;
           this.typeRoomselect = res.data;
           this.listRoom = this.buildingList.map((e) => {
+            // console.log(e);
             return {
-              label: e.buil,
-              value: e.buil,
+              label: e.name,
+              value: e.name,
             };
           });
-          listData = this.listRoom.reverse()
+          listData = this.listRoom.reverse();
           let roomValue = this.buildingList[0];
           this.committee = roomValue.committee;
           // this.onChangeEventRoom("ทั้งหมด")
@@ -229,16 +230,16 @@ export default {
         data = this.typeRoomselect.filter((el) => el.buildingType === e);
         mapdata = data.map((e) => {
           return {
-            label: e.buil,
-            value: e.buil,
+            label: e.name,
+            value: e.name,
           };
         });
         this.listRoom = mapdata;
       } else {
         mapdata = this.typeRoomselect.map((e) => {
           return {
-            label: e.buil,
-            value: e.buil,
+            label: e.name,
+            value: e.name,
           };
         });
         this.listRoom = mapdata;
@@ -259,7 +260,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.reverse()
+          this.roomList = t.reverse();
         }
       } else if (e == "unavailable") {
         if (event.target.checked) {
@@ -272,7 +273,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.reverse()
+          this.roomList = t.reverse();
         }
       } else if (e == "waiting") {
         if (event.target.checked) {
@@ -285,7 +286,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.reverse()
+          this.roomList = t.reverse();
         }
       } else if (e == "return") {
         if (event.target.checked) {
@@ -298,7 +299,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.reverse()
+          this.roomList = t.reverse();
         }
       } else if (e == "special") {
         if (event.target.checked) {
@@ -311,7 +312,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.reverse()
+          this.roomList = t.reverse();
         }
       } else {
         this.roomList = this.roomListOld;
@@ -354,7 +355,7 @@ export default {
       <div class="page-header min-vh-45">
         <div class="container-fluid">
           <!-- d-flex justify-content-between -->
-          <notifications class="pt-6 " position="top center" width="400px" />
+          <notifications class="pt-6" position="top center" width="400px" />
           <div>
             <Breadcrumbs
               :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'สถานะห้องพัก' }]"
