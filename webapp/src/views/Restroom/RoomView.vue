@@ -92,7 +92,7 @@ export default {
     selectedlistRoom: async function (newValue) {
       let arr = [];
       if (newValue !== null) {
-        arr = this.buildingList.find((e) => e.buil == newValue.value);
+        arr = this.buildingList.find((e) => e.buildingId == newValue.value);
         this.buidingId = arr.listRoom[0].buildingId;
         this.committee = arr.committee;
         this.buildById(this.buidingId);
@@ -181,7 +181,7 @@ export default {
             // console.log(e);
             return {
               label: e.name,
-              value: e.name,
+              value: e.buildingId,
             };
           });
           listData = this.listRoom.reverse();
@@ -231,7 +231,7 @@ export default {
         mapdata = data.map((e) => {
           return {
             label: e.name,
-            value: e.name,
+            value: e.buildingId,
           };
         });
         this.listRoom = mapdata;
@@ -239,7 +239,7 @@ export default {
         mapdata = this.typeRoomselect.map((e) => {
           return {
             label: e.name,
-            value: e.name,
+            value: e.buildingId,
           };
         });
         this.listRoom = mapdata;
