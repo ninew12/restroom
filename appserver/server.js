@@ -129,7 +129,8 @@ app.put('/users/:id', (req, res) => {
     if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
-    
+    if (req.body.years) parsedData.years = req.body.years
+
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -259,6 +260,7 @@ app.put('/rooms/:id', (req, res) => {
     let dataOld = rooms[updateIndex]
     let filterdata = rooms.filter(user => user.id !== (req.params.id))
     const parsedData = dataOld;
+    console.log(req.body);
     if (req.body.floor) parsedData.floor = req.body.floor
     if (req.body.firstName) parsedData.firstName = req.body.firstName
     if (req.body.lastName) parsedData.lastName = req.body.lastName
@@ -299,7 +301,8 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
-
+    if (req.body.years) parsedData.years = req.body.years
+    
     filterdata.push(parsedData)
     fs.writeFile('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -363,6 +366,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
+    if (req.body.years) parsedData.years = req.body.years
     filterdata.push(parsedData)
     fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -432,6 +436,7 @@ app.put('/history/:id', (req, res) => {
     if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
+    if (req.body.years) parsedData.years = req.body.years
     filterdata.push(parsedData)
     fs.writeFile('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -565,6 +570,7 @@ app.put('/report/:id', (req, res) => {
     if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
+    if (req.body.years) parsedData.years = req.body.years
     filterdata.push(parsedData)
     fs.writeFile('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {

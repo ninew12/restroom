@@ -129,7 +129,6 @@ export default {
             this.userId = this.roomData.userId;
             this.selectedRoomtype = this.roomData.typeRoom;
             this.getHistoryRoom(this.roomData.id);
-            console.log(res.data);
           })
           .catch((err) => {
             console.log(err);

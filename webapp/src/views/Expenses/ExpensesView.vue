@@ -169,7 +169,8 @@ export default {
         typeContract: this.typeContract,
         contractExpenses: this.contractExpenses,
         sumCost: this.sumCost,
-        monthly: `${this.months}/${this.years}`
+        monthly:this.months,
+        years:this.years
       };
       await axios
         .put(`http://localhost:3897/users/${this.id}`, body, {
@@ -207,7 +208,8 @@ export default {
         typeContract: this.typeContract,
         contractExpenses: this.contractExpenses,
         sumCost: this.sumCost,
-        monthly: `${this.months}/${this.years}`
+        monthly:this.months,
+        years:this.years
       };
       await axios
         .put(`http://localhost:3897/report/${this.id}`, body, {

@@ -90,7 +90,6 @@ export default {
           .get(`http://localhost:3897/queue/inqueue`)
           .then((res) => {
             this.queueList = res.data;
-            console.log( res.data);
             this.queuefilter = this.queueList.filter((e) => e.typeRoom === this.typeroom);
           })
           .catch((err) => {
@@ -132,12 +131,10 @@ export default {
           .then((res) => {
             let data = res.data;
             this.userByid = data;
-            console.log(this.userByid);
           })
           .catch((err) => {
             console.log(err);
           });
-          console.log(this.userId);
       } catch (error) {
         console.error(error);
       }
@@ -158,7 +155,6 @@ export default {
           if (this.data.roomStatus == "unavailable") this.statusRoom = "ไม่ว่าง";
           if (this.data.roomStatus == "free") this.statusRoom = "ว่าง";
           this.data['maintenanceCost'] = this.countinsamaintenance(this.data)
-          console.log(this.data);
           this.getAllqueue();
         });
       } catch (e) {

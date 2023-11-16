@@ -120,16 +120,14 @@ export default {
             data2.forEach((element) => {
               if (element.monthly) {
                 const myString = element.monthly;
-                const splits = myString.split("/");
-                if (splits[0] !== undefined) {
+                if (myString !== undefined) {
                   const d = new Date();
                   let m = this.optionMonth[d.getMonth()];
-                  if (m == splits[0]) this.openBtn = true;
+                  if (m == myString) this.openBtn = true;
                 }
               }
             });
 
-            // พฤศจิกายน/2023
             this.expensesList = data2;
           })
           .catch((err) => {
@@ -153,7 +151,7 @@ export default {
     },
 
     countinsamountPaid(e) {
-      return e.insurance - e.amountPaid;
+      return e.insurance - e.amountPaid || 0;
     },
 
     countinsamaintenance(e) {
@@ -223,7 +221,8 @@ export default {
       let id = index.id;
       let body = {
         amountPaid: index.amountPaid,
-        monthly: `${this.months}/${this.years}`,
+        monthly: this.months,
+        years: this.years
       };
       await axios
         .put(`http://localhost:3897/users/${id}`, body, {
@@ -250,7 +249,8 @@ export default {
       let id = index.id;
       let body = {
         amountPaid: index.amountPaid,
-        monthly: `${this.months}/${this.years}`,
+        monthly:this.months,
+        years:this.years
       };
       await axios
         .put(`http://localhost:3897/rooms/${id}`, body, {
@@ -265,7 +265,8 @@ export default {
       let id = index.id;
       let body = {
         amountPaid: index.amountPaid,
-        monthly: `${this.months}/${this.years}`,
+        monthly :this.months,
+        years: this.years
       };
       await axios.put(`http://localhost:3897/report/${id}`, body, {
         headers: {
@@ -364,7 +365,7 @@ export default {
                     </span>
                     <span v-if="item?.installments == 0"> - </span>
                   </td>
-                  <td>{{ item?.amountPaidCost || "-" }}</td>
+                  <td>{{ item?.amountPaidCost || 0 }}</td>
                 </tr>
               </tbody>
             </table>

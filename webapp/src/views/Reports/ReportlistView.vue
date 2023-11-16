@@ -91,6 +91,25 @@ export default {
         { label: "พฤศจิกายน", value: "พฤศจิกายน" },
         { label: "ธันวาคม", value: "ธันวาคม" },
       ],
+      dataMonth: [
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม",
+      ],
+      externalDataRetrievedFromServer: [
+        { name: "Bartek", age: 34 },
+        { name: "John", age: 27 },
+        { name: "Elizabeth", age: 30 },
+      ],
       selectedColor: "",
       firstName: "",
       lastName: "",
@@ -98,13 +117,14 @@ export default {
       rank: "", //ยศ
       idcard: "",
       phone: "",
-      selectedAffiliation: "",
+      selectedAffiliation: "เลือกสังกัด",
       selectedYear: "2023",
       selectedMonth: "พฤศจิกายน",
       expensesList: [],
       reportType: "บัญชีหน้างบ",
       reportlistCTD: [],
       reportListTD: [],
+      dateData: new Date(),
     };
   },
   created() {
@@ -113,17 +133,26 @@ export default {
     // this.getAllusers();
     this.getExpenses();
     this.getReport();
+    this.getM();
   },
   watch: {
     selectedColor: function (newValue) {
       // this.updateColor(newValue)
       console.log(newValue);
     },
+    selectedAffiliation: function (newValue) {
+      if (newValue !== null) this.Affiliation = newValue.value;
+    },
   },
   methods: {
     changedLabel(event) {
       console.log(event);
       // this.selected = event;
+    },
+
+    getM() {
+      let m = this.dataMonth[this.dateData.getMonth() - 1];
+      this.selectedMonth = m;
     },
 
     async getExpenses() {
@@ -163,12 +192,7 @@ export default {
             // arr1 = data3.filter((el) => el.installmentsRooom !== undefined);
             // arr2 = data4.filter((el) => el.installmentsRooom !== undefined);
             this.reportlistCTD = data;
-            console.log(this.reportlistCTD);
             this.reportlistTD = data2;
-            // console.log(this.reportlistTD);
-            console.log(data);
-            console.log(data2);
-            console.log(arr2);
           })
           .catch((err) => {
             console.log(err);
@@ -201,6 +225,35 @@ export default {
       window.history.back();
     },
 
+    buildTableBody(data, columns) {
+      var body = [];
+
+      body.push(columns);
+
+      data.forEach(function (row) {
+        var dataRow = [];
+
+        columns.forEach(function (column) {
+          dataRow.push(row[column].toString());
+        });
+        body.push(dataRow);
+      });
+      // console.log(body);
+      // body[0][0] = "รายการ";
+      // body[0][1] = "ประกัน";
+
+      return body;
+    },
+
+    table(data, columns) {
+      return {
+        table: {
+          headerRows: 1,
+          body: this.buildTableBody(data, columns),
+        },
+      };
+    },
+
     exportPdf() {
       // pdfMake.vfs = pdfFonts.pdfMake.vfs // 2. set vfs pdf font
       pdfMake.fonts = {
@@ -225,22 +278,25 @@ export default {
       };
       const docDefinition = {
         content: [
-          {
-            layout: "lightHorizontalLines", // optional
-            table: {
-              // headers are automatically repeated if the table spans over multiple pages
-              // you can declare how many rows should be treated as headers
-              headerRows: 1,
-              widths: ["*", "auto", 100, "*"],
-
-              body: [
-                ["First", "Second", "Third", "The last one"],
-                ["Value 1", "Value 2", "Value 3", "Value 4"],
-                [{ text: "Bold value", bold: true }, "Val 2", "Val 3", "Val 4"],
-              ],
-            },
-          },
+          { text: "Dynamic parts", style: "header" },
+          this.table(this.reportList, ["typeAffiliation", "maintenance"]),
         ],
+        // content: [
+        //   {
+        //     layout: "lightHorizontalLines", // optional
+        //     table: {
+        //       // headers are automatically repeated if the table spans over multiple pages
+        //       headerRows: 1,
+        //       widths: ["*", "auto", 100, "*"],
+
+        //       body: [
+        //         ["First", "Second", "Third", "The last one"],
+        //         ["Value 1", "Value 2", "Value 3", "Value 4"],
+        //         [{ text: "Bold value", bold: true }, "Val 2", "Val 3", "Val 4"],
+        //       ],
+        //     },
+        //   },
+        // ],
         defaultStyle: {
           // 4. default style 'KANIT' font to test
           font: "Roboto",
@@ -292,6 +348,7 @@ export default {
               ]"
             />
           </div>
+          <!-- <a @click="exportPdf">test</a> -->
           <div class="mb-3">
             <a
               style="display: flex; align-items: center; cursor: pointer"

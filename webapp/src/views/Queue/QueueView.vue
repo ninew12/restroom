@@ -122,7 +122,7 @@ export default {
             this.queuefilter("ทั้งหมด");
           })
           .catch((err) => {
-            console.log(err.response);
+            console.log(err);
           });
       } catch (error) {
         console.error(error);
@@ -161,7 +161,6 @@ export default {
               };
             });
 
-            console.log(this.userList);
           })
           .catch((err) => {
             console.log(err);

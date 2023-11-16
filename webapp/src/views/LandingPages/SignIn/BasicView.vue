@@ -25,7 +25,6 @@ export default {
   },
   created() {
     let userold =  localStorage.getItem("user");
-    console.log(userold);
   },
   methods: {
     async submitForm() {

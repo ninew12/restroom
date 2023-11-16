@@ -168,7 +168,6 @@ export default {
       // let b = []
       // b.push(body)
       this.userlist.push(body);
-      console.log(this.userlist);
     },
   },
 };

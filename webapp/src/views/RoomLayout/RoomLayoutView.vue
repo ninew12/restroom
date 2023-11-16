@@ -174,7 +174,6 @@ export default {
           .get("http://localhost:3897/buildings")
           .then((res) => {
             this.buildingList = res.data;
-            console.log(res.data);
           })
           .catch((err) => {
             console.log(err);
@@ -209,7 +208,6 @@ export default {
     },
     deleteLayour(id) {
       this.builId = id;
-      console.log(this.builId);
     },
 
     async submitDelete() {
