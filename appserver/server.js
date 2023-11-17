@@ -186,6 +186,8 @@ app.post('/buildings', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
     building.push(body)
+    console.log(building);
+    console.log(body);
     fs.writeFile('./building.json', JSON.stringify(building), err => {
         if (err) {
             console.log('Error writing file', err)
@@ -243,8 +245,9 @@ app.get('/rooms/:id', (req, res) => {
 app.post('/rooms', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
-    rooms.push(body)
-    fs.writeFile('./rooms.json', JSON.stringify(rooms), err => {
+    let data =   [...rooms,...body]
+    console.log(data);
+    fs.writeFile('./rooms.json', JSON.stringify(data), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {

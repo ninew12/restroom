@@ -69,7 +69,7 @@ export default {
             {
               buildingId: this.building_Id,
               id: uuidv4(),
-              name: this.building,
+              name: this.Building,
               floor: index + 1,
               index: 1,
               numberRoom: 1,
@@ -161,14 +161,14 @@ export default {
       });
       // let body = floorsList
       floorsLoop = floorsList;
-      await floorsLoop.forEach((x) => {
-        axios.post(`http://localhost:3897/rooms`, x, {
+      // await floorsLoop.forEach((x) => {
+        axios.post(`http://localhost:3897/rooms`, floorsLoop, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
           },
         });
-      });
+      // });
       notify({
         title: "เพิ่มข้อมูลสำเร็จ",
         type: "success",

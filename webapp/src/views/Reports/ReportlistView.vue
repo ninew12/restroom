@@ -78,18 +78,18 @@ export default {
         { label: "2020", value: "2020" },
       ],
       optionMonth: [
-        { label: "มกราคม", value: "มกราคม" },
-        { label: "กุมภาพันธ์", value: "กุมภาพันธ์" },
-        { label: "มีนาคม", value: "มีนาคม" },
-        { label: "เมษายน", value: "เมษายน" },
-        { label: "พฤษภาคม", value: "พฤษภาคม" },
-        { label: "มิถุนายน", value: "มิถุนายน" },
-        { label: "กรกฎาคม", value: "กรกฎาคม" },
-        { label: "สิงหาคม", value: "สิงหาคม" },
-        { label: "กันยายน", value: "กันยายน" },
-        { label: "ตุลาคม", value: "ตุลาคม" },
-        { label: "พฤศจิกายน", value: "พฤศจิกายน" },
-        { label: "ธันวาคม", value: "ธันวาคม" },
+        { label: "มกราคม", value: "1" },
+        { label: "กุมภาพันธ์", value: "2" },
+        { label: "มีนาคม", value: "3" },
+        { label: "เมษายน", value: "4" },
+        { label: "พฤษภาคม", value: "5" },
+        { label: "มิถุนายน", value: "6" },
+        { label: "กรกฎาคม", value: "7" },
+        { label: "สิงหาคม", value: "8" },
+        { label: "กันยายน", value: "9" },
+        { label: "ตุลาคม", value: "10" },
+        { label: "พฤศจิกายน", value: "11" },
+        { label: "ธันวาคม", value: "12" },
       ],
       dataMonth: [
         "มกราคม",
@@ -119,12 +119,14 @@ export default {
       phone: "",
       selectedAffiliation: "เลือกสังกัด",
       selectedYear: "2023",
-      selectedMonth: "พฤศจิกายน",
+      selectedMonth: "",
       expensesList: [],
       reportType: "บัญชีหน้างบ",
       reportlistCTD: [],
       reportListTD: [],
       dateData: new Date(),
+      mountNumber: 0,
+      yearNumber: 0,
     };
   },
   created() {
@@ -132,7 +134,6 @@ export default {
     if (userold === null) this.$router.push({ path: `/login` });
     // this.getAllusers();
     this.getExpenses();
-    this.getReport();
     this.getM();
   },
   watch: {
@@ -143,6 +144,15 @@ export default {
     selectedAffiliation: function (newValue) {
       if (newValue !== null) this.Affiliation = newValue.value;
     },
+    selectedMonth: function (newValue) {
+      if (newValue !== null && newValue.label !== undefined) {
+        let x = this.optionMonth.findIndex((el) => el.label == newValue.label);
+        let y = this.dateData.getFullYear();
+        this.mountNumber = x + 1;
+        this.yearNumber = y;
+        this.getReport(this.mountNumber, this.yearNumber);
+      }
+    },
   },
   methods: {
     changedLabel(event) {
@@ -150,9 +160,14 @@ export default {
       // this.selected = event;
     },
 
-    getM() {
+    async getM() {
       let m = this.dataMonth[this.dateData.getMonth() - 1];
+      let y = this.dateData.getFullYear();
+      let x = this.optionMonth.findIndex((el) => el.label == m);
+      this.mountNumber = x + 1;
+      this.yearNumber = y;
       this.selectedMonth = m;
+      await this.getReport(this.mountNumber, this.yearNumber);
     },
 
     async getExpenses() {
@@ -171,26 +186,33 @@ export default {
       }
     },
 
+    seleteM() {
+      // console.log(event);
+      console.log(this.selectedMonth);
+    },
+
     typeUserchange(e) {
       this.reportType = e;
     },
 
-    async getReport() {
+    async getReport(m, y) {
       try {
         await axios
           .get("http://localhost:3897/report")
           .then((res) => {
             let data = [];
             let data2 = [];
-            let arr1 = [];
-            let arr2 = [];
             let data3 = res.data;
             let data4 = res.data;
             this.reportList = res.data;
-            data = data3.filter((el) => el.typeUser == "บช.ตชด.");
-            data2 = data4.filter((el) => el.typeUser == "ตร.");
-            // arr1 = data3.filter((el) => el.installmentsRooom !== undefined);
-            // arr2 = data4.filter((el) => el.installmentsRooom !== undefined);
+            data = data3.filter(
+              (el) => el.typeUser == "บช.ตชด." && el.monthly == m && el.years == y
+            );
+            data2 = data4.filter(
+              (el) => el.typeUser == "ตร." && el.monthly == m && el.years == y
+            );
+            console.log(data);
+            console.log(data2);
             this.reportlistCTD = data;
             this.reportlistTD = data2;
           })
@@ -492,6 +514,7 @@ export default {
                             <v-select
                               :options="optionMonth"
                               v-model="selectedMonth"
+                              @change="seleteM"
                             ></v-select>
                           </div>
                           <div class="mb-3 w-20">
