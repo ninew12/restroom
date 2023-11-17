@@ -186,9 +186,7 @@ app.post('/buildings', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
     building.push(body)
-    console.log(building);
-    console.log(body);
-    fs.writeFile('./building.json', JSON.stringify(building), err => {
+    fs.writeFileSync('./building.json', JSON.stringify(building), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -201,7 +199,6 @@ app.post('/buildings', (req, res) => {
 app.delete('/buildings/:builId', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const deletedIndex = building.filter(buil => buil.buildingId !== (req.params.builId))
-    console.log(deletedIndex);
     fs.writeFile('./building.json', JSON.stringify(deletedIndex, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
@@ -246,8 +243,7 @@ app.post('/rooms', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
     let data =   [...rooms,...body]
-    console.log(data);
-    fs.writeFile('./rooms.json', JSON.stringify(data), err => {
+    fs.writeFileSync('./rooms.json', JSON.stringify(data), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
