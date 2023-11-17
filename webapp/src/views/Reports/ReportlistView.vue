@@ -142,7 +142,11 @@ export default {
       console.log(newValue);
     },
     selectedAffiliation: function (newValue) {
-      if (newValue !== null) this.Affiliation = newValue.value;
+      if (newValue !== null && newValue.label !== undefined){
+        this.Affiliation = newValue.value;
+        this.getReportAffiliation(this.mountNumber, this.yearNumber, this.Affiliation)
+      } 
+      
     },
     selectedMonth: function (newValue) {
       if (newValue !== null && newValue.label !== undefined) {
@@ -195,13 +199,14 @@ export default {
       this.reportType = e;
     },
 
-    async getReport(m, y) {
+    getReport(m, y) {
       try {
-        await axios
+        axios
           .get("http://localhost:3897/report")
           .then((res) => {
             let data = [];
             let data2 = [];
+
             let data3 = res.data;
             let data4 = res.data;
             this.reportList = res.data;
@@ -211,10 +216,9 @@ export default {
             data2 = data4.filter(
               (el) => el.typeUser == "ตร." && el.monthly == m && el.years == y
             );
-            console.log(data);
-            console.log(data2);
-            this.reportlistCTD = data;
-            this.reportlistTD = data2;
+            this.mapData(data, data2);
+            // this.reportlistTD = data2;
+            // console.log(this.reportlistCTD);
           })
           .catch((err) => {
             console.log(err);
@@ -224,6 +228,136 @@ export default {
       }
     },
 
+    getReportAffiliation(m, y, Affiliation) {
+      try {
+        axios
+          .get("http://localhost:3897/report")
+          .then((res) => {
+            let data = [];
+            let data2 = [];
+            let arr = [];
+            let arr2 = [];
+            let data3 = res.data;
+            let data4 = res.data;
+            this.reportList = res.data;
+            data = data3.filter(
+              (el) => el.typeUser == "บช.ตชด." && el.monthly == m && el.years == y
+            );
+            data2 = data4.filter(
+              (el) => el.typeUser == "ตร." && el.monthly == m && el.years == y
+            );
+
+            arr = data.filter((ele) => ele.typeAffiliation === Affiliation);
+            arr2 = data2.filter((ele) => ele.typeAffiliation === Affiliation);
+            this.mapData(arr, arr2);
+            // this.reportlistTD = data2;
+            // console.log(this.reportlistCTD);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    mapData(data, data2) {
+      let arr = [];
+      let arr2 = [];
+      arr = data.map((el) => {
+        return {
+          ...el,
+          accumulated: el.insurance / el.installments,
+          amountPaidSum: this.AmountPaidSum(data),
+          waterbillSum: this.WaterbillSum(data),
+          electricitybillSum: this.ElectricitybillSum(data),
+          sumCostSum: this.SumCostSum(data),
+          centralSum: this.CentralSum(data),
+          costsSum: this.CostsSum(data),
+          InsuranceSum: this.InsuranceSum(data),
+          MaintenanceSum: this.MaintenanceSum(data),
+          accumulatedSum: this.AccumulatedSum(data),
+        };
+      });
+
+      arr2 = data2.map((el) => {
+        return {
+          ...el,
+          accumulated: el.insurance / el.installments,
+          amountPaidSum: this.AmountPaidSum(data),
+          waterbillSum: this.WaterbillSum(data),
+          electricitybillSum: this.ElectricitybillSum(data),
+          sumCostSum: this.SumCostSum(data),
+          centralSum: this.CentralSum(data),
+          costsSum: this.CostsSum(data),
+          InsuranceSum: this.InsuranceSum(data),
+          MaintenanceSum: this.MaintenanceSum(data),
+          accumulatedSum: this.AccumulatedSum(data),
+        };
+      });
+      this.reportlistCTD = arr;
+      this.reportlistTD = arr2;
+    },
+
+    AmountPaidSum(items) {
+      return items.reduce((amountPaidSum, ele) => {
+        if (ele.amountPaid !== undefined) return amountPaidSum + parseInt(ele.amountPaid);
+        else return amountPaidSum;
+      }, 0);
+    },
+
+    AccumulatedSum(items) {
+      return items.reduce((accumulatedSum, ele) => {
+        if (ele.insurance !== undefined && ele.installments !== undefined)
+          return accumulatedSum + parseInt(ele.insurance) / parseInt(ele.installments);
+        else return accumulatedSum;
+      }, 0);
+    },
+
+    WaterbillSum(items) {
+      return items.reduce((waterbillSum, ele) => {
+        if (ele.waterbill !== undefined) return waterbillSum + parseInt(ele.waterbill);
+        else return waterbillSum;
+      }, 0);
+    },
+    ElectricitybillSum(items) {
+      return items.reduce((electricitybillSum, ele) => {
+        if (ele.electricitybill !== undefined)
+          return electricitybillSum + parseInt(ele.electricitybill);
+        else return electricitybillSum;
+      }, 0);
+    },
+    SumCostSum(items) {
+      return items.reduce((sumCostSum, ele) => {
+        if (ele.sumCost !== undefined) return sumCostSum + parseInt(ele.sumCost);
+        else return sumCostSum;
+      }, 0);
+    },
+    CentralSum(items) {
+      return items.reduce((centralSum, ele) => {
+        if (ele.central !== undefined) return centralSum + parseInt(ele.central);
+        else return centralSum;
+      }, 0);
+    },
+    CostsSum(items) {
+      return items.reduce((costsSum, ele) => {
+        if (ele.costs !== undefined) return costsSum + parseInt(ele.costs);
+        else return costsSum;
+      }, 0);
+    },
+    InsuranceSum(items) {
+      return items.reduce((InsuranceSum, ele) => {
+        if (ele.insurance !== undefined) return InsuranceSum + parseInt(ele.insurance);
+        else return InsuranceSum;
+      }, 0);
+    },
+    MaintenanceSum(items) {
+      return items.reduce((MaintenanceSum, ele) => {
+        if (ele.maintenance !== undefined)
+          return MaintenanceSum + parseInt(ele.maintenance);
+        else return MaintenanceSum;
+      }, 0);
+    },
     thaiNumber(num) {
       var array = {
         1: "๑",
@@ -571,8 +705,8 @@ export default {
                             </tr>
                           </thead>
                           <!-- reportlistCTD -->
-                          <tbody>
-                            <tr v-for="(item, index) in reportlistTD" :key="index">
+                          <tbody v-for="(item, index) in reportlistTD" :key="index">
+                            <tr>
                               <th scope="row">{{ index + 1 }}</th>
                               <td>{{ item?.typeAffiliation || "-" }}</td>
                               <td>{{ item?.maintenance || "-" }}</td>
@@ -582,10 +716,10 @@ export default {
                             </tr>
                             <tr>
                               <th scope="row" colspan="2">รวมเงิน</th>
-                              <th>900</th>
-                              <th>200</th>
-                              <th>1000</th>
-                              <th>2100</th>
+                              <th>{{ item?.MaintenanceSum }}</th>
+                              <th>{{ item?.waterbillSum }}</th>
+                              <th>{{ item?.electricitybillSum }}</th>
+                              <th>{{ item?.sumCostSum }}</th>
                             </tr>
                           </tbody>
                         </table>
@@ -645,7 +779,7 @@ export default {
                         <div class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
-                            :options="masterData?.Affiliation"
+                            :options="masterData?.AffiliationList"
                             v-model="selectedAffiliation"
                           ></v-select>
                         </div>
@@ -698,8 +832,8 @@ export default {
                             <th>รวม</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tbody v-for="(item, index) in reportlistTD" :key="index">
+                          <tr>
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.typeAffiliation || "-" }}</td>
                             <td>{{ item?.maintenance || "-" }}</td>
@@ -709,10 +843,10 @@ export default {
                           </tr>
                           <tr>
                             <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>900</th>
-                            <th>200</th>
-                            <th>1000</th>
-                            <th>2100</th>
+                            <th>{{ item?.MaintenanceSum }}</th>
+                            <th>{{ item?.waterbillSum }}</th>
+                            <th>{{ item?.electricitybillSum }}</th>
+                            <th>{{ item?.sumCostSum }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -739,8 +873,8 @@ export default {
                             <th scope="col">สาเหตุที่หักไม่ได้</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tbody v-for="(item, index) in reportlistTD" :key="index">
+                          <tr>
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.roomnumber }}</td>
                             <td>
@@ -764,10 +898,10 @@ export default {
                           </tr>
                           <tr>
                             <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>400</th>
-                            <th>200</th>
-                            <th>400</th>
-                            <th>1000</th>
+                            <th>{{ item?.MaintenanceSum }}</th>
+                            <th>{{ item?.waterbillSum }}</th>
+                            <th>{{ item?.centralSum }}</th>
+                            <th>{{ item?.sumCostSum }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -826,7 +960,7 @@ export default {
                         <div class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
-                            :options="masterData?.Affiliation"
+                            :options="masterData?.AffiliationList"
                             v-model="selectedAffiliation"
                           ></v-select>
                         </div>
@@ -878,8 +1012,8 @@ export default {
                             <th>รวม</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tbody v-for="(item, index) in reportlistTD" :key="index">
+                          <tr>
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.typeAffiliation || "-" }}</td>
                             <td>
@@ -892,9 +1026,9 @@ export default {
                           </tr>
                           <tr>
                             <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>900</th>
-                            <th>200</th>
-                            <th>1100</th>
+                            <th>{{ item?.centralSum }}</th>
+                            <th>{{ item?.costsSum }}</th>
+                            <th>{{ item?.sumCostSum }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -919,8 +1053,8 @@ export default {
                             <th scope="col">สาเหตุที่หักไม่ได้</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tbody v-for="(item, index) in reportlistTD" :key="index">
+                          <tr>
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.buildingName || "-" }}</td>
                             <td>{{ item?.roomnumber || "-" }}</td>
@@ -944,9 +1078,9 @@ export default {
                           </tr>
                           <tr>
                             <th scope="row" colspan="5">รวมเงิน</th>
-                            <th>140</th>
-                            <th>200</th>
-                            <th>340</th>
+                            <th>{{ item?.centralSum }}</th>
+                            <th>{{ item?.costsSum }}</th>
+                            <th>{{ item?.sumCostSum }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -1005,7 +1139,7 @@ export default {
                         <div class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
-                            :options="masterData?.Affiliation"
+                            :options="masterData?.AffiliationList"
                             v-model="selectedAffiliation"
                           ></v-select>
                         </div>
@@ -1058,8 +1192,8 @@ export default {
                             <th>รวม</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tbody v-for="(item, index) in reportlistTD" :key="index">
+                          <tr>
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.typeAffiliation }}</td>
                             <td>{{ item?.maintenance || "-" }}</td>
@@ -1069,10 +1203,10 @@ export default {
                           </tr>
                           <tr>
                             <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>900</th>
-                            <th>200</th>
-                            <th>1000</th>
-                            <th>2100</th>
+                            <th>{{ item?.MaintenanceSum }}</th>
+                            <th>{{ item?.waterbillSum }}</th>
+                            <th>{{ item?.electricitybillSum }}</th>
+                            <th>{{ item?.sumCostSum }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -1099,8 +1233,8 @@ export default {
                             <th scope="col">สาเหตุที่หักไม่ได้</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tbody v-for="(item, index) in reportlistTD" :key="index">
+                          <tr>
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.roomnumber || "-" }}</td>
                             <td>
@@ -1126,10 +1260,10 @@ export default {
                           </tr>
                           <tr>
                             <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>400</th>
-                            <th>200</th>
-                            <th>400</th>
-                            <th>1000</th>
+                            <th>{{ item?.MaintenanceSum }}</th>
+                            <th>{{ item?.waterbillSum }}</th>
+                            <th>{{ item?.electricitybillSum }}</th>
+                            <th>{{ item?.sumCostSum }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -1188,7 +1322,7 @@ export default {
                         <div class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
-                            :options="masterData?.Affiliation"
+                            :options="masterData?.AffiliationList"
                             v-model="selectedAffiliation"
                           ></v-select>
                         </div>
@@ -1241,8 +1375,8 @@ export default {
                             <th>รวม</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tbody v-for="(item, index) in reportlistTD" :key="index">
+                          <tr>
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.typeAffiliation || "-" }}</td>
                             <td>{{ item?.maintenance || "-" }}</td>
@@ -1252,10 +1386,10 @@ export default {
                           </tr>
                           <tr>
                             <th scope="row" colspan="2">รวมยอดส่งหัก</th>
-                            <th>1300</th>
-                            <th>300</th>
-                            <th>1000</th>
-                            <th>2600</th>
+                            <th>{{ item?.MaintenanceSum }}</th>
+                            <th>{{ item?.waterbillSum }}</th>
+                            <th>{{ item?.electricitybillSum }}</th>
+                            <th>{{ item?.sumCostSum }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -1280,8 +1414,8 @@ export default {
                             <th>หมายเหตุ</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tbody v-for="(item, index) in reportlistTD" :key="index">
+                          <tr>
                             <th scope="row">{{ index + 1 }}</th>
                             <td>
                               {{ item?.rank }} {{ item?.firstName }}
@@ -1291,16 +1425,16 @@ export default {
                             <td>{{ item?.roomnumber }}</td>
                             <td>{{ item?.maintenance || "-" }}</td>
                             <td>
-                              {{ item?.insurance / item?.installments || "-" }}
+                              {{ item?.accumulated || "-" }}
                             </td>
                             <td>{{ item?.amountPaid || "-" }}</td>
                             <td>{{ item?.contractExpenses || "-" }}</td>
                           </tr>
                           <tr>
                             <th scope="row" colspan="4">รวมเงิน</th>
-                            <th>200</th>
-                            <th>-</th>
-                            <th colspan="2">200</th>
+                            <th>{{ item?.MaintenanceSum }}</th>
+                            <th>{{ item?.accumulatedSum }}</th>
+                            <th colspan="2">{{ item?.amountPaidSum }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -1398,7 +1532,7 @@ export default {
                                 <div class="mb-3 w-20">
                                   <label>สังกัด</label>
                                   <v-select
-                                    :options="masterData?.Affiliation"
+                                    :options="masterData?.AffiliationList"
                                     v-model="selectedAffiliation"
                                   ></v-select>
                                 </div>
@@ -1450,8 +1584,8 @@ export default {
                                     <th>รวม</th>
                                   </tr>
                                 </thead>
-                                <tbody>
-                                  <tr v-for="(item, index) in reportlistTD" :key="index">
+                                <tbody v-for="(item, index) in reportlistTD" :key="index">
+                                  <tr>
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>{{ item?.typeAffiliation || "-" }}</td>
                                     <td>{{ item?.insurance || "-" }}</td>
@@ -1460,9 +1594,9 @@ export default {
                                   </tr>
                                   <tr>
                                     <th scope="row" colspan="2">รวมยอดส่งหัก</th>
-                                    <th>1300</th>
-                                    <th>300</th>
-                                    <th>1600</th>
+                                    <th>{{ item?.InsuranceSum }}</th>
+                                    <th>{{ item?.waterbillSum }}</th>
+                                    <th>{{ item?.sumCostSum }}</th>
                                   </tr>
                                 </tbody>
                               </table>
@@ -1487,8 +1621,8 @@ export default {
                                     <th>หมายเหตุ</th>
                                   </tr>
                                 </thead>
-                                <tbody>
-                                  <tr v-for="(item, index) in reportlistTD" :key="index">
+                                <tbody v-for="(item, index) in reportlistTD" :key="index">
+                                  <tr>
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>
                                       {{ item?.rank }} {{ item?.firstName }}
@@ -1498,7 +1632,7 @@ export default {
                                     <td>{{ item?.roomnumber || "-" }}</td>
                                     <td>{{ item?.maintenance || "-" }}</td>
                                     <td>
-                                      {{ item?.insurance / item?.installments || "-" }}
+                                      {{ item?.accumulated || "-" }}
                                     </td>
                                     <td>{{ item?.amountPaid || "-" }}</td>
                                     <td>{{ item?.contractExpenses || "-" }}</td>
@@ -1506,9 +1640,9 @@ export default {
 
                                   <tr>
                                     <th scope="row" colspan="4">รวมเงิน</th>
-                                    <th>200</th>
-                                    <th>-</th>
-                                    <th colspan="2">200</th>
+                                    <th>{{ item?.MaintenanceSum }}</th>
+                                    <th>{{ item?.accumulatedSum }}</th>
+                                    <th colspan="2">{{ item?.amountPaidSum }}</th>
                                   </tr>
                                 </tbody>
                               </table>
@@ -1567,7 +1701,7 @@ export default {
                                 <div class="mb-3 w-20">
                                   <label>สังกัด</label>
                                   <v-select
-                                    :options="masterData?.Affiliation"
+                                    :options="masterData?.AffiliationList"
                                     v-model="selectedAffiliation"
                                   ></v-select>
                                 </div>
@@ -1619,8 +1753,11 @@ export default {
                                     <th>รวม</th>
                                   </tr>
                                 </thead>
-                                <tbody>
-                                  <tr v-for="(item, index) in reportlistCTD" :key="index">
+                                <tbody
+                                  v-for="(item, index) in reportlistCTD"
+                                  :key="index"
+                                >
+                                  <tr>
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>{{ item?.typeAffiliation || "-" }}</td>
                                     <td>{{ item?.insurance || "-" }}</td>
@@ -1629,9 +1766,9 @@ export default {
                                   </tr>
                                   <tr>
                                     <th scope="row" colspan="2">รวมยอดส่งหัก</th>
-                                    <th>1300</th>
-                                    <th>300</th>
-                                    <th>1600</th>
+                                    <th>{{ item?.InsuranceSum }}</th>
+                                    <th>{{ item?.waterbillSum }}</th>
+                                    <th>{{ item?.sumCostSum }}</th>
                                   </tr>
                                 </tbody>
                               </table>
@@ -1656,8 +1793,11 @@ export default {
                                     <th>หมายเหตุ</th>
                                   </tr>
                                 </thead>
-                                <tbody>
-                                  <tr v-for="(item, index) in reportlistCTD" :key="index">
+                                <tbody
+                                  v-for="(item, index) in reportlistCTD"
+                                  :key="index"
+                                >
+                                  <tr>
                                     <th scope="row">{{ index + 1 }}</th>
                                     <td>
                                       {{ item?.rank }} {{ item?.firstName }}
@@ -1667,7 +1807,7 @@ export default {
                                     <td>{{ item?.roomnumber || "-" }}</td>
                                     <td>{{ item?.maintenance || "-" }}</td>
                                     <td>
-                                      {{ item?.insurance / item?.installments || "-" }}
+                                      {{ item?.accumulated || "-" }}
                                     </td>
                                     <td>{{ item?.amountPaid || "-" }}</td>
                                     <td>{{ item?.contractExpenses || "-" }}</td>
@@ -1675,9 +1815,9 @@ export default {
 
                                   <tr>
                                     <th scope="row" colspan="4">รวมเงิน</th>
-                                    <th>200</th>
-                                    <th>-</th>
-                                    <th colspan="2">200</th>
+                                    <th>{{ item?.MaintenanceSum }}</th>
+                                    <th>{{ item?.accumulatedSum }}</th>
+                                    <th colspan="2">{{ item?.amountPaidSum }}</th>
                                   </tr>
                                 </tbody>
                               </table>
@@ -1740,7 +1880,7 @@ export default {
                         <div class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
-                            :options="masterData?.Affiliation"
+                            :options="masterData?.AffiliationList"
                             v-model="selectedAffiliation"
                           ></v-select>
                         </div>
@@ -1793,8 +1933,8 @@ export default {
                             <th>รวม</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tbody v-for="(item, index) in reportlistTD" :key="index">
+                          <tr>
                             <th scope="row">{{ index + 1 }}</th>
                             <td>
                               {{ item?.typeAffiliation || "-" }}
@@ -1807,10 +1947,10 @@ export default {
 
                           <tr>
                             <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>900</th>
-                            <th>200</th>
-                            <th>1000</th>
-                            <th>2100</th>
+                            <th>{{ item?.MaintenanceSum }}</th>
+                            <th>{{ item?.waterbillSum }}</th>
+                            <th>{{ item?.electricitybillSum }}</th>
+                            <th>{{ item?.sumCostSum }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -1837,8 +1977,8 @@ export default {
                             <th scope="col">สาเหตุที่หักไม่ได้</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tbody v-for="(item, index) in reportlistTD" :key="index">
+                          <tr>
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.roomnumber || "-" }}</td>
                             <td>
@@ -1865,10 +2005,10 @@ export default {
 
                           <tr>
                             <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>400</th>
-                            <th>200</th>
-                            <th>400</th>
-                            <th>1000</th>
+                            <th>{{ item?.MaintenanceSum }}</th>
+                            <th>{{ item?.waterbillSum }}</th>
+                            <th>{{ item?.centralSum }}</th>
+                            <th>{{ item?.sumCostSum }}</th>
                           </tr>
                         </tbody>
                       </table>

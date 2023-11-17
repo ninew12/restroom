@@ -61,7 +61,7 @@ app.post('/users', (req, res) => {
     let body = req.body
     let data = { id: id, ...body }
     users.push(data)
-    fs.writeFile('./users.json', JSON.stringify(users), err => {
+    fs.writeFileSync('./users.json', JSON.stringify(users), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -132,7 +132,7 @@ app.put('/users/:id', (req, res) => {
     if (req.body.years) parsedData.years = req.body.years
 
     filterdata.push(parsedData)
-    fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -144,7 +144,7 @@ app.put('/users/:id', (req, res) => {
 app.delete('/users/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const deletedIndex = users.filter(user => user.id !== (req.params.id))
-    fs.writeFile('./users.json', JSON.stringify(deletedIndex, null, 2), (err) => {
+    fs.writeFileSync('./users.json', JSON.stringify(deletedIndex, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -172,7 +172,7 @@ app.put('/buildings/:id', (req, res) => {
     const parsedData = dataOld;
     if (req.body.committee) parsedData.committee = req.body.committee
     filterdata.push(parsedData)
-    fs.writeFile('./building.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFileSync('./building.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -186,7 +186,7 @@ app.post('/buildings', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
     building.push(body)
-    fs.writeFileSync('./building.json', JSON.stringify(building), err => {
+    fs.writeFileSyncSync('./building.json', JSON.stringify(building), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -199,7 +199,7 @@ app.post('/buildings', (req, res) => {
 app.delete('/buildings/:builId', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const deletedIndex = building.filter(buil => buil.buildingId !== (req.params.builId))
-    fs.writeFile('./building.json', JSON.stringify(deletedIndex, null, 2), (err) => {
+    fs.writeFileSync('./building.json', JSON.stringify(deletedIndex, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -220,7 +220,7 @@ app.post('/expenses', (req, res) => {
     let body = req.body
     let data = { id: id, ...body }
     Expenses.push(data)
-    fs.writeFile('./Expenses.json', JSON.stringify(Expenses), err => {
+    fs.writeFileSync('./Expenses.json', JSON.stringify(Expenses), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -243,7 +243,7 @@ app.post('/rooms', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
     let data =   [...rooms,...body]
-    fs.writeFileSync('./rooms.json', JSON.stringify(data), err => {
+    fs.writeFileSyncSync('./rooms.json', JSON.stringify(data), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -259,7 +259,6 @@ app.put('/rooms/:id', (req, res) => {
     let dataOld = rooms[updateIndex]
     let filterdata = rooms.filter(user => user.id !== (req.params.id))
     const parsedData = dataOld;
-    console.log(req.body);
     if (req.body.floor) parsedData.floor = req.body.floor
     if (req.body.firstName) parsedData.firstName = req.body.firstName
     if (req.body.lastName) parsedData.lastName = req.body.lastName
@@ -303,7 +302,7 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.years) parsedData.years = req.body.years
     
     filterdata.push(parsedData)
-    fs.writeFile('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFileSync('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -328,7 +327,7 @@ app.put('/queue', (req, res) => {
     let body = req.body
     let data = { id: id, ...body }
     queue.push(data)
-    fs.writeFile('./queue.json', JSON.stringify(queue), err => {
+    fs.writeFileSync('./queue.json', JSON.stringify(queue), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -367,7 +366,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
     filterdata.push(parsedData)
-    fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -391,7 +390,7 @@ app.post('/history', (req, res) => {
     let body = req.body
     let data = { id: id, ...body }
     history.push(data)
-    fs.writeFile('./history.json', JSON.stringify(history), err => {
+    fs.writeFileSync('./history.json', JSON.stringify(history), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -437,7 +436,7 @@ app.put('/history/:id', (req, res) => {
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
     filterdata.push(parsedData)
-    fs.writeFile('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFileSync('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -466,7 +465,7 @@ app.post('/layout', (req, res) => {
     let body = req.body
     let data = { id: id, ...body }
     users.push(data)
-    fs.writeFile('./users.json', JSON.stringify(users), err => {
+    fs.writeFileSync('./users.json', JSON.stringify(users), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -493,7 +492,7 @@ app.put('/layout/:id', (req, res) => {
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
     if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
     filterdata.push(parsedData)
-    fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -521,7 +520,7 @@ app.post('/report', (req, res) => {
     let body = req.body
     let data = { id: id, ...body }
     reports.push(data)
-    fs.writeFile('./report.json', JSON.stringify(reports), err => {
+    fs.writeFileSync('./report.json', JSON.stringify(reports), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -571,7 +570,7 @@ app.put('/report/:id', (req, res) => {
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
     filterdata.push(parsedData)
-    fs.writeFile('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -600,7 +599,7 @@ app.post('/utilitie', (req, res) => {
     let body = req.body
     let data = { id: id, ...body }
     users.push(data)
-    fs.writeFile('./users.json', JSON.stringify(users), err => {
+    fs.writeFileSync('./users.json', JSON.stringify(users), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -627,7 +626,7 @@ app.put('/utilitie/:id', (req, res) => {
     
     
     filterdata.push(parsedData)
-    fs.writeFile('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
