@@ -186,7 +186,7 @@ app.post('/buildings', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
     building.push(body)
-    fs.writeFileSyncSync('./building.json', JSON.stringify(building), err => {
+    fs.writeFileSync('./building.json', JSON.stringify(building), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
@@ -243,7 +243,7 @@ app.post('/rooms', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
     let data =   [...rooms,...body]
-    fs.writeFileSyncSync('./rooms.json', JSON.stringify(data), err => {
+    fs.writeFileSync('./rooms.json', JSON.stringify(data), err => {
         if (err) {
             console.log('Error writing file', err)
         } else {
