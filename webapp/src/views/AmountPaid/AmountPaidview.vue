@@ -311,7 +311,6 @@ export default {
                   <th scope="col">อาคาร</th>
                   <th scope="col">เลขที่ห้อง</th>
                   <th scope="col">ประเภทห้อง</th>
-                  <th scope="col">ธนาคาร</th>
                   <th scope="col">เงินประกันที่ชำระแล้ว</th>
                   <th scope="col">งวดเงินประกัน</th>
                   <th scope="col">ยอดเงินประกันคงเหลือ</th>

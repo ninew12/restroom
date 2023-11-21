@@ -6,57 +6,10 @@ import vueMkHeader from "@/assets/img/bg.jpg";
 import masterData from "@/assets/dataJson/masterData.json";
 import axios from "axios";
 import pdfMake from "pdfmake";
-import dataExt from "@/assets/dataJson/dataExt.json";
 import * as XLSX from "xlsx/xlsx.mjs";
-// import * as pdfFonts from "pdfmake/build/vfs_fonts";
 import pdfFonts from "@/assets/fonts/vfs_font_v2.js";
 
 // import pdfFonts from 'vfs_fonts.js'
-
-const listRoom = [
-  { title: "ตึก 1" },
-  { title: "ตึก 2" },
-  { title: "ตึก 3" },
-  { title: "ตึก 4" },
-  { title: "ตึก 5" },
-  { title: "ตึก 6" },
-  { title: "ตึก 7" },
-];
-
-const NoRoom = [
-  { title: "ชั้น 1" },
-  { title: "ชั้น 2" },
-  { title: "ชั้น 3" },
-  { title: "ชั้น 4" },
-  { title: "ชั้น 5" },
-  { title: "ชั้น 6" },
-  { title: "ชั้น 7" },
-];
-
-const userlist = [
-  {
-    dataIndex: "1",
-    firstName: "สมชาย",
-    lastName: "แสงทอง",
-    Affiliation: "บก", //สังกัด
-    rank: "ร้อยตรี", //ยศ
-    old: "32",
-    birthday: "04/03/2534",
-    idcard: "134044411441122",
-    phone: "0325647846",
-  },
-  {
-    dataIndex: "2",
-    firstName: "สมชัย",
-    lastName: "แสงสุข",
-    Affiliation: "กก", //สังกัด
-    rank: "ร้อยตรี", //ยศ
-    old: "32",
-    birthday: "14/07/2534",
-    idcard: "134044411441178",
-    phone: "0325647845",
-  },
-];
 
 export default {
   components: {
@@ -66,9 +19,6 @@ export default {
   },
   setup() {
     return {
-      listRoom,
-      NoRoom,
-      userlist,
       vueMkHeader,
       masterData,
     };
@@ -95,6 +45,76 @@ export default {
         { label: "ตุลาคม", value: "10" },
         { label: "พฤศจิกายน", value: "11" },
         { label: "ธันวาคม", value: "12" },
+      ],
+      AffiliationList: [
+        {
+          name: "บช.ตชด.",
+          fullname: "บช.ตชด.",
+        },
+        {
+          name: "บก.อก.",
+          fullname: "บก.อก.บช.ตชด.",
+        },
+        {
+          label: "บก.สนน.",
+          value: "บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.1",
+          value: "ฝอ.1 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.2",
+          value: "ฝอ.2 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.3",
+          value: "ฝอ.3 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.4",
+          value: "ฝอ.4 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.5",
+          value: "ฝอ.5 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.6",
+          value: "ฝอ.6 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.7",
+          value: "ฝอ.7 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.8",
+          value: "ฝอ.8 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.1",
+          value: "ฝสสน.1 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.2",
+          value: "ฝสสน.2 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.3",
+          value: "ฝสสน.3 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.4",
+          value: "ฝสสน.4 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.5",
+          value: "ฝสสน.5 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ลูกจ้าง",
+          value: "ลูกจ้าง",
+        },
       ],
       dataMonth: [
         "มกราคม",
@@ -136,6 +156,7 @@ export default {
       yearNumber: 0,
       tableId: "",
       typeReport: "ตร.",
+      monthYear: "",
     };
   },
   created() {
@@ -163,19 +184,17 @@ export default {
         let y = this.dateData.getFullYear();
         this.mountNumber = x + 1;
         this.yearNumber = y;
+        const result = this.dateData.toLocaleDateString("th-TH", {
+          year: "numeric",
+        });
+        this.monthYear = newValue.label + " " + this.thaiNumber(result);
         this.getReport(this.mountNumber, this.yearNumber);
       }
     },
   },
   methods: {
-    changedLabel(event) {
-      console.log(event);
-      // this.selected = event;
-    },
-
     typeChange(e) {
       this.typeReport = e;
-      console.log(this.typeReport);
     },
 
     async getM() {
@@ -184,7 +203,15 @@ export default {
       let x = this.optionMonth.findIndex((el) => el.label == m);
       this.mountNumber = x + 1;
       this.yearNumber = y;
+      let mm = this.dateData.getMonth();
       this.selectedMonth = m;
+      const today = new Date();
+      const month = today.getMonth();
+      today.setMonth(month - 1);
+      const result = today.toLocaleDateString("th-TH", {
+        year: "numeric",
+      });
+      this.monthYear = m + " " + this.thaiNumber(result);
       await this.getReport(this.mountNumber, this.yearNumber);
     },
 
@@ -204,15 +231,9 @@ export default {
       }
     },
 
-    seleteM() {
-      // console.log(event);
-      console.log(this.selectedMonth);
-    },
-
     typeUserchange(e, id) {
       this.reportType = e;
       this.tableId = id;
-      console.log(this.tableId);
     },
 
     getReport(m, y) {
@@ -262,11 +283,11 @@ export default {
               (el) => el.typeUser == "บช.ตชด." && el.monthly == m && el.years == y
             );
             data2 = data4.filter(
-              (el) => el.typeUser == "ตร." && el.monthly == m && el.years == y
+              (ele2) => ele2.typeUser == "ตร." && ele2.monthly == m && ele2.years == y
             );
 
             arr = data.filter((ele) => ele.typeAffiliation === Affiliation);
-            arr2 = data2.filter((ele) => ele.typeAffiliation === Affiliation);
+            arr2 = data2.filter((el2) => el2.typeAffiliation === Affiliation);
 
             this.mapData(arr, arr2);
             // this.reportlistTD = data2;
@@ -290,14 +311,17 @@ export default {
           lastnumber: el.lastnumber || 0,
           numberfirst: el.numberfirst || 0,
           central: el.central || 0,
+          typeAffiliation: el.typeAffiliation || "-",
           typeContract: el.typeContract || "-",
           contractExpenses: el.contractExpenses || "-",
           buildingName: el.buildingName || "-",
+          maintenance: el.maintenance || 0,
+          insurance: el.insurance || 0,
           accumulated: el.insurance / el.installments,
           amountPaidSum: this.AmountPaidSum(data),
           waterbillSum: this.WaterbillSum(data),
           electricitybillSum: this.ElectricitybillSum(data),
-          fullname: el.rank + el.firstName + el.lastName,
+          fullname: (el.rank || "") + " " + el?.firstName + " " + el?.lastName,
           unitWater: el.lastnumber - el.numberfirst || 0,
           costs: el.costs || 0,
           centralSum: this.CentralSum(data),
@@ -311,31 +335,34 @@ export default {
         };
       });
 
-      arr2 = await data2.map((el, i) => {
+      arr2 = await data2.map((el2, i) => {
         return {
-          ...el,
+          ...el2,
           numberNo: i + 1,
-          lastnumber: el.lastnumber || 0,
-          numberfirst: el.numberfirst || 0,
-          central: el.central || 0,
-          accumulated: el.insurance / el.installments,
-          typeContract: el.typeContract || "-",
-          contractExpenses: el.contractExpenses || "-",
-          buildingName: el.buildingName || "-",
-          costs: el.costs || 0,
+          lastnumber: el2.lastnumber || 0,
+          numberfirst: el2.numberfirst || 0,
+          central: el2.central || 0,
+          typeAffiliation: el2.typeAffiliation || "-",
+          accumulated: el2.insurance / el2.installments,
+          typeContract: el2.typeContract || "-",
+          contractExpenses: el2.contractExpenses || "-",
+          buildingName: el2.buildingName || "-",
+          costs: el2.costs || 0,
+          insurance: el.insurance || 0,
           amountPaidSum: this.AmountPaidSum(data2),
           waterbillSum: this.WaterbillSum(data2),
           electricitybillSum: this.ElectricitybillSum(data2),
-          fullname: el?.rank + el?.firstName + el?.lastName,
-          unitWater: el.lastnumber - el.numberfirst || 0,
+          fullname: (el2.rank || "") + " " + el2?.firstName + " " + el2?.lastName,
+          unitWater: el2.lastnumber - el2.numberfirst || 0,
+          maintenance: el2.maintenance || 0,
           centralSum: this.CentralSum(data2),
           costsSum: this.CostsSum(data2),
           InsuranceSum: this.InsuranceSum(data2),
           MaintenanceSum: this.MaintenanceSum(data2),
           accumulatedSum: this.AccumulatedSum(data2),
-          waterbill: el.waterbill || 0,
-          electricitybill: el.electricitybill || 0,
-          Installmenttime: this.checkMonth(el.dateApproved, el.installments),
+          waterbill: el2.waterbill || 0,
+          electricitybill: el2.electricitybill || 0,
+          Installmenttime: this.checkMonth(el2.dateApproved, el2.installments),
         };
       });
       await this.mapdataSum(arr, arr2);
@@ -390,7 +417,7 @@ export default {
       });
       arr2 = await data2.map((el2) => {
         return {
-          ...el,
+          ...el2,
           typeContractYes: this.checkTypeContract(el2),
           typeContractNo: this.checkTypeContract(el2),
           sumCostwaterbill: this.countSumWaterbill(el2),
@@ -416,20 +443,79 @@ export default {
       });
       arr2 = await data2.map((el2) => {
         return {
-          ...el,
+          ...el2,
           SumCostSumInsurance: this.SumCostSumInsurance(data2),
           SumCostSumCentral: this.SumCostSumCentral(data2),
           SumCostSumwater: this.SumCostSumwater(data2),
           SumCostSumCosts: this.SumCostSumCosts(data2),
         };
       });
-      this.reportlistCTD = arr;
-      this.reportlistTD = arr2;
-      console.log(arr);
+      this.mapDataComma(arr,arr2)
     },
 
+   async mapDataComma(data, data2){
+      let arr3 = [];
+      let arr4 = [];
+      arr3 = await data.map((el2) => {
+        return {
+          ...el2,
+          SumCostSumInsurance: this.numberWithCommas(el2.SumCostSumInsurance)|| 0,
+          SumCostSumCentral: this.numberWithCommas(el2.SumCostSumCentral)|| 0,
+          SumCostSumwater: this.numberWithCommas(el2.SumCostSumwater)|| 0,
+          SumCostSumCosts: this.numberWithCommas(el2.SumCostSumCosts)|| 0,
+          sumCostwaterbill: this.numberWithCommas(el2.sumCostwaterbill)|| 0,
+          sumCostCentral: this.numberWithCommas(el2.sumCostCentral)|| 0,
+          sumCostCosts: this.numberWithCommas(el2.sumCostCosts)|| 0,
+          sumCostnsurance: this.numberWithCommas(el2.sumCostnsurance)|| 0,
+          central: this.numberWithCommas(el2.central) || 0,
+          costs: this.numberWithCommas(el2.costs) || 0,
+          amountPaidSum: this.numberWithCommas(el2.amountPaidSum)|| 0,
+          waterbillSum: this.numberWithCommas(el2.waterbillSum)|| 0,
+          electricitybillSum: this.numberWithCommas(el2.electricitybillSum)|| 0,
+          maintenance: this.numberWithCommas(el2.maintenance) || 0,
+          insurance: this.numberWithCommas(el2.insurance) || 0,
+          centralSum: this.numberWithCommas(el2.centralSum)|| 0,
+          costsSum: this.numberWithCommas(el2.costsSum)|| 0,
+          InsuranceSum: this.numberWithCommas(el2.InsuranceSum) || 0,
+          MaintenanceSum: this.numberWithCommas(el2.MaintenanceSum) || 0,
+          accumulatedSum: this.numberWithCommas(el2.accumulatedSum) || 0,
+          waterbill: this.numberWithCommas(el2.waterbill )|| 0,
+          electricitybill:  this.numberWithCommas(el2.electricitybill) || 0,
+        };
+      });
+      arr4 = await data2.map((el3) => {
+        return {
+          ...el3,
+          SumCostSumInsurance: this.numberWithCommas(el3.SumCostSumInsurance)|| 0,
+          SumCostSumCentral: this.numberWithCommas(el3.SumCostSumCentral)|| 0,
+          SumCostSumwater: this.numberWithCommas(el3.SumCostSumwater)|| 0,
+          SumCostSumCosts: this.numberWithCommas(el3.SumCostSumCosts)|| 0,
+          sumCostwaterbill: this.numberWithCommas(el3.sumCostwaterbill)|| 0,
+          sumCostCentral: this.numberWithCommas(el3.sumCostCentral)|| 0,
+          sumCostCosts: this.numberWithCommas(el3.sumCostCosts)|| 0,
+          sumCostnsurance: this.numberWithCommas(el3.sumCostnsurance)|| 0,
+          central: this.numberWithCommas(el3.central) || 0,
+          costs: this.numberWithCommas(el3.costs) || 0,
+          insurance: this.numberWithCommas(el2.insurance) || 0,
+          amountPaidSum: this.numberWithCommas(el3.amountPaidSum)|| 0,
+          waterbillSum: this.numberWithCommas(el3.waterbillSum)|| 0,
+          electricitybillSum: this.numberWithCommas(el3.electricitybillSum)|| 0,
+          maintenance: this.numberWithCommas(el3.maintenance) || 0,
+          centralSum: this.numberWithCommas(el3.centralSum)|| 0,
+          costsSum: this.numberWithCommas(el3.costsSum)|| 0,
+          InsuranceSum: this.numberWithCommas(el3.InsuranceSum) || 0,
+          MaintenanceSum: this.numberWithCommas(el3.MaintenanceSum) || 0,
+          accumulatedSum: this.numberWithCommas(el3.accumulatedSum) || 0,
+          waterbill: this.numberWithCommas(el3.waterbill )|| 0,
+          electricitybill:  this.numberWithCommas(el3.electricitybill) || 0,
+        };
+      });
+      this.reportlistCTD = arr3;
+      this.reportlistTD = arr4;
+    },
+    // numberWithCommas
+
     ExportExcel(type, tableId, fn, dl) {
-      console.log(type, tableId, fn, dl);
       var elt = document.getElementById(tableId);
       var wb = XLSX.utils.table_to_book(elt, { sheet: "Sheet JS" });
 
@@ -459,6 +545,27 @@ export default {
 
     countSumInsurance(item) {
       return parseInt(item.maintenance) + parseInt(item.insurance) || 0;
+    },
+
+    // insuranceCount(items) {
+    //   return items.reduce((insuranceSum, ele) => {
+    //     if (ele.insurance !== undefined) return amountPaidSum + parseInt(ele.insurance);
+    //     else return insuranceSum;
+    //   }, 0);
+    // },
+
+    // insuranceCount(items) {
+    //   return items.reduce((insuranceSum, ele) => {
+    //     if (ele.insurance !== undefined) return amountPaidSum + parseInt(ele.insurance);
+    //     else return insuranceSum;
+    //   }, 0);
+    // },
+
+    insuranceCount(items) {
+      return items.reduce((insuranceSum, ele) => {
+        if (ele.insurance !== undefined) return amountPaidSum + parseInt(ele.insurance);
+        else return insuranceSum;
+      }, 0);
     },
 
     AmountPaidSum(items) {
@@ -545,6 +652,7 @@ export default {
       }, 0);
     },
     thaiNumber(num) {
+      let convertNumber = this.numberWithCommas(num)
       var array = {
         1: "๑",
         2: "๒",
@@ -557,12 +665,17 @@ export default {
         9: "๙",
         0: "๐",
       };
-      var str = num.toString();
+      var str = convertNumber.toString();
       for (var val in array) {
         str = str.split(val).join(array[val]);
       }
+     
       return str;
     },
+
+numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+},
     Previous() {
       window.history.back();
     },
@@ -570,6 +683,7 @@ export default {
     buildTableBodyinsurance(data, columns) {
       var body = [];
       let arr = [];
+      console.log(data);
       var thaiNum = data.map((e) => {
         return {
           ...e,
@@ -582,6 +696,7 @@ export default {
           insurance: this.thaiNumber(e.insurance),
         };
       });
+      console.log(thaiNum);
       var footer = [
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
@@ -630,8 +745,10 @@ export default {
     },
 
     exportPdfinsurance() {
+      let listData = []
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
+      console.log(listData);
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
@@ -653,7 +770,19 @@ export default {
         };
         const docDefinition = {
           content: [
-            { text: "Dynamic parts", style: "header" },
+              {
+              text:
+                "สรุปยอดหักค่าบํารุงสถานที่",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text:
+                "และค่าประกันทรัพย์สินเสียหายประจําเดือน",
+              style: "header",
+              alignment: "center",
+            },
+            { text: `(เฉพาะอาคารบ้านพัก ${this.typeReport} แยกตามสังกัด)`, style: "subheader", alignment: "center" },
             this.tableInsurance(listData, [
               "numberNo",
               "typeAffiliation",
@@ -687,7 +816,6 @@ export default {
           electricitybill: this.thaiNumber(e.electricitybill),
         };
       });
-      console.log(thaiNum);
       var footer = [
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
@@ -728,7 +856,6 @@ export default {
     },
 
     tablewaterBill(data, columns) {
-      console.log(data, columns);
       return {
         table: {
           widths: [50, "*", "*", "*", "*", 100],
@@ -739,6 +866,7 @@ export default {
     },
 
     exportPdfWaterBill() {
+      let listData = []
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
@@ -858,6 +986,7 @@ export default {
     },
 
     exportPdfCentral() {
+      let listData = []
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
@@ -980,6 +1109,7 @@ export default {
     },
 
     exportPdfCosts() {
+      let listData = []
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
@@ -1113,7 +1243,7 @@ export default {
     },
 
     exportPdfAccumulated() {
-      let listData = [];
+      let listData = []
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
 
@@ -1233,6 +1363,7 @@ export default {
     },
 
     exportPdfCostCentral() {
+      let listData = []
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
@@ -1335,7 +1466,7 @@ export default {
               <span>ย้อนกลับ</span>
             </a>
           </div>
-          <h4>ระบบเรียกรายงาน ประจำเดือน พฤศจิกายน</h4>
+          <h4>ระบบเรียกรายงาน ประจำเดือน {{ selectedMonth?.label || selectedMonth }}</h4>
           <div class="row pt-4 min-vh-45">
             <div class="col-lg-3">
               <div
@@ -1437,7 +1568,6 @@ export default {
                             <v-select
                               :options="optionMonth"
                               v-model="selectedMonth"
-                              @change="seleteM"
                             ></v-select>
                           </div>
                           <div class="mb-3 w-20">
@@ -1484,7 +1614,7 @@ export default {
                         </div>
                       </div>
                       <div class="text-center pt-4 table-responsive">
-                        <table class="table table table-bordered" id="table1">
+                        <table class="table table-bordered" id="table1">
                           <thead>
                             <tr>
                               <td colspan="6" style="border: 0">
@@ -1500,7 +1630,7 @@ export default {
                             </tr>
                             <tr>
                               <td colspan="6" style="border: 0">
-                                ประจําเดือน มีนาคม 2566
+                                ประจําเดือน {{ monthYear }}
                               </td>
                             </tr>
                           </thead>
@@ -1650,7 +1780,7 @@ export default {
                       v-if="reportType == 'บัญชีหน้างบ'"
                       class="text-center pt-4 table-responsive"
                     >
-                      <table class="table table table-bordered" id="table3">
+                      <table class="table table-bordered" id="table3">
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
@@ -1664,7 +1794,9 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">ประจําเดือน เมษายน 2566</td>
+                            <td colspan="6" style="border: 0">
+                              ประจําเดือน {{ monthYear }}
+                            </td>
                           </tr>
                           <tr>
                             <th rowspan="2">ลำดับ</th>
@@ -1687,14 +1819,13 @@ export default {
                             <td>{{ item?.electricitybill || "-" }}</td>
                             <td>{{ item?.sumCostwaterbill || "-" }}</td>
                           </tr>
-                          <tr v-if="reportlistTD.length > 0"> 
+                          <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="2">รวมเงิน</th>
                             <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
                             <th>{{ reportlistTD[0]?.waterbillSum }}</th>
                             <th>{{ reportlistTD[0]?.electricitybillSum }}</th>
                             <th>{{ reportlistTD[0]?.SumCostSumwater }}</th>
                           </tr>
-                     
                         </tbody>
                       </table>
                     </div>
@@ -1702,21 +1833,21 @@ export default {
                       v-if="reportType == 'ประกันทรัพย์สิน'"
                       class="text-center pt-4 table-responsive"
                     >
-                      <table class="table table table-bordered" id="table4">
+                      <table class="table table-bordered" id="table4">
                         <thead>
                           <tr>
-                            <td colspan="6" style="border: 0">
+                            <td colspan="9" style="border: 0">
                               บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">
+                            <td colspan="9" style="border: 0">
                               การหักค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์ (เพิ่มเติม)
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">
-                              ประจําเดือน มีนาคม 2566 หน่วยงาน บช.ตชด.
+                            <td colspan="9" style="border: 0">
+                              ประจําเดือน {{ monthYear }} หน่วยงาน บช.ตชด.
                             </td>
                           </tr>
                           <tr>
@@ -1736,7 +1867,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr  v-for="(item, index) in reportlistTD" :key="index">
+                          <tr v-for="(item, index) in reportlistCTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.roomnumber }}</td>
                             <td>
@@ -1758,12 +1889,12 @@ export default {
                             </td>
                             <td>{{ item?.contractExpenses }}</td>
                           </tr>
-                          <tr v-if="reportlistTD.length > 0">
+                          <tr v-if="reportlistCTD?.length > 0">
                             <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
-                            <th>{{ reportlistTD[0]?.waterbillSum }}</th>
-                            <th>{{ reportlistTD[0]?.centralSum }}</th>
-                            <th>{{ reportlistTD[0]?.SumCostSumCentral }}</th>
+                            <th>{{ reportlistCTD[0]?.MaintenanceSum }}</th>
+                            <th>{{ reportlistCTD[0]?.waterbillSum }}</th>
+                            <th>{{ reportlistCTD[0]?.centralSum }}</th>
+                            <th>{{ reportlistCTD[0]?.SumCostSumCentral }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -1901,7 +2032,7 @@ export default {
                       v-if="reportType == 'บัญชีหน้างบ'"
                       class="text-center pt-4 table-responsive"
                     >
-                      <table class="table table table-bordered" id="table5">
+                      <table class="table table-bordered" id="table5">
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
@@ -1915,7 +2046,9 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">ประจําเดือน มีนาคม 2566</td>
+                            <td colspan="6" style="border: 0">
+                              ประจําเดือน {{ monthYear }}
+                            </td>
                           </tr>
                           <tr>
                             <th rowspan="2">ลำดับ</th>
@@ -1936,7 +2069,7 @@ export default {
                             <td>{{ item?.costs || "-" }}</td>
                             <td>{{ item?.sumCostCosts || "-" }}</td>
                           </tr>
-                          <tr v-if="reportlistTD.length > 0">
+                          <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="2">รวมเงิน</th>
                             <th>{{ reportlistTD[0]?.centralSum }}</th>
                             <th>{{ reportlistTD[0]?.costsSum }}</th>
@@ -1949,21 +2082,21 @@ export default {
                       v-if="reportType == 'ประกันทรัพย์สิน'"
                       class="text-center pt-4 table-responsive"
                     >
-                      <table class="table table table-bordered" id="table6">
+                      <table class="table table-bordered" id="table6">
                         <thead>
                           <tr>
-                            <td colspan="6" style="border: 0">
+                            <td colspan="9" style="border: 0">
                               บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">
+                            <td colspan="9" style="border: 0">
                               ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์ (เพิ่มเติม)
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">
-                              ประจําเดือน มีนาคม 2566 หน่วยงาน บช.ตชด.
+                            <td colspan="9" style="border: 0">
+                              ประจําเดือน {{ monthYear }} หน่วยงาน บช.ตชด.
                             </td>
                           </tr>
                           <tr>
@@ -1981,7 +2114,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                          <tr v-for="(item, index) in reportlistCTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.buildingName || "-" }}</td>
                             <td>{{ item?.roomnumber || "-" }}</td>
@@ -2003,11 +2136,11 @@ export default {
                             </td>
                             <td>{{ item?.contractExpenses || "-" }}</td>
                           </tr>
-                          <tr v-if="reportlistTD.length > 0">
+                          <tr v-if="reportlistCTD?.length > 0">
                             <th scope="row" colspan="5">รวมเงิน</th>
-                            <th>{{ reportlistTD[0]?.centralSum }}</th>
-                            <th>{{ reportlistTD[0]?.costsSum }}</th>
-                            <th>{{ reportlistTD[0]?.SumCostSumCosts }}</th>
+                            <th>{{ reportlistCTD[0]?.centralSum }}</th>
+                            <th>{{ reportlistCTD[0]?.costsSum }}</th>
+                            <th>{{ reportlistCTD[0]?.SumCostSumCosts }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -2023,38 +2156,7 @@ export default {
                   <div>
                     <div class="pt-4 text-start">
                       <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
-                      <div class="mb-3">
-                        <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px">ประเภท</label>
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="typeUser17"
-                            id="typeUser17"
-                            value="บัญชีหน้างบ"
-                            :checked="reportType == 'บัญชีหน้างบ'"
-                            @change="typeUserchange('บัญชีหน้างบ', 'table9')"
-                          />
-                          <label class="form-check-label" for="typeUser17"
-                            >บัญชีหน้างบ</label
-                          >
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="typeUser18"
-                            id="typeUser18"
-                            value="ประกันทรัพย์สิน"
-                            :checked="reportType == 'ประกันทรัพย์สิน'"
-                            @change="typeUserchange('ประกันทรัพย์สิน', 'table10')"
-                          />
-                          <label class="form-check-label" for="typeUser18">
-                            รายละเอียดการหักเงินค่าบํารุงสถานที่
-                            และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
-                          >
-                        </div>
-                      </div>
+
                       <div class="d-flex justify-content-end align-items-center">
                         <div class="mb-3 w-20" style="margin-right: 5px">
                           <label>เดือน</label>
@@ -2142,7 +2244,7 @@ export default {
                       </div>
                     </div>
                     <div class="text-center pt-4 table-responsive">
-                      <table class="table table table-bordered" id="table9">
+                      <table class="table table-bordered" id="table9">
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
@@ -2150,27 +2252,27 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">เดือน มีนาคม 2566</td>
+                            <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
                           </tr>
                           <tr>
-                            <th rowspan="2">หน่วยงาน</th>
-                            <th rowspan="2">ค่าบํารุงฯ</th>
-                            <th colspan="3">ค่าประกันฯ</th>
-                            <th colspan="3">รวม</th>
+                            <th>หน่วยงาน</th>
+                            <th>ค่าบํารุงฯ</th>
+                            <th>ค่าประกันฯ</th>
+                            <th>รวม</th>
                           </tr>
                         </thead>
-                        <tbody v-for="(item, index) in reportlistTD" :key="index">
-                          <tr>
-                            <td>{{ item?.maintenance || "-" }}</td>
-                            <td>{{ item?.waterbill || "-" }}</td>
-                            <td>{{ item?.electricitybill || "-" }}</td>
+                        <tbody>
+                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                            <td>{{ item?.typeAffiliation || "-" }}</td>
+                            <td>{{ item?.MaintenanceSum || "-" }}</td>
+                            <td>{{ item?.InsuranceSum || "-" }}</td>
                             <td>{{ item?.sumCostwaterbill || "-" }}</td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
                     <div class="text-center pt-4 table-responsive">
-                      <table class="table table table-bordered" id="table10">
+                      <table class="table table-bordered" id="table10">
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
@@ -2179,18 +2281,18 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">เดือน มีนาคม 2566</td>
+                            <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
                           </tr>
                           <tr>
-                            <th rowspan="2">หน่วยงาน</th>
-                            <th rowspan="2">ค่าธรรมเนียม</th>
-                            <th rowspan="2">ค่าน้ําประปา</th>
-                            <th rowspan="2">ค่าไฟฟ้า</th>
-                            <th rowspan="2">รวม</th>
+                            <th>หน่วยงาน</th>
+                            <th>ค่าธรรมเนียม</th>
+                            <th>ค่าน้ําประปา</th>
+                            <th>ค่าไฟฟ้า</th>
+                            <th>รวม</th>
                           </tr>
                         </thead>
-                        <tbody v-for="(item, index) in reportlistTD" :key="index">
-                          <tr>
+                        <tbody>
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <td>{{ item?.buildingName || "-" }}</td>
                             <td>{{ item?.roomnumber }}</td>
                             <td>{{ item?.maintenance || "-" }}</td>
@@ -2201,7 +2303,7 @@ export default {
                       </table>
                     </div>
                     <div class="text-center pt-4 table-responsive">
-                      <table class="table table table-bordered" id="table10">
+                      <table class="table table-bordered" id="table10">
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
@@ -2210,19 +2312,19 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">เดือน มีนาคม 2566</td>
+                            <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
                           </tr>
                           <tr>
-                            <th rowspan="2">หน่วยงาน</th>
-                            <th rowspan="2">ค่าไฟฟ้าส่วนกลาง</th>
-                            <th rowspan="2">ค่าบํารุงลิฟต์</th>
-                            <th rowspan="2">รวม</th>
+                            <th>หน่วยงาน</th>
+                            <th>ค่าไฟฟ้าส่วนกลาง</th>
+                            <th>ค่าบํารุงลิฟต์</th>
+                            <th>รวม</th>
                           </tr>
                         </thead>
-                        <tbody v-for="(item, index) in reportlistTD" :key="index">
-                          <tr>
+                        <tbody>
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <td>{{ item?.buildingName || "-" }}</td>
-                            <td>{{ item?.roomnumber }}</td>
+                            <td>{{ item?.centralSum }}</td>
                             <td>{{ item?.maintenance || "-" }}</td>
                             <td>{{ item?.amountPaid || "-" }}</td>
                           </tr>
@@ -2230,7 +2332,7 @@ export default {
                       </table>
                     </div>
                     <div class="text-center pt-4 table-responsive">
-                      <table class="table table table-bordered" id="table10">
+                      <table class="table table-bordered" id="table10">
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
@@ -2239,14 +2341,14 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <th rowspan="2">บช.ตชด.</th>
-                            <th rowspan="2">ตร.ส่วนกลาง</th>
-                            <th rowspan="2">ตร.ส่วนกลาง(เพิ่มเติม)</th>
-                            <th rowspan="2">รวมเป็นเงิน</th>
+                            <th>บช.ตชด.</th>
+                            <th>ตร.ส่วนกลาง</th>
+                            <th>ตร.ส่วนกลาง(เพิ่มเติม)</th>
+                            <th>รวมเป็นเงิน</th>
                           </tr>
                         </thead>
-                        <tbody v-for="(item, index) in reportlistTD" :key="index">
-                          <tr>
+                        <tbody>
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <td>{{ item?.buildingName || "-" }}</td>
                             <td>{{ item?.roomnumber }}</td>
                             <td>{{ item?.maintenance || "-" }}</td>
@@ -2429,7 +2531,7 @@ export default {
                               v-if="reportType == 'บัญชีหน้างบ'"
                               class="text-center pt-4 table-responsive"
                             >
-                              <table class="table table table-bordered" id="table11">
+                              <table class="table table-bordered" id="table11">
                                 <thead>
                                   <tr>
                                     <td colspan="6" style="border: 0">
@@ -2467,8 +2569,8 @@ export default {
                                   </tr>
                                   <tr v-if="reportlistCTD.length > 0">
                                     <th scope="row" colspan="2">รวมยอดส่งหัก</th>
-                                    <th>{{ reportlistTD[0]?.InsuranceSum }}</th>
                                     <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
+                                    <th>{{ reportlistTD[0]?.InsuranceSum }}</th>
                                     <th>{{ reportlistTD[0]?.SumCostSumInsurance }}</th>
                                   </tr>
                                 </tbody>
@@ -2478,21 +2580,21 @@ export default {
                               v-if="reportType == 'ประกันทรัพย์สิน'"
                               class="text-center pt-4 table-responsive"
                             >
-                              <table class="table table table-bordered" id="table12">
+                              <table class="table table-bordered" id="table12">
                                 <thead>
                                   <tr>
-                                    <td colspan="6" style="border: 0">
+                                    <td colspan="7" style="border: 0">
                                       บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ ตร.
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td colspan="6" style="border: 0">
+                                    <td colspan="7" style="border: 0">
                                       ที่หักเงินเดือนเป็นค่าบํารุงรักษาสถานที่และค่าประกันทรัพย์สินเสียหาย
                                     </td>
                                   </tr>
                                   <tr>
-                                    <td colspan="6" style="border: 0">
-                                      ประจําเดือน มีนาคม 2566 หน่วยงาน ตร.
+                                    <td colspan="7" style="border: 0">
+                                      ประจําเดือน {{ monthYear }} หน่วยงาน ตร.
                                     </td>
                                   </tr>
 
@@ -2527,11 +2629,13 @@ export default {
                                     <td>{{ item?.Installmenttime || "-" }}</td>
                                   </tr>
 
-                                  <tr v-if="reportlistTD.length > 0">
+                                  <tr v-if="reportlistTD?.length > 0">
                                     <th scope="row" colspan="4">รวมเงิน</th>
                                     <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
                                     <th>{{ reportlistTD[0]?.accumulatedSum }}</th>
-                                    <th colspan="2">{{ reportlistTD[0]?.amountPaidSum }}</th>
+                                    <th colspan="2">
+                                      {{ reportlistTD[0]?.amountPaidSum }}
+                                    </th>
                                   </tr>
                                 </tbody>
                               </table>
@@ -2669,7 +2773,7 @@ export default {
                               v-if="reportType == 'บัญชีหน้างบ'"
                               class="text-center pt-4 table-responsive"
                             >
-                              <table class="table table table-bordered" id="table13">
+                              <table class="table table-bordered" id="table13">
                                 <thead>
                                   <tr>
                                     <td colspan="6" style="border: 0">
@@ -2719,21 +2823,21 @@ export default {
                               class="text-center pt-4 table-responsive"
                             >
                               <div>
-                                <table class="table table table-bordered" id="table14">
+                                <table class="table table-bordered" id="table14">
                                   <thead>
                                     <tr>
-                                      <td colspan="6" style="border: 0">
+                                      <td colspan="7" style="border: 0">
                                         บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด.
                                       </td>
                                     </tr>
                                     <tr>
-                                      <td colspan="6" style="border: 0">
+                                      <td colspan="7" style="border: 0">
                                         ที่หักเงินเดือนเป็นค่าบํารุงรักษาสถานที่และค่าประกันทรัพย์สินเสียหาย
                                       </td>
                                     </tr>
                                     <tr>
-                                      <td colspan="6" style="border: 0">
-                                        ประจําเดือน มีนาคม 2566 หน่วยงาน บช.ตชด.
+                                      <td colspan="7" style="border: 0">
+                                        ประจําเดือน {{ monthYear }} หน่วยงาน บช.ตชด.
                                       </td>
                                     </tr>
                                     <tr>
@@ -2917,7 +3021,7 @@ export default {
                       v-if="reportType == 'บัญชีหน้างบ'"
                       class="text-center pt-4 table-responsive"
                     >
-                      <table class="table table table-bordered" id="table15">
+                      <table class="table table-bordered" id="table15">
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
@@ -2930,7 +3034,9 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">ประจําเดือน มีนาคม 2566</td>
+                            <td colspan="6" style="border: 0">
+                              ประจําเดือน {{ monthYear }}
+                            </td>
                           </tr>
                           <tr>
                             <th rowspan="2">ลำดับ</th>
@@ -2945,7 +3051,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr  v-for="(item, index) in reportlistTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>
                               {{ item?.typeAffiliation || "-" }}
@@ -2956,7 +3062,7 @@ export default {
                             <td>{{ item?.sumCostwaterbill || "-" }}</td>
                           </tr>
 
-                          <tr v-if="reportlistTD.length > 0"> 
+                          <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="2">รวมเงิน</th>
                             <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
                             <th>{{ reportlistTD[0]?.waterbillSum }}</th>
@@ -2970,21 +3076,21 @@ export default {
                       v-if="reportType == 'ประกันทรัพย์สิน'"
                       class="text-center pt-4 table-responsive"
                     >
-                      <table class="table table table-bordered" id="table16">
+                      <table class="table table-bordered" id="table16">
                         <thead>
                           <tr>
-                            <td colspan="6" style="border: 0">
+                            <td colspan="9" style="border: 0">
                               บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">
+                            <td colspan="9" style="border: 0">
                               ที่หักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">
-                              ประจําเดือน มีนาคม 2566 หน่วยงาน บช.ตชด.
+                            <td colspan="9" style="border: 0">
+                              ประจําเดือน {{ monthYear }} หน่วยงาน บช.ตชด.
                             </td>
                           </tr>
                           <tr>
@@ -3004,7 +3110,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr  v-for="(item, index) in reportlistTD" :key="index">
+                          <tr v-for="(item, index) in reportlistCTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.roomnumber || "-" }}</td>
                             <td>
@@ -3029,12 +3135,12 @@ export default {
                             <td>{{ item?.contractExpenses || "-" }}</td>
                           </tr>
 
-                          <tr v-if="reportlistTD.length > 0">
+                          <tr v-if="reportlistCTD?.length > 0">
                             <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
-                            <th>{{ reportlistTD[0]?.waterbillSum }}</th>
-                            <th>{{ reportlistTD[0]?.centralSum }}</th>
-                            <th>{{ reportlistTD[0]?.SumCostSumCentral }}</th>
+                            <th>{{ reportlistCTD[0]?.MaintenanceSum }}</th>
+                            <th>{{ reportlistCTD[0]?.waterbillSum }}</th>
+                            <th>{{ reportlistCTD[0]?.centralSum }}</th>
+                            <th>{{ reportlistCTD[0]?.SumCostSumCentral }}</th>
                           </tr>
                         </tbody>
                       </table>

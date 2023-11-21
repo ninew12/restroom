@@ -644,28 +644,28 @@ export default {
                                   item2?.roomconditions !== 'ชำรุด'
                                 "
                                 class="card-title bgg-green"
-                                style="font-size: 16px"
+                                style="font-size: 18px"
                               >
                                 {{ "ว่าง" }}
                               </p>
                               <p
                                 v-if="item2?.roomStatus == 'unavailable'"
                                 class="card-title bgg-red"
-                                style="font-size: 16px"
+                                style="font-size: 18px"
                               >
                                 {{ "ไม่ว่าง" }}
                               </p>
                               <p
                                 v-if="item2?.roomconditions == 'ชำรุด'"
                                 class="card-title bgg-warning2"
-                                style="font-size: 16px"
+                                style="font-size: 18px"
                               >
                                 {{ "ชำรุด" }}
                               </p>
                               <p
                                 v-if="item2?.roomStatus == 'return'"
                                 class="card-title bgg-return"
-                                style="font-size: 16px"
+                                style="font-size: 18px"
                               >
                                 {{ "ผ่อนผัน" }}
                               </p>
@@ -682,7 +682,7 @@ export default {
                                 <span
                                   v-if="item2?.roomStatus == 'special'"
                                   style="
-                                    font-size: 16px;
+                                    font-size: 18px;
                                     display: flex;
                                     align-items: center;
                                     margin-left: 5px;

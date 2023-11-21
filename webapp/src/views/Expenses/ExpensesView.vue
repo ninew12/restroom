@@ -6,6 +6,7 @@ import vueMkHeader from "@/assets/img/bg.jpg";
 import masterData from "@/assets/dataJson/masterData.json";
 import axios from "axios";
 import { notify } from "@kyvg/vue3-notification";
+import { v4 as uuidv4 } from "uuid";
 
 export default {
   components: {
@@ -61,7 +62,11 @@ export default {
       contractExpenses: "",
       id: "",
       months: "",
-      typeUser: ""
+      typeUser: "",
+      dateData: new Date(),
+      reportType: "",
+      userId: "",
+      reportId: "",
     };
   },
   created() {
@@ -72,7 +77,7 @@ export default {
   },
   watch: {
     selectedColor: function (newValue) {
-      // this.updateColor(newValue) 
+      // this.updateColor(newValue)
       console.log(newValue);
     },
   },
@@ -89,10 +94,10 @@ export default {
     },
     getMonths() {
       const d = new Date();
-      let m = this.optionMonth[d.getMonth()-1];
+      let m = this.optionMonth[d.getMonth() - 1];
       let y = d.getFullYear();
       this.months = m;
-      this.years = y
+      this.years = y;
     },
     async getExpenses() {
       try {
@@ -124,28 +129,60 @@ export default {
       return e.lastnumber - e.numberfirst || 0;
     },
 
+    Sumunit(lastnumber, numberfirst) {
+      let sum = lastnumber - numberfirst;
+      return numberfirst + sum || 0;
+    },
+
     async getRoomsByid(id) {
       this.id = id;
       try {
         await axios
           .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
+            this.getreportByid(id);
             this.userByid = res.data;
             this.rank = this.userByid.rank;
-            this.typeUser = this.userByid.typeUser
-            (this.firstName = this.userByid.firstName),
-              (this.lastName = this.userByid.firstName);
-            (this.Insurancecost = this.userByid.insurancecost),
-              (this.installmentsRooom = this.userByid.installmentsRooom),
-              (this.numberfirst = this.userByid.numberfirst),
-              (this.lastnumber = this.userByid.lastnumber),
-              (this.Waterbill = this.userByid.Waterbill),
-              (this.Electricitybill = this.userByid.Electricitybill),
-              (this.Central = this.userByid.Central),
-              (this.Costs = this.userByid.Costs),
-              (this.typeContract = this.userByid.typeContract),
-              (this.contractExpenses = this.userByid.contractExpenses),
-              (this.sumCost = this.userByid.sumCost);
+            this.userId = this.userByid.id;
+            this.typeUser = this.userByid.typeUser;
+            this.buildingType = this.userByid.buildingType;
+            this.firstName = this.userByid.firstName,
+            this.lastName = this.userByid.lastName;
+            this.Insurancecost = this.userByid.insurancecost,
+            this.installmentsRooom = this.userByid.installmentsRooom,
+            this.numberfirst = this.userByid.numberfirst,
+            this.lastnumber = this.userByid.lastnumber,
+            this.Waterbill = this.userByid.Waterbill,
+            this.Electricitybill = this.userByid.electricitybill,
+            this.Central = this.userByid.Central,
+            this.Costs = this.userByid.Costs,
+            this.typeContract = this.userByid.typeContract,
+            this.contractExpenses = this.userByid.contractExpenses,
+            this.sumCost = this.userByid.sumCost;
+            this.numberfirstNew = this.Sumunit(
+              this.userByid.lastnumber,
+              this.userByid.numberfirst
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async getreportByid(id) {
+      try {
+        await axios
+          .get(`http://localhost:3897/reportId/${id}`)
+          .then((res) => {
+            if(res.data !== "")this.reportId = res.data.id;
+            let reportData = "";
+            let data = res.data;
+            data == "" ? (reportData = "none") : (reportData = "havedata");
+            this.reportType = reportData;
+            this.reportId = res.data.id;
           })
           .catch((err) => {
             console.log(err);
@@ -160,17 +197,17 @@ export default {
         buildingType: this.buildingType,
         firstName: this.firstName,
         lastName: this.lastName,
-        numberfirst: this.numberfirst,
+        numberfirst: this.numberfirstNew,
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
-        electricitybill: this.Electricitybill,
+        electricitybill: this.electricitybill,
         central: this.Central,
         costs: this.Costs,
         typeContract: this.typeContract,
         contractExpenses: this.contractExpenses,
         sumCost: this.sumCost,
-        monthly:this.months,
-        years:this.years
+        monthly: this.months,
+        years: this.years,
       };
       await axios
         .put(`http://localhost:3897/users/${this.id}`, body, {
@@ -185,7 +222,11 @@ export default {
             title: "แก้ไขข้อมูลสำเร็จ",
             type: "success",
           });
-          this.saveToreport()
+          if (this.reportType == "havedata") {
+            this.editToreport();
+          } else if (this.reportType == "none") {
+            this.postToreport();
+          }
           this.getExpenses();
         })
         .catch((err) => {
@@ -193,32 +234,68 @@ export default {
         });
     },
 
-    async saveToreport() {
+    async postToreport() {
       let body = {
-        typeUser: "บช.ตชด.",
+        typeUser: "ตร.",
+        idreport: uuidv4(),
+        userId: this.userId,
+        affiliation: this.userByid.affiliation,
+        rank: this.userByid.rank,
+        idcard: this.userByid.idcard,
+        phone: this.userByid.phone,
+        status: this.userByid.status,
+        typeAffiliation: this.userByid.typeAffiliation,
+        typeRanks: this.userByid.typeRanks,
+        pickedBook: this.dateData.toISOString(),
         buildingType: this.buildingType,
-        firstName: this.firstName,
-        lastName: this.lastName,
-        numberfirst: this.numberfirst,
+        firstName: this.userByid.firstName,
+        lastName: this.userByid.lastName,
+        numberfirst: this.numberfirstNew,
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
-        electricitybill: this.Electricitybill,
+        electricitybill: this.electricitybill,
         central: this.Central,
         costs: this.Costs,
         typeContract: this.typeContract,
         contractExpenses: this.contractExpenses,
         sumCost: this.sumCost,
-        monthly:this.months,
-        years:this.years
+        monthly: this.months,
+        years: this.years,
       };
-      await axios
-        .put(`http://localhost:3897/report/${this.id}`, body, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        })
+      await axios.post(`http://localhost:3897/report/`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
     },
+
+    async editToreport() {
+      let body = {
+        typeUser: "ตร.",
+        userId: this.userByid.userId,
+        pickedBook: this.dateData.toISOString(),
+        buildingType: this.buildingType,
+        numberfirst: this.numberfirstNew,
+        lastnumber: this.lastnumber,
+        waterbill: this.Waterbill,
+        electricitybill: this.electricitybill,
+        central: this.Central,
+        costs: this.Costs,
+        typeContract: this.typeContract,
+        contractExpenses: this.contractExpenses,
+        sumCost: this.sumCost,
+        monthly: this.months,
+        years: this.years,
+      };
+      await axios.put(`http://localhost:3897/report/${this.reportId}`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
+    },
+
     Previous() {
       window.history.back();
     },
@@ -272,8 +349,8 @@ export default {
               <span>ย้อนกลับ</span>
             </a>
           </div>
-          <h4>บันทึกค่าใช้จ่ายรายเดือน ตร. &nbsp;  ประจำเดือน {{ months }} </h4>
-          <notifications class="pt-6 " position="top center" width="400px" />
+          <h4>บันทึกค่าใช้จ่ายรายเดือน ตร. &nbsp; ประจำเดือน {{ months }}</h4>
+          <notifications class="pt-6" position="top center" width="400px" />
 
           <!-- <div class="d-flex justify-content-end align-items-baseline pt-1">
               <label  style="margin-right:20px;">
@@ -390,14 +467,14 @@ export default {
               <div class="mb-3">
                 <label>เลขที่ห้อง</label>
                 <v-select :options="optionsRoom" v-model="selectedRoom"></v-select>
-              </div> --> 
+              </div> -->
               <div class="mb-3">
                 <label class="starRed">อาคารบ้านพัก</label>
                 <MaterialInput
                   :value="buildingType"
                   @input="(event) => (buildingType = event.target.value)"
                   class="input-group-static"
-                  type="number"
+                  type="text"
                   placeholder="อาคารบ้านพัก"
                 />
               </div>
@@ -519,8 +596,6 @@ export default {
         </div>
       </div>
     </div>
-
-
   </section>
 </template>
 <style>

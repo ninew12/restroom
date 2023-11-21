@@ -514,6 +514,12 @@ app.get('/report/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.json(reports.find(user => user.id === (req.params.id)))
 })
+
+app.get('/reportId/:userId', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(reports.find(report => report.userId === (req.params.userId)))
+})
+
 app.post('/report', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let id = uuidv4();
@@ -533,7 +539,9 @@ app.put('/report/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const updateIndex = reports.findIndex(user => user.id === (req.params.id))
     let dataOld = reports[updateIndex]
+    console.log(dataOld);
     let filterdata = reports.filter(user => user.id !== (req.params.id))
+    console.log(filterdata);
     const parsedData = dataOld;
     if (req.body.firstName) parsedData.firstName = req.body.firstName
     if (req.body.lastName) parsedData.lastName = req.body.lastName

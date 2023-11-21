@@ -167,21 +167,21 @@ export default {
         await axios
           .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
-            this.userByid = res.data;
-            this.rank = this.userByid.rank;
-            (this.firstName = this.userByid.firstName),
-              (this.lastName = this.userByid.firstName);
-            (this.Insurancecost = this.userByid.insurancecost),
-              (this.installmentsRooom = this.userByid.installmentsRooom),
-              (this.numberfirst = this.userByid.numberfirst),
-              (this.lastnumber = this.userByid.lastnumber),
-              (this.Waterbill = this.userByid.Waterbill),
-              (this.Electricitybill = this.userByid.Electricitybill),
-              (this.Central = this.userByid.Central),
-              (this.Costs = this.userByid.Costs),
-              (this.typeContract = this.userByid.typeContract),
-              (this.contractExpenses = this.userByid.contractExpenses),
-              (this.sumCost = this.userByid.sumCost);
+              this.userByid = res.data;
+              this.rank = this.userByid.rank;
+              this.firstName = this.userByid.firstName,
+              this.lastName = this.userByid.firstName;
+              this.Insurancecost = this.userByid.insurancecost,
+              this.installmentsRooom = this.userByid.installmentsRooom,
+              this.numberfirst = this.userByid.numberfirst,
+              this.lastnumber = this.userByid.lastnumber,
+              this.Waterbill = this.userByid.Waterbill,
+              this.Electricitybill = this.userByid.Electricitybill,
+              this.Central = this.userByid.Central,
+              this.Costs = this.userByid.Costs,
+              this.typeContract = this.userByid.typeContract,
+              this.contractExpenses = this.userByid.contractExpenses,
+              this.sumCost = this.userByid.sumCost;
           })
           .catch((err) => {
             console.log(err);
