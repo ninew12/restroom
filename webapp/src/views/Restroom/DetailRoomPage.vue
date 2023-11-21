@@ -34,6 +34,20 @@ export default {
         { label: "ธนาพร", value: "ธนาพร" },
         { label: "มนตรี", value: "มนตรี" },
       ],
+      optionMonth: [
+        "มกราคม",
+        "กุมภาพันธ์",
+        "มีนาคม",
+        "เมษายน",
+        "พฤษภาคม",
+        "มิถุนายน",
+        "กรกฎาคม",
+        "สิงหาคม",
+        "กันยายน",
+        "ตุลาคม",
+        "พฤศจิกายน",
+        "ธันวาคม",
+      ],
       selectedColor: "",
       firstName: "",
       lastName: "",
@@ -74,6 +88,7 @@ export default {
       this.getroomByid(this.id);
     }
     this.getAllinqueue();
+    this.getMonths()
   },
   watch: {
     selectedUser: function (newValue) {
@@ -131,6 +146,7 @@ export default {
           .then((res) => {
             let data = res.data;
             this.userByid = data;
+            console.log(data);
           })
           .catch((err) => {
             console.log(err);
@@ -148,6 +164,7 @@ export default {
           this.typeroom = this.data.typeRoom;
           this.numberRoom = this.data.numberRoom;
           this.roomId = this.data.id;
+          this.buildingName = this.data.name
           if (this.data.affiliation) this.Affiliation = this.data.affiliation;
           if (this.data.roomStatus == "return") this.statusRoom = "ผ่อนผัน";
           if (this.data.roomStatus == "special") this.statusRoom = "กรณีพิเศษ";
@@ -165,19 +182,24 @@ export default {
     convertDateTolocal(index) {
       if (index !== undefined && index !== "") {
         const date = new Date(index);
-        const formatter = new Intl.DateTimeFormat("en-US", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        });
-        const formattedDate = formatter.format(date);
-        return formattedDate;
+        var today = new Date();
+        var dd = String(date.getDate()).padStart(2, "0");
+        var mm = String(date.getMonth() + 1).padStart(2, "0");
+        var yyyy = date.getFullYear();
+        today = dd + "/" + mm + "/" + yyyy;
+        return today;
       } else {
         return "";
       }
     },
 
-    
+    getMonths() {
+      const d = new Date();
+      let m = this.optionMonth[d.getMonth()];
+      let y = d.getFullYear();
+      this.months = d.getMonth();
+      this.years = y
+    },
 
     countinsamaintenance(e) {
       let a = e.insurance / e.installments; // จำนวนเงินต่องวด
@@ -233,6 +255,7 @@ export default {
         dateApproved: this.dateApp.toISOString(),
         roomId: this.roomId,
         roomnumber: this.numberRoom,
+        buildingName: this.buildingName
       };
       await axios.put(`http://localhost:3897/users/${this.userId}`, body, {
         headers: {
@@ -245,15 +268,16 @@ export default {
     async submitForm2() {
       let body = {
         userId: this.userId,
-        firstName : this.data.firstName,
-        lastName :  this.data.lastName,
-        selectedAffiliation :  this.data.affiliation,
-        selectedRanks :  this.data.rank,
-        idcard :  this.data.idcard,
-        phone :  this.data.phone,
-        selectedDataObtion :  this.data.status,
-        typeAffiliation :  this.data.typeAffiliation,
-        typeRanks :  this.data.typeRanks,
+        firstName : this.userByid.firstName,
+        lastName :  this.userByid.lastName,
+        selectedAffiliation :  this.userByid.affiliation,
+        selectedRanks :  this.userByid.rank,
+        idcard :  this.userByid.idcard,
+        phone :  this.userByid.phone,
+        selectedDataObtion :  this.userByid.status,
+        typeAffiliation :  this.userByid.typeAffiliation,
+        typeRanks :  this.userByid.typeRanks,
+        typeUser: this.userByid.typeUser,
         queue: "inroom",
         contract: this.contract,
         checkintime: this.Checkintime,
@@ -264,6 +288,9 @@ export default {
         roomId: this.roomId,
         roomnumber: this.numberRoom,
         dateApproved: this.dateApp.toISOString(),
+        buildingName: this.buildingName,
+        monthly:this.months,
+        years:this.years
       };
       await axios.post(`http://localhost:3897/report`, body, {
         headers: {
@@ -304,6 +331,7 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        buildingName: this.buildingName,
         dateApproved: this.dateApp.toISOString(),
       };
 
@@ -355,6 +383,7 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        buildingName: this.buildingName,
         dateApproved: this.dateApp.toISOString(),
       };
 

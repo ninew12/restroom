@@ -166,13 +166,12 @@ export default {
     convertDateTolocal(index) {
       if (index !== undefined && index !== "") {
         const date = new Date(index);
-        const formatter = new Intl.DateTimeFormat("en-US", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        });
-        const formattedDate = formatter.format(date);
-        return formattedDate;
+        var today = new Date();
+        var dd = String(date.getDate()).padStart(2, "0");
+        var mm = String(date.getMonth() + 1).padStart(2, "0");
+        var yyyy = date.getFullYear();
+        today = dd + "/" + mm + "/" + yyyy;
+        return today;
       } else {
         return "";
       }

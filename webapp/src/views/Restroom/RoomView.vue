@@ -81,8 +81,8 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          filldata2 = t.sort((a, b) => a.floor - b.floor);
-          this.roomList = filldata2.reverse();
+          // filldata2 = t.sort((a, b) => b.floor - a.floor);
+          this.roomList = filldata2.sort((a, b) => b.floor - a.floor);
         } else {
           this.roomList = this.roomListOld;
         }
@@ -151,6 +151,7 @@ export default {
         axios.get(`http://localhost:3897/rooms/`).then((res) => {
           let broom = [];
           let datalist = [];
+          let arr = [];
           let buidingRoom = res.data;
           // let buidingRoomOld = buidingRoom;
           broom = buidingRoom.filter((e) => e.buildingId == id);
@@ -158,14 +159,16 @@ export default {
           const groupByCategory = Object.groupBy(broom, (product) => {
             return product.floor;
           });
-          this.roomList = Object.keys(groupByCategory).map((ele) => {
+          arr = Object.keys(groupByCategory).map((ele) => {
             return {
               floor: parseInt(ele),
               data: groupByCategory[ele].sort((a, b) => a.index - b.index),
             };
           });
-          datalist = this.roomList.sort((a, b) => a.floor - b.floor);
-          this.roomListOld = datalist.reverse();
+        //  console.log(arr.sort((a, b) => a.floor - b.floor));
+          datalist =  arr.sort((a, b) => b.floor - a.floor);
+          this.roomList = datalist
+          this.roomListOld = arr
         });
       } catch (e) {
         console.error(e);
@@ -184,7 +187,7 @@ export default {
               value: e.buildingId,
             };
           });
-          listData = this.listRoom.reverse();
+          listData = this.listRoom.sort((a, b) => b.floor - a.floor);
           let roomValue = this.buildingList[0];
           this.committee = roomValue.committee;
           // this.onChangeEventRoom("ทั้งหมด")
@@ -251,7 +254,8 @@ export default {
       let filldata = [];
       if (e == "free") {
         if (event.target.checked) {
-          filldata = this.roomList.map((ele, i) => {
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.roomStatus == "free");
           });
           let t = Object.keys(filldata).map((ele) => {
@@ -260,11 +264,12 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.reverse();
+          this.roomList = t.sort((a, b) => b.floor - a.floor);
         }
       } else if (e == "unavailable") {
         if (event.target.checked) {
-          filldata = this.roomList.map((ele, i) => {
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.roomStatus == "unavailable");
           });
           let t = Object.keys(filldata).map((ele) => {
@@ -273,11 +278,12 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.reverse();
+          this.roomList = t.sort((a, b) => b.floor - a.floor);
         }
       } else if (e == "waiting") {
         if (event.target.checked) {
-          filldata = this.roomList.map((ele, i) => {
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.roomconditions == "ชำรุด");
           });
           let t = Object.keys(filldata).map((ele) => {
@@ -286,24 +292,26 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.reverse();
+          this.roomList = t.sort((a, b) => b.floor - a.floor);
         }
       } else if (e == "return") {
         if (event.target.checked) {
-          filldata = this.roomList.map((ele, i) => {
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.roomStatus == "return");
           });
-          let t = Object.keys(filldata).map((ele) => {
+          let t = Object.keys(filldata).map((ele,i) => {
             return {
-              floor: parseInt(ele) + 1,
+              floor:  parseInt(ele) + 1,
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.reverse();
+          this.roomList = t.sort((a, b) => b.floor - a.floor);
         }
       } else if (e == "special") {
         if (event.target.checked) {
-          filldata = this.roomList.map((ele, i) => {
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.roomStatus == "special");
           });
           let t = Object.keys(filldata).map((ele) => {
@@ -312,7 +320,7 @@ export default {
               data: filldata[ele] || [],
             };
           });
-          this.roomList = t.reverse();
+          this.roomList = t.sort((a, b) => b.floor - a.floor);
         }
       } else {
         this.roomList = this.roomListOld;
@@ -556,12 +564,12 @@ export default {
                     class="form-check-input"
                     type="radio"
                     name="inlineRadioOptions2"
-                    id="Radio4"
+                    id="Radio47"
                     value="ผ่อนผัน"
                     @change="onChangeEvent('return', $event)"
                     :checked="statusreturn"
                   />
-                  <label class="form-check-label" for="Radio4 " style="color: #816613"
+                  <label class="form-check-label" for="Radio47" style="color: #816613"
                     >ผ่อนผัน</label
                   >
                 </div>
