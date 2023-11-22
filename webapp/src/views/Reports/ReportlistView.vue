@@ -318,7 +318,6 @@ export default {
     },
 
     async getReport(m, y) {
-      console.log(m,y);
       try {
         axios
           .get("http://localhost:3897/report")
@@ -354,8 +353,8 @@ export default {
             data2 = data4.filter(
               (el2) => el2.typeUser == "ตร." && parseInt(el2.monthly) == m && el2.years == y
             );
-            console.log(data);
-            console.log(data2);
+            // console.log(data);
+            // console.log(data2);
             this.mapData(data, data2);
             this.reportlistok = data5;
             this.reportListssn = data6;
@@ -1807,7 +1806,6 @@ export default {
         9: "๙",
         0: "๐",
       };
-      console.log(convertNumber);
       var str = convertNumber.toString();
       for (var val in array) {
         str = str.split(val).join(array[val]);

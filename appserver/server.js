@@ -126,6 +126,7 @@ app.put('/users/:id', (req, res) => {
     if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
     if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
     if (req.body.userId) parsedData.userId = req.body.userId
+    if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
     if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
