@@ -70,7 +70,8 @@ export default {
     selectedUser: function (newValue) {
       if (newValue !== null) this.getAllusersByid(newValue.value);
     },
-    seleteBuildingType2: function (newValue) {
+    selectedBuildingName: function (newValue) {
+      console.log(newValue.value);
       if (newValue !== null) this.buildingType2 = newValue.value;
     },
     seleteBuildingType: function (newValue) {
@@ -119,6 +120,7 @@ export default {
             this.olddatatypeQueue = this.queueList;
             this.queueList.sort((a, b) => a.pickedBook - b.pickedBook);
             this.no = this.queueList.length + 1;
+            console.log(this.queueList);
             this.queuefilter("ทั้งหมด");
           })
           .catch((err) => {
@@ -487,7 +489,7 @@ export default {
               </div>
               <div class="mb-3">
                 <label class="starRed">อาคาร2</label>
-                <v-select :options="obtionBuil" v-model="seleteBuildingType2"></v-select>
+                <v-select :options="obtionBuil" v-model="selectedBuildingName"></v-select>
               </div>
               <div class="mb-3">
                 <label style="margin-left: -5px">กรอกเลขลงรับหนังสือ</label>

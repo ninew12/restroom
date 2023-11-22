@@ -130,6 +130,7 @@ app.put('/users/:id', (req, res) => {
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
+    if (req.body.leniency) parsedData.leniency = req.body.leniency
 
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -141,17 +142,19 @@ app.put('/users/:id', (req, res) => {
     });
     res.send(`Update user id: '${req.params.id}' completed.`)
 })
+
 app.delete('/users/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const deletedIndex = users.filter(user => user.id !== (req.params.id))
-    fs.writeFileSync('./users.json', JSON.stringify(deletedIndex, null, 2), (err) => {
+    const parsedData = deletedIndex;
+    fs.writeFileSync('./users.json', JSON.stringify(parsedData, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
         }
         console.log("Updated file successfully");
     });
-    res.send(`Delete user completed.`)
+    res.json(users)
 })
 
 app.get('/buildings', (req, res) => {
@@ -300,6 +303,7 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
+    if (req.body.leniency) parsedData.leniency = req.body.leniency
     
     filterdata.push(parsedData)
     fs.writeFileSync('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -365,6 +369,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
+    if (req.body.leniency) parsedData.leniency = req.body.leniency
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -435,6 +440,7 @@ app.put('/history/:id', (req, res) => {
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
+    if (req.body.leniency) parsedData.leniency = req.body.leniency
     filterdata.push(parsedData)
     fs.writeFileSync('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -573,6 +579,8 @@ app.put('/report/:id', (req, res) => {
     if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
+    if (req.body.leniency) parsedData.leniency = req.body.leniency
+    
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {

@@ -324,7 +324,7 @@ export default {
           this.roomList = t.sort((a, b) => b.floor - a.floor);
         }
       } else {
-        this.roomList = this.roomListOld;
+        this.roomList = this.roomListOld.reverse();
       }
     },
     Previous() {

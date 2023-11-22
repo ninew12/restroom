@@ -50,6 +50,7 @@ export default {
       typeUserBytype: "",
       typeUserByrankr: "",
       queue: "",
+      roomId: ''
     };
   },
   created() {
@@ -114,11 +115,41 @@ export default {
           this.typeAffiliation = data.typeAffiliation
           this.queue = data.queue
           this.typeRanks = data.typeRanks
+          this.roomId = data.roomId
           this.modalShow = true;
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+
+    getAlluser() {
+      try {
+         axios
+          .get("http://localhost:3897/users")
+          .then((res) => {
+            this.dataUser = res.data;
+            this.olddata = res.data;
+            this.typeUserfilter("ทั้งหมด");
+            // this.rankrfilter("ประทวน");
+            this.searchName = ""
+            this.firstName = ""
+            this.lastName = ""
+            this.typeAffiliation = ""
+            this.selectedRanks = ""
+            this.idcard = ""
+            this.phone = ""
+            this.selectedDataObtion = "โสด"
+            this.typeAffiliation = ""
+            this.typeRanks = ""
+            this.typeUser = "ตร."
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
     },
 
     async editForm() {
@@ -155,11 +186,43 @@ export default {
             type: "success",
           });
           this.getAlluser();
+          this.updateRoom()
         })
         .catch((err) => {
           console.log(err);
         });
     },
+
+    async  updateRoom() {
+      let typeA;
+      this.typeAffiliation.label == "ลูกจ้าง"
+        ? (typeA = "ลูกจ้าง")
+        : this.typeAffiliation.label == "บช.ตชด."
+        ? (typeA = "บช.ตชด.")
+        : (typeA = this.selectedAffiliation.label);
+      let body = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        affiliation: typeA,
+        rank: this.selectedRanks.value,
+        idcard: this.idcard,
+        phone: this.phone,
+        status: this.selectedDataObtion.value || "โสด",
+        typeAffiliation: this.typeAffiliation.value,
+        typeRanks: this.typeRanks.value,
+        queue: this.queue,
+      };
+
+      axios
+        .put(`http://localhost:3897/rooms/${this.roomId}`, body, {
+          headers: {
+            // remove headers
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        })
+    },
+
     async submitForm() {
       let typeA;
       let maintenance;
@@ -208,40 +271,31 @@ export default {
     },
 
     submitDelete() {
-      axios
+       axios
         .delete(`http://localhost:3897/users/${this.userId}`)
         .then((res) => {
-          this.getAlluser();
+          setTimeout(() => {
+            this.getAlluser2();
+          }, 1000);
+         
           notify({
             title: "ลบข้อมูลสำเร็จ",
             type: "success",
           });
+          
         })
         .catch((err) => {
           console.log(err);
         });
     },
 
-    async getAlluser() {
+    getAlluser2() {
       try {
-        await axios
+        axios
           .get("http://localhost:3897/users")
           .then((res) => {
             this.dataUser = res.data;
             this.olddata = res.data;
-            this.typeUserfilter("ทั้งหมด");
-            // this.rankrfilter("ประทวน");
-            this.searchName = ""
-            this.firstName = ""
-            this.lastName = ""
-            this.typeAffiliation = ""
-            this.selectedRanks = ""
-            this.idcard = ""
-            this.phone = ""
-            this.selectedDataObtion = "โสด"
-            this.typeAffiliation = ""
-            this.typeRanks = ""
-            this.typeUser = "ตร."
           })
           .catch((err) => {
             console.log(err);
@@ -250,6 +304,7 @@ export default {
         console.error(error);
       }
     },
+
 
     Previous() {
       window.history.back();

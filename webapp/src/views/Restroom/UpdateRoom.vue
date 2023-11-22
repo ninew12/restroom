@@ -129,7 +129,9 @@ export default {
             this.userId = this.roomData.userId;
             this.selectedRoomtype = this.roomData.typeRoom;
             this.firstName = this.roomData.firstName,
-             this.lastName = this.roomData.lastName
+            this.lastName = this.roomData.lastName
+            this.leniency = this.roomData.leniency
+             console.log(this.roomData);
             this.getHistoryRoom(this.roomData.id);
           })
           .catch((err) => {
