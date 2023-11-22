@@ -336,9 +336,10 @@ export default {
               variant="gradient"
               color="success"
               @click="genInsurance()"
-              :disabled="openBtn"
+              
               >คำนวณค่าใช้จ่าย</MaterialButton
             >
+            <!-- :disabled="openBtn" -->
           </div>
 
           <div class="text-center pt-4 table-responsive">

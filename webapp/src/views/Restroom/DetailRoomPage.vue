@@ -79,6 +79,8 @@ export default {
       dateApp: new Date(),
       numberRoom: "",
       roomId: "",
+      maintenanceFix: '',
+      userByid: ''
     };
   },
   created() {
@@ -92,6 +94,7 @@ export default {
   },
   watch: {
     selectedUser: function (newValue) {
+      if(newValue !== null)
       this.getAllusersByid(newValue.value);
     },
   },
@@ -146,6 +149,8 @@ export default {
           .then((res) => {
             let data = res.data;
             this.userByid = data;
+           if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
+           if (data.typeRanks == "สัญญาบัตร") this.maintenanceFix = "100";
             console.log(data);
           })
           .catch((err) => {
@@ -210,9 +215,7 @@ export default {
 
     async submitForm(index) {
       let body = {
-        ...this.userByid,
         queue: "inroom",
-        // firstName: this.firstName,
         Affiliation: this.Affiliation,
         contract: this.contract,
         checkintime: this.Checkintime,
@@ -247,8 +250,14 @@ export default {
     },
 
     async submitFormUser() {
+      let typeA;
+      this.typeAffiliation.label == "ลูกจ้าง"
+        ? (typeA = "ลูกจ้าง")
+        : this.typeAffiliation.label == "บช.ตชด."
+        ? (typeA = "บช.ตชด.")
+        : (typeA = this.selectedAffiliation.label);
       let body = {
-        maintenance: this.Maintenance,
+        maintenance: this.maintenanceFix,
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
@@ -266,23 +275,24 @@ export default {
     },
 
     async submitForm2() {
+      let typeA;
       let body = {
         userId: this.userId,
-        firstName : this.userByid.firstName,
-        lastName :  this.userByid.lastName,
-        selectedAffiliation :  this.userByid.affiliation,
-        selectedRanks :  this.userByid.rank,
-        idcard :  this.userByid.idcard,
-        phone :  this.userByid.phone,
-        rank: this.userByid.rank,
-        selectedDataObtion :  this.userByid.status,
-        typeAffiliation :  this.userByid.typeAffiliation,
-        typeRanks :  this.userByid.typeRanks,
-        typeUser: this.userByid.typeUser,
+        // firstName : this.userByid.firstName,
+        // lastName :  this.userByid.lastName,
+        // selectedAffiliation :  this.userByid.affiliation,
+        // selectedRanks :  this.userByid.rank,
+        // idcard :  this.userByid.idcard,
+        // phone :  this.userByid.phone,
+        // rank: this.userByid.rank,
+        // selectedDataObtion :  this.userByid.status,
+        // typeAffiliation :  this.userByid.typeAffiliation,
+        // typeRanks :  this.userByid.typeRanks,
+        // typeUser: this.userByid.typeUser,
         queue: "inroom",
         contract: this.contract,
         checkintime: this.Checkintime,
-        maintenance: this.Maintenance,
+        maintenance: this.maintenanceFix,
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
@@ -293,6 +303,8 @@ export default {
         monthly:this.months,
         years:this.years
       };
+      let employee = { ...body,  ...this.userByid };
+      
       await axios.post(`http://localhost:3897/report`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -307,7 +319,7 @@ export default {
         queue: "inroom",
         contract: this.contract,
         checkintime: this.Checkintime,
-        maintenance: this.Maintenance,
+        maintenance: this.maintenanceFix,
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
@@ -321,6 +333,9 @@ export default {
       });
     },
     async submitFormRoom() {
+      let maintenance;
+      if (this.typeRanks == "ประทวน") maintenance = "60";
+      if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
       let body = {
         userId: this.userId,
         firstName : this.userByid.firstName,
@@ -338,7 +353,7 @@ export default {
         roomStatus: "unavailable",
         contract: this.contract,
         checkintime: this.Checkintime,
-        maintenance: this.Maintenance,
+        maintenance: this.maintenanceFix,
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
@@ -368,6 +383,7 @@ export default {
 
     async submitRoomScapia() {
       let typeA;
+      let maintenance;
       this.typeAffiliation.label == "ลูกจ้าง"
         ? (typeA = "ลูกจ้าง")
         : this.typeAffiliation.label == "บช.ตชด."
@@ -390,7 +406,7 @@ export default {
         roomStatus: "special",
         contract: this.contract,
         checkintime: this.Checkintime,
-        maintenance: this.Maintenance,
+        maintenance: this.maintenanceFix,
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
@@ -574,7 +590,7 @@ export default {
                               color="success"
                               data-bs-toggle="modal"
                               data-bs-target="#contractBackdrop"
-                              @click="getAllusersByid(item.id)"
+                              @click="getAllusersByid(item?.id)"
                               >เพิ่มผู้พักอาศัยเข้าห้องพัก</MaterialButton
                             >
                           </td>
@@ -955,7 +971,7 @@ export default {
             <MaterialButton
               variant="gradient"
               color="success"
-              @click="submitForm('normal'); getAllusersByid(item.id)"
+              @click="submitForm('normal'); getAllusersByid(item?.id)"
               data-bs-dismiss="modal"
               html-type="submit"
               >บันทึก</MaterialButton

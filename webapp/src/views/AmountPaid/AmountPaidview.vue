@@ -116,7 +116,6 @@ export default {
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
-            console.log(data);
             this.expensesList = data;
           })
           .catch((err) => {

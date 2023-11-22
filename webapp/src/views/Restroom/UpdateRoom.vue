@@ -143,6 +143,7 @@ export default {
         await axios
           .get(`http://localhost:3897/history/${id}`)
           .then((res) => {
+            console.log(res);
             if (res.data.customerOld == "คืนห้องพักแล้ว") {
               this.historyOld = res.data;
               this.historyOld["dateApproved"] = this.convertDateTolocal(
@@ -261,6 +262,7 @@ export default {
             type: "success",
           });
           this.updatedataUser();
+          this.updatedataHistory()
           this.getRooms(this.id);
           this.$router.push({ path: `/room/` });
         })
@@ -296,7 +298,6 @@ export default {
 
     updatedataHistory() {
       let body = {
-        queue: "none",
         deposit: this.deposit,
         roomKey: this.roomKey,
         houseRegistration: this.houseRegistration,
@@ -308,7 +309,7 @@ export default {
         dateReturn: this.dateApp.toISOString(),
         customerOld: "คืนห้องพักแล้ว",
       };
-      axios.put(`http://localhost:3897/users/${this.userId}`, body, {
+      axios.put(`http://localhost:3897/history/${this.id}`, body, {
         headers: {
           // remove headers
           "Access-Control-Allow-Origin": "*",
@@ -316,6 +317,8 @@ export default {
         },
       });
     },
+
+    
     Previous() {
       window.history.back();
     },

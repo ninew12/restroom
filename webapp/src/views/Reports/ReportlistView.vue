@@ -46,14 +46,84 @@ export default {
         { label: "พฤศจิกายน", value: "11" },
         { label: "ธันวาคม", value: "12" },
       ],
-      AffiliationList: [
+      AffiliationListTD: [
         {
-          name: "บช.ตชด.",
-          fullname: "บช.ตชด.",
+          label: "บช.ตชด.",
+          value: "บช.ตชด.",
         },
         {
-          name: "บก.อก.",
-          fullname: "บก.อก.บช.ตชด.",
+          label: "บก.อก.",
+          value: "บก.อก.บช.ตชด.",
+        },
+        {
+          label: "บก.สนน.",
+          value: "บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.1",
+          value: "ฝอ.1 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.2",
+          value: "ฝอ.2 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.3",
+          value: "ฝอ.3 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.4",
+          value: "ฝอ.4 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.5",
+          value: "ฝอ.5 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.6",
+          value: "ฝอ.6 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.7",
+          value: "ฝอ.7 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.8",
+          value: "ฝอ.8 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.1",
+          value: "ฝสสน.1 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.2",
+          value: "ฝสสน.2 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.3",
+          value: "ฝสสน.3 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.4",
+          value: "ฝสสน.4 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.5",
+          value: "ฝสสน.5 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ลูกจ้าง",
+          value: "ลูกจ้าง",
+        },
+      ],
+      AffiliationListCTD: [
+        {
+          label: "บช.ตชด.",
+          value: "บช.ตชด.",
+        },
+        {
+          label: "บก.อก.",
+          value: "บก.อก.บช.ตชด.",
         },
         {
           label: "บก.สนน.",
@@ -149,6 +219,9 @@ export default {
       reportType: "บัญชีหน้างบ",
       reportlistCTD: [],
       reportListTD: [],
+      reportlistok: [],
+      reportListssn: [],
+      reportlistlj: [],
       jsonData: [],
       jsonFiled: [],
       dateData: new Date(),
@@ -157,6 +230,14 @@ export default {
       tableId: "",
       typeReport: "ตร.",
       monthYear: "",
+      datalistCTD: [],
+      datalistTD: [],
+      sumreportlistAll: [],
+      sumreportlistAll2: [],
+      sumreportlistAll3: [],
+      maintenanceAllcount: 0,
+      insuranceAllcount: 0,
+      sumAllcount: 0,
     };
   },
   created() {
@@ -236,33 +317,523 @@ export default {
       this.tableId = id;
     },
 
-    getReport(m, y) {
+    async getReport(m, y) {
       try {
         axios
           .get("http://localhost:3897/report")
           .then((res) => {
             let data = [];
             let data2 = [];
-
+            let data5 = [];
+            let data6 = [];
+            let data7 = [];
             let data3 = res.data;
             let data4 = res.data;
             this.reportList = res.data;
+
+            data5 = data3.filter(
+              (el) =>
+                el.typeAffiliation == "บช.ตชด." ||
+                (el.typeAffiliation == "บก.อก." && el.monthly == m && el.years == y)
+            );
+            data6 = data3.filter(
+              (el) => el.typeAffiliation == "ลูกจ้าง" && el.monthly == m && el.years == y
+            );
+            data7 = data3.filter(
+              (el) =>
+                el.typeAffiliation !== "ลูกจ้าง" &&
+                el.typeAffiliation !== "บช.ตชด." &&
+                el.typeAffiliation !== "บก.อก." &&
+                el.monthly == m &&
+                el.years == y
+            );
             data = data3.filter(
               (el) => el.typeUser == "บช.ตชด." && el.monthly == m && el.years == y
             );
             data2 = data4.filter(
               (el) => el.typeUser == "ตร." && el.monthly == m && el.years == y
             );
-            console.log(data);
             this.mapData(data, data2);
-            // this.reportlistTD = data2;
-            // console.log(this.reportlistCTD);
+            this.reportlistok = data5;
+            this.reportListssn = data6;
+            this.reportlistlj = data7;
+            this.sumreportlistAll = data5.map((x) => {
+              return {
+                ...x,
+                type: "อำนวยการ",
+                sumdataMaintenance: this.MaintenanceSumAll(data5),
+                sumdataInsurance: this.InsuranceSumAll(data5),
+                sumCostdataInsurance: this.SumCostSumInsuranceAll(data5),
+              };
+            });
+            this.sumreportlistAll2 = data6.map((x) => {
+              return {
+                ...x,
+                type: "สนับสนุน",
+                sumdataMaintenance: this.MaintenanceSumAll(data6),
+                sumdataInsurance: this.InsuranceSumAll(data6),
+                sumCostdataInsurance: this.SumCostSumInsuranceAll(data6),
+              };
+            });
+            this.sumreportlistAll3 = data7.map((x) => {
+              return {
+                ...x,
+                type: "ลูกจ้าง",
+                sumdataMaintenance: this.MaintenanceSumAll(data7),
+                sumdataInsurance: this.InsuranceSumAll(data7),
+                sumCostdataInsurance: this.SumCostSumInsuranceAll(data7),
+              };
+            });
+            (this.maintenanceAllcount =
+              this.sumreportlistAll[0].sumdataMaintenance ||
+              0 + this.sumreportlistAll2[0].sumdataMaintenance ||
+              0 + this.sumreportlistAll3[0].sumdataMaintenance ||
+              0),
+              (this.insuranceAllcount =
+                this.sumreportlistAll[0].sumdataInsurance ||
+                0 + this.sumreportlistAll2[0].sumdataInsurance ||
+                0 + this.sumreportlistAll3[0].sumdataInsurance ||
+                0),
+              (this.sumAllcount =
+                this.sumreportlistAll[0].sumCostdataInsurance ||
+                0 + this.sumreportlistAll2[0].sumCostdataInsurance ||
+                0 + this.sumreportlistAll3[0].sumCostdataInsurance ||
+                0);
           })
           .catch((err) => {
             console.log(err);
           });
       } catch (error) {
         console.error(error);
+      }
+    },
+
+    async filterAffiliation() {
+      let listTD = this.datalistTD;
+      let data,
+        data2,
+        data3,
+        data4,
+        data5,
+        data6,
+        data7,
+        data8,
+        data9,
+        data10,
+        data11,
+        data12,
+        data13,
+        data14,
+        data15,
+        data16,
+        data17 = [];
+      if (this.datalistTD.length > 0) {
+        data = listTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
+        let sumCostdataInsuranceAll = this.SumCostSumInsuranceAll(data);
+        let sumdataInsuranceAll = this.InsuranceSumAll(data);
+        let sumdataMaintenanceSumAll = this.MaintenanceSumAll(data);
+        data2 = listTD.filter((el) => el.typeAffiliation == "บก.อก.");
+        let sumCostdata2InsuranceAll = this.SumCostSumInsuranceAll(data2);
+        let sumdata2InsuranceAll = this.InsuranceSumAll(data2);
+        let sumdata2MaintenanceSumAll = this.MaintenanceSumAll(data2);
+        data3 = listTD.filter((el) => el.typeAffiliation == "บก.สนน.");
+        let sumCostdata3InsuranceAll = this.SumCostSumInsuranceAll(data3);
+        let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
+        let sumdata3MaintenanceSumAll = this.MaintenanceSumAll(data3);
+        data4 = listTD.filter((el) => el.typeAffiliation == "ฝอ.1");
+        let sumCostdata4InsuranceAll = this.SumCostSumInsuranceAll(data4);
+        let sumdata4InsuranceAll = this.InsuranceSumAll(data4);
+        let sumdata4MaintenanceSumAll = this.MaintenanceSumAll(data4);
+        data5 = listTD.filter((el) => el.typeAffiliation == "ฝอ.2");
+        let sumCostdata5InsuranceAll = this.SumCostSumInsuranceAll(data5);
+        let sumdata5InsuranceAll = this.InsuranceSumAll(data5);
+        let sumdata5MaintenanceSumAll = this.MaintenanceSumAll(data5);
+        data6 = listTD.filter((el) => el.typeAffiliation == "ฝอ.3");
+        let sumCostdata6InsuranceAll = this.SumCostSumInsuranceAll(data6);
+        let sumdata6InsuranceAll = this.InsuranceSumAll(data6);
+        let sumdata6MaintenanceSumAll = this.MaintenanceSumAll(data6);
+        data7 = listTD.filter((el) => el.typeAffiliation == "ฝอ.4");
+        let sumCostdata7InsuranceAll = this.SumCostSumInsuranceAll(data7);
+        let sumdata7InsuranceAll = this.InsuranceSumAll(data7);
+        let sumdata7MaintenanceSumAll = this.MaintenanceSumAll(data7);
+        data8 = listTD.filter((el) => el.typeAffiliation == "ฝอ.5");
+        let sumCostdata8InsuranceAll = this.SumCostSumInsuranceAll(data8);
+        let sumdata8InsuranceAll = this.InsuranceSumAll(data8);
+        let sumdata8MaintenanceSumAll = this.MaintenanceSumAll(data8);
+        data9 = listTD.filter((el) => el.typeAffiliation == "ฝอ.6");
+        let sumCostdata9InsuranceAll = this.SumCostSumInsuranceAll(data9);
+        let sumdata9InsuranceAll = this.InsuranceSumAll(data9);
+        let sumdata9MaintenanceSumAll = this.MaintenanceSumAll(data9);
+        data10 = listTD.filter((el) => el.typeAffiliation == "ฝอ.7");
+        let sumCostdata10InsuranceAll = this.SumCostSumInsuranceAll(data10);
+        let sumdata10InsuranceAll = this.InsuranceSumAll(data10);
+        let sumdata10MaintenanceSumAll = this.MaintenanceSumAll(data10);
+        data11 = listTD.filter((el) => el.typeAffiliation == "ฝอ.8");
+        let sumCostdata11InsuranceAll = this.SumCostSumInsuranceAll(data11);
+        let sumdata11InsuranceAll = this.InsuranceSumAll(data11);
+        let sumdata11MaintenanceSumAll = this.MaintenanceSumAll(data11);
+        data12 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.1");
+        let sumCostdata12InsuranceAll = this.SumCostSumInsuranceAll(data12);
+        let sumdata12InsuranceAll = this.InsuranceSumAll(data12);
+        let sumdata12MaintenanceSumAll = this.MaintenanceSumAll(data12);
+        data13 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.2");
+        let sumCostdata13InsuranceAll = this.SumCostSumInsuranceAll(data13);
+        let sumdata13InsuranceAll = this.InsuranceSumAll(data13);
+        let sumdata13MaintenanceSumAll = this.MaintenanceSumAll(data13);
+        data14 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.3");
+        let sumCostdata14InsuranceAll = this.SumCostSumInsuranceAll(data14);
+        let sumdata14InsuranceAll = this.InsuranceSumAll(data14);
+        let sumdata14MaintenanceSumAll = this.MaintenanceSumAll(data14);
+        data15 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.4");
+        let sumCostdata15InsuranceAll = this.SumCostSumInsuranceAll(data15);
+        let sumdata15InsuranceAll = this.InsuranceSumAll(data15);
+        let sumdata15MaintenanceSumAll = this.MaintenanceSumAll(data15);
+        data16 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.5");
+        let sumCostdata16InsuranceAll = this.SumCostSumInsuranceAll(data16);
+        let sumdata16InsuranceAll = this.InsuranceSumAll(data16);
+        let sumdata16MaintenanceSumAll = this.MaintenanceSumAll(data16);
+        data17 = listTD.filter((el) => el.typeAffiliation == "ลูกจ้าง");
+        let sumCostdata17InsuranceAll = this.SumCostSumInsuranceAll(data17);
+        let sumdata17InsuranceAll = this.InsuranceSumAll(data17);
+        let sumdata17MaintenanceSumAll = this.MaintenanceSumAll(data17);
+
+        await this.AffiliationlistTD.map((el) => {
+          if (el.label == "บช.ตชด.") {
+            el["sumdataMaintenance"] = sumdataMaintenanceSumAll;
+            el["sumdataInsurance"] = sumdataInsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdataInsuranceAll;
+          }
+          if (el.label == "บก.อก.") {
+            el["sumdataMaintenance"] = sumdata2MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata2InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata2InsuranceAll;
+          }
+          if (el.label == "บก.สนน.") {
+            el["sumdataMaintenance"] = sumdata3MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata3InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
+          }
+          if (el.label == "ฝอ.1") {
+            el["sumdataMaintenance"] = sumdata4MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata4InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata4InsuranceAll;
+          }
+          if (el.label == "ฝอ.2") {
+            el["sumdataMaintenance"] = sumdata5MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata5InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata5InsuranceAll;
+          }
+          if (el.label == "ฝอ.3") {
+            el["sumdataMaintenance"] = sumdata6MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata6InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata6InsuranceAll;
+          }
+          if (el.label == "ฝอ.4") {
+            el["sumdataMaintenance"] = sumdata7MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata7InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata7InsuranceAll;
+          }
+          if (el.label == "ฝอ.5") {
+            el["sumdataMaintenance"] = sumdata8MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata8InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata8InsuranceAll;
+          }
+          if (el.label == "ฝอ.6") {
+            el["sumdataMaintenance"] = sumdata9MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata9InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata9InsuranceAll;
+          }
+          if (el.label == "ฝอ.7") {
+            el["sumdataMaintenance"] = sumdata10MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata10InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata10InsuranceAll;
+          }
+          if (el.label == "ฝอ.8") {
+            el["sumdataMaintenance"] = sumdata11MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata11InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata11InsuranceAll;
+          }
+          if (el.label == "ฝสสน.1") {
+            el["sumdataMaintenance"] = sumdata12MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata12InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata12InsuranceAll;
+          }
+          if (el.label == "ฝสสน.2") {
+            el["sumdataMaintenance"] = sumdata13MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata13InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata13InsuranceAll;
+          }
+          if (el.label == "ฝสสน.3") {
+            el["sumdataMaintenance"] = sumdata14MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata14InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata14InsuranceAll;
+          }
+          if (el.label == "ฝสสน.4") {
+            el["sumdataMaintenance"] = sumdata15MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata15InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata15InsuranceAll;
+          }
+          if (el.label == "ฝสสน.5") {
+            el["sumdataMaintenance"] = sumdata16MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata16InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata16InsuranceAll;
+          }
+          if (el.label == "ลูกจ้าง") {
+            el["sumdataMaintenance"] = sumdata17MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata17InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata17InsuranceAll;
+          }
+          return el;
+        });
+        await this.AffiliationlistTD.map((ele) => {
+          ele["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationlistTD);
+          ele["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationlistTD);
+          ele["countCostSumAll"] = this.countCostSumAll(this.AffiliationlistTD);
+          return ele;
+        });
+      }
+    },
+
+    MaintenanceSumAll(items) {
+      return items.reduce((MaintenanceSumAll, ele) => {
+        if (ele.maintenance !== undefined)
+          return MaintenanceSumAll + parseInt(ele.maintenance);
+        else return MaintenanceSumAll;
+      }, 0);
+    },
+
+    countCostSumList(items) {
+      return items.reduce((countCostSumAll, ele) => {
+        if (ele.sumcostMN !== undefined) return countCostSumAll + parseInt(ele.sumcostMN);
+        else return countCostSumAll;
+      }, 0);
+    },
+
+    InsuranceSumAll(items) {
+      return items.reduce((InsuranceSumAll, ele) => {
+        if (ele.insurance !== undefined) return InsuranceSumAll + parseInt(ele.insurance);
+        else return InsuranceSumAll;
+      }, 0);
+    },
+    SumCostSumInsuranceAll(items) {
+      return items.reduce((sumCostSumInsuranceAll, ele) => {
+        if (ele.insurance !== undefined)
+          return (
+            sumCostSumInsuranceAll +
+            (parseInt(ele.insurance) + parseInt(ele.maintenance || 0))
+          );
+        else return sumCostSumInsuranceAll;
+      }, 0);
+    },
+
+    countMaintenanceAll(items) {
+      return items.reduce((sumCostSumInsuranceAll, ele) => {
+        if (ele.sumdataMaintenance !== undefined)
+          return sumCostSumInsuranceAll + parseInt(ele.sumdataMaintenance);
+        else return sumCostSumInsuranceAll;
+      }, 0);
+    },
+    countInsuranceAll(items) {
+      return items.reduce((countInsuranceAll, ele) => {
+        if (ele.sumdataInsurance !== undefined)
+          return countInsuranceAll + parseInt(ele.sumdataInsurance);
+        else return countInsuranceAll;
+      }, 0);
+    },
+    countCostSumAll(items) {
+      return items.reduce((countCostSumAll, ele) => {
+        if (ele.sumCostdataInsurance !== undefined)
+          return countCostSumAll + parseInt(ele.sumCostdataInsurance);
+        else return countCostSumAll;
+      }, 0);
+    },
+
+    async filterAffiliation2() {
+      let listCTD = this.datalistCTD;
+      let data,
+        data2,
+        data3,
+        data4,
+        data5,
+        data6,
+        data7,
+        data8,
+        data9,
+        data10,
+        data11,
+        data12,
+        data13,
+        data14,
+        data15,
+        data16,
+        data17 = [];
+      if (this.datalistCTD.length > 0) {
+        data = listCTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
+        let sumCostdataInsuranceAll = this.SumCostSumInsuranceAll(data);
+        let sumdataInsuranceAll = this.InsuranceSumAll(data);
+        let sumdataMaintenanceSumAll = this.MaintenanceSumAll(data);
+        data2 = listCTD.filter((el) => el.typeAffiliation == "บก.อก.");
+        let sumCostdata2InsuranceAll = this.SumCostSumInsuranceAll(data2);
+        let sumdata2InsuranceAll = this.InsuranceSumAll(data2);
+        let sumdata2MaintenanceSumAll = this.MaintenanceSumAll(data2);
+        data3 = listCTD.filter((el) => el.typeAffiliation == "บก.สนน.");
+        let sumCostdata3InsuranceAll = this.SumCostSumInsuranceAll(data3);
+        let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
+        let sumdata3MaintenanceSumAll = this.MaintenanceSumAll(data3);
+        data4 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.1");
+        let sumCostdata4InsuranceAll = this.SumCostSumInsuranceAll(data4);
+        let sumdata4InsuranceAll = this.InsuranceSumAll(data4);
+        let sumdata4MaintenanceSumAll = this.MaintenanceSumAll(data4);
+        data5 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.2");
+        let sumCostdata5InsuranceAll = this.SumCostSumInsuranceAll(data5);
+        let sumdata5InsuranceAll = this.InsuranceSumAll(data5);
+        let sumdata5MaintenanceSumAll = this.MaintenanceSumAll(data5);
+        data6 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.3");
+        let sumCostdata6InsuranceAll = this.SumCostSumInsuranceAll(data6);
+        let sumdata6InsuranceAll = this.InsuranceSumAll(data6);
+        let sumdata6MaintenanceSumAll = this.MaintenanceSumAll(data6);
+        data7 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.4");
+        let sumCostdata7InsuranceAll = this.SumCostSumInsuranceAll(data7);
+        let sumdata7InsuranceAll = this.InsuranceSumAll(data7);
+        let sumdata7MaintenanceSumAll = this.MaintenanceSumAll(data7);
+        data8 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.5");
+        let sumCostdata8InsuranceAll = this.SumCostSumInsuranceAll(data8);
+        let sumdata8InsuranceAll = this.InsuranceSumAll(data8);
+        let sumdata8MaintenanceSumAll = this.MaintenanceSumAll(data8);
+        data9 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.6");
+        let sumCostdata9InsuranceAll = this.SumCostSumInsuranceAll(data9);
+        let sumdata9InsuranceAll = this.InsuranceSumAll(data9);
+        let sumdata9MaintenanceSumAll = this.MaintenanceSumAll(data9);
+        data10 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.7");
+        let sumCostdata10InsuranceAll = this.SumCostSumInsuranceAll(data10);
+        let sumdata10InsuranceAll = this.InsuranceSumAll(data10);
+        let sumdata10MaintenanceSumAll = this.MaintenanceSumAll(data10);
+        data11 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.8");
+        let sumCostdata11InsuranceAll = this.SumCostSumInsuranceAll(data11);
+        let sumdata11InsuranceAll = this.InsuranceSumAll(data11);
+        let sumdata11MaintenanceSumAll = this.MaintenanceSumAll(data11);
+        data12 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.1");
+        let sumCostdata12InsuranceAll = this.SumCostSumInsuranceAll(data12);
+        let sumdata12InsuranceAll = this.InsuranceSumAll(data12);
+        let sumdata12MaintenanceSumAll = this.MaintenanceSumAll(data12);
+        data13 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.2");
+        let sumCostdata13InsuranceAll = this.SumCostSumInsuranceAll(data13);
+        let sumdata13InsuranceAll = this.InsuranceSumAll(data13);
+        let sumdata13MaintenanceSumAll = this.MaintenanceSumAll(data13);
+        data14 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.3");
+        let sumCostdata14InsuranceAll = this.SumCostSumInsuranceAll(data14);
+        let sumdata14InsuranceAll = this.InsuranceSumAll(data14);
+        let sumdata14MaintenanceSumAll = this.MaintenanceSumAll(data14);
+        data15 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.4");
+        let sumCostdata15InsuranceAll = this.SumCostSumInsuranceAll(data15);
+        let sumdata15InsuranceAll = this.InsuranceSumAll(data15);
+        let sumdata15MaintenanceSumAll = this.MaintenanceSumAll(data15);
+        data16 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.5");
+        let sumCostdata16InsuranceAll = this.SumCostSumInsuranceAll(data16);
+        let sumdata16InsuranceAll = this.InsuranceSumAll(data16);
+        let sumdata16MaintenanceSumAll = this.MaintenanceSumAll(data16);
+        data17 = listCTD.filter((el) => el.typeAffiliation == "ลูกจ้าง");
+        let sumCostdata17InsuranceAll = this.SumCostSumInsuranceAll(data17);
+        let sumdata17InsuranceAll = this.InsuranceSumAll(data17);
+        let sumdata17MaintenanceSumAll = this.MaintenanceSumAll(data17);
+
+        await this.AffiliationListCTD.map((el) => {
+          if (el.label == "บช.ตชด.") {
+            el["sumdataMaintenance"] = sumdataMaintenanceSumAll;
+            el["sumdataInsurance"] = sumdataInsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdataInsuranceAll;
+          }
+          if (el.label == "บก.อก.") {
+            el["sumdataMaintenance"] = sumdata2MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata2InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata2InsuranceAll;
+          }
+          if (el.label == "บก.สนน.") {
+            el["sumdataMaintenance"] = sumdata3MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata3InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
+          }
+          if (el.label == "ฝอ.1") {
+            el["sumdataMaintenance"] = sumdata4MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata4InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata4InsuranceAll;
+          }
+          if (el.label == "ฝอ.2") {
+            el["sumdataMaintenance"] = sumdata5MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata5InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata5InsuranceAll;
+          }
+          if (el.label == "ฝอ.3") {
+            el["sumdataMaintenance"] = sumdata6MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata6InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata6InsuranceAll;
+          }
+          if (el.label == "ฝอ.4") {
+            el["sumdataMaintenance"] = sumdata7MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata7InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata7InsuranceAll;
+          }
+          if (el.label == "ฝอ.5") {
+            el["sumdataMaintenance"] = sumdata8MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata8InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata8InsuranceAll;
+          }
+          if (el.label == "ฝอ.6") {
+            el["sumdataMaintenance"] = sumdata9MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata9InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata9InsuranceAll;
+          }
+          if (el.label == "ฝอ.7") {
+            el["sumdataMaintenance"] = sumdata10MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata10InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata10InsuranceAll;
+          }
+          if (el.label == "ฝอ.8") {
+            el["sumdataMaintenance"] = sumdata11MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata11InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata11InsuranceAll;
+          }
+          if (el.label == "ฝสสน.1") {
+            el["sumdataMaintenance"] = sumdata12MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata12InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata12InsuranceAll;
+          }
+          if (el.label == "ฝสสน.2") {
+            el["sumdataMaintenance"] = sumdata13MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata13InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata13InsuranceAll;
+          }
+          if (el.label == "ฝสสน.3") {
+            el["sumdataMaintenance"] = sumdata14MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata14InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata14InsuranceAll;
+          }
+          if (el.label == "ฝสสน.4") {
+            el["sumdataMaintenance"] = sumdata15MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata15InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata15InsuranceAll;
+          }
+          if (el.label == "ฝสสน.5") {
+            el["sumdataMaintenance"] = sumdata16MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata16InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata16InsuranceAll;
+          }
+          if (el.label == "ลูกจ้าง") {
+            el["sumdataMaintenance"] = sumdata17MaintenanceSumAll;
+            el["sumdataInsurance"] = sumdata17InsuranceAll;
+            el["sumCostdataInsurance"] = sumCostdata17InsuranceAll;
+          }
+          el["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListCTD);
+          el["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListCTD);
+          el["countCostSumAll"] = this.countCostSumAll(this.AffiliationListCTD);
+          return el;
+        });
+        await this.AffiliationListCTD.map((ele) => {
+          ele["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListCTD);
+          ele["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListCTD);
+          ele["countCostSumAll"] = this.countCostSumAll(this.AffiliationListCTD);
+          return ele;
+        });
       }
     },
 
@@ -369,8 +940,9 @@ export default {
     },
 
     checkMonth(index, installments) {
+      let td = installments || 0;
       var d = new Date(index);
-      var newDate = d.setMonth(d.getMonth() + parseInt(installments));
+      var newDate = d.setMonth(d.getMonth() + parseInt(td));
       var t = new Date(newDate).toISOString();
       return this.convertDateTolocal(index, t);
     },
@@ -450,78 +1022,160 @@ export default {
           SumCostSumCosts: this.SumCostSumCosts(data2),
         };
       });
-      this.mapDataComma(arr,arr2)
+      this.datalistCTD = arr;
+      this.datalistTD = arr2;
+      this.mapDataComma(arr, arr2);
     },
 
-   async mapDataComma(data, data2){
+    async mapDataComma(data, data2) {
       let arr3 = [];
       let arr4 = [];
       arr3 = await data.map((el2) => {
         return {
           ...el2,
-          SumCostSumInsurance: this.numberWithCommas(el2.SumCostSumInsurance)|| 0,
-          SumCostSumCentral: this.numberWithCommas(el2.SumCostSumCentral)|| 0,
-          SumCostSumwater: this.numberWithCommas(el2.SumCostSumwater)|| 0,
-          SumCostSumCosts: this.numberWithCommas(el2.SumCostSumCosts)|| 0,
-          sumCostwaterbill: this.numberWithCommas(el2.sumCostwaterbill)|| 0,
-          sumCostCentral: this.numberWithCommas(el2.sumCostCentral)|| 0,
-          sumCostCosts: this.numberWithCommas(el2.sumCostCosts)|| 0,
-          sumCostnsurance: this.numberWithCommas(el2.sumCostnsurance)|| 0,
+          SumCostSumInsurance: this.numberWithCommas(el2.SumCostSumInsurance) || 0,
+          SumCostSumCentral: this.numberWithCommas(el2.SumCostSumCentral) || 0,
+          SumCostSumwater: this.numberWithCommas(el2.SumCostSumwater) || 0,
+          SumCostSumCosts: this.numberWithCommas(el2.SumCostSumCosts) || 0,
+          sumCostwaterbill: this.numberWithCommas(el2.sumCostwaterbill) || 0,
+          sumCostCentral: this.numberWithCommas(el2.sumCostCentral) || 0,
+          sumCostCosts: this.numberWithCommas(el2.sumCostCosts) || 0,
+          sumCostnsurance: this.numberWithCommas(el2.sumCostnsurance) || 0,
           central: this.numberWithCommas(el2.central) || 0,
           costs: this.numberWithCommas(el2.costs) || 0,
-          amountPaidSum: this.numberWithCommas(el2.amountPaidSum)|| 0,
-          waterbillSum: this.numberWithCommas(el2.waterbillSum)|| 0,
-          electricitybillSum: this.numberWithCommas(el2.electricitybillSum)|| 0,
+          amountPaidSum: this.numberWithCommas(el2.amountPaidSum) || 0,
+          waterbillSum: this.numberWithCommas(el2.waterbillSum) || 0,
+          electricitybillSum: this.numberWithCommas(el2.electricitybillSum) || 0,
           maintenance: this.numberWithCommas(el2.maintenance) || 0,
           insurance: this.numberWithCommas(el2.insurance) || 0,
-          centralSum: this.numberWithCommas(el2.centralSum)|| 0,
-          costsSum: this.numberWithCommas(el2.costsSum)|| 0,
+          centralSum: this.numberWithCommas(el2.centralSum) || 0,
+          costsSum: this.numberWithCommas(el2.costsSum) || 0,
           InsuranceSum: this.numberWithCommas(el2.InsuranceSum) || 0,
           MaintenanceSum: this.numberWithCommas(el2.MaintenanceSum) || 0,
           accumulatedSum: this.numberWithCommas(el2.accumulatedSum) || 0,
-          waterbill: this.numberWithCommas(el2.waterbill )|| 0,
-          electricitybill:  this.numberWithCommas(el2.electricitybill) || 0,
+          waterbill: this.numberWithCommas(el2.waterbill) || 0,
+          electricitybill: this.numberWithCommas(el2.electricitybill) || 0,
         };
       });
       arr4 = await data2.map((el3) => {
         return {
           ...el3,
-          SumCostSumInsurance: this.numberWithCommas(el3.SumCostSumInsurance)|| 0,
-          SumCostSumCentral: this.numberWithCommas(el3.SumCostSumCentral)|| 0,
-          SumCostSumwater: this.numberWithCommas(el3.SumCostSumwater)|| 0,
-          SumCostSumCosts: this.numberWithCommas(el3.SumCostSumCosts)|| 0,
-          sumCostwaterbill: this.numberWithCommas(el3.sumCostwaterbill)|| 0,
-          sumCostCentral: this.numberWithCommas(el3.sumCostCentral)|| 0,
-          sumCostCosts: this.numberWithCommas(el3.sumCostCosts)|| 0,
-          sumCostnsurance: this.numberWithCommas(el3.sumCostnsurance)|| 0,
+          SumCostSumInsurance: this.numberWithCommas(el3.SumCostSumInsurance) || 0,
+          SumCostSumCentral: this.numberWithCommas(el3.SumCostSumCentral) || 0,
+          SumCostSumwater: this.numberWithCommas(el3.SumCostSumwater) || 0,
+          SumCostSumCosts: this.numberWithCommas(el3.SumCostSumCosts) || 0,
+          sumCostwaterbill: this.numberWithCommas(el3.sumCostwaterbill) || 0,
+          sumCostCentral: this.numberWithCommas(el3.sumCostCentral) || 0,
+          sumCostCosts: this.numberWithCommas(el3.sumCostCosts) || 0,
+          sumCostnsurance: this.numberWithCommas(el3.sumCostnsurance) || 0,
           central: this.numberWithCommas(el3.central) || 0,
           costs: this.numberWithCommas(el3.costs) || 0,
           insurance: this.numberWithCommas(el2.insurance) || 0,
-          amountPaidSum: this.numberWithCommas(el3.amountPaidSum)|| 0,
-          waterbillSum: this.numberWithCommas(el3.waterbillSum)|| 0,
-          electricitybillSum: this.numberWithCommas(el3.electricitybillSum)|| 0,
+          amountPaidSum: this.numberWithCommas(el3.amountPaidSum) || 0,
+          waterbillSum: this.numberWithCommas(el3.waterbillSum) || 0,
+          electricitybillSum: this.numberWithCommas(el3.electricitybillSum) || 0,
           maintenance: this.numberWithCommas(el3.maintenance) || 0,
-          centralSum: this.numberWithCommas(el3.centralSum)|| 0,
-          costsSum: this.numberWithCommas(el3.costsSum)|| 0,
+          centralSum: this.numberWithCommas(el3.centralSum) || 0,
+          costsSum: this.numberWithCommas(el3.costsSum) || 0,
           InsuranceSum: this.numberWithCommas(el3.InsuranceSum) || 0,
           MaintenanceSum: this.numberWithCommas(el3.MaintenanceSum) || 0,
           accumulatedSum: this.numberWithCommas(el3.accumulatedSum) || 0,
-          waterbill: this.numberWithCommas(el3.waterbill )|| 0,
-          electricitybill:  this.numberWithCommas(el3.electricitybill) || 0,
+          waterbill: this.numberWithCommas(el3.waterbill) || 0,
+          electricitybill: this.numberWithCommas(el3.electricitybill) || 0,
         };
       });
       this.reportlistCTD = arr3;
       this.reportlistTD = arr4;
+      this.filterAffiliation();
+      this.filterAffiliation2();
     },
     // numberWithCommas
 
     ExportExcel(type, tableId, fn, dl) {
       var elt = document.getElementById(tableId);
-      var wb = XLSX.utils.table_to_book(elt, { sheet: "Sheet JS" });
-
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "Sheet" });
       return dl
         ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
         : XLSX.writeFile(wb, fn || "ExportFile." + (type || "xlsx"));
+    },
+
+    async ExportData() {
+      var ws_data = [
+        [
+          "รายละเอียดการหักเงิน  ค่าบำรุงฯ ,ค่าประกันฯ , ผู้ได้สิทธิพักอาศัยบ้านพัก บช.ตชด.",
+        ],
+        ["และค่าสาธารณูปโภค  ผู้ได้สิทธิพักอาศัยบ้านพักส่วนกลาง ตร.  (อก.)"],
+        [` ประจําเดือน ${this.monthYear} `],
+      ];
+      let aa,
+        aa2,
+        aa3,
+        aa4,
+        aa5 = [];
+      let count = this.OGCount(this.reportlistok);
+      await this.reportlistok.forEach((e, i) => {
+        ws_data.push([i + 1, e.idcard, "41001", this.countSuminstallments(e)]);
+      });
+      aa = [" ", " ", "รวม อก.", count];
+      aa2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
+      aa3 = [" ร.ต.อ.หญิง", " ", "", " "];
+      aa4 = [" ", " ", " (  ศุภลักษณ์  ฤทธิสอน )", " "];
+      aa5 = [" ", " ", "รอง สว.ฝสสน.๑ บก.สสน.บช.ตชด.", " "];
+      ws_data.push(aa, aa2, aa3, aa4, aa5);
+      var ws = XLSX.utils.aoa_to_sheet(ws_data);
+
+      var ws_data2 = [
+        [
+          "รายละเอียดการหักเงิน  ค่าบำรุงฯ ,ค่าประกันฯ , ผู้ได้สิทธิพักอาศัยบ้านพัก บช.ตชด. ",
+        ],
+        ["และค่าสาธารณูปโภค  ผู้ได้สิทธิพักอาศัยบ้านพักส่วนกลาง ตร.  (สสน.)"],
+        [` ประจําเดือน ${this.monthYear} `],
+      ];
+      let bb,
+        bb2,
+        bb3,
+        bb4,
+        bb5 = [];
+      let count2 = this.OGCount(this.reportListssn);
+      await this.reportListssn.forEach((el, i) => {
+        ws_data2.push([i + 1, el.idcard, "41001", this.countSuminstallments(el)]);
+      });
+      bb = [" ", " ", "รวม อก.", count2];
+      bb2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
+      bb3 = [" ร.ต.อ.หญิง", " ", "", " "];
+      bb4 = [" ", " ", " (  ศุภลักษณ์  ฤทธิสอน )", " "];
+      bb5 = [" ", " ", "รอง สว.ฝสสน.๑ บก.สสน.บช.ตชด.", " "];
+      ws_data2.push(bb, bb2, bb3, bb4, bb5);
+      var ws2 = XLSX.utils.aoa_to_sheet(ws_data2);
+
+      var ws_data3 = [
+        [
+          "รายละเอียดการหักเงิน  ค่าบำรุงฯ ,ค่าประกันฯ , ผู้ได้สิทธิพักอาศัยบ้านพัก บช.ตชด. ",
+        ],
+        ["และค่าสาธารณูปโภค  ผู้ได้สิทธิพักอาศัยบ้านพักส่วนกลาง ตร.  (ลูกจ้าง)"],
+        [` ประจําเดือน ${this.monthYear} `],
+      ];
+      let cc,
+        cc2,
+        cc3,
+        cc4,
+        cc5 = [];
+      let count3 = this.OGCount(this.reportListssn);
+      await this.reportlistlj.forEach((el2, i) => {
+        ws_data3.push([i + 1, el2.idcard, "41001", this.countSuminstallments(el2)]);
+      });
+      cc = [" ", " ", "รวม อก.", count3];
+      cc2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
+      cc3 = [" ร.ต.อ.หญิง", " ", "", " "];
+      cc4 = [" ", " ", " (  ศุภลักษณ์  ฤทธิสอน )", " "];
+      cc5 = [" ", " ", "รอง สว.ฝสสน.๑ บก.สสน.บช.ตชด.", " "];
+      ws_data3.push(cc, cc2, cc3, cc4, cc5);
+      var ws3 = XLSX.utils.aoa_to_sheet(ws_data3);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "อก");
+      XLSX.utils.book_append_sheet(wb, ws2, "สสน");
+      XLSX.utils.book_append_sheet(wb, ws3, "ลูกจ้าง");
+      XLSX.writeFile(wb, "report.xlsx");
     },
 
     countSumWaterbill(item) {
@@ -530,6 +1184,10 @@ export default {
           parseInt(item.waterbill) +
           parseInt(item.electricitybill) || 0
       );
+    },
+
+    countSuminstallments(item) {
+      return parseInt(item.insurance) / parseInt(item.installments) || 0;
     },
 
     countSumcentral(item) {
@@ -544,7 +1202,15 @@ export default {
     },
 
     countSumInsurance(item) {
-      return parseInt(item.maintenance) + parseInt(item.insurance) || 0;
+      return parseInt(item.maintenance || 0) + parseInt(item.insurance) || 0;
+    },
+
+    OGCount(items) {
+      return items.reduce((insuranceSum, ele) => {
+        let c = parseInt(ele.insurance) / parseInt(ele.installments);
+        if (ele.insurance !== undefined) return insuranceSum + c;
+        else return insuranceSum;
+      }, 0);
     },
 
     // insuranceCount(items) {
@@ -563,7 +1229,7 @@ export default {
 
     insuranceCount(items) {
       return items.reduce((insuranceSum, ele) => {
-        if (ele.insurance !== undefined) return amountPaidSum + parseInt(ele.insurance);
+        if (ele.insurance !== undefined) return insuranceSum + parseInt(ele.insurance);
         else return insuranceSum;
       }, 0);
     },
@@ -651,8 +1317,9 @@ export default {
         else return MaintenanceSum;
       }, 0);
     },
+
     thaiNumber(num) {
-      let convertNumber = this.numberWithCommas(num)
+      let convertNumber = this.numberWithCommas(num);
       var array = {
         1: "๑",
         2: "๒",
@@ -669,13 +1336,14 @@ export default {
       for (var val in array) {
         str = str.split(val).join(array[val]);
       }
-     
+
       return str;
     },
 
-numberWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-},
+    numberWithCommas(x) {
+      // .toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
     Previous() {
       window.history.back();
     },
@@ -683,7 +1351,6 @@ numberWithCommas(x) {
     buildTableBodyinsurance(data, columns) {
       var body = [];
       let arr = [];
-      console.log(data);
       var thaiNum = data.map((e) => {
         return {
           ...e,
@@ -696,7 +1363,7 @@ numberWithCommas(x) {
           insurance: this.thaiNumber(e.insurance),
         };
       });
-      console.log(thaiNum);
+      
       var footer = [
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
@@ -745,10 +1412,10 @@ numberWithCommas(x) {
     },
 
     exportPdfinsurance() {
-      let listData = []
+      let listData = [];
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
-      console.log(listData);
+      
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
@@ -770,19 +1437,21 @@ numberWithCommas(x) {
         };
         const docDefinition = {
           content: [
-              {
-              text:
-                "สรุปยอดหักค่าบํารุงสถานที่",
+            {
+              text: "สรุปยอดหักค่าบํารุงสถานที่",
               style: "header",
               alignment: "center",
             },
             {
-              text:
-                "และค่าประกันทรัพย์สินเสียหายประจําเดือน",
+              text: "และค่าประกันทรัพย์สินเสียหายประจําเดือน",
               style: "header",
               alignment: "center",
             },
-            { text: `(เฉพาะอาคารบ้านพัก ${this.typeReport} แยกตามสังกัด)`, style: "subheader", alignment: "center" },
+            {
+              text: `(เฉพาะอาคารบ้านพัก ${this.typeReport} แยกตามสังกัด)`,
+              style: "subheader",
+              alignment: "center",
+            },
             this.tableInsurance(listData, [
               "numberNo",
               "typeAffiliation",
@@ -866,10 +1535,15 @@ numberWithCommas(x) {
     },
 
     exportPdfWaterBill() {
-      let listData = []
+      let listData = [];
+      let mss = "";
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
+        if (this.typeReport == "ตร.")
+          mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";
+        else if (this.typeReport == "บช.ตชด.")
+          mss = "การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบำรุงลิฟต์เพิ่มเติม";
         pdfMake.fonts = {
           Roboto: {
             normal:
@@ -890,7 +1564,21 @@ numberWithCommas(x) {
         };
         const docDefinition = {
           content: [
-            { text: "Dynamic parts", style: "header" },
+            {
+              text: `${this.mss}`,
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: " ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: ` ประจําเดือน ${this.monthYear} `,
+              style: "subheader",
+              alignment: "center",
+            },
             this.tablewaterBill(listData, [
               "numberNo",
               "typeAffiliation",
@@ -986,10 +1674,14 @@ numberWithCommas(x) {
     },
 
     exportPdfCentral() {
-      let listData = []
+      let listData = [];
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
+        if (this.typeReport == "ตร.")
+          mss = "การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบำรุงลิฟต์เพิ่มเติม";
+        else if (this.typeReport == "บช.ตชด.")
+          mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";
         pdfMake.fonts = {
           Roboto: {
             normal:
@@ -1010,13 +1702,21 @@ numberWithCommas(x) {
         };
         const docDefinition = {
           content: [
-            // {
-            //   text:
-            //     "บัญชีรายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือนเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง ตร",
-            //   style: "header",
-            //   alignment: "center",
-            // },
-            // { text: "ประจำเดือน เมษายน 2566", style: "subheader", alignment: "center" },
+            {
+              text: `${this.mss}`,
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: " ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: ` ประจําเดือน ${this.monthYear} `,
+              style: "subheader",
+              alignment: "center",
+            },
             this.tableCentral(listData, [
               "numberNo",
               "roomnumber",
@@ -1109,7 +1809,7 @@ numberWithCommas(x) {
     },
 
     exportPdfCosts() {
-      let listData = []
+      let listData = [];
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
@@ -1133,7 +1833,21 @@ numberWithCommas(x) {
         };
         const docDefinition = {
           content: [
-            { text: "Dynamic parts", style: "header" },
+            {
+              text: `  การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติม`,
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: " ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: ` ประจําเดือน ${this.monthYear} `,
+              style: "subheader",
+              alignment: "center",
+            },
             this.tableCosts(listData, [
               "numberNo",
               "typeAffiliation",
@@ -1243,7 +1957,7 @@ numberWithCommas(x) {
     },
 
     exportPdfAccumulated() {
-      let listData = []
+      let listData = [];
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
 
@@ -1269,7 +1983,22 @@ numberWithCommas(x) {
 
         const docDefinition = {
           content: [
-            { text: "Dynamic parts", style: "header" },
+            {
+              text: ` บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ ${this.typeReport} `,
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text:
+                " ที่หักเงินเดือนเป็นค่าบํารุงรักษาสถานที่และค่าประกันทรัพย์สินเสียหาย",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: ` ประจําเดือน ${this.monthYear} `,
+              style: "subheader",
+              alignment: "center",
+            },
             this.tableAccumulated(listData, [
               "numberNo",
               "fullname",
@@ -1363,7 +2092,7 @@ numberWithCommas(x) {
     },
 
     exportPdfCostCentral() {
-      let listData = []
+      let listData = [];
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
@@ -1456,7 +2185,6 @@ numberWithCommas(x) {
               ]"
             />
           </div>
-          <!-- <a @click="exportPdfCostCentral">kkkkkkk</a> -->
           <div class="mb-3">
             <a
               style="display: flex; align-items: center; cursor: pointer"
@@ -1466,7 +2194,21 @@ numberWithCommas(x) {
               <span>ย้อนกลับ</span>
             </a>
           </div>
-          <h4>ระบบเรียกรายงาน ประจำเดือน {{ selectedMonth?.label || selectedMonth }}</h4>
+          <div class="d-flex justify-content-between align-items-center">
+            <h4>
+              ระบบเรียกรายงาน ประจำเดือน {{ selectedMonth?.label || selectedMonth }}
+            </h4>
+            <div style="text-align: right">
+              <MaterialButton
+                style="width: 200px"
+                variant="gradient"
+                color="success"
+                @click="ExportData"
+                >บัญชีสรุปส่งการเงิน</MaterialButton
+              >
+            </div>
+          </div>
+
           <div class="row pt-4 min-vh-45">
             <div class="col-lg-3">
               <div
@@ -1536,7 +2278,7 @@ numberWithCommas(x) {
                   บัญชีรายชื่อผู้พักอาศัยที่ถอนเงินเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง
                   ตร.
                 </button>
-                <button
+                <!-- <button
                   class="nav-link"
                   id="v-pills-home-tab"
                   data-bs-toggle="pill"
@@ -1547,7 +2289,7 @@ numberWithCommas(x) {
                   aria-selected="true"
                 >
                   บัญชีสรุปส่งการเงิน
-                </button>
+                </button> -->
               </div>
             </div>
             <div class="col-lg-9">
@@ -2262,11 +3004,41 @@ numberWithCommas(x) {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
-                            <td>{{ item?.typeAffiliation || "-" }}</td>
-                            <td>{{ item?.MaintenanceSum || "-" }}</td>
-                            <td>{{ item?.InsuranceSum || "-" }}</td>
-                            <td>{{ item?.sumCostwaterbill || "-" }}</td>
+                          <tr>
+                            <td>{{ "อำนวยการ" || "-" }}</td>
+                            <td>{{ sumreportlistAll[0]?.sumdataMaintenance || "-" }}</td>
+                            <td>{{ sumreportlistAll[0]?.sumdataInsurance || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll[0]?.sumCostdataInsurance || "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{{ "สนับสนุน" || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdataInsurance || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll2[0]?.sumCostdataInsurance || "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{{ "ลูกจ้าง" || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdataInsurance || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll2[0]?.sumCostdataInsurance || "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{{ "รวม" || "-" }}</td>
+                            <td>
+                              {{ maintenanceAllcount }}
+                            </td>
+                            <td>
+                              {{ insuranceAllcount }}
+                            </td>
+                            <td>
+                              {{ sumAllcount }}
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -2560,18 +3332,27 @@ numberWithCommas(x) {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr v-for="(item, index) in reportlistTD" :key="index">
+                                  <tr
+                                    v-for="(item, index) in AffiliationListTD"
+                                    :key="index"
+                                  >
                                     <th scope="row">{{ index + 1 }}</th>
-                                    <td>{{ item?.typeAffiliation || "-" }}</td>
-                                    <td>{{ item?.maintenance || "-" }}</td>
-                                    <td>{{ item?.insurance || "-" }}</td>
-                                    <td>{{ item?.sumCostnsurance || "-" }}</td>
+                                    <td>{{ item?.value || "-" }}</td>
+                                    <td>{{ item?.sumdataMaintenance || "-" }}</td>
+                                    <td>{{ item?.sumdataInsurance || "-" }}</td>
+                                    <td>{{ item?.sumCostdataInsurance || "-" }}</td>
                                   </tr>
-                                  <tr v-if="reportlistCTD.length > 0">
+                                  <tr v-if="AffiliationListTD.length > 0">
                                     <th scope="row" colspan="2">รวมยอดส่งหัก</th>
-                                    <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
-                                    <th>{{ reportlistTD[0]?.InsuranceSum }}</th>
-                                    <th>{{ reportlistTD[0]?.SumCostSumInsurance }}</th>
+                                    <th>
+                                      {{ AffiliationListTD[0]?.countMaintenanceAll || 0 }}
+                                    </th>
+                                    <th>
+                                      {{ AffiliationListTD[0]?.countInsuranceAll || 0 }}
+                                    </th>
+                                    <th>
+                                      {{ AffiliationListTD[0]?.countCostSumAll || 0 }}
+                                    </th>
                                   </tr>
                                 </tbody>
                               </table>
@@ -2802,18 +3583,29 @@ numberWithCommas(x) {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr v-for="(item, index) in reportlistCTD" :key="index">
+                                  <tr
+                                    v-for="(item, index) in AffiliationListCTD"
+                                    :key="index"
+                                  >
                                     <th scope="row">{{ index + 1 }}</th>
-                                    <td>{{ item?.typeAffiliation || "-" }}</td>
-                                    <td>{{ item?.maintenance || "-" }}</td>
-                                    <td>{{ item?.insurance || "-" }}</td>
-                                    <td>{{ item?.sumCostnsurance || "-" }}</td>
+                                    <td>{{ item?.value || "-" }}</td>
+                                    <td>{{ item?.sumdataMaintenance || "-" }}</td>
+                                    <td>{{ item?.sumdataInsurance || "-" }}</td>
+                                    <td>{{ item?.sumCostdataInsurance || "-" }}</td>
                                   </tr>
-                                  <tr v-if="reportlistCTD.length > 0">
+                                  <tr v-if="AffiliationListCTD.length > 0">
                                     <th scope="row" colspan="2">รวมยอดส่งหัก</th>
-                                    <th>{{ reportlistCTD[0]?.MaintenanceSum }}</th>
-                                    <th>{{ reportlistCTD[0]?.InsuranceSum }}</th>
-                                    <th>{{ reportlistCTD[0]?.SumCostSumInsurance }}</th>
+                                    <th>
+                                      {{
+                                        AffiliationListCTD[0]?.countMaintenanceAll || 0
+                                      }}
+                                    </th>
+                                    <th>
+                                      {{ AffiliationListCTD[0]?.countInsuranceAll || 0 }}
+                                    </th>
+                                    <th>
+                                      {{ AffiliationListCTD[0]?.countCostSumAll || 0 }}
+                                    </th>
                                   </tr>
                                 </tbody>
                               </table>
