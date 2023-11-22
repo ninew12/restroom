@@ -274,7 +274,7 @@ export default {
     updatedataUser() {
       let body = {
         queue: "none",
-        deposit: this.deposit,
+        deposit: "รอคืนเงินประกัน",
         roomKey: this.roomKey,
         houseRegistration: this.houseRegistration,
         payMonth: this.payMonth,
@@ -298,7 +298,7 @@ export default {
 
     updatedataHistory() {
       let body = {
-        deposit: this.deposit,
+        deposit: "รอคืนเงินประกัน",
         roomKey: this.roomKey,
         houseRegistration: this.houseRegistration,
         payMonth: this.payMonth,

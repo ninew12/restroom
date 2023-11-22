@@ -109,6 +109,7 @@ export default {
           .then((res) => {
             this.queueList = res.data;
             this.queuefilter = this.queueList.filter((e) => e.typeRoom === this.typeroom);
+            console.log(this.queuefilter);
           })
           .catch((err) => {
             console.log(err);
@@ -148,9 +149,21 @@ export default {
           .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
             let data = res.data;
-            this.userByid = data;
+            this.userByid = res.data;
            if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
            if (data.typeRanks == "สัญญาบัตร") this.maintenanceFix = "100";
+           this.userId = id,
+           this.firstName = this.userByid.firstName,
+           this.lastName = this.userByid.lastName,
+           this.affiliation = this.userByid.affiliation,
+           this.rank = this.userByid.rank,
+           this.idcard = this.userByid.idcard,
+           this.phone = this.userByid.phone,
+           this.rank = this.userByid.rank,
+           this.status = this.userByid.status,
+           this.typeAffiliation = this.userByid.typeAffiliation,
+           this.typeRanks = this.userByid.typeRanks,
+           this.typeRanks = this.userByid.typeRanks,
             console.log(data);
           })
           .catch((err) => {
@@ -275,20 +288,19 @@ export default {
     },
 
     async submitForm2() {
-      let typeA;
       let body = {
         userId: this.userId,
-        // firstName : this.userByid.firstName,
-        // lastName :  this.userByid.lastName,
-        // selectedAffiliation :  this.userByid.affiliation,
-        // selectedRanks :  this.userByid.rank,
-        // idcard :  this.userByid.idcard,
-        // phone :  this.userByid.phone,
-        // rank: this.userByid.rank,
-        // selectedDataObtion :  this.userByid.status,
-        // typeAffiliation :  this.userByid.typeAffiliation,
-        // typeRanks :  this.userByid.typeRanks,
-        // typeUser: this.userByid.typeUser,
+        firstName : this.firstName,
+        lastName :  this.lastName,
+        selectedAffiliation :  this.affiliation,
+        selectedRanks :  this.rank,
+        idcard :  this.idcard,
+        phone :  this.phone,
+        rank: this.rank,
+        selectedDataObtion :  this.status,
+        typeAffiliation :  this.typeAffiliation,
+        typeRanks :  this.typeRanks,
+        typeUser: this.typeUser,
         queue: "inroom",
         contract: this.contract,
         checkintime: this.Checkintime,
@@ -303,7 +315,6 @@ export default {
         monthly:this.months,
         years:this.years
       };
-      let employee = { ...body,  ...this.userByid };
       
       await axios.post(`http://localhost:3897/report`, body, {
         headers: {
@@ -315,7 +326,18 @@ export default {
 
     async submitForm3() {
       let body = {
-        ...this.userByid,
+        userId: this.userId,
+        firstName : this.firstName,
+        lastName :  this.lastName,
+        selectedAffiliation :  this.affiliation,
+        selectedRanks :  this.rank,
+        idcard :  this.idcard,
+        phone :  this.phone,
+        rank: this.rank,
+        selectedDataObtion :  this.status,
+        typeAffiliation :  this.typeAffiliation,
+        typeRanks :  this.typeRanks,
+        typeUser: this.typeUser,
         queue: "inroom",
         contract: this.contract,
         checkintime: this.Checkintime,
@@ -338,17 +360,17 @@ export default {
       if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
       let body = {
         userId: this.userId,
-        firstName : this.userByid.firstName,
-        lastName :  this.userByid.lastName,
-        selectedAffiliation :  this.userByid.affiliation,
-        selectedRanks :  this.userByid.rank,
-        idcard :  this.userByid.idcard,
-        phone :  this.userByid.phone,
-        rank: this.userByid.rank,
-        selectedDataObtion :  this.userByid.status,
-        typeAffiliation :  this.userByid.typeAffiliation,
-        typeRanks :  this.userByid.typeRanks,
-        typeUser: this.userByid.typeUser,
+        firstName : this.firstName,
+        lastName :  this.lastName,
+        selectedAffiliation :  this.affiliation,
+        selectedRanks :  this.rank,
+        idcard :  this.idcard,
+        phone :  this.phone,
+        rank: this.rank,
+        selectedDataObtion :  this.status,
+        typeAffiliation :  this.typeAffiliation,
+        typeRanks :  this.typeRanks,
+        typeUser: this.typeUser,
         queue: "inroom",
         roomStatus: "unavailable",
         contract: this.contract,

@@ -610,7 +610,7 @@ export default {
                         <div
                           class="card mb-2"
                           :class="{
-                            'bg-red': item2?.roomStatus == 'unavailable',
+                            'bg-red': item2?.roomStatus == 'unavailable' && item2?.roomconditions !== 'ชำรุด',
                             'bg-green':
                               item2?.roomStatus == 'free' &&
                               item2?.roomconditions !== 'ชำรุด',
@@ -649,7 +649,7 @@ export default {
                                 {{ "ว่าง" }}
                               </p>
                               <p
-                                v-if="item2?.roomStatus == 'unavailable'"
+                                v-if="item2?.roomStatus == 'unavailable' && item2?.roomconditions !== 'ชำรุด'"
                                 class="card-title bgg-red"
                                 style="font-size: 18px"
                               >
