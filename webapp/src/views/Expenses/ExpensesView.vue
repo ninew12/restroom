@@ -158,7 +158,15 @@ export default {
             this.typeContract = this.userByid.typeContract,
             this.contractExpenses = this.userByid.contractExpenses,
             this.sumCost = this.userByid.sumCost;
-            this.numberfirst = this.userByid.numberfirst
+            if(this.userByid.numberfirst == undefined){
+              this.numberfirst =  0
+            }else{
+              this.numberfirst = this.Sumunit(
+                this.userByid.lastnumber,
+                this.userByid.numberfirst
+              );
+            }
+           
           
           })
           .catch((err) => {
@@ -192,10 +200,6 @@ export default {
     },
 
     async submitForm() {
-      this.numberfirst = this.Sumunit(
-          this.userByid.lastnumber,
-          this.userByid.numberfirst
-      );
       let body = {
         buildingType: this.buildingType,
         firstName: this.firstName,
