@@ -2204,7 +2204,7 @@ export default {
                 variant="gradient"
                 color="success"
                 @click="ExportData"
-                >บัญชีสรุปส่งการเงิน</MaterialButton
+                >ดาวน์โหลดบัญชีสรุปส่งการเงิน</MaterialButton
               >
             </div>
           </div>
