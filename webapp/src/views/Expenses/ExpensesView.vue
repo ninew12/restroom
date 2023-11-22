@@ -130,8 +130,8 @@ export default {
     },
 
     Sumunit(lastnumber, numberfirst) {
-      let sum = lastnumber - numberfirst;
-      return numberfirst + sum || 0;
+      let sum = parseInt(lastnumber)  - parseInt(numberfirst);
+      return parseInt(numberfirst) + sum || 0;
     },
 
     async getRoomsByid(id) {
@@ -150,7 +150,6 @@ export default {
             this.lastName = this.userByid.lastName;
             this.Insurancecost = this.userByid.insurancecost,
             this.installmentsRooom = this.userByid.installmentsRooom,
-            this.numberfirst = this.userByid.numberfirst,
             this.lastnumber = this.userByid.lastnumber,
             this.Waterbill = this.userByid.Waterbill,
             this.Electricitybill = this.userByid.electricitybill,
@@ -159,10 +158,8 @@ export default {
             this.typeContract = this.userByid.typeContract,
             this.contractExpenses = this.userByid.contractExpenses,
             this.sumCost = this.userByid.sumCost;
-            this.numberfirstNew = this.Sumunit(
-              this.userByid.lastnumber,
-              this.userByid.numberfirst
-            );
+            this.numberfirst = this.userByid.numberfirst
+          
           })
           .catch((err) => {
             console.log(err);
@@ -178,10 +175,12 @@ export default {
           .get(`http://localhost:3897/reportId/${id}`)
           .then((res) => {
             if(res.data !== "")this.reportId = res.data.id;
-            let reportData = "";
             let data = res.data;
-            data == "" ? (reportData = "none") : (reportData = "havedata");
-            this.reportType = reportData;
+            if(data !== '' && data !== undefined){
+              this.reportType = "havedata"
+            }else{
+              this.reportType = "none"
+            }
             this.reportId = res.data.id;
           })
           .catch((err) => {
@@ -193,14 +192,18 @@ export default {
     },
 
     async submitForm() {
+      this.numberfirst = this.Sumunit(
+          this.userByid.lastnumber,
+          this.userByid.numberfirst
+      );
       let body = {
         buildingType: this.buildingType,
         firstName: this.firstName,
         lastName: this.lastName,
-        numberfirst: this.numberfirstNew,
+        numberfirst: this.numberfirst,
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
-        electricitybill: this.electricitybill,
+        electricitybill: this.Electricitybill,
         central: this.Central,
         costs: this.Costs,
         typeContract: this.typeContract,
@@ -250,10 +253,10 @@ export default {
         buildingType: this.buildingType,
         firstName: this.userByid.firstName,
         lastName: this.userByid.lastName,
-        numberfirst: this.numberfirstNew,
+        numberfirst: this.numberfirst,
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
-        electricitybill: this.electricitybill,
+        electricitybill: this.Electricitybill,
         central: this.Central,
         costs: this.Costs,
         typeContract: this.typeContract,
@@ -276,10 +279,10 @@ export default {
         userId: this.userByid.userId,
         pickedBook: this.dateData.toISOString(),
         buildingType: this.buildingType,
-        numberfirst: this.numberfirstNew,
+        numberfirst: this.numberfirst,
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
-        electricitybill: this.electricitybill,
+        electricitybill: this.Electricitybill,
         central: this.Central,
         costs: this.Costs,
         typeContract: this.typeContract,

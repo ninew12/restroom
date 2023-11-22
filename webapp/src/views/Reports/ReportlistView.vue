@@ -318,6 +318,7 @@ export default {
     },
 
     async getReport(m, y) {
+      console.log(m,y);
       try {
         axios
           .get("http://localhost:3897/report")
@@ -330,29 +331,31 @@ export default {
             let data3 = res.data;
             let data4 = res.data;
             this.reportList = res.data;
-
+            
             data5 = data3.filter(
-              (el) =>
-                el.typeAffiliation == "บช.ตชด." ||
-                (el.typeAffiliation == "บก.อก." && el.monthly == m && el.years == y)
+              (el6) =>
+                el6.typeAffiliation == "บช.ตชด." ||
+                (el6.typeAffiliation == "บก.อก." && el6.monthly == m && el6.years == y)
             );
             data6 = data3.filter(
-              (el) => el.typeAffiliation == "ลูกจ้าง" && el.monthly == m && el.years == y
+              (el5) => el5.typeAffiliation == "ลูกจ้าง" && el5.monthly == m && el5.years == y
             );
             data7 = data3.filter(
-              (el) =>
-                el.typeAffiliation !== "ลูกจ้าง" &&
-                el.typeAffiliation !== "บช.ตชด." &&
-                el.typeAffiliation !== "บก.อก." &&
-                el.monthly == m &&
-                el.years == y
+              (el4) =>
+                el4.typeAffiliation !== "ลูกจ้าง" &&
+                el4.typeAffiliation !== "บช.ตชด." &&
+                el4.typeAffiliation !== "บก.อก." &&
+                el4.monthly == m &&
+                el4.years == y
             );
             data = data3.filter(
-              (el) => el.typeUser == "บช.ตชด." && el.monthly == m && el.years == y
+              (el) => el.typeUser == "บช.ตชด." && parseInt(el.monthly) == m && el.years == y
             );
             data2 = data4.filter(
-              (el) => el.typeUser == "ตร." && el.monthly == m && el.years == y
+              (el2) => el2.typeUser == "ตร." && parseInt(el2.monthly) == m && el2.years == y
             );
+            console.log(data);
+            console.log(data2);
             this.mapData(data, data2);
             this.reportlistok = data5;
             this.reportListssn = data6;
@@ -797,6 +800,18 @@ export default {
           el["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListTD);
           return el;
         });
+        this.AffiliationListTD.map(e => {
+          e["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListTD);
+          e["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListTD);
+          e["countCostSumAll"] = this.countCostSumAll(this.AffiliationListTD);
+          e["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListTD);
+          e["countelectricitybillAll"] = this.countelectricitybillAll(this.AffiliationListTD);
+          e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(this.AffiliationListTD);
+          e["countcentraAll"] = this.countcentralAll(this.AffiliationListTD);
+          e["countcostsAll"] = this.countcostsAll(this.AffiliationListTD);
+          e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListTD);
+          return e
+        })
       }
     },
 
@@ -1274,18 +1289,21 @@ export default {
             el["sumdatacosts"] = sumdata17costsSumAll;
             el["sumCostdataCostCosts"] = sumdata17CostCostsSumAll;
           }
-          el["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListCTD);
-          el["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListCTD);
-          el["countCostSumAll"] = this.countCostSumAll(this.AffiliationListCTD);
-          el["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListCTD);
-          el["countelectricitybillAll"] = this.countelectricitybillAll(this.AffiliationListCTD);
-          el["countCostwaterbillAll"] = this.countCostwaterbillSumAll(this.AffiliationListCTD);
-          el["countcentraAll"] = this.countcentralAll(this.AffiliationListCTD);
-          el["countcostsAll"] = this.countcostsAll(this.AffiliationListCTD);
-          el["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListCTD);
+          
           return el;
         });
-        console.log(this.AffiliationListCTD);
+        this.AffiliationListCTD.map(e => {
+          e["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListCTD);
+          e["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListCTD);
+          e["countCostSumAll"] = this.countCostSumAll(this.AffiliationListCTD);
+          e["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListCTD);
+          e["countelectricitybillAll"] = this.countelectricitybillAll(this.AffiliationListCTD);
+          e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(this.AffiliationListCTD);
+          e["countcentraAll"] = this.countcentralAll(this.AffiliationListCTD);
+          e["countcostsAll"] = this.countcostsAll(this.AffiliationListCTD);
+          e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListCTD);
+          return e
+        })
       }
     },
 
