@@ -2200,7 +2200,7 @@ export default {
             </h4>
             <div style="text-align: right">
               <MaterialButton
-                style="width: 200px"
+                style="width: 220px"
                 variant="gradient"
                 color="success"
                 @click="ExportData"
