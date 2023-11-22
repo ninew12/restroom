@@ -67,24 +67,25 @@ export default {
   },
   watch: {
     selectedtypeRoom: function (newValue) {
-      this.roomList = this.roomListOld;
+      this.roomList = this.roomListOld;    
       let filldata = [];
       let filldata2 = [];
       if (newValue !== null) {
         if (newValue.value !== "ทั้งหมด") {
-          filldata = this.roomList.map((ele, i) => {
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.typeRoom == newValue.value);
           });
-          let t = Object.keys(filldata).map((ele) => {
+      
+          filldata2 = Object.keys(filldata).map((ele) => {
             return {
               floor: parseInt(ele) + 1,
               data: filldata[ele] || [],
             };
           });
-          // filldata2 = t.sort((a, b) => b.floor - a.floor);
           this.roomList = filldata2.sort((a, b) => b.floor - a.floor);
         } else {
-          this.roomList = this.roomListOld;
+          this.roomList = this.roomListOld.reverse()
         }
       }
     },

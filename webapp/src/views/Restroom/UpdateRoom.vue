@@ -209,6 +209,7 @@ export default {
     submitLeniency() {
       let body = {
         leniency: this.leniency,
+        roomStatus: "return",
       };
       axios
         .put(`http://localhost:3897/rooms/${this.id}`, body, {

@@ -268,7 +268,7 @@ export default {
         const result = this.dateData.toLocaleDateString("th-TH", {
           year: "numeric",
         });
-        this.monthYear = newValue.label + " " + this.thaiNumber(result);
+        this.monthYear = newValue.label + " " + this.thaiNumber(result,'year');
         this.getReport(this.mountNumber, this.yearNumber);
       }
     },
@@ -292,7 +292,7 @@ export default {
       const result = today.toLocaleDateString("th-TH", {
         year: "numeric",
       });
-      this.monthYear = m + " " + this.thaiNumber(result);
+      this.monthYear = m + " " + this.thaiNumber(result,'year');
       await this.getReport(this.mountNumber, this.yearNumber);
     },
 
@@ -1770,8 +1770,13 @@ export default {
       }, 0);
     },
 
-    thaiNumber(num) {
-      let convertNumber = this.numberWithCommas(num);
+    thaiNumber(num,index) {
+      let convertNumber
+      if(index !== 'year'){
+         convertNumber = this.numberWithCommas(num);
+      }else{
+        convertNumber = num;
+      }
       var array = {
         1: "๑",
         2: "๒",
@@ -1784,6 +1789,7 @@ export default {
         9: "๙",
         0: "๐",
       };
+      console.log(convertNumber);
       var str = convertNumber.toString();
       for (var val in array) {
         str = str.split(val).join(array[val]);
@@ -3016,9 +3022,9 @@ export default {
                           <tr v-if="AffiliationListTD?.length > 0">
                             <th scope="row" colspan="2">รวมเงิน</th>
                             <th>{{ AffiliationListTD[0]?.countMaintenanceAll || 0 }}</th>
-                            <th>{{ AffiliationListTD[0]?.countWaterbillAll }}</th>
-                            <th>{{ AffiliationListTD[0]?.countelectricitybillAll }}</th>
-                            <th>{{ AffiliationListTD[0]?.countCostwaterbillSumAll }}</th>
+                            <th>{{ AffiliationListTD[0]?.countWaterbillAll || 0 }}</th>
+                            <th>{{ AffiliationListTD[0]?.countelectricitybillAll ||0}}</th>
+                            <th>{{ AffiliationListTD[0]?.countCostwaterbillSumAll ||0}}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -3255,21 +3261,19 @@ export default {
                             <th>รวม</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tr v-for="(item, index) in AffiliationListTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item?.typeAffiliation || "-" }}</td>
-                            <td>{{ item?.central || "-" }}</td>
-                            <td>{{ item?.costs || "-" }}</td>
-                            <td>{{ item?.sumCostCosts || "-" }}</td>
+                            <td>{{ item?.value || "-" }}</td>
+                            <td>{{ item?.sumdatacentral || "-" }}</td>
+                            <td>{{ item?.sumdatacosts || "-" }}</td>
+                            <td>{{ item?.sumCostdataCostCosts || "-" }}</td>
                           </tr>
-                          <tr v-if="reportlistTD?.length > 0">
+                          <tr v-if="AffiliationListTD?.length > 0">
                             <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>{{ reportlistTD[0]?.centralSum }}</th>
-                            <th>{{ reportlistTD[0]?.costsSum }}</th>
-                            <th>{{ reportlistTD[0]?.SumCostSumCosts }}</th>
+                            <th>{{ AffiliationListTD[0]?.countcentralAll || 0 }}</th>
+                            <th>{{ AffiliationListTD[0]?.countcostsAll ||0}}</th>
+                            <th>{{ AffiliationListTD[0]?.countCostCostsSumAll ||0}}</th>
                           </tr>
-                        </tbody>
                       </table>
                     </div>
                     <div
