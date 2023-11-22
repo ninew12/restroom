@@ -153,18 +153,18 @@ export default {
            if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
            if (data.typeRanks == "สัญญาบัตร") this.maintenanceFix = "100";
            this.userId = id,
-           this.firstName = this.userByid.firstName,
-           this.lastName = this.userByid.lastName,
-           this.affiliation = this.userByid.affiliation,
-           this.rank = this.userByid.rank,
-           this.idcard = this.userByid.idcard,
-           this.phone = this.userByid.phone,
-           this.rank = this.userByid.rank,
-           this.status = this.userByid.status,
-           this.typeAffiliation = this.userByid.typeAffiliation,
-           this.typeRanks = this.userByid.typeRanks,
-           this.typeRanks = this.userByid.typeRanks,
-            console.log(data);
+           this.firstName = data.firstName,
+           this.lastName = data.lastName,
+           this.affiliation = data.affiliation,
+           this.rank = data.rank,
+           this.idcard = data.idcard,
+           this.phone = data.phone,
+           this.rank = data.rank,
+           this.status = data.status,
+           this.typeAffiliation = data.typeAffiliation,
+           this.typeRanks = data.typeRanks,
+           this.typeRoom = data.typeRoom
+           console.log(data);
           })
           .catch((err) => {
             console.log(err);
@@ -183,7 +183,7 @@ export default {
           this.numberRoom = this.data.numberRoom;
           this.roomId = this.data.id;
           this.buildingName = this.data.name
-          if (this.data.affiliation) this.Affiliation = this.data.affiliation;
+          this.Affiliation = this.data.affiliation;
           if (this.data.roomStatus == "return") this.statusRoom = "ผ่อนผัน";
           if (this.data.roomStatus == "special") this.statusRoom = "กรณีพิเศษ";
           if (this.data.roomStatus == "waiting") this.statusRoom = "ชำรุด";
@@ -229,7 +229,7 @@ export default {
     async submitForm(index) {
       let body = {
         queue: "inroom",
-        Affiliation: this.Affiliation,
+        affiliation: this.Affiliation,
         contract: this.contract,
         checkintime: this.Checkintime,
         maintenance: this.Maintenance,
@@ -293,6 +293,7 @@ export default {
         firstName : this.firstName,
         lastName :  this.lastName,
         selectedAffiliation :  this.affiliation,
+        affiliation: this.affiliation,
         selectedRanks :  this.rank,
         idcard :  this.idcard,
         phone :  this.phone,
@@ -330,6 +331,7 @@ export default {
         firstName : this.firstName,
         lastName :  this.lastName,
         selectedAffiliation :  this.affiliation,
+        affiliation: this.affiliation,
         selectedRanks :  this.rank,
         idcard :  this.idcard,
         phone :  this.phone,
@@ -346,7 +348,6 @@ export default {
         installments: this.installments,
         amountPaid: this.amountPaid,
       };
-
       await axios.put(`http://localhost:3897/queue/${this.userId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -355,22 +356,21 @@ export default {
       });
     },
     async submitFormRoom() {
-      let maintenance;
-      if (this.typeRanks == "ประทวน") maintenance = "60";
-      if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
       let body = {
         userId: this.userId,
         firstName : this.firstName,
         lastName :  this.lastName,
         selectedAffiliation :  this.affiliation,
+        affiliation: this.affiliation,
         selectedRanks :  this.rank,
         idcard :  this.idcard,
         phone :  this.phone,
-        rank: this.rank,
+        ranks: this.rank,
         selectedDataObtion :  this.status,
         typeAffiliation :  this.typeAffiliation,
         typeRanks :  this.typeRanks,
         typeUser: this.typeUser,
+        typeRoom: this.typeRoom,
         queue: "inroom",
         roomStatus: "unavailable",
         contract: this.contract,
@@ -382,7 +382,6 @@ export default {
         buildingName: this.buildingName,
         dateApproved: this.dateApp.toISOString(),
       };
-
       await axios
         .put(`http://localhost:3897/rooms/${this.id}`, body, {
           headers: {
@@ -405,22 +404,20 @@ export default {
 
     async submitRoomScapia() {
       let typeA;
-      let maintenance;
       this.typeAffiliation.label == "ลูกจ้าง"
         ? (typeA = "ลูกจ้าง")
         : this.typeAffiliation.label == "บช.ตชด."
         ? (typeA = "บช.ตชด.")
         : (typeA = this.selectedAffiliation.label);
-      if (this.typeRanks == "ประทวน") maintenance = "60";
-      if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
       let body = {
         userId: this.userId,
         firstName: this.firstName,
         lastName: this.lastName,
-        affiliation: typeA,
-        rank: this.selectedRanks.value,
+        affiliation: this.affiliation,
+        ranks: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
+        typeRoom: this.typeRoom,
         status: this.selectedDataObtion.value || "โสด",
         typeAffiliation: this.typeAffiliation.value,
         typeRanks: this.typeRanks.value,
@@ -615,6 +612,7 @@ export default {
                               @click="getAllusersByid(item?.id)"
                               >เพิ่มผู้พักอาศัยเข้าห้องพัก</MaterialButton
                             >
+                            <!-- @click="getAllusersByid(item?.id)" -->
                           </td>
                         </tr>
                       </tbody>
@@ -993,7 +991,7 @@ export default {
             <MaterialButton
               variant="gradient"
               color="success"
-              @click="submitForm('normal'); getAllusersByid(item?.id)"
+              @click="submitForm('normal');"
               data-bs-dismiss="modal"
               html-type="submit"
               >บันทึก</MaterialButton
@@ -1034,15 +1032,15 @@ export default {
                   v-model="typeAffiliation"
                 ></v-select>
               </div>
-              <div class="mb-3" v-if="typeAffiliation.label == 'บก.อก.'">
-                <label>สังกัด {{ typeAffiliation.label }}</label>
+              <div class="mb-3" v-if="typeAffiliation?.label == 'บก.อก.'">
+                <label>สังกัด {{ typeAffiliation?.label }}</label>
                 <v-select
                   :options="masterData?.Affiliation"
                   v-model="selectedAffiliation"
                 ></v-select>
               </div>
-              <div class="mb-3" v-if="typeAffiliation.label == 'บก.สนน.'">
-                <label>สังกัด {{ typeAffiliation.label }}</label>
+              <div class="mb-3" v-if="typeAffiliation?.label == 'บก.สนน.'">
+                <label>สังกัด {{ typeAffiliation?.label }}</label>
                 <v-select
                   :options="masterData?.Affiliation2"
                   v-model="selectedAffiliation"
@@ -1052,19 +1050,19 @@ export default {
                 <label class="starRed">ลำดับยศ</label>
                 <v-select :options="masterData?.typeranks" v-model="typeRanks"></v-select>
               </div>
-              <div class="mb-3" v-if="typeRanks.label == 'ลูกจ้าง'">
-                <label> {{ typeRanks.label }}</label>
+              <div class="mb-3" v-if="typeRanks?.label == 'ลูกจ้าง'">
+                <label> {{ typeRanks?.label }}</label>
                 <v-select :options="masterData?.ranks" v-model="selectedRanks"></v-select>
               </div>
-              <div class="mb-3" v-if="typeRanks.label == 'ประทวน'">
-                <label> {{ typeRanks.label }}</label>
+              <div class="mb-3" v-if="typeRanks?.label == 'ประทวน'">
+                <label> {{ typeRanks?.label }}</label>
                 <v-select
                   :options="masterData?.ranks2"
                   v-model="selectedRanks"
                 ></v-select>
               </div>
-              <div class="mb-3" v-if="typeRanks.label == 'สัญญาบัตร'">
-                <label> {{ typeRanks.label }}</label>
+              <div class="mb-3" v-if="typeRanks?.label == 'สัญญาบัตร'">
+                <label> {{ typeRanks?.label }}</label>
                 <v-select
                   :options="masterData?.ranks3"
                   v-model="selectedRanks"

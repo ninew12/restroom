@@ -3005,20 +3005,20 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                          <tr v-for="(item, index) in AffiliationListTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item?.typeAffiliation || "-" }}</td>
-                            <td>{{ item?.maintenance || "-" }}</td>
-                            <td>{{ item?.waterbill || "-" }}</td>
-                            <td>{{ item?.electricitybill || "-" }}</td>
-                            <td>{{ item?.sumCostwaterbill || "-" }}</td>
+                            <td>{{ item?.value || "-" }}</td>
+                            <td>{{ item?.sumdataMaintenance || "-" }}</td>
+                            <td>{{ item?.sumdatawaterbill || "-" }}</td>
+                            <td>{{ item?.sumdataelectricitybill || "-" }}</td>
+                            <td>{{ item?.sumCostdatawaterbill || "-" }}</td>
                           </tr>
-                          <tr v-if="reportlistTD?.length > 0">
+                          <tr v-if="AffiliationListTD?.length > 0">
                             <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
-                            <th>{{ reportlistTD[0]?.waterbillSum }}</th>
-                            <th>{{ reportlistTD[0]?.electricitybillSum }}</th>
-                            <th>{{ reportlistTD[0]?.SumCostSumwater }}</th>
+                            <th>{{ AffiliationListTD[0]?.countMaintenanceAll || 0 }}</th>
+                            <th>{{ AffiliationListTD[0]?.countWaterbillAll }}</th>
+                            <th>{{ AffiliationListTD[0]?.countelectricitybillAll }}</th>
+                            <th>{{ AffiliationListTD[0]?.countCostwaterbillSumAll }}</th>
                           </tr>
                         </tbody>
                       </table>

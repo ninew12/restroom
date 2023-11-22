@@ -677,7 +677,7 @@ export default {
                                 <span
                                   v-if="item2?.roomStatus !== 'special'"
                                   style="text-align: right; font-size: small"
-                                  >{{ item2?.Affiliation }}</span
+                                  >{{ item2?.affiliation }}</span
                                 >
                                 <span
                                   v-if="item2?.roomStatus == 'special'"

@@ -128,6 +128,8 @@ export default {
             this.roomId = this.roomData.id;
             this.userId = this.roomData.userId;
             this.selectedRoomtype = this.roomData.typeRoom;
+            this.firstName = this.roomData.firstName,
+             this.lastName = this.roomData.lastName
             this.getHistoryRoom(this.roomData.id);
           })
           .catch((err) => {
@@ -143,7 +145,6 @@ export default {
         await axios
           .get(`http://localhost:3897/history/${id}`)
           .then((res) => {
-            console.log(res);
             if (res.data.customerOld == "คืนห้องพักแล้ว") {
               this.historyOld = res.data;
               this.historyOld["dateApproved"] = this.convertDateTolocal(
@@ -163,6 +164,7 @@ export default {
         console.error(error);
       }
     },
+
 
     convertDateTolocal(index) {
       if (index !== undefined && index !== "") {
@@ -234,6 +236,7 @@ export default {
         laststName: " ",
         ranks: " ",
         Affiliation: " ",
+        affiliation: " ",
         queue: "none",
         roomKey: this.roomKey,
         houseRegistration: this.houseRegistration,
@@ -296,9 +299,12 @@ export default {
       });
     },
 
+
     updatedataHistory() {
       let body = {
         deposit: "รอคืนเงินประกัน",
+        firstName : this.firstName,
+        lastName :  this.lastName,
         roomKey: this.roomKey,
         houseRegistration: this.houseRegistration,
         payMonth: this.payMonth,

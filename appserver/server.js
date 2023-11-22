@@ -401,9 +401,9 @@ app.post('/history', (req, res) => {
 })
 app.put('/history/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    const updateIndex = history.findIndex(user => user.id === (req.params.id))
+    const updateIndex = history.findIndex(user => user.roomId === (req.params.id))
     let dataOld = history[updateIndex]
-    let filterdata = history.filter(user => user.id !== (req.params.id))
+    let filterdata = history.filter(user => user.roomId !== (req.params.id))
     const parsedData = dataOld;
     if (req.body.firstName) parsedData.firstName = req.body.firstName
     if (req.body.lastName) parsedData.lastName = req.body.lastName
@@ -513,6 +513,10 @@ app.get('/report', (req, res) => {
 app.get('/report/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.json(reports.find(user => user.id === (req.params.id)))
+})
+app.get('/reportId/:id', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(reports.find(user => user.userId === (req.params.id)))
 })
 app.post('/report', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
