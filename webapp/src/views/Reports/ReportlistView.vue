@@ -238,6 +238,12 @@ export default {
       maintenanceAllcount: 0,
       insuranceAllcount: 0,
       sumAllcount: 0,
+      costsAllcount: 0,
+      CostCostsAllcount: 0,
+      centralAllcount: 0,
+      Costdatawaterbillcount: 0,
+      electricitybillAllcount: 0,
+      waterbillAllcount: 0,
     };
   },
   created() {
@@ -268,8 +274,8 @@ export default {
         const result = this.dateData.toLocaleDateString("th-TH", {
           year: "numeric",
         });
-        let m = newValue.label
-        this.monthYear = newValue.label + " " + this.thaiNumber(result,'year');
+        let m = newValue.label;
+        this.monthYear = newValue.label + " " + this.thaiNumber(result, "year");
         this.getReport(m, this.yearNumber);
       }
     },
@@ -293,7 +299,7 @@ export default {
       const result = today.toLocaleDateString("th-TH", {
         year: "numeric",
       });
-      this.monthYear = m + " " + this.thaiNumber(result,'year');
+      this.monthYear = m + " " + this.thaiNumber(result, "year");
       await this.getReport(m, this.yearNumber);
     },
 
@@ -331,14 +337,15 @@ export default {
             let data3 = res.data;
             let data4 = res.data;
             this.reportList = res.data;
-            
+
             data5 = data3.filter(
               (el6) =>
                 el6.typeAffiliation == "บช.ตชด." ||
                 (el6.typeAffiliation == "บก.อก." && el6.monthly == m && el6.years == y)
             );
             data6 = data3.filter(
-              (el5) => el5.typeAffiliation == "ลูกจ้าง" && el5.monthly == m && el5.years == y
+              (el5) =>
+                el5.typeAffiliation == "ลูกจ้าง" && el5.monthly == m && el5.years == y
             );
             data7 = data3.filter(
               (el4) =>
@@ -366,6 +373,12 @@ export default {
                 sumdataMaintenance: this.MaintenanceSumAll(data5),
                 sumdataInsurance: this.InsuranceSumAll(data5),
                 sumCostdataInsurance: this.SumCostSumInsuranceAll(data5),
+                sumdatawaterbill: this.WaterbillSum(data5),
+                sumdataelectricitybill: this.ElectricitybillSum(data5),
+                sumCostdatawaterbill: this.SumCostSumwater(data5),
+                sumdatacentral: this.CentralSum(data5),
+                sumdatacosts: this.CostsSum(data5),
+                sumCostdataCostCosts: this.SumCostSumCentral(data5),
               };
             });
             this.sumreportlistAll2 = data6.map((x) => {
@@ -375,6 +388,12 @@ export default {
                 sumdataMaintenance: this.MaintenanceSumAll(data6),
                 sumdataInsurance: this.InsuranceSumAll(data6),
                 sumCostdataInsurance: this.SumCostSumInsuranceAll(data6),
+                sumdatawaterbill: this.WaterbillSum(data6),
+                sumdataelectricitybill: this.ElectricitybillSum(data6),
+                sumCostdatawaterbill: this.SumCostSumwater(data6),
+                sumdatacentral: this.CentralSum(data6),
+                sumdatacosts: this.CostsSum(data6),
+                sumCostdataCostCosts: this.SumCostSumCentral(data6),
               };
             });
             this.sumreportlistAll3 = data7.map((x) => {
@@ -384,6 +403,12 @@ export default {
                 sumdataMaintenance: this.MaintenanceSumAll(data7),
                 sumdataInsurance: this.InsuranceSumAll(data7),
                 sumCostdataInsurance: this.SumCostSumInsuranceAll(data7),
+                sumdatawaterbill: this.WaterbillSum(data7),
+                sumdataelectricitybill: this.ElectricitybillSum(data7),
+                sumCostdatawaterbill: this.SumCostSumwater(data7),
+                sumdatacentral: this.CentralSum(data7),
+                sumdatacosts: this.CostsSum(data7),
+                sumCostdataCostCosts: this.SumCostSumCentral(data7),
               };
             });
             (this.maintenanceAllcount =
@@ -400,6 +425,36 @@ export default {
                 this.sumreportlistAll[0].sumCostdataInsurance ||
                 0 + this.sumreportlistAll2[0].sumCostdataInsurance ||
                 0 + this.sumreportlistAll3[0].sumCostdataInsurance ||
+                0);
+            (this.waterbillAllcount =
+              this.sumreportlistAll[0].sumdatawaterbill ||
+              0 + this.sumreportlistAll2[0].sumdatawaterbill ||
+              0 + this.sumreportlistAll3[0].sumdatawaterbill ||
+              0),
+              (this.electricitybillAllcount =
+                this.sumreportlistAll[0].sumdataelectricitybill ||
+                0 + this.sumreportlistAll2[0].sumdataelectricitybill ||
+                0 + this.sumreportlistAll3[0].sumdataelectricitybill ||
+                0),
+              (this.Costdatawaterbillcount =
+                this.sumreportlistAll[0].sumCostdatawaterbill ||
+                0 + this.sumreportlistAll2[0].sumCostdatawaterbill ||
+                0 + this.sumreportlistAll3[0].sumCostdatawaterbill ||
+                0);
+            (this.centralAllcount =
+              this.sumreportlistAll[0].sumdatacentral ||
+              0 + this.sumreportlistAll2[0].sumdatacentral ||
+              0 + this.sumreportlistAll3[0].sumdatacentral ||
+              0),
+              (this.costsAllcount =
+                this.sumreportlistAll[0].sumdatacosts ||
+                0 + this.sumreportlistAll2[0].sumdatacosts ||
+                0 + this.sumreportlistAll3[0].sumdatacosts ||
+                0),
+              (this.CostCostsAllcount =
+                this.sumreportlistAll[0].sumCostdataCostCosts ||
+                0 + this.sumreportlistAll2[0].sumCostdataCostCosts ||
+                0 + this.sumreportlistAll3[0].sumCostdataCostCosts ||
                 0);
           })
           .catch((err) => {
@@ -429,7 +484,7 @@ export default {
         data15,
         data16,
         data17 = [];
-        if (this.datalistTD.length > 0) {
+      if (this.datalistTD.length > 0) {
         data = listTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
         let sumCostdataInsuranceAll = this.SumCostSumInsuranceAll(data);
         let sumdataInsuranceAll = this.InsuranceSumAll(data);
@@ -791,18 +846,22 @@ export default {
 
           return el;
         });
-        this.AffiliationListTD.map(e => {
+        this.AffiliationListTD.map((e) => {
           e["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListTD);
           e["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListTD);
           e["countCostSumAll"] = this.countCostSumAll(this.AffiliationListTD);
           e["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListTD);
-          e["countelectricitybillAll"] = this.countelectricitybillAll(this.AffiliationListTD);
-          e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(this.AffiliationListTD);
+          e["countelectricitybillAll"] = this.countelectricitybillAll(
+            this.AffiliationListTD
+          );
+          e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(
+            this.AffiliationListTD
+          );
           e["countcentraAll"] = this.countcentralAll(this.AffiliationListTD);
           e["countcostsAll"] = this.countcostsAll(this.AffiliationListTD);
           e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListTD);
-          return e
-        })
+          return e;
+        });
       }
     },
 
@@ -1280,21 +1339,25 @@ export default {
             el["sumdatacosts"] = sumdata17costsSumAll;
             el["sumCostdataCostCosts"] = sumdata17CostCostsSumAll;
           }
-          
+
           return el;
         });
-        this.AffiliationListCTD.map(e => {
+        this.AffiliationListCTD.map((e) => {
           e["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListCTD);
           e["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListCTD);
           e["countCostSumAll"] = this.countCostSumAll(this.AffiliationListCTD);
           e["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListCTD);
-          e["countelectricitybillAll"] = this.countelectricitybillAll(this.AffiliationListCTD);
-          e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(this.AffiliationListCTD);
+          e["countelectricitybillAll"] = this.countelectricitybillAll(
+            this.AffiliationListCTD
+          );
+          e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(
+            this.AffiliationListCTD
+          );
           e["countcentraAll"] = this.countcentralAll(this.AffiliationListCTD);
           e["countcostsAll"] = this.countcostsAll(this.AffiliationListCTD);
           e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListCTD);
-          return e
-        })
+          return e;
+        });
       }
     },
 
@@ -1363,7 +1426,10 @@ export default {
           accumulatedSum: this.AccumulatedSum(data),
           waterbill: el.waterbill || 0,
           electricitybill: el.electricitybill || 0,
-          Installmenttime: this.checkMonth(el.dateApproved|| new Date(), el.installments),
+          Installmenttime: this.checkMonth(
+            el.dateApproved || new Date(),
+            el.installments
+          ),
         };
       });
 
@@ -1394,7 +1460,10 @@ export default {
           accumulatedSum: this.AccumulatedSum(data2),
           waterbill: el2.waterbill || 0,
           electricitybill: el2.electricitybill || 0,
-          Installmenttime: this.checkMonth(el2.dateApproved|| new Date(), el2.installments),
+          Installmenttime: this.checkMonth(
+            el2.dateApproved || new Date(),
+            el2.installments
+          ),
         };
       });
       await this.mapdataSum(arr, arr2);
@@ -1465,8 +1534,8 @@ export default {
     async mapdataSumTable(data, data2) {
       let arr = [];
       let arr2 = [];
-      this.datalistCTD = []
-      this.datalistTD = []
+      this.datalistCTD = [];
+      this.datalistTD = [];
       arr = await data.map((el) => {
         return {
           ...el,
@@ -1493,8 +1562,8 @@ export default {
     async mapDataComma(data, data2) {
       let arr3 = [];
       let arr4 = [];
-      this.reportlistCTD = []
-      this.reportlistTD = []
+      this.reportlistCTD = [];
+      this.reportlistTD = [];
       arr3 = await data.map((el2) => {
         return {
           ...el2,
@@ -1783,11 +1852,11 @@ export default {
       }, 0);
     },
 
-    thaiNumber(num,index) {
-      let convertNumber
-      if(index !== 'year'){
-         convertNumber = this.numberWithCommas(num);
-      }else{
+    thaiNumber(num, index) {
+      let convertNumber;
+      if (index !== "year") {
+        convertNumber = this.numberWithCommas(num);
+      } else {
         convertNumber = num;
       }
       var array = {
@@ -1833,7 +1902,7 @@ export default {
           insurance: this.thaiNumber(e.insurance),
         };
       });
-      
+
       var footer = [
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
@@ -1885,7 +1954,7 @@ export default {
       let listData = [];
       if (this.typeReport == "ตร.") listData = this.reportListTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
-      
+
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
@@ -3035,8 +3104,12 @@ export default {
                             <th scope="row" colspan="2">รวมเงิน</th>
                             <th>{{ AffiliationListTD[0]?.countMaintenanceAll || 0 }}</th>
                             <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
-                            <th>{{ AffiliationListTD[0]?.countelectricitybillAll ||0}}</th>
-                            <th>{{ AffiliationListTD[0]?.countCostwaterbillAll ||0}}</th>
+                            <th>
+                              {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
+                            </th>
+                            <th>
+                              {{ AffiliationListTD[0]?.countCostwaterbillAll || 0 }}
+                            </th>
                           </tr>
                         </tbody>
                       </table>
@@ -3274,18 +3347,18 @@ export default {
                           </tr>
                         </thead>
                         <tr v-for="(item, index) in AffiliationListTD" :key="index">
-                            <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item?.value || "-" }}</td>
-                            <td>{{ item?.sumdatacentral || "-" }}</td>
-                            <td>{{ item?.sumdatacosts || "-" }}</td>
-                            <td>{{ item?.sumCostdataCostCosts || "-" }}</td>
-                          </tr>
-                          <tr v-if="AffiliationListTD?.length > 0">
-                            <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>{{ AffiliationListTD[0]?.countcentraAll || 0 }}</th>
-                            <th>{{ AffiliationListTD[0]?.countcostsAll ||0}}</th>
-                            <th>{{ AffiliationListTD[0]?.countCostCostsSumAll ||0}}</th>
-                          </tr>
+                          <th scope="row">{{ index + 1 }}</th>
+                          <td>{{ item?.value || "-" }}</td>
+                          <td>{{ item?.sumdatacentral || "-" }}</td>
+                          <td>{{ item?.sumdatacosts || "-" }}</td>
+                          <td>{{ item?.sumCostdataCostCosts || "-" }}</td>
+                        </tr>
+                        <tr v-if="AffiliationListTD?.length > 0">
+                          <th scope="row" colspan="2">รวมเงิน</th>
+                          <th>{{ AffiliationListTD[0]?.countcentraAll || 0 }}</th>
+                          <th>{{ AffiliationListTD[0]?.countcostsAll || 0 }}</th>
+                          <th>{{ AffiliationListTD[0]?.countCostCostsSumAll || 0 }}</th>
+                        </tr>
                       </table>
                     </div>
                     <div
@@ -3531,15 +3604,51 @@ export default {
                             <th>รวม</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
-                            <td>{{ item?.buildingName || "-" }}</td>
-                            <td>{{ item?.roomnumber }}</td>
-                            <td>{{ item?.maintenance || "-" }}</td>
-                            <td>{{ item?.amountPaid || "-" }}</td>
-                            <td>{{ item?.Installmenttime || "-" }}</td>
-                          </tr>
-                        </tbody>
+                        <tr>
+                          <td>{{ "อำนวยการ" || "-" }}</td>
+                          <td>{{ sumreportlistAll[0]?.sumdataMaintenance || "-" }}</td>
+                          <td>{{ sumreportlistAll[0]?.sumdatawaterbill || "-" }}</td>
+                          <td>
+                            {{ sumreportlistAll[0]?.sumdataelectricitybill || "-" }}
+                          </td>
+                          <td>
+                            {{ sumreportlistAll[0]?.sumCostdatawaterbill || "-" }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>{{ "สนับสนุน" || "-" }}</td>
+                          <td>{{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}</td>
+                          <td>{{ sumreportlistAll2[0]?.sumdatawaterbill || "-" }}</td>
+                          <td>
+                            {{ sumreportlistAll2[0]?.sumdataelectricitybill || "-" }}
+                          </td>
+                          <td>
+                            {{ sumreportlistAll2[0]?.sumCostdatawaterbill || "-" }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>{{ "ลูกจ้าง" || "-" }}</td>
+                          <td>{{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}</td>
+                          <td>{{ sumreportlistAll2[0]?.sumdatawaterbill || "-" }}</td>
+                          <td>
+                            {{ sumreportlistAll2[0]?.sumdataelectricitybill || "-" }}
+                          </td>
+                          <td>
+                            {{ sumreportlistAll2[0]?.sumCostdatawaterbill || "-" }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>{{ "รวม" || "-" }}</td>
+                          <td>
+                            {{ maintenanceAllcount }}
+                          </td>
+                          <td>
+                            {{ waterbillAllcount }}
+                          </td>
+                          <td>
+                            {{ Costdatawaterbillcount }}
+                          </td>
+                        </tr>
                       </table>
                     </div>
                     <div class="text-center pt-4 table-responsive">
@@ -3562,11 +3671,41 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
-                            <td>{{ item?.buildingName || "-" }}</td>
-                            <td>{{ item?.centralSum }}</td>
-                            <td>{{ item?.maintenance || "-" }}</td>
-                            <td>{{ item?.amountPaid || "-" }}</td>
+                          <tr>
+                            <td>{{ "อำนวยการ" || "-" }}</td>
+                            <td>{{ sumreportlistAll[0]?.sumdatacentral || "-" }}</td>
+                            <td>{{ sumreportlistAll[0]?.sumdatacosts || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll[0]?.sumCostdataCostCosts || "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{{ "สนับสนุน" || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdatacentral || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdatacosts || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll2[0]?.sumCostdataCostCosts || "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{{ "ลูกจ้าง" || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdatacentral || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdatacosts || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll2[0]?.sumCostdataCostCosts || "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{{ "รวม" || "-" }}</td>
+                            <td>
+                              {{ centralAllcount }}
+                            </td>
+                            <td>
+                              {{ costsAllcount }}
+                            </td>
+                            <td>
+                              {{ CostCostsAllcount }}
+                            </td>
                           </tr>
                         </tbody>
                       </table>
@@ -3589,10 +3728,10 @@ export default {
                         </thead>
                         <tbody>
                           <tr v-for="(item, index) in reportlistTD" :key="index">
-                            <td>{{ item?.buildingName || "-" }}</td>
-                            <td>{{ item?.roomnumber }}</td>
-                            <td>{{ item?.maintenance || "-" }}</td>
-                            <td>{{ item?.Installmenttime || "-" }}</td>
+                            <td>{{ "-" }}</td>
+                            <td>{{ "-" }}</td>
+                            <td>{{ "-" }}</td>
+                            <td>{{ "-" }}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -4323,8 +4462,12 @@ export default {
                             <th scope="row" colspan="2">รวมเงิน</th>
                             <th>{{ AffiliationListTD[0]?.countMaintenanceAll || 0 }}</th>
                             <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
-                            <th>{{ AffiliationListTD[0]?.countelectricitybillAll ||0}}</th>
-                            <th>{{ AffiliationListTD[0]?.countCostwaterbillAll ||0}}</th>
+                            <th>
+                              {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
+                            </th>
+                            <th>
+                              {{ AffiliationListTD[0]?.countCostwaterbillAll || 0 }}
+                            </th>
                           </tr>
                         </tbody>
                       </table>
