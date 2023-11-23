@@ -144,19 +144,19 @@ export default {
 
     countinstallments(e) {
       let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
+      let c = e.insurance - parseInt(e.amountPaid || 0)  // จำนวนเงินคงเหลือ
       let b = c / a; //จำนวนงวดคงเหลือ
       let d = e.installments - b;
       return a * d || 0;
     },
 
     countinsamountPaid(e) {
-      return e.insurance - e.amountPaid || 0;
+      return e.insurance - parseInt(e.amountPaid || 0)  || 0;
     },
 
     countinsamaintenance(e) {
       let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
+      let c = e.insurance - parseInt(e.amountPaid || 0) ; // จำนวนเงินคงเหลือ
       let b = c / a; //จำนวนงวดคงเหลือ
       return b || 0;
     },
@@ -206,24 +206,31 @@ export default {
     },
 
     async loopData() {
-      await this.expensesList.forEach((element) => {
-        this.submitForm(element);
-      });
+      // await this.expensesList.forEach((element) => {
+      //   this.submitForm(element);
+      // });
+      for (let index = 0; index < 10 ; index++) {
+        // this.submitForm(this.expensesLis[index]);
+        let ele = this.expensesList[index]
+        this.submitForm(ele)
+      }
     },
 
     callInsurance(e) {
       let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = parseInt(e.amountPaid) + parseInt(a); // จำนวนจ่ายแล้ว
+      let c = parseInt(e.amountPaid || 0) + parseInt(a); // จำนวนจ่ายแล้ว
       return c;
     },
 
     async submitForm(index) {
       let id = index.id;
+      console.log(index);
       let body = {
-        amountPaid: index.amountPaid,
+        amountPaid: index.amountPaid || 0,
         monthly: this.months,
         years: this.years
       };
+      console.log(body);
       await axios
         .put(`http://localhost:3897/users/${id}`, body, {
           headers: {
@@ -246,9 +253,9 @@ export default {
     },
 
     async submitRoom(index) {
-      let id = index.id;
+      let id = index.roomId;
       let body = {
-        amountPaid: index.amountPaid,
+        amountPaid: index.amountPaid || 0,
         monthly:this.months,
         years:this.years
       };
@@ -264,11 +271,11 @@ export default {
     async saveToreport(index) {
       let id = index.id;
       let body = {
-        amountPaid: index.amountPaid,
+        amountPaid: index.amountPaid || 0,
         monthly :this.months,
         years: this.years
       };
-      await axios.put(`http://localhost:3897/report/${id}`, body, {
+      await axios.put(`http://localhost:3897/reportUser/${id}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",

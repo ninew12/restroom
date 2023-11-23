@@ -596,6 +596,60 @@ app.put('/report/:id', (req, res) => {
     res.send(`Update user id: '${req.params.id}' completed.`)
 })
 
+app.put('/reportUser/:id', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    const updateIndex = reports.findIndex(user => user.userId === (req.params.id))
+    let dataOld = reports[updateIndex]
+    let filterdata = reports.filter(user => user.userId !== (req.params.id))
+    const parsedData = dataOld;
+    if (req.body.firstName) parsedData.firstName = req.body.firstName
+    if (req.body.lastName) parsedData.lastName = req.body.lastName
+    if (req.body.affiliation) parsedData.affiliation = req.body.affiliation
+    if (req.body.rank) parsedData.rank = req.body.rank
+    if (req.body.idcard) parsedData.idcard = req.body.idcard
+    if (req.body.phone) parsedData.phone = req.body.phone
+    if (req.body.status) parsedData.status = req.body.status
+    if (req.body.typeAffiliation) parsedData.typeAffiliation = req.body.typeAffiliation
+    if (req.body.typeRanks) parsedData.typeRanks = req.body.typeRanks
+    if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
+    if (req.body.monthly) parsedData.monthly = req.body.monthly
+    if (req.body.numberfirst) parsedData.numberfirst = req.body.numberfirst
+    if (req.body.lastnumber) parsedData.lastnumber = req.body.lastnumber
+    if (req.body.houseRegistration) parsedData.houseRegistration = req.body.houseRegistration
+    if (req.body.payMonth) parsedData.payMonth = req.body.payMonth
+    if (req.body.roomKey) parsedData.roomKey = req.body.roomKey
+    if (req.body.houseRegistrationcause) parsedData.houseRegistrationcause = req.body.houseRegistrationcause
+    if (req.body.payMonthcause) parsedData.payMonthcause = req.body.payMonthcause
+    if (req.body.payMonthcausetwo) parsedData.payMonthcausetwo = req.body.payMonthcausetwo
+    if (req.body.roomKeycause) parsedData.roomKeycause = req.body.roomKeycause
+    if (req.body.dateApproved) parsedData.dateApproved = req.body.dateApproved
+    if (req.body.insurance) parsedData.insurance = req.body.insurance
+    if (req.body.installments) parsedData.installments = req.body.installments
+    if (req.body.maintenance) parsedData.maintenance = req.body.maintenance
+    if (req.body.deposit) parsedData.deposit = req.body.deposit
+    if (req.body.roomId) parsedData.roomId = req.body.roomId
+    if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
+    if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
+    if (req.body.queue) parsedData.queue = req.body.queue
+    if (req.body.userId) parsedData.userId = req.body.userId
+    if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
+    if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
+    if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
+    if (req.body.years) parsedData.years = req.body.years
+    if (req.body.leniency) parsedData.leniency = req.body.leniency
+    if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
+    
+    filterdata.push(parsedData)
+    fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
+        if (err) {
+            console.log("Failed to write updated data to file");
+            return;
+        }
+        console.log("Updated file successfully");
+    });
+    res.send(`Update user id: '${req.params.id}' completed.`)
+})
+
 app.delete('/report/:id', (req, res) => {
     const deletedIndex = reports.findIndex(user => user.id === Number(req.params.id))
     res.send(`Delete user '${users[deletedIndex].username}' completed.`)
