@@ -99,7 +99,9 @@ export default {
     async getExpenses() {
       try {
         await axios
-          .get("http://localhost:3897/expensesMock")
+          // .get("http://localhost:3897/expensesMock")
+          // .get("http://localhost:3897/users")
+          .get("http://localhost:3897/expenses")
           .then((res) => {
             let data = [];
             let arr = [];
@@ -130,6 +132,7 @@ export default {
             });
 
             // this.expensesList = data2;
+            console.log(data2)
             this.expensesListFix = data2
       // console.log(this.expensesListFix);
           })
@@ -142,15 +145,27 @@ export default {
     },
 
     countSum(e) {
+      try {
       return e.lastnumber - e.numberfirst || 0;
+        
+      } catch (error) {
+        console.log("error:::")
+        console.lgo(error)
+      }
     },
 
     countinstallments(e) {
+      try {
       let a = e.insurance / e.installments; // จำนวนเงินต่องวด
       let c = e.insurance - parseInt(e.amountPaid || 0)  // จำนวนเงินคงเหลือ
       let b = c / a; //จำนวนงวดคงเหลือ
       let d = e.installments - b;
       return a * d || 0;
+      } catch (error) {
+        console.log("error:::")
+          console.log(error)
+      }
+
     },
 
     countinsamountPaid(e) {
@@ -158,10 +173,16 @@ export default {
     },
 
     countinsamaintenance(e) {
-      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
+      try {
+           let a = e.insurance / e.installments; // จำนวนเงินต่องวด
       let c = e.insurance - parseInt(e.amountPaid || 0) ; // จำนวนเงินคงเหลือ
       let b = c / a; //จำนวนงวดคงเหลือ
       return b || 0;
+      } catch (error) {
+        console.log("error:::")
+        console.log(error)
+      }
+   
     },
 
     async getRoomsByid(id) {
