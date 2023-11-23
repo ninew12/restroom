@@ -62,6 +62,7 @@ export default {
       id: "",
       months: "",
       openBtn: false,
+      expensesListFix: [],
     };
   },
   created() {
@@ -98,16 +99,16 @@ export default {
     async getExpenses() {
       try {
         await axios
-          .get("http://localhost:3897/expenses")
+          .get("http://localhost:3897/expensesMock")
           .then((res) => {
             let data = [];
             let arr = [];
+            let arr2 = [];
             let data2 = [];
-            this.expensesListOld = res.data;
-            this.expensesList = res.data;
-            data = this.expensesList.filter((ele) => ele.typeUser == "บช.ตชด.");
-            arr = data.filter((ele) => ele.queue == "inroom");
-            data2 = arr.map((el) => {
+            // this.expensesListOld = res.data;
+            this.expensesListFix = res.data;
+            data = this.expensesListFix.filter((ele) => ele.typeUser == "บช.ตชด." && ele.queue == "inroom" );
+            data2 = data.map((el) => {
               return {
                 ...el,
                 sumCost: this.countSum(el),
@@ -128,7 +129,9 @@ export default {
               }
             });
 
-            this.expensesList = data2;
+            // this.expensesList = data2;
+            this.expensesListFix = data2
+      // console.log(this.expensesListFix);
           })
           .catch((err) => {
             console.log(err);
@@ -194,26 +197,26 @@ export default {
     async genInsurance() {
       let arr = [];
       let data = [];
-      arr = this.expensesList;
+      arr = this.expensesListFix;
       data = await arr.map((el) => {
         return {
           ...el,
           amountPaid: this.callInsurance(el),
         };
       });
-      this.expensesList = data;
+      this.expensesListFix = data;
       this.loopData();
     },
 
     async loopData() {
-      // await this.expensesList.forEach((element) => {
-      //   this.submitForm(element);
-      // });
-      for (let index = 0; index < 10 ; index++) {
-        // this.submitForm(this.expensesLis[index]);
-        let ele = this.expensesList[index]
-        this.submitForm(ele)
-      }
+      await this.expensesListFix.forEach((element) => {
+        this.submitForm(element);
+      });
+      // for (let index = 0; index < 10 ; index++) {
+      //   // this.submitForm(this.expensesLis[index]);
+      //   let ele = this.expensesList[index]
+      //   this.submitForm(ele)
+      // }
     },
 
     callInsurance(e) {
@@ -224,7 +227,6 @@ export default {
 
     async submitForm(index) {
       let id = index.id;
-      console.log(index);
       let body = {
         amountPaid: index.amountPaid || 0,
         monthly: this.months,
@@ -232,7 +234,7 @@ export default {
       };
       console.log(body);
       await axios
-        .put(`http://localhost:3897/users/${id}`, body, {
+        .put(`http://localhost:3897/expenses/${id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -362,7 +364,7 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, index) in this.expensesList" :key="index">
+                <tr v-for="(item, index) in this.expensesListFix" :key="index">
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.maintenance || "-" }}</td>
                   <td>{{ item?.insurance || "-" }}</td>
