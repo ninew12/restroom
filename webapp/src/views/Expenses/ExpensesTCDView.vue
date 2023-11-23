@@ -99,15 +99,17 @@ export default {
     async getExpenses() {
       try {
         await axios
-          .get("http://localhost:3897/expensesMock")
+          .get("http://localhost:3897/expenses")
           .then((res) => {
             let data = [];
             let arr = [];
             let arr2 = [];
             let data2 = [];
-            // this.expensesListOld = res.data;
-            this.expensesListFix = res.data;
-            data = this.expensesListFix.filter((ele) => ele.typeUser == "บช.ตชด." && ele.queue == "inroom" );
+            this.expensesListOld = res.data;
+            this.expensesList = res.data;
+            data = this.expensesList.filter(
+              (ele) => ele.typeUser == "บช.ตชด." && ele.queue == "inroom"
+            );
             data2 = data.map((el) => {
               return {
                 ...el,
@@ -130,8 +132,8 @@ export default {
             });
 
             // this.expensesList = data2;
-            this.expensesListFix = data2
-      // console.log(this.expensesListFix);
+            this.expensesList = data2;
+            // console.log(this.expensesListFix);
           })
           .catch((err) => {
             console.log(err);
@@ -147,19 +149,19 @@ export default {
 
     countinstallments(e) {
       let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = e.insurance - parseInt(e.amountPaid || 0)  // จำนวนเงินคงเหลือ
+      let c = e.insurance - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
       let b = c / a; //จำนวนงวดคงเหลือ
       let d = e.installments - b;
       return a * d || 0;
     },
 
     countinsamountPaid(e) {
-      return e.insurance - parseInt(e.amountPaid || 0)  || 0;
+      return e.insurance - parseInt(e.amountPaid || 0) || 0;
     },
 
     countinsamaintenance(e) {
       let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = e.insurance - parseInt(e.amountPaid || 0) ; // จำนวนเงินคงเหลือ
+      let c = e.insurance - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
       let b = c / a; //จำนวนงวดคงเหลือ
       return b || 0;
     },
@@ -170,7 +172,7 @@ export default {
         await axios
           .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
-              this.userByid = res.data;
+            this.userByid = res.data;
               this.rank = this.userByid.rank;
               this.firstName = this.userByid.firstName,
               this.lastName = this.userByid.firstName;
@@ -197,26 +199,21 @@ export default {
     async genInsurance() {
       let arr = [];
       let data = [];
-      arr = this.expensesListFix;
+      arr = this.expensesList;
       data = await arr.map((el) => {
         return {
           ...el,
           amountPaid: this.callInsurance(el),
         };
       });
-      this.expensesListFix = data;
+      this.expensesList = data;
       this.loopData();
     },
 
     async loopData() {
-      await this.expensesListFix.forEach((element) => {
+      await this.expensesList.forEach((element) => {
         this.submitForm(element);
       });
-      // for (let index = 0; index < 10 ; index++) {
-      //   // this.submitForm(this.expensesLis[index]);
-      //   let ele = this.expensesList[index]
-      //   this.submitForm(ele)
-      // }
     },
 
     callInsurance(e) {
@@ -230,11 +227,10 @@ export default {
       let body = {
         amountPaid: index.amountPaid || 0,
         monthly: this.months,
-        years: this.years
+        years: this.years,
       };
-      console.log(body);
       await axios
-        .put(`http://localhost:3897/expenses/${id}`, body, {
+        .put(`http://localhost:3897/users/${id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -246,7 +242,7 @@ export default {
           //   type: "success",
           // });
           this.saveToreport(index);
-          this.submitRoom(index)
+          this.submitRoom(index);
           this.getExpenses();
         })
         .catch((err) => {
@@ -258,24 +254,23 @@ export default {
       let id = index.roomId;
       let body = {
         amountPaid: index.amountPaid || 0,
-        monthly:this.months,
-        years:this.years
+        monthly: this.months,
+        years: this.years,
       };
-      await axios
-        .put(`http://localhost:3897/rooms/${id}`, body, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        })
+      await axios.put(`http://localhost:3897/rooms/${id}`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
     },
 
     async saveToreport(index) {
       let id = index.id;
       let body = {
         amountPaid: index.amountPaid || 0,
-        monthly :this.months,
-        years: this.years
+        monthly: this.months,
+        years: this.years,
       };
       await axios.put(`http://localhost:3897/reportUser/${id}`, body, {
         headers: {
@@ -338,7 +333,7 @@ export default {
             </a>
           </div>
           <h4>บันทึกค่าใช้จ่ายรายเดือน บช.ตชด. &nbsp; ประจำเดือน {{ months }}</h4>
-          <notifications class="pt-6 " position="top center" width="400px" />
+          <notifications class="pt-6" position="top center" width="400px" />
           <div class="d-flex justify-content-end align-items-baseline pt-1">
             <MaterialButton
               style="margin-bottom: 0px"
@@ -364,7 +359,7 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, index) in this.expensesListFix" :key="index">
+                <tr v-for="(item, index) in this.expensesList" :key="index">
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.maintenance || "-" }}</td>
                   <td>{{ item?.insurance || "-" }}</td>
