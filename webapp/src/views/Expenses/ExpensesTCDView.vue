@@ -232,6 +232,7 @@ export default {
 
     async loopData() {
       await this.expensesList.forEach((element) => {
+        console.log(element);
         this.submitForm(element);
       });
     },
@@ -271,6 +272,7 @@ export default {
     },
 
     async submitRoom(index) {
+      console.log(index);
       let id = index.roomId;
       let body = {
         amountPaid: index.amountPaid || 0,

@@ -68,7 +68,7 @@ export default {
       userId: "",
       reportId: "",
       maintenancefee:"",
-      roomnumber: ''
+      Roomnumber: ''
     };
   },
   created() {
@@ -161,9 +161,9 @@ export default {
             this.Costs = this.userByid.Costs,
             this.typeContract = this.userByid.typeContract,
             this.contractExpenses = this.userByid.contractExpenses,
-            this.roomnumber = this.userByid.roomnumber,
             this.sumCost = this.userByid.sumCost;
             this.maintenancefee = this.userByid.maintenancefee
+            this.Roomnumber = this.userByid.roomnumber
             if(this.userByid.numberfirst == undefined){
               this.numberfirst =  0
             }else{
@@ -214,7 +214,7 @@ export default {
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
         electricitybill: this.Electricitybill,
-        roomnumber: this.roomnumber,
+        roomnumber: this.Roomnumber,
         central: this.Central,
         costs: this.Costs,
         typeContract: this.typeContract,
@@ -261,7 +261,7 @@ export default {
         status: this.userByid.status,
         typeAffiliation: this.userByid.typeAffiliation,
         typeRanks: this.userByid.typeRanks,
-        roomnumber: this.userByid.roomnumber,
+        roomnumber: this.Roomnumber,
         pickedBook: this.dateData.toISOString(),
         buildingType: this.buildingType,
         firstName: this.userByid.firstName,
@@ -279,6 +279,7 @@ export default {
         monthly: this.months,
         years: this.years,
       };
+      console.log(body);
       await axios.post(`http://localhost:3897/report/`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -296,7 +297,7 @@ export default {
         numberfirst: this.numberfirst,
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
-        roomnumber: this.roomnumber,
+        roomnumber: this.Roomnumber,
         electricitybill: this.Electricitybill,
         central: this.Central,
         costs: this.Costs,
@@ -307,6 +308,7 @@ export default {
         monthly: this.months,
         years: this.years,
       };
+      console.log(body);
       await axios.put(`http://localhost:3897/report/${this.reportId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -393,6 +395,7 @@ export default {
                   <!-- 
                   <th scope="col">ชั้น</th>
                   <th scope="col">เลขที่ห้อง</th> -->
+                  <th scope="col">เลขที่ห้อง</th>
                   <th scope="col">เลขก่อน</th>
                   <th scope="col">เลขหลัง</th>
                   <th scope="col">ยอดใช้</th>
@@ -422,6 +425,7 @@ export default {
                   </td>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.buildingType }}</td>
+                  <td>{{ item?.roomnumber }}</td>
                   <td>{{ item?.numberfirst }}</td>
                   <td>{{ item?.lastnumber }}</td>
                   <td>{{ item?.sumCost }}</td>
@@ -501,11 +505,21 @@ export default {
               </div>
               <div class="mb-3">
                 <MaterialInput
+                  :value="Roomnumber"
+                  @input="(event) => (Roomnumber = event.target.value)"
+                  class="input-group-static"
+                  label="เลขที่ห้อง"
+                  type="text"
+                  placeholder="เลขที่ห้อง"
+                />
+              </div>
+              <div class="mb-3">
+                <MaterialInput
                   :value="numberfirst"
                   @input="(event) => (numberfirst = event.target.value)"
                   class="input-group-static"
                   label="เลขก่อน"
-                  type="text"
+                  type="number"
                   placeholder="เลขก่อน"
                 />
               </div>
@@ -515,7 +529,7 @@ export default {
                   :value="lastnumber"
                   @input="(event) => (lastnumber = event.target.value)"
                   class="input-group-static"
-                  type="text"
+                  type="number"
                   placeholder="เลขหลัง"
                 />
               </div>

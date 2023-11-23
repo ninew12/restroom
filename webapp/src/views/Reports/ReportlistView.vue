@@ -46,6 +46,76 @@ export default {
         { label: "พฤศจิกายน", value: "11" },
         { label: "ธันวาคม", value: "12" },
       ],
+      AffiliationListOld: [
+        {
+          label: "บช.ตชด.",
+          value: "บช.ตชด.",
+        },
+        {
+          label: "บก.อก.",
+          value: "บก.อก.บช.ตชด.",
+        },
+        {
+          label: "บก.สนน.",
+          value: "บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.1",
+          value: "ฝอ.1 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.2",
+          value: "ฝอ.2 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.3",
+          value: "ฝอ.3 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.4",
+          value: "ฝอ.4 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.5",
+          value: "ฝอ.5 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.6",
+          value: "ฝอ.6 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.7",
+          value: "ฝอ.7 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝอ.8",
+          value: "ฝอ.8 บก.อก.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.1",
+          value: "ฝสสน.1 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.2",
+          value: "ฝสสน.2 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.3",
+          value: "ฝสสน.3 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.4",
+          value: "ฝสสน.4 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ฝสสน.5",
+          value: "ฝสสน.5 บก.สสน.บช.ตชด.",
+        },
+        {
+          label: "ลูกจ้าง",
+          value: "ลูกจ้าง",
+        },
+      ],
       AffiliationListTD: [
         {
           label: "บช.ตชด.",
@@ -326,6 +396,10 @@ export default {
     },
 
     async getReport(m, y) {
+      this.reportlistok = [];
+            this.reportListssn = [];
+            this.reportlistlj = [];
+            
       try {
         axios
           .get("http://localhost:3897/report")
@@ -364,6 +438,8 @@ export default {
             );
             // console.log(data);
             this.mapData(data, data2);
+            console.log(data);
+            console.log(data2);
             this.reportlistok = data5;
             this.reportListssn = data6;
             this.reportlistlj = data7;
@@ -416,54 +492,54 @@ export default {
               };
             });
             (this.maintenanceAllcount =
-              this.sumreportlistAll[0].sumdataMaintenance ||
-              0 + this.sumreportlistAll2[0].sumdataMaintenance ||
-              0 + this.sumreportlistAll3[0].sumdataMaintenance ||
+              this.sumreportlistAll[0]?.sumdataMaintenance ||
+              0 + this.sumreportlistAll2[0]?.sumdataMaintenance ||
+              0 + this.sumreportlistAll3[0]?.sumdataMaintenance ||
               0),
               (this.maintenancefeeAllcount =
-              this.sumreportlistAll[0].sumdataMaintenancefree ||
-              0 + this.sumreportlistAll2[0].sumdataMaintenancefree ||
-              0 + this.sumreportlistAll3[0].sumdataMaintenancefree ||
+              this.sumreportlistAll[0]?.sumdataMaintenancefree ||
+              0 + this.sumreportlistAll2[0]?.sumdataMaintenancefree ||
+              0 + this.sumreportlistAll3[0]?.sumdataMaintenancefree ||
               0),
               (this.insuranceAllcount =
-                this.sumreportlistAll[0].sumdataInsurance ||
-                0 + this.sumreportlistAll2[0].sumdataInsurance ||
-                0 + this.sumreportlistAll3[0].sumdataInsurance ||
+                this.sumreportlistAll[0]?.sumdataInsurance ||
+                0 + this.sumreportlistAll2[0]?.sumdataInsurance ||
+                0 + this.sumreportlistAll3[0]?.sumdataInsurance ||
                 0),
               (this.sumAllcount =
-                this.sumreportlistAll[0].sumCostdataInsurance ||
-                0 + this.sumreportlistAll2[0].sumCostdataInsurance ||
-                0 + this.sumreportlistAll3[0].sumCostdataInsurance ||
+                this.sumreportlistAll[0]?.sumCostdataInsurance ||
+                0 + this.sumreportlistAll2[0]?.sumCostdataInsurance ||
+                0 + this.sumreportlistAll3[0]?.sumCostdataInsurance ||
                 0);
             (this.waterbillAllcount =
-              this.sumreportlistAll[0].sumdatawaterbill ||
-              0 + this.sumreportlistAll2[0].sumdatawaterbill ||
-              0 + this.sumreportlistAll3[0].sumdatawaterbill ||
+              this.sumreportlistAll[0]?.sumdatawaterbill ||
+              0 + this.sumreportlistAll2[0]?.sumdatawaterbill ||
+              0 + this.sumreportlistAll3[0]?.sumdatawaterbill ||
               0),
               (this.electricitybillAllcount =
-                this.sumreportlistAll[0].sumdataelectricitybill ||
-                0 + this.sumreportlistAll2[0].sumdataelectricitybill ||
-                0 + this.sumreportlistAll3[0].sumdataelectricitybill ||
+                this.sumreportlistAll[0]?.sumdataelectricitybill ||
+                0 + this.sumreportlistAll2[0]?.sumdataelectricitybill ||
+                0 + this.sumreportlistAll3[0]?.sumdataelectricitybill ||
                 0),
               (this.Costdatawaterbillcount =
-                this.sumreportlistAll[0].sumCostdatawaterbill ||
-                0 + this.sumreportlistAll2[0].sumCostdatawaterbill ||
-                0 + this.sumreportlistAll3[0].sumCostdatawaterbill ||
+                this.sumreportlistAll[0]?.sumCostdatawaterbill ||
+                0 + this.sumreportlistAll2[0]?.sumCostdatawaterbill ||
+                0 + this.sumreportlistAll3[0]?.sumCostdatawaterbill ||
                 0);
             (this.centralAllcount =
-              this.sumreportlistAll[0].sumdatacentral ||
-              0 + this.sumreportlistAll2[0].sumdatacentral ||
-              0 + this.sumreportlistAll3[0].sumdatacentral ||
+              this.sumreportlistAll[0]?.sumdatacentral ||
+              0 + this.sumreportlistAll2[0]?.sumdatacentral ||
+              0 + this.sumreportlistAll3[0]?.sumdatacentral ||
               0),
               (this.costsAllcount =
-                this.sumreportlistAll[0].sumdatacosts ||
-                0 + this.sumreportlistAll2[0].sumdatacosts ||
-                0 + this.sumreportlistAll3[0].sumdatacosts ||
+                this.sumreportlistAll[0]?.sumdatacosts ||
+                0 + this.sumreportlistAll2[0]?.sumdatacosts ||
+                0 + this.sumreportlistAll3[0]?.sumdatacosts ||
                 0),
               (this.CostCostsAllcount =
-                this.sumreportlistAll[0].sumCostdataCostCosts ||
-                0 + this.sumreportlistAll2[0].sumCostdataCostCosts ||
-                0 + this.sumreportlistAll3[0].sumCostdataCostCosts ||
+                this.sumreportlistAll[0]?.sumCostdataCostCosts ||
+                0 + this.sumreportlistAll2[0]?.sumCostdataCostCosts ||
+                0 + this.sumreportlistAll3[0]?.sumCostdataCostCosts ||
                 0);
           })
           .catch((err) => {
@@ -474,8 +550,9 @@ export default {
       }
     },
 
-    async filterAffiliation() {
-      let listTD = this.datalistTD;
+    async filterAffiliation(listdata) {
+      let listTD = []
+      listTD = listdata;
       let data,
         data2,
         data3,
@@ -493,7 +570,6 @@ export default {
         data15,
         data16,
         data17 = [];
-      if (this.datalistTD.length > 0) {
         data = listTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
         let sumCostdataInsuranceAll = this.SumCostSummaintenanceAll(data);
         let sumdataInsuranceAll = this.InsuranceSumAll(data);
@@ -872,7 +948,6 @@ export default {
           e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListTD);
           return e;
         });
-      }
     },
 
     MaintenanceSumAll(items) {
@@ -989,8 +1064,9 @@ export default {
       }, 0);
     },
 
-    async filterAffiliation2() {
-      let listCTD = this.datalistCTD;
+    async filterAffiliation2(listdata) {
+      let listCTD = []
+      listCTD = listdata;
       let data,
         data2,
         data3,
@@ -1008,7 +1084,6 @@ export default {
         data15,
         data16,
         data17 = [];
-      if (this.datalistCTD.length > 0) {
         data = listCTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
         let sumCostdataInsuranceAll = this.SumCostSumInsuranceAll(data);
         let sumdataInsuranceAll = this.InsuranceSumAll(data);
@@ -1386,7 +1461,6 @@ export default {
           e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListCTD);
           return e;
         });
-      }
     },
 
     getReportAffiliation(m, y, Affiliation) {
@@ -1413,6 +1487,8 @@ export default {
             arr2 = data2.filter((el2) => el2.typeAffiliation === Affiliation);
 
             this.mapData(arr, arr2);
+            console.log(arr);
+            console.log(arr2);
             // this.reportlistTD = data2;
             // console.log(this.reportlistCTD);
           })
@@ -1570,6 +1646,8 @@ export default {
       let arr2 = [];
       this.datalistCTD = [];
       this.datalistTD = [];
+      console.log(this.datalistTD);
+      console.log(data2);
       arr = await data.map((el) => {
         return {
           ...el,
@@ -1590,6 +1668,8 @@ export default {
       });
       this.datalistCTD = arr;
       this.datalistTD = arr2;
+      this.filterAffiliation(arr2);
+      this.filterAffiliation2(arr);
       this.mapDataComma(arr, arr2);
     },
 
@@ -1658,8 +1738,7 @@ export default {
       });
       this.reportlistCTD = arr3;
       this.reportlistTD = arr4;
-      this.filterAffiliation();
-      this.filterAffiliation2();
+  
     },
     // numberWithCommas
 
