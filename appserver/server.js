@@ -218,7 +218,7 @@ app.delete('/buildings/:builId', (req, res) => {
 
 app.get('/expenses', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    res.json(new_user)
+    res.json(users)
 })
 
 app.post('/expenses', (req, res) => {
