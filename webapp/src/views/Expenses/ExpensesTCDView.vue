@@ -63,6 +63,7 @@ export default {
       months: "",
       openBtn: false,
       expensesListFix: [],
+  
     };
   },
   created() {
@@ -215,6 +216,8 @@ export default {
         console.error(error);
       }
     },
+   
+  
 
     async genInsurance() {
       let arr = [];

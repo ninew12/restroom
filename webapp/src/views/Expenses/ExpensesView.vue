@@ -308,7 +308,7 @@ export default {
         monthly: this.months,
         years: this.years,
       };
-      console.log(body);
+ 
       await axios.put(`http://localhost:3897/report/${this.reportId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",

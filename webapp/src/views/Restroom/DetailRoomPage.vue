@@ -67,7 +67,7 @@ export default {
       dateApproved: "",
       userList: [],
       selectedUser: "เลือกผู้พักอาศัย",
-      typeUser: "ตร.",
+      typeUser: "บช.ตชด.",
       typeUserBytype: "",
       typeUserByrankr: "",
       typeAffiliation: "",
@@ -80,7 +80,9 @@ export default {
       numberRoom: "",
       roomId: "",
       maintenanceFix: '',
-      userByid: ''
+      userByid: '',
+      reportId: '',
+    reportType: ''
     };
   },
   created() {
@@ -148,6 +150,7 @@ export default {
         axios
           .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
+            this.getreportByid(id);
             let data = res.data;
             this.userByid = res.data;
            if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
@@ -164,7 +167,7 @@ export default {
            this.typeAffiliation = data.typeAffiliation,
            this.typeRanks = data.typeRanks,
            this.typeRoom = data.typeRoom
-           console.log(data);
+           this.typeUser = data.typeUser
           })
           .catch((err) => {
             console.log(err);
@@ -194,6 +197,28 @@ export default {
         });
       } catch (e) {
         console.error(e);
+      }
+    },
+
+    async getreportByid(id) {
+      try {
+        await axios
+          .get(`http://localhost:3897/reportId/${id}`)
+          .then((res) => {
+            if(res.data !== "")this.reportId = res.data.id;
+            let data = res.data;
+            if(data !== '' && data !== undefined){
+              this.reportType = "havedata"
+            }else{
+              this.reportType = "none"
+            }
+            this.reportId = res.data.id;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
       }
     },
 
@@ -248,7 +273,12 @@ export default {
           },
         })
         .then((res) => {
-          this.submitForm2();
+          if (this.reportType == "havedata") {
+            this.editToreport();
+          } else if (this.reportType == "none") {
+            this.submitForm2();
+          }
+        
           this.submitForm3();
           this.submitFormUser();
           if (index == "spacia") {
@@ -318,6 +348,30 @@ export default {
       };
       
       await axios.post(`http://localhost:3897/report`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
+    },
+
+    async editToreport() {
+      let body = {
+        userId: this.userId,
+        queue: "inroom",
+        contract: this.contract,
+        checkintime: this.Checkintime,
+        maintenance: this.maintenanceFix,
+        insurance: this.insurance,
+        installments: this.installments,
+        amountPaid: this.amountPaid,
+        roomId: this.roomId,
+        dateApproved: this.dateApp.toISOString(),
+        monthly:this.months,
+        years:this.years
+      };
+      
+      await axios.put(`http://localhost:3897/report/${this.reportId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",

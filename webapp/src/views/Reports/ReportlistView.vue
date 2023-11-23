@@ -1487,8 +1487,6 @@ export default {
             arr2 = data2.filter((el2) => el2.typeAffiliation === Affiliation);
 
             this.mapData(arr, arr2);
-            console.log(arr);
-            console.log(arr2);
             // this.reportlistTD = data2;
             // console.log(this.reportlistCTD);
           })
@@ -1701,7 +1699,7 @@ export default {
           InsuranceSum: this.numberWithCommas(el2.InsuranceSum) || 0,
           MaintenanceSum: this.numberWithCommas(el2.MaintenanceSum) || 0,
           accumulatedSum: this.numberWithCommas(el2.accumulatedSum) || 0,
-          maintenancefee: this.numberWithCommas(el2. maintenancefee) || 0,
+          maintenancefee: this.numberWithCommas(el2.maintenancefee) || 0,
           maintenancefeeSum : this.numberWithCommas(el2.maintenancefeeSum) || 0,
           waterbill: this.numberWithCommas(el2.waterbill) || 0,
           electricitybill: this.numberWithCommas(el2.electricitybill) || 0,
@@ -1731,14 +1729,14 @@ export default {
           MaintenanceSum: this.numberWithCommas(el3.MaintenanceSum) || 0,
           accumulatedSum: this.numberWithCommas(el3.accumulatedSum) || 0,
           waterbill: this.numberWithCommas(el3.waterbill) || 0,
-          maintenancefee: this.numberWithCommas(el3. maintenancefee) || 0,
+          maintenancefee: this.numberWithCommas(el3.maintenancefee) || 0,
           maintenancefeeSum : this.numberWithCommas(el3.maintenancefeeSum) || 0,
           electricitybill: this.numberWithCommas(el3.electricitybill) || 0,
         };
       });
       this.reportlistCTD = arr3;
       this.reportlistTD = arr4;
-  
+  console.log(this.reportlistCTD);
     },
     // numberWithCommas
 
@@ -3319,12 +3317,12 @@ export default {
                             </td>
                             <td>{{ item?.contractExpenses }}</td>
                           </tr>
-                          <tr v-if="reportlistCTD?.length > 0">
+                          <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>{{ reportlistCTD[0]?.MaintenanceSum }}</th>
-                            <th>{{ reportlistCTD[0]?.waterbillSum }}</th>
-                            <th>{{ reportlistCTD[0]?.centralSum }}</th>
-                            <th>{{ reportlistCTD[0]?.SumCostSumCentral }}</th>
+                            <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
+                            <th>{{ reportlistTD[0]?.waterbillSum }}</th>
+                            <th>{{ reportlistTD[0]?.centralSum }}</th>
+                            <th>{{ reportlistTD[0]?.SumCostSumCentral }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -3542,7 +3540,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.buildingName || "-" }}</td>
                             <td>{{ item?.roomnumber || "-" }}</td>
@@ -3564,11 +3562,11 @@ export default {
                             </td>
                             <td>{{ item?.contractExpenses || "-" }}</td>
                           </tr>
-                          <tr v-if="reportlistCTD?.length > 0">
+                          <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="5">รวมเงิน</th>
-                            <th>{{ reportlistCTD[0]?.centralSum }}</th>
-                            <th>{{ reportlistCTD[0]?.costsSum }}</th>
-                            <th>{{ reportlistCTD[0]?.SumCostSumCosts }}</th>
+                            <th>{{ reportlistTD[0]?.centralSum }}</th>
+                            <th>{{ reportlistTD[0]?.costsSum }}</th>
+                            <th>{{ reportlistTD[0]?.SumCostSumCosts }}</th>
                           </tr>
                         </tbody>
                       </table>
