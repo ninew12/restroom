@@ -244,6 +244,7 @@ export default {
       Costdatawaterbillcount: 0,
       electricitybillAllcount: 0,
       waterbillAllcount: 0,
+      maintenancefeeAllcount: 0
     };
   },
   created() {
@@ -371,6 +372,7 @@ export default {
                 ...x,
                 type: "อำนวยการ",
                 sumdataMaintenance: this.MaintenanceSumAll(data5),
+                sumdataMaintenancefree: this.maintenancefeeCount(data5),
                 sumdataInsurance: this.InsuranceSumAll(data5),
                 sumCostdataInsurance: this.SumCostSumInsuranceAll(data5),
                 sumdatawaterbill: this.WaterbillSum(data5),
@@ -387,6 +389,7 @@ export default {
                 type: "สนับสนุน",
                 sumdataMaintenance: this.MaintenanceSumAll(data6),
                 sumdataInsurance: this.InsuranceSumAll(data6),
+                sumdataMaintenancefree: this.maintenancefeeCount(data6),
                 sumCostdataInsurance: this.SumCostSumInsuranceAll(data6),
                 sumdatawaterbill: this.WaterbillSum(data6),
                 sumdataelectricitybill: this.ElectricitybillSum(data6),
@@ -401,6 +404,7 @@ export default {
                 ...x,
                 type: "ลูกจ้าง",
                 sumdataMaintenance: this.MaintenanceSumAll(data7),
+                sumdataMaintenancefree: this.maintenancefeeCount(data7),
                 sumdataInsurance: this.InsuranceSumAll(data7),
                 sumCostdataInsurance: this.SumCostSumInsuranceAll(data7),
                 sumdatawaterbill: this.WaterbillSum(data7),
@@ -415,6 +419,11 @@ export default {
               this.sumreportlistAll[0].sumdataMaintenance ||
               0 + this.sumreportlistAll2[0].sumdataMaintenance ||
               0 + this.sumreportlistAll3[0].sumdataMaintenance ||
+              0),
+              (this.maintenancefeeAllcount =
+              this.sumreportlistAll[0].sumdataMaintenancefree ||
+              0 + this.sumreportlistAll2[0].sumdataMaintenancefree ||
+              0 + this.sumreportlistAll3[0].sumdataMaintenancefree ||
               0),
               (this.insuranceAllcount =
                 this.sumreportlistAll[0].sumdataInsurance ||
@@ -486,19 +495,20 @@ export default {
         data17 = [];
       if (this.datalistTD.length > 0) {
         data = listTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
-        let sumCostdataInsuranceAll = this.SumCostSumInsuranceAll(data);
+        let sumCostdataInsuranceAll = this.SumCostSummaintenanceAll(data);
         let sumdataInsuranceAll = this.InsuranceSumAll(data);
-        let sumdataMaintenanceSumAll = this.MaintenanceSumAll(data);
+        let sumdatamaintenancefeeSumAll = this.maintenancefeeCount(data);
         let sumdatawaterbillSumAll = this.WaterbillSum(data);
         let sumdataelectricitybillSumAll = this.ElectricitybillSum(data);
         let sumdataCostwaterbillSumAll = this.SumCostSumwater(data);
         let sumdatacentralSumAll = this.CentralSum(data);
         let sumdatacostsSumAll = this.CostsSum(data);
         let sumdataCostCostsSumAll = this.SumCostSumCentral(data);
+        
         data2 = listTD.filter((el) => el.typeAffiliation == "บก.อก.");
-        let sumCostdata2InsuranceAll = this.SumCostSumInsuranceAll(data2);
+        let sumCostdata2InsuranceAll = this.SumCostSummaintenanceAll(data2);
         let sumdata2InsuranceAll = this.InsuranceSumAll(data2);
-        let sumdata2MaintenanceSumAll = this.MaintenanceSumAll(data2);
+        let sumdata2maintenancefeeSumAll = this.maintenancefeeCount(data2);
         let sumdata2waterbillSumAll = this.WaterbillSum(data2);
         let sumdata2electricitybillSumAll = this.ElectricitybillSum(data2);
         let sumdata2CostwaterbillSumAll = this.SumCostSumwater(data2);
@@ -506,9 +516,9 @@ export default {
         let sumdata2costsSumAll = this.CostsSum(data2);
         let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
         data3 = listTD.filter((el) => el.typeAffiliation == "บก.สนน.");
-        let sumCostdata3InsuranceAll = this.SumCostSumInsuranceAll(data3);
+        let sumCostdata3InsuranceAll = this.SumCostSummaintenanceAll(data3);
         let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
-        let sumdata3MaintenanceSumAll = this.MaintenanceSumAll(data3);
+        let sumdata3maintenancefeeSumAll = this.maintenancefeeCount(data3);
         let sumdata3waterbillSumAll = this.WaterbillSum(data3);
         let sumdata3electricitybillSumAll = this.ElectricitybillSum(data3);
         let sumdata3CostwaterbillSumAll = this.SumCostSumwater(data3);
@@ -516,9 +526,9 @@ export default {
         let sumdata3costsSumAll = this.CostsSum(data3);
         let sumdata3CostCostsSumAll = this.SumCostSumCentral(data3);
         data4 = listTD.filter((el) => el.typeAffiliation == "ฝอ.1");
-        let sumCostdata4InsuranceAll = this.SumCostSumInsuranceAll(data4);
+        let sumCostdata4InsuranceAll = this.SumCostSummaintenanceAll(data4);
         let sumdata4InsuranceAll = this.InsuranceSumAll(data4);
-        let sumdata4MaintenanceSumAll = this.MaintenanceSumAll(data4);
+        let sumdata4maintenancefeeSumAll = this.maintenancefeeCount(data4);
         let sumdata4waterbillSumAll = this.WaterbillSum(data4);
         let sumdata4electricitybillSumAll = this.ElectricitybillSum(data4);
         let sumdata4CostwaterbillSumAll = this.SumCostSumwater(data4);
@@ -526,9 +536,9 @@ export default {
         let sumdata4costsSumAll = this.CostsSum(data4);
         let sumdata4CostCostsSumAll = this.SumCostSumCentral(data4);
         data5 = listTD.filter((el) => el.typeAffiliation == "ฝอ.2");
-        let sumCostdata5InsuranceAll = this.SumCostSumInsuranceAll(data5);
+        let sumCostdata5InsuranceAll = this.SumCostSummaintenanceAll(data5);
         let sumdata5InsuranceAll = this.InsuranceSumAll(data5);
-        let sumdata5MaintenanceSumAll = this.MaintenanceSumAll(data5);
+        let sumdata5maintenancefeeSumAll = this.maintenancefeeCount(data5);
         let sumdata5waterbillSumAll = this.WaterbillSum(data5);
         let sumdata5electricitybillSumAll = this.ElectricitybillSum(data5);
         let sumdata5CostwaterbillSumAll = this.SumCostSumwater(data5);
@@ -536,9 +546,9 @@ export default {
         let sumdata5costsSumAll = this.CostsSum(data5);
         let sumdata5CostCostsSumAll = this.SumCostSumCentral(data5);
         data6 = listTD.filter((el) => el.typeAffiliation == "ฝอ.3");
-        let sumCostdata6InsuranceAll = this.SumCostSumInsuranceAll(data6);
+        let sumCostdata6InsuranceAll = this.SumCostSummaintenanceAll(data6);
         let sumdata6InsuranceAll = this.InsuranceSumAll(data6);
-        let sumdata6MaintenanceSumAll = this.MaintenanceSumAll(data6);
+        let sumdata6maintenancefeeSumAll = this.maintenancefeeCount(data6);
         let sumdata6waterbillSumAll = this.WaterbillSum(data6);
         let sumdata6electricitybillSumAll = this.ElectricitybillSum(data6);
         let sumdata6CostwaterbillSumAll = this.SumCostSumwater(data6);
@@ -546,9 +556,9 @@ export default {
         let sumdata6costsSumAll = this.CostsSum(data6);
         let sumdata6CostCostsSumAll = this.SumCostSumCentral(data6);
         data7 = listTD.filter((el) => el.typeAffiliation == "ฝอ.4");
-        let sumCostdata7InsuranceAll = this.SumCostSumInsuranceAll(data7);
+        let sumCostdata7InsuranceAll = this.SumCostSummaintenanceAll(data7);
         let sumdata7InsuranceAll = this.InsuranceSumAll(data7);
-        let sumdata7MaintenanceSumAll = this.MaintenanceSumAll(data7);
+        let sumdata7maintenancefeeSumAll = this.maintenancefeeCount(data7);
         let sumdata7waterbillSumAll = this.WaterbillSum(data7);
         let sumdata7electricitybillSumAll = this.ElectricitybillSum(data7);
         let sumdata7CostwaterbillSumAll = this.SumCostSumwater(data7);
@@ -556,9 +566,9 @@ export default {
         let sumdata7costsSumAll = this.CostsSum(data7);
         let sumdata7CostCostsSumAll = this.SumCostSumCentral(data7);
         data8 = listTD.filter((el) => el.typeAffiliation == "ฝอ.5");
-        let sumCostdata8InsuranceAll = this.SumCostSumInsuranceAll(data8);
+        let sumCostdata8InsuranceAll = this.SumCostSummaintenanceAll(data8);
         let sumdata8InsuranceAll = this.InsuranceSumAll(data8);
-        let sumdata8MaintenanceSumAll = this.MaintenanceSumAll(data8);
+        let sumdata8maintenancefeeSumAll = this.maintenancefeeCount(data8);
         let sumdata8waterbillSumAll = this.WaterbillSum(data8);
         let sumdata8electricitybillSumAll = this.ElectricitybillSum(data8);
         let sumdata8CostwaterbillSumAll = this.SumCostSumwater(data8);
@@ -566,9 +576,9 @@ export default {
         let sumdata8costsSumAll = this.CostsSum(data8);
         let sumdata8CostCostsSumAll = this.SumCostSumCentral(data8);
         data9 = listTD.filter((el) => el.typeAffiliation == "ฝอ.6");
-        let sumCostdata9InsuranceAll = this.SumCostSumInsuranceAll(data9);
+        let sumCostdata9InsuranceAll = this.SumCostSummaintenanceAll(data9);
         let sumdata9InsuranceAll = this.InsuranceSumAll(data9);
-        let sumdata9MaintenanceSumAll = this.MaintenanceSumAll(data9);
+        let sumdata9maintenancefeeSumAll = this.maintenancefeeCount(data9);
         let sumdata9waterbillSumAll = this.WaterbillSum(data9);
         let sumdata9electricitybillSumAll = this.ElectricitybillSum(data9);
         let sumdata9CostwaterbillSumAll = this.SumCostSumwater(data9);
@@ -576,9 +586,9 @@ export default {
         let sumdata9costsSumAll = this.CostsSum(data9);
         let sumdata9CostCostsSumAll = this.SumCostSumCentral(data9);
         data10 = listTD.filter((el) => el.typeAffiliation == "ฝอ.7");
-        let sumCostdata10InsuranceAll = this.SumCostSumInsuranceAll(data10);
+        let sumCostdata10InsuranceAll = this.SumCostSummaintenanceAll(data10);
         let sumdata10InsuranceAll = this.InsuranceSumAll(data10);
-        let sumdata10MaintenanceSumAll = this.MaintenanceSumAll(data10);
+        let sumdata10maintenancefeeSumAll = this.maintenancefeeCount(data10);
         let sumdata10waterbillSumAll = this.WaterbillSum(data10);
         let sumdata10electricitybillSumAll = this.ElectricitybillSum(data10);
         let sumdata10CostwaterbillSumAll = this.SumCostSumwater(data10);
@@ -586,9 +596,9 @@ export default {
         let sumdata10costsSumAll = this.CostsSum(data10);
         let sumdata10CostCostsSumAll = this.SumCostSumCentral(data10);
         data11 = listTD.filter((el) => el.typeAffiliation == "ฝอ.8");
-        let sumCostdata11InsuranceAll = this.SumCostSumInsuranceAll(data11);
+        let sumCostdata11InsuranceAll = this.SumCostSummaintenanceAll(data11);
         let sumdata11InsuranceAll = this.InsuranceSumAll(data11);
-        let sumdata11MaintenanceSumAll = this.MaintenanceSumAll(data11);
+        let sumdata11maintenancefeeSumAll = this.maintenancefeeCount(data11);
         let sumdata11waterbillSumAll = this.WaterbillSum(data11);
         let sumdata11electricitybillSumAll = this.ElectricitybillSum(data11);
         let sumdata11CostwaterbillSumAll = this.SumCostSumwater(data11);
@@ -596,9 +606,9 @@ export default {
         let sumdata11costsSumAll = this.CostsSum(data11);
         let sumdata11CostCostsSumAll = this.SumCostSumCentral(data11);
         data12 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.1");
-        let sumCostdata12InsuranceAll = this.SumCostSumInsuranceAll(data12);
+        let sumCostdata12InsuranceAll = this.SumCostSummaintenanceAll(data12);
         let sumdata12InsuranceAll = this.InsuranceSumAll(data12);
-        let sumdata12MaintenanceSumAll = this.MaintenanceSumAll(data12);
+        let sumdata12maintenancefeeSumAll = this.maintenancefeeCount(data12);
         let sumdata12waterbillSumAll = this.WaterbillSum(data12);
         let sumdata12electricitybillSumAll = this.ElectricitybillSum(data12);
         let sumdata12CostwaterbillSumAll = this.SumCostSumwater(data12);
@@ -606,9 +616,9 @@ export default {
         let sumdata12costsSumAll = this.CostsSum(data12);
         let sumdata12CostCostsSumAll = this.SumCostSumCentral(data12);
         data13 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.2");
-        let sumCostdata13InsuranceAll = this.SumCostSumInsuranceAll(data13);
+        let sumCostdata13InsuranceAll = this.SumCostSummaintenanceAll(data13);
         let sumdata13InsuranceAll = this.InsuranceSumAll(data13);
-        let sumdata13MaintenanceSumAll = this.MaintenanceSumAll(data13);
+        let sumdata13maintenancefeeSumAll = this.maintenancefeeCount(data13);
         let sumdata13waterbillSumAll = this.WaterbillSum(data13);
         let sumdata13lectricitybillSumAll = this.ElectricitybillSum(data13);
         let sumdata13CostwaterbillSumAll = this.SumCostSumwater(data13);
@@ -616,9 +626,9 @@ export default {
         let sumdata13costsSumAll = this.CostsSum(data13);
         let sumdata13CostCostsSumAll = this.SumCostSumCentral(data13);
         data14 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.3");
-        let sumCostdata14InsuranceAll = this.SumCostSumInsuranceAll(data14);
+        let sumCostdata14InsuranceAll = this.SumCostSummaintenanceAll(data14);
         let sumdata14InsuranceAll = this.InsuranceSumAll(data14);
-        let sumdata14MaintenanceSumAll = this.MaintenanceSumAll(data14);
+        let sumdata14maintenancefeeSumAll = this.maintenancefeeCount(data14);
         let sumdata14waterbillSumAll = this.WaterbillSum(data14);
         let sumdata14electricitybillSumAll = this.ElectricitybillSum(data14);
         let sumdata14CostwaterbillSumAll = this.SumCostSumwater(data14);
@@ -626,9 +636,9 @@ export default {
         let sumdata14costsSumAll = this.CostsSum(data14);
         let sumdata14CostCostsSumAll = this.SumCostSumCentral(data14);
         data15 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.4");
-        let sumCostdata15InsuranceAll = this.SumCostSumInsuranceAll(data15);
+        let sumCostdata15InsuranceAll = this.SumCostSummaintenanceAll(data15);
         let sumdata15InsuranceAll = this.InsuranceSumAll(data15);
-        let sumdata15MaintenanceSumAll = this.MaintenanceSumAll(data15);
+        let sumdata15maintenancefeeSumAll = this.maintenancefeeCount(data15);
         let sumdata15waterbillSumAll = this.WaterbillSum(data15);
         let sumdata15electricitybillSumAll = this.ElectricitybillSum(data15);
         let sumdata15CostwaterbillSumAll = this.SumCostSumwater(data15);
@@ -636,9 +646,9 @@ export default {
         let sumdata15costsSumAll = this.CostsSum(data15);
         let sumdata15CostCostsSumAll = this.SumCostSumCentral(data15);
         data16 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.5");
-        let sumCostdata16InsuranceAll = this.SumCostSumInsuranceAll(data16);
+        let sumCostdata16InsuranceAll = this.SumCostSummaintenanceAll(data16);
         let sumdata16InsuranceAll = this.InsuranceSumAll(data16);
-        let sumdata16MaintenanceSumAll = this.MaintenanceSumAll(data16);
+        let sumdata16maintenancefeeSumAll = this.maintenancefeeCount(data16);
         let sumdata16waterbillSumAll = this.WaterbillSum(data16);
         let sumdata16electricitybillSumAll = this.ElectricitybillSum(data16);
         let sumdata16CostwaterbillSumAll = this.SumCostSumwater(data16);
@@ -646,9 +656,9 @@ export default {
         let sumdata16costsSumAll = this.CostsSum(data16);
         let sumdata16CostCostsSumAll = this.SumCostSumCentral(data16);
         data17 = listTD.filter((el) => el.typeAffiliation == "ลูกจ้าง");
-        let sumCostdata17InsuranceAll = this.SumCostSumInsuranceAll(data17);
+        let sumCostdata17InsuranceAll = this.SumCostSummaintenanceAll(data17);
         let sumdata17InsuranceAll = this.InsuranceSumAll(data17);
-        let sumdata17MaintenanceSumAll = this.MaintenanceSumAll(data17);
+        let sumdata17maintenancefeeSumAll = this.maintenancefeeCount(data17);
         let sumdata17waterbillSumAll = this.WaterbillSum(data17);
         let sumdata17electricitybillSumAll = this.ElectricitybillSum(data17);
         let sumdata17CostwaterbillSumAll = this.SumCostSumwater(data17);
@@ -657,7 +667,7 @@ export default {
         let sumdata17CostCostsSumAll = this.SumCostSumCentral(data17);
         await this.AffiliationListTD.map((el) => {
           if (el.label == "บช.ตชด.") {
-            el["sumdataMaintenance"] = sumdataMaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdatamaintenancefeeSumAll;
             el["sumdataInsurance"] = sumdataInsuranceAll;
             el["sumCostdataInsurance"] = sumCostdataInsuranceAll;
             el["sumdatawaterbill"] = sumdatawaterbillSumAll;
@@ -668,7 +678,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdataCostCostsSumAll;
           }
           if (el.label == "บก.อก.") {
-            el["sumdataMaintenance"] = sumdata2MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata2maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata2InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata2InsuranceAll;
             el["sumdatawaterbill"] = sumdata2waterbillSumAll;
@@ -679,7 +689,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata2CostCostsSumAll;
           }
           if (el.label == "บก.สนน.") {
-            el["sumdataMaintenance"] = sumdata3MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata3maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata3InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
             el["sumdatawaterbill"] = sumdata3waterbillSumAll;
@@ -690,7 +700,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata3CostCostsSumAll;
           }
           if (el.label == "ฝอ.1") {
-            el["sumdataMaintenance"] = sumdata4MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata4maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata4InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata4InsuranceAll;
             el["sumdatawaterbill"] = sumdata4waterbillSumAll;
@@ -701,7 +711,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata4CostCostsSumAll;
           }
           if (el.label == "ฝอ.2") {
-            el["sumdataMaintenance"] = sumdata5MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata5maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata5InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata5InsuranceAll;
             el["sumdatawaterbill"] = sumdata5waterbillSumAll;
@@ -712,7 +722,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata5CostCostsSumAll;
           }
           if (el.label == "ฝอ.3") {
-            el["sumdataMaintenance"] = sumdata6MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata6maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata6InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata6InsuranceAll;
             el["sumdatawaterbill"] = sumdata6waterbillSumAll;
@@ -723,7 +733,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata6CostCostsSumAll;
           }
           if (el.label == "ฝอ.4") {
-            el["sumdataMaintenance"] = sumdata7MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata7maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata7InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata7InsuranceAll;
             el["sumdatawaterbill"] = sumdata7waterbillSumAll;
@@ -734,7 +744,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata7CostCostsSumAll;
           }
           if (el.label == "ฝอ.5") {
-            el["sumdataMaintenance"] = sumdata8MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata8maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata8InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata8InsuranceAll;
             el["sumdatawaterbill"] = sumdata8waterbillSumAll;
@@ -745,7 +755,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata8CostCostsSumAll;
           }
           if (el.label == "ฝอ.6") {
-            el["sumdataMaintenance"] = sumdata9MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata9maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata9InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata9InsuranceAll;
             el["sumdatawaterbill"] = sumdata9waterbillSumAll;
@@ -756,7 +766,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata9CostCostsSumAll;
           }
           if (el.label == "ฝอ.7") {
-            el["sumdataMaintenance"] = sumdata10MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata10maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata10InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata10InsuranceAll;
             el["sumdatawaterbill"] = sumdata10waterbillSumAll;
@@ -767,7 +777,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata10CostCostsSumAll;
           }
           if (el.label == "ฝอ.8") {
-            el["sumdataMaintenance"] = sumdata11MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata11maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata11InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata11InsuranceAll;
             el["sumdatawaterbill"] = sumdata11waterbillSumAll;
@@ -778,7 +788,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata11CostCostsSumAll;
           }
           if (el.label == "ฝสสน.1") {
-            el["sumdataMaintenance"] = sumdata12MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata12maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata12InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata12InsuranceAll;
             el["sumdatawaterbill"] = sumdata12waterbillSumAll;
@@ -789,7 +799,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata12CostCostsSumAll;
           }
           if (el.label == "ฝสสน.2") {
-            el["sumdataMaintenance"] = sumdata13MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata13maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata13InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata13InsuranceAll;
             el["sumdatawaterbill"] = sumdata13waterbillSumAll;
@@ -800,7 +810,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata13CostCostsSumAll;
           }
           if (el.label == "ฝสสน.3") {
-            el["sumdataMaintenance"] = sumdata14MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata14maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata14InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata14InsuranceAll;
             el["sumdatawaterbill"] = sumdata14waterbillSumAll;
@@ -811,7 +821,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata14CostCostsSumAll;
           }
           if (el.label == "ฝสสน.4") {
-            el["sumdataMaintenance"] = sumdata15MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata15maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata15InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata15InsuranceAll;
             el["sumdatawaterbill"] = sumdata15waterbillSumAll;
@@ -822,7 +832,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata15CostCostsSumAll;
           }
           if (el.label == "ฝสสน.5") {
-            el["sumdataMaintenance"] = sumdata16MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata16maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata16InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata16InsuranceAll;
             el["sumdatawaterbill"] = sumdata16waterbillSumAll;
@@ -833,7 +843,7 @@ export default {
             el["sumCostdataCostCosts"] = sumdata16CostCostsSumAll;
           }
           if (el.label == "ลูกจ้าง") {
-            el["sumdataMaintenance"] = sumdata17MaintenanceSumAll;
+            el["sumdataMaintenancefee"] = sumdata17maintenancefeeSumAll;
             el["sumdataInsurance"] = sumdata17InsuranceAll;
             el["sumCostdataInsurance"] = sumCostdata17InsuranceAll;
             el["sumdatawaterbill"] = sumdata17waterbillSumAll;
@@ -847,7 +857,7 @@ export default {
           return el;
         });
         this.AffiliationListTD.map((e) => {
-          e["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListTD);
+          e["countMaintenancefeeAll"] = this.countMaintenancefeeAll(this.AffiliationListTD);
           e["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListTD);
           e["countCostSumAll"] = this.countCostSumAll(this.AffiliationListTD);
           e["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListTD);
@@ -897,11 +907,29 @@ export default {
       }, 0);
     },
 
+    SumCostSummaintenanceAll(items) {
+      return items.reduce((SumCostSummaintenanceAll, ele) => {
+        if (ele.insurance !== undefined)
+          return (
+            SumCostSummaintenanceAll +
+            (parseInt(ele.insurance) + parseInt(ele.maintenancefree || 0))
+          );
+        else return sumCostSumInsuranceAll;
+      }, 0);
+    },
+
     countMaintenanceAll(items) {
       return items.reduce((sumCostSumInsuranceAll, ele) => {
         if (ele.sumdataMaintenance !== undefined)
           return sumCostSumInsuranceAll + parseInt(ele.sumdataMaintenance);
         else return sumCostSumInsuranceAll;
+      }, 0);
+    },
+    countMaintenancefeeAll(items) {
+      return items.reduce((sumCostSumMaintenancefeeAll, ele) => {
+        if (ele.sumdataMaintenancefee !== undefined)
+          return sumCostSumMaintenancefeeAll + parseInt(ele.sumdataMaintenancefee);
+        else return sumCostSumMaintenancefeeAll;
       }, 0);
     },
     countInsuranceAll(items) {
@@ -1413,6 +1441,7 @@ export default {
           maintenance: el.maintenance || 0,
           insurance: el.insurance || 0,
           accumulated: el.insurance / el.installments,
+          maintenancefee: el.maintenancefee || 0,
           amountPaidSum: this.AmountPaidSum(data),
           waterbillSum: this.WaterbillSum(data),
           electricitybillSum: this.ElectricitybillSum(data),
@@ -1424,6 +1453,7 @@ export default {
           InsuranceSum: this.InsuranceSum(data),
           MaintenanceSum: this.MaintenanceSum(data),
           accumulatedSum: this.AccumulatedSum(data),
+          maintenancefeeSum: this.maintenancefeeCount(data),
           waterbill: el.waterbill || 0,
           electricitybill: el.electricitybill || 0,
           Installmenttime: this.checkMonth(
@@ -1447,8 +1477,10 @@ export default {
           buildingName: el2.buildingName || "-",
           costs: el2.costs || 0,
           insurance: el2.insurance || 0,
+          maintenancefee: el2.maintenancefee || 0,
           amountPaidSum: this.AmountPaidSum(data2),
           waterbillSum: this.WaterbillSum(data2),
+          maintenancefeeSum: this.maintenancefeeCount(data2),
           electricitybillSum: this.ElectricitybillSum(data2),
           fullname: (el2.rank || "") + " " + el2?.firstName + " " + el2?.lastName,
           unitWater: el2.lastnumber - el2.numberfirst || 0,
@@ -1587,6 +1619,8 @@ export default {
           InsuranceSum: this.numberWithCommas(el2.InsuranceSum) || 0,
           MaintenanceSum: this.numberWithCommas(el2.MaintenanceSum) || 0,
           accumulatedSum: this.numberWithCommas(el2.accumulatedSum) || 0,
+          maintenancefee: this.numberWithCommas(el2. maintenancefee) || 0,
+          maintenancefeeSum : this.numberWithCommas(el2.maintenancefeeSum) || 0,
           waterbill: this.numberWithCommas(el2.waterbill) || 0,
           electricitybill: this.numberWithCommas(el2.electricitybill) || 0,
         };
@@ -1615,6 +1649,8 @@ export default {
           MaintenanceSum: this.numberWithCommas(el3.MaintenanceSum) || 0,
           accumulatedSum: this.numberWithCommas(el3.accumulatedSum) || 0,
           waterbill: this.numberWithCommas(el3.waterbill) || 0,
+          maintenancefee: this.numberWithCommas(el3. maintenancefee) || 0,
+          maintenancefeeSum : this.numberWithCommas(el3.maintenancefeeSum) || 0,
           electricitybill: this.numberWithCommas(el3.electricitybill) || 0,
         };
       });
@@ -1648,7 +1684,7 @@ export default {
         aa5 = [];
       let count = this.OGCount(this.reportlistok);
       await this.reportlistok.forEach((e, i) => {
-        ws_data.push([i + 1, e.idcard, "41001", this.countSuminstallments(e)]);
+        ws_data.push([i + 1, e.idcard,` ${e.firstName}+" "+${e.lastName} `, "41001", this.countSuminstallments(e)]);
       });
       aa = [" ", " ", "รวม อก.", count];
       aa2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
@@ -1672,7 +1708,7 @@ export default {
         bb5 = [];
       let count2 = this.OGCount(this.reportListssn);
       await this.reportListssn.forEach((el, i) => {
-        ws_data2.push([i + 1, el.idcard, "41001", this.countSuminstallments(el)]);
+        ws_data2.push([i + 1, el.idcard, ` ${el.firstName}+" "+${el.lastName} `,"41001", this.countSuminstallments(el)]);
       });
       bb = [" ", " ", "รวม อก.", count2];
       bb2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
@@ -1696,7 +1732,7 @@ export default {
         cc5 = [];
       let count3 = this.OGCount(this.reportListssn);
       await this.reportlistlj.forEach((el2, i) => {
-        ws_data3.push([i + 1, el2.idcard, "41001", this.countSuminstallments(el2)]);
+        ws_data3.push([i + 1, el2.idcard,` ${el2.firstName}+" "+${el2.lastName} `, "41001", this.countSuminstallments(el2)]);
       });
       cc = [" ", " ", "รวม อก.", count3];
       cc2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
@@ -1721,7 +1757,7 @@ export default {
     },
 
     countSuminstallments(item) {
-      return parseInt(item.insurance) / parseInt(item.installments) || 0;
+      return (parseInt(item.insurance) / parseInt(item.installments))+ parseInt(item.maintenance || 0) || 0;
     },
 
     countSumcentral(item) {
@@ -1760,6 +1796,12 @@ export default {
     //     else return insuranceSum;
     //   }, 0);
     // },
+    maintenancefeeCount(items) {
+      return items.reduce((maintenancefeeSum, ele) => {
+        if (ele.maintenancefee !== undefined) return maintenancefeeSum + parseInt(ele.maintenancefee);
+        else return maintenancefeeSum;
+      }, 0);
+    },
 
     insuranceCount(items) {
       return items.reduce((insuranceSum, ele) => {
@@ -1796,6 +1838,15 @@ export default {
         else return electricitybillSum;
       }, 0);
     },
+
+    SumCostSumMaintenancefee(items) {
+      return items.reduce((SumCostSumMaintenancefee, ele) => {
+        if (ele.sumCostmaintenancefee !== undefined)
+          return SumCostSumMaintenancefee + parseInt(ele.sumCostmaintenancefee);
+        else return SumCostSumMaintenancefee;
+      }, 0);
+    },
+
     SumCostSumCosts(items) {
       return items.reduce((SumCostSumCosts, ele) => {
         if (ele.sumCostCosts !== undefined)
@@ -2121,7 +2172,7 @@ export default {
             this.tablewaterBill(listData, [
               "numberNo",
               "typeAffiliation",
-              "maintenance",
+              "maintenancefee",
               "waterbill",
               "electricitybill",
               "sumCostwaterbill",
@@ -2263,7 +2314,7 @@ export default {
               "numberfirst",
               "lastnumber",
               "unitWater",
-              "maintenance",
+              "maintenancefee",
               "waterbill",
               "central",
               "sumCostCentral",
@@ -3095,14 +3146,14 @@ export default {
                           <tr v-for="(item, index) in AffiliationListTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.value || "-" }}</td>
-                            <td>{{ item?.sumdataMaintenance || "-" }}</td>
+                            <td>{{ item?.sumdataMaintenancefee || "-" }}</td>
                             <td>{{ item?.sumdatawaterbill || "-" }}</td>
                             <td>{{ item?.sumdataelectricitybill || "-" }}</td>
                             <td>{{ item?.sumCostdatawaterbill || "-" }}</td>
                           </tr>
                           <tr v-if="AffiliationListTD?.length > 0">
                             <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>{{ AffiliationListTD[0]?.countMaintenanceAll || 0 }}</th>
+                            <th>{{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}</th>
                             <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
                             <th>
                               {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
@@ -3132,7 +3183,7 @@ export default {
                           </tr>
                           <tr>
                             <td colspan="9" style="border: 0">
-                              ประจําเดือน {{ monthYear }} หน่วยงาน บช.ตชด.
+                              ประจําเดือน {{ monthYear }} หน่วยงาน ฝอ.๘.บก.อก.บช.ตชด. 
                             </td>
                           </tr>
                           <tr>
@@ -3162,7 +3213,7 @@ export default {
                             <td>{{ item?.numberfirst || "-" }}</td>
                             <td>{{ item?.lastnumber || "-" }}</td>
                             <td>{{ item?.lastnumber - item?.numberfirst || "-" }}</td>
-                            <td>{{ item?.maintenance || "-" }}</td>
+                            <td>{{ item?.maintenancefee || "-" }}</td>
                             <td>{{ item?.waterbill || "-" }}</td>
                             <td>{{ item?.central || "-" }}</td>
                             <td>{{ item?.sumCostCentral || "-" }}</td>
@@ -3606,7 +3657,7 @@ export default {
                         </thead>
                         <tr>
                           <td>{{ "อำนวยการ" || "-" }}</td>
-                          <td>{{ sumreportlistAll[0]?.sumdataMaintenance || "-" }}</td>
+                          <td>{{ sumreportlistAll[0]?.sumdataMaintenancefee || "-" }}</td>
                           <td>{{ sumreportlistAll[0]?.sumdatawaterbill || "-" }}</td>
                           <td>
                             {{ sumreportlistAll[0]?.sumdataelectricitybill || "-" }}
@@ -3617,7 +3668,7 @@ export default {
                         </tr>
                         <tr>
                           <td>{{ "สนับสนุน" || "-" }}</td>
-                          <td>{{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}</td>
+                          <td>{{ sumreportlistAll2[0]?.sumdataMaintenancefee || "-" }}</td>
                           <td>{{ sumreportlistAll2[0]?.sumdatawaterbill || "-" }}</td>
                           <td>
                             {{ sumreportlistAll2[0]?.sumdataelectricitybill || "-" }}
@@ -3628,7 +3679,7 @@ export default {
                         </tr>
                         <tr>
                           <td>{{ "ลูกจ้าง" || "-" }}</td>
-                          <td>{{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}</td>
+                          <td>{{ sumreportlistAll2[0]?.sumdataMaintenancefee || "-" }}</td>
                           <td>{{ sumreportlistAll2[0]?.sumdatawaterbill || "-" }}</td>
                           <td>
                             {{ sumreportlistAll2[0]?.sumdataelectricitybill || "-" }}
@@ -3640,7 +3691,7 @@ export default {
                         <tr>
                           <td>{{ "รวม" || "-" }}</td>
                           <td>
-                            {{ maintenanceAllcount }}
+                            {{ maintenancefeeAllcount }}
                           </td>
                           <td>
                             {{ waterbillAllcount }}
@@ -3746,297 +3797,7 @@ export default {
                 >
                   <div>
                     <div class="text-center pt-4 table-responsive">
-                      <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                          <button
-                            class="nav-link active"
-                            style="color: #57b05b"
-                            id="nav-home-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#nav-home"
-                            type="button"
-                            role="tab"
-                            aria-controls="nav-home"
-                            aria-selected="true"
-                            @click="typeChange('ตร')"
-                          >
-                            ตร.
-                          </button>
-                          <button
-                            class="nav-link"
-                            style="color: #57b05b"
-                            id="nav-profile-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#nav-profile"
-                            type="button"
-                            role="tab"
-                            aria-controls="nav-profile"
-                            aria-selected="false"
-                            @click="typeChange('บช.ตชด.')"
-                          >
-                            บช.ตชด.
-                          </button>
-                        </div>
-                      </nav>
-                      <div class="tab-content" id="nav-tabContent">
-                        <div
-                          class="tab-pane fade show active"
-                          id="nav-home"
-                          role="tabpanel"
-                          aria-labelledby="nav-home-tab"
-                        >
-                          <div>
-                            <div class="pt-4 text-start">
-                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
-                              <div class="mb-3">
-                                <div class="form-check form-check-inline">
-                                  <label style="margin-right: 20px">ประเภท</label>
-                                  <input
-                                    class="form-check-input"
-                                    type="radio"
-                                    name="typeUser31"
-                                    id="typeUser31"
-                                    value="บัญชีหน้างบ"
-                                    :checked="reportType == 'บัญชีหน้างบ'"
-                                    @change="typeUserchange('บัญชีหน้างบ', 'table11')"
-                                  />
-                                  <label class="form-check-label" for="typeUser31"
-                                    >บัญชีหน้างบ</label
-                                  >
-                                </div>
-                                <div class="form-check form-check-inline">
-                                  <input
-                                    class="form-check-input"
-                                    type="radio"
-                                    name="typeUser32"
-                                    id="typeUser32"
-                                    value="ประกันทรัพย์สิน"
-                                    :checked="reportType == 'ประกันทรัพย์สิน'"
-                                    @change="typeUserchange('ประกันทรัพย์สิน', 'table12')"
-                                  />
-                                  <label class="form-check-label" for="typeUser32">
-                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
-                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
-                                  >
-                                </div>
-                              </div>
-                              <div class="d-flex justify-content-end align-items-center">
-                                <div class="mb-3 w-20" style="margin-right: 5px">
-                                  <label>เดือน</label>
-                                  <v-select
-                                    :options="optionMonth"
-                                    v-model="selectedMonth"
-                                  ></v-select>
-                                </div>
-                                <div class="mb-3 w-20">
-                                  <label>สังกัด</label>
-                                  <v-select
-                                    :options="masterData?.AffiliationList"
-                                    v-model="selectedAffiliation"
-                                  ></v-select>
-                                </div>
-
-                                <div>
-                                  <MaterialButton
-                                    v-if="reportType == 'บัญชีหน้างบ'"
-                                    size="lg"
-                                    class="btn-icon"
-                                    style="margin-right: -30px"
-                                    @click="exportPdfinsurance()"
-                                  >
-                                    <div class="d-flex align-items-center">
-                                      <span style="margin-right: 5px">บันทึก</span>
-                                      <img
-                                        src="../../assets/img/pdf.png"
-                                        alt="title"
-                                        loading="lazy"
-                                        width="40"
-                                      />
-                                    </div>
-                                  </MaterialButton>
-                                  <MaterialButton
-                                    v-if="reportType == 'ประกันทรัพย์สิน'"
-                                    size="lg"
-                                    class="btn-icon"
-                                    style="margin-right: -30px"
-                                    @click="exportPdfAccumulated()"
-                                  >
-                                    <div class="d-flex align-items-center">
-                                      <span style="margin-right: 5px">บันทึก</span>
-                                      <img
-                                        src="../../assets/img/pdf.png"
-                                        alt="title"
-                                        loading="lazy"
-                                        width="40"
-                                      />
-                                    </div>
-                                  </MaterialButton>
-                                  <MaterialButton
-                                    v-if="reportType == 'บัญชีหน้างบ'"
-                                    size="lg"
-                                    class="btn-icon"
-                                    @click="ExportExcel('xlsx', 'table11')"
-                                  >
-                                    <div class="d-flex align-items-center">
-                                      <span style="margin-right: 5px">บันทึก</span>
-                                      <img
-                                        src="../../assets/img/excel.png"
-                                        alt="title"
-                                        loading="lazy"
-                                        width="40"
-                                      />
-                                    </div>
-                                  </MaterialButton>
-                                  <MaterialButton
-                                    v-if="reportType == 'ประกันทรัพย์สิน'"
-                                    size="lg"
-                                    class="btn-icon"
-                                    @click="ExportExcel('xlsx', 'table12')"
-                                  >
-                                    <div class="d-flex align-items-center">
-                                      <span style="margin-right: 5px">บันทึก</span>
-                                      <img
-                                        src="../../assets/img/excel.png"
-                                        alt="title"
-                                        loading="lazy"
-                                        width="40"
-                                      />
-                                    </div>
-                                  </MaterialButton>
-                                </div>
-                              </div>
-                            </div>
-                            <div
-                              v-if="reportType == 'บัญชีหน้างบ'"
-                              class="text-center pt-4 table-responsive"
-                            >
-                              <table class="table table-bordered" id="table11">
-                                <thead>
-                                  <tr>
-                                    <td colspan="6" style="border: 0">
-                                      สรุปยอดหักค่าบํารุงสถานที่
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="6" style="border: 0">
-                                      และค่าประกันทรัพย์สินเสียหายประจําเดือน
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="6" style="border: 0">
-                                      (เฉพาะอาคารบ้านพัก ตร. แยกตามสังกัด)
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th rowspan="2">ลำดับ</th>
-                                    <th rowspan="2">หน่วยงาน</th>
-                                    <th colspan="3">จำนวนเงิน (บาท)</th>
-                                  </tr>
-                                  <tr>
-                                    <th>ค่าบำรุง</th>
-                                    <th>ค่าประกัน</th>
-                                    <th>รวม</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr
-                                    v-for="(item, index) in AffiliationListTD"
-                                    :key="index"
-                                  >
-                                    <th scope="row">{{ index + 1 }}</th>
-                                    <td>{{ item?.value || "-" }}</td>
-                                    <td>{{ item?.sumdataMaintenance || "-" }}</td>
-                                    <td>{{ item?.sumdataInsurance || "-" }}</td>
-                                    <td>{{ item?.sumCostdataInsurance || "-" }}</td>
-                                  </tr>
-                                  <tr v-if="AffiliationListTD.length > 0">
-                                    <th scope="row" colspan="2">รวมยอดส่งหัก</th>
-                                    <th>
-                                      {{ AffiliationListTD[0]?.countMaintenanceAll || 0 }}
-                                    </th>
-                                    <th>
-                                      {{ AffiliationListTD[0]?.countInsuranceAll || 0 }}
-                                    </th>
-                                    <th>
-                                      {{ AffiliationListTD[0]?.countCostSumAll || 0 }}
-                                    </th>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            <div
-                              v-if="reportType == 'ประกันทรัพย์สิน'"
-                              class="text-center pt-4 table-responsive"
-                            >
-                              <table class="table table-bordered" id="table12">
-                                <thead>
-                                  <tr>
-                                    <td colspan="7" style="border: 0">
-                                      บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ ตร.
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="7" style="border: 0">
-                                      ที่หักเงินเดือนเป็นค่าบํารุงรักษาสถานที่และค่าประกันทรัพย์สินเสียหาย
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="7" style="border: 0">
-                                      ประจําเดือน {{ monthYear }} หน่วยงาน ตร.
-                                    </td>
-                                  </tr>
-
-                                  <tr>
-                                    <th rowspan="2">ลำดับ</th>
-                                    <th rowspan="2">ชื่อ-สกุล</th>
-                                    <th rowspan="2">อาคาร</th>
-                                    <th rowspan="2">เลขที่ห้อง</th>
-                                    <th rowspan="2">การหักเงินค่าบำรุงฯ</th>
-                                    <th colspan="3">การหักเงินค่าประกันฯ</th>
-                                  </tr>
-                                  <tr>
-                                    <th>ยอดหัก</th>
-                                    <th>ยอดหักสะสม</th>
-                                    <th>หมายเหตุ</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr v-for="(item, index) in reportlistTD" :key="index">
-                                    <th scope="row">{{ index + 1 }}</th>
-                                    <td>
-                                      {{ item?.rank }} {{ item?.firstName }}
-                                      {{ item?.lastName }}
-                                    </td>
-                                    <td>{{ item?.buildingName || "-" }}</td>
-                                    <td>{{ item?.roomnumber || "-" }}</td>
-                                    <td>{{ item?.maintenance || "-" }}</td>
-                                    <td>
-                                      {{ item?.accumulated || "-" }}
-                                    </td>
-                                    <td>{{ item?.amountPaid || "-" }}</td>
-                                    <td>{{ item?.Installmenttime || "-" }}</td>
-                                  </tr>
-
-                                  <tr v-if="reportlistTD?.length > 0">
-                                    <th scope="row" colspan="4">รวมเงิน</th>
-                                    <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
-                                    <th>{{ reportlistTD[0]?.accumulatedSum }}</th>
-                                    <th colspan="2">
-                                      {{ reportlistTD[0]?.amountPaidSum }}
-                                    </th>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          class="tab-pane fade"
-                          id="nav-profile"
-                          role="tabpanel"
-                          aria-labelledby="nav-profile-tab"
-                        >
-                          <div>
+                      <div>
                             <div class="pt-4 text-start">
                               <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
                               <div class="mb-3">
@@ -4236,7 +3997,7 @@ export default {
                                     </tr>
                                     <tr>
                                       <td colspan="7" style="border: 0">
-                                        ประจําเดือน {{ monthYear }} หน่วยงาน บช.ตชด.
+                                        ประจําเดือน {{ monthYear }} หน่วยงาน ฝอ.๘.บก.อก.บช.ตชด. 
                                       </td>
                                     </tr>
                                     <tr>
@@ -4284,8 +4045,7 @@ export default {
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -4453,14 +4213,14 @@ export default {
                           <tr v-for="(item, index) in AffiliationListTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.value || "-" }}</td>
-                            <td>{{ item?.sumdataMaintenance || "-" }}</td>
+                            <td>{{ item?.sumdataMaintenancefee || "-" }}</td>
                             <td>{{ item?.sumdatawaterbill || "-" }}</td>
                             <td>{{ item?.sumdataelectricitybill || "-" }}</td>
                             <td>{{ item?.sumCostdatawaterbill || "-" }}</td>
                           </tr>
                           <tr v-if="AffiliationListTD?.length > 0">
                             <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>{{ AffiliationListTD[0]?.countMaintenanceAll || 0 }}</th>
+                            <th>{{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}</th>
                             <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
                             <th>
                               {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
@@ -4522,7 +4282,7 @@ export default {
                             <td>
                               {{ item?.lastnumber - item?.numberfirst || "-" }}
                             </td>
-                            <td>{{ item?.maintenance || "-" }}</td>
+                            <td>{{ item?.maintenancefee || "-" }}</td>
                             <td>{{ item?.waterbill || "-" }}</td>
                             <td>{{ item?.central || "-" }}</td>
                             <td>{{ item?.sumCostCentral || "-" }}</td>

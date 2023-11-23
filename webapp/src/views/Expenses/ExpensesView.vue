@@ -67,6 +67,7 @@ export default {
       reportType: "",
       userId: "",
       reportId: "",
+      maintenancefee:""
     };
   },
   created() {
@@ -96,6 +97,8 @@ export default {
       const d = new Date();
       let m = this.optionMonth[d.getMonth() - 1];
       let y = d.getFullYear();
+      let x = this.optionMonth.findIndex((el) => el.label == m);
+      this.mountNumber = x + 1;
       this.months = m;
       this.years = y;
     },
@@ -158,6 +161,7 @@ export default {
             this.typeContract = this.userByid.typeContract,
             this.contractExpenses = this.userByid.contractExpenses,
             this.sumCost = this.userByid.sumCost;
+            this.maintenancefee = this.userByid.maintenancefee
             if(this.userByid.numberfirst == undefined){
               this.numberfirst =  0
             }else{
@@ -212,6 +216,7 @@ export default {
         costs: this.Costs,
         typeContract: this.typeContract,
         contractExpenses: this.contractExpenses,
+        maintenancefee: this.maintenancefee,
         sumCost: this.sumCost,
         monthly: this.months,
         years: this.years,
@@ -265,6 +270,7 @@ export default {
         costs: this.Costs,
         typeContract: this.typeContract,
         contractExpenses: this.contractExpenses,
+        maintenancefee: this.maintenancefee,
         sumCost: this.sumCost,
         monthly: this.months,
         years: this.years,
@@ -291,6 +297,7 @@ export default {
         costs: this.Costs,
         typeContract: this.typeContract,
         contractExpenses: this.contractExpenses,
+        maintenancefee: this.maintenancefee,
         sumCost: this.sumCost,
         monthly: this.months,
         years: this.years,
@@ -384,6 +391,7 @@ export default {
                   <th scope="col">เลขก่อน</th>
                   <th scope="col">เลขหลัง</th>
                   <th scope="col">ยอดใช้</th>
+                  <th scope="col">ค่าธรรมเนียม</th>
                   <th scope="col">ค่าน้ำประปา</th>
                   <th scope="col">ค่าไฟฟ้า</th>
                   <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
@@ -412,6 +420,7 @@ export default {
                   <td>{{ item?.numberfirst }}</td>
                   <td>{{ item?.lastnumber }}</td>
                   <td>{{ item?.sumCost }}</td>
+                  <td>{{ item?.maintenancefee }}</td>
                   <td>{{ item?.waterbill }}</td>
                   <td>{{ item?.electricitybill }}</td>
                   <td>{{ item?.central }}</td>
@@ -503,6 +512,16 @@ export default {
                   class="input-group-static"
                   type="text"
                   placeholder="เลขหลัง"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="starRed">ค่าธรรมเนียม</label>
+                <MaterialInput
+                  :value="maintenancefee"
+                  @input="(event) => (maintenancefee = event.target.value)"
+                  class="input-group-static"
+                  type="text"
+                  placeholder="ค่าธรรมเนียม"
                 />
               </div>
               <div class="mb-3">

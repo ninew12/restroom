@@ -100,7 +100,7 @@ app.put('/users/:id', (req, res) => {
     if (req.body.electricitybill) parsedData.electricitybill = req.body.electricitybill
     if (req.body.central) parsedData.central = req.body.central
     if (req.body.costs) parsedData.costs = req.body.costs
-    if (req.body.Maintenancefee) parsedData.Maintenancefee = req.body.Maintenancefee
+    if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
     if (req.body.sumCost) parsedData.sumCost = req.body.sumCost
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
     if (req.body.typeContract) parsedData.typeContract = req.body.typeContract
@@ -305,7 +305,7 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
     if (req.body.leniency) parsedData.leniency = req.body.leniency
-    
+    if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
     filterdata.push(parsedData)
     fs.writeFileSync('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -371,6 +371,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
     if (req.body.leniency) parsedData.leniency = req.body.leniency
+    if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -442,6 +443,7 @@ app.put('/history/:id', (req, res) => {
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
     if (req.body.leniency) parsedData.leniency = req.body.leniency
+    if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
     filterdata.push(parsedData)
     fs.writeFileSync('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -581,6 +583,7 @@ app.put('/report/:id', (req, res) => {
     if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
     if (req.body.years) parsedData.years = req.body.years
     if (req.body.leniency) parsedData.leniency = req.body.leniency
+    if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
     
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
