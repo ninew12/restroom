@@ -126,7 +126,7 @@ export default {
           .then((res) => {
             let arr = res.data
             let arr2 = []
-            arr2 = arr.filter(e=> e.typeUser == "บช.ตชด.")
+            arr2 = arr.filter(e=> e.typeUser == "บช.ตชด." && e.queue !== "inroom")
             this.userList = arr2.map((ele) => {
               return {
                 label: ele.rank + " " + ele.firstName + " " + ele.lastName,
