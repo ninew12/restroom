@@ -7,6 +7,7 @@ const Expenses = require('./Expenses.json')
 const history = require('./history.json')
 const reports = require('./report.json')
 const userlogin = require('./login.json')
+const fixdata = require('./fixtest.json')
 // const masterData = require('./masterData.json')
 const express = require("express");
 const app = express();
@@ -232,6 +233,84 @@ app.post('/expenses', (req, res) => {
         }
     })
     res.json(Expenses)
+})
+
+app.get('/expensesMock', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.json(fixdata)
+})
+
+app.put('/expenses/:id', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    const updateIndex = fixdata.findIndex(user => user.id === (req.params.id))
+    let dataOld = fixdata[updateIndex]
+    let filterdata = fixdata.filter(user => user.id !== (req.params.id))
+    const parsedData = dataOld;
+    if (req.body.firstName) parsedData.firstName = req.body.firstName
+    if (req.body.lastName) parsedData.lastName = req.body.lastName
+    if (req.body.affiliation) parsedData.affiliation = req.body.affiliation
+    if (req.body.rank) parsedData.rank = req.body.rank
+    if (req.body.idcard) parsedData.idcard = req.body.idcard
+    if (req.body.phone) parsedData.phone = req.body.phone
+    if (req.body.status) parsedData.status = req.body.status
+    if (req.body.typeAffiliation) parsedData.typeAffiliation = req.body.typeAffiliation
+    if (req.body.typeRanks) parsedData.typeRanks = req.body.typeRanks
+    if (req.body.queue) parsedData.queue = req.body.queue
+    if (req.body.no) parsedData.no = req.body.no
+    if (req.body.bookNumber) parsedData.bookNumber = req.body.bookNumber
+    if (req.body.pickedBook) parsedData.pickedBook = req.body.pickedBook
+    if (req.body.typeRoom) parsedData.typeRoom = req.body.typeRoom
+    if (req.body.roomconditions) parsedData.roomconditions = req.body.roomconditions
+    if (req.body.checkintime) parsedData.checkintime = req.body.checkintime
+    if (req.body.roomnumber) parsedData.roomnumber = req.body.roomnumber
+    if (req.body.insurancecost) parsedData.insurancecost = req.body.insurancecost
+    if (req.body.installmentsRooom) parsedData.installmentsRooom = req.body.installmentsRooom
+    if (req.body.waterbill) parsedData.waterbill = req.body.waterbill
+    if (req.body.electricitybill) parsedData.electricitybill = req.body.electricitybill
+    if (req.body.central) parsedData.central = req.body.central
+    if (req.body.costs) parsedData.costs = req.body.costs
+    if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
+    if (req.body.sumCost) parsedData.sumCost = req.body.sumCost
+    if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
+    if (req.body.typeContract) parsedData.typeContract = req.body.typeContract
+    if (req.body.contractExpenses) parsedData.contractExpenses = req.body.contractExpenses
+    if (req.body.buildingName) parsedData.buildingName = req.body.buildingName
+    if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
+    if (req.body.monthly) parsedData.monthly = req.body.monthly
+    if (req.body.numberfirst) parsedData.numberfirst = req.body.numberfirst
+    if (req.body.lastnumber) parsedData.lastnumber = req.body.lastnumber
+    if (req.body.houseRegistration) parsedData.houseRegistration = req.body.houseRegistration
+    if (req.body.payMonth) parsedData.payMonth = req.body.payMonth
+    if (req.body.roomKey) parsedData.roomKey = req.body.roomKey
+    if (req.body.houseRegistrationcause) parsedData.houseRegistrationcause = req.body.houseRegistrationcause
+    if (req.body.payMonthcause) parsedData.payMonthcause = req.body.payMonthcause
+    if (req.body.payMonthcausetwo) parsedData.payMonthcausetwo = req.body.payMonthcausetwo
+    if (req.body.roomKeycause) parsedData.roomKeycause = req.body.roomKeycause
+    if (req.body.dateApproved) parsedData.dateApproved = req.body.dateApproved
+    if (req.body.insurance) parsedData.insurance = req.body.insurance
+    if (req.body.installments) parsedData.installments = req.body.installments
+    if (req.body.maintenance) parsedData.maintenance = req.body.maintenance
+    if (req.body.deposit) parsedData.deposit = req.body.deposit
+    if (req.body.roomId) parsedData.roomId = req.body.roomId
+    if (req.body.dateReturn) parsedData.dateReturn = req.body.dateReturn
+    if (req.body.customerOld) parsedData.customerOld = req.body.customerOld
+    if (req.body.userId) parsedData.userId = req.body.userId
+    if (req.body.buildingType) parsedData.buildingType = req.body.buildingType
+    if (req.body.buildingType2) parsedData.buildingType2 = req.body.buildingType2
+    if (req.body.bankbookName) parsedData.bankbookName = req.body.bankbookName
+    if (req.body.bankbookNumber) parsedData.bankbookNumber = req.body.bankbookNumber
+    if (req.body.years) parsedData.years = req.body.years
+    if (req.body.leniency) parsedData.leniency = req.body.leniency
+    
+    filterdata.push(parsedData)
+    fs.writeFileSync('./fixtest.json', JSON.stringify(filterdata, null, 2), (err) => {
+        if (err) {
+            console.log("Failed to write updated data to file");
+            return;
+        }
+        console.log("Updated file successfully");
+    });
+    res.send(`Update user id: '${req.params.id}' completed.`)
 })
 
 app.get('/rooms', (req, res) => {
