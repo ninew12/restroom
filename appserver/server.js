@@ -1,8 +1,8 @@
 
 // const users = require('./users.json')
 const users = require('./new_user.json')
-const rooms = require('./new_room.json')
-// const rooms = require('./rooms.json')
+// const rooms = require('./new_room.json')
+const rooms = require('./rooms.json')
 const queue = require('./queue.json')
 const building = require('./building.json')
 const Expenses = require('./Expenses.json')
@@ -137,13 +137,14 @@ app.put('/users/:id', (req, res) => {
     if (req.body.leniency) parsedData.leniency = req.body.leniency
 
     filterdata.push(parsedData)
-    fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFileSync('./users.json', JSON.stringify(filterdata), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
         }
         console.log("Updated file successfully");
     });
+
     res.send(`Update user id: '${req.params.id}' completed.`)
 })
 
