@@ -67,7 +67,8 @@ export default {
       reportType: "",
       userId: "",
       reportId: "",
-      maintenancefee:""
+      maintenancefee:"",
+      roomnumber: ''
     };
   },
   created() {
@@ -160,6 +161,7 @@ export default {
             this.Costs = this.userByid.Costs,
             this.typeContract = this.userByid.typeContract,
             this.contractExpenses = this.userByid.contractExpenses,
+            this.roomnumber = this.userByid.roomnumber,
             this.sumCost = this.userByid.sumCost;
             this.maintenancefee = this.userByid.maintenancefee
             if(this.userByid.numberfirst == undefined){
@@ -212,6 +214,7 @@ export default {
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
         electricitybill: this.Electricitybill,
+        roomnumber: this.roomnumber,
         central: this.Central,
         costs: this.Costs,
         typeContract: this.typeContract,
@@ -258,6 +261,7 @@ export default {
         status: this.userByid.status,
         typeAffiliation: this.userByid.typeAffiliation,
         typeRanks: this.userByid.typeRanks,
+        roomnumber: this.userByid.roomnumber,
         pickedBook: this.dateData.toISOString(),
         buildingType: this.buildingType,
         firstName: this.userByid.firstName,
@@ -292,6 +296,7 @@ export default {
         numberfirst: this.numberfirst,
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
+        roomnumber: this.roomnumber,
         electricitybill: this.Electricitybill,
         central: this.Central,
         costs: this.Costs,

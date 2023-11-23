@@ -1441,6 +1441,7 @@ export default {
           maintenance: el.maintenance || 0,
           insurance: el.insurance || 0,
           accumulated: el.insurance / el.installments,
+          roomnumber: el.roomnumber,
           maintenancefee: el.maintenancefee || 0,
           amountPaidSum: this.AmountPaidSum(data),
           waterbillSum: this.WaterbillSum(data),
@@ -1478,6 +1479,7 @@ export default {
           costs: el2.costs || 0,
           insurance: el2.insurance || 0,
           maintenancefee: el2.maintenancefee || 0,
+          roomnumber: el2.roomnumber,
           amountPaidSum: this.AmountPaidSum(data2),
           waterbillSum: this.WaterbillSum(data2),
           maintenancefeeSum: this.maintenancefeeCount(data2),
@@ -1684,7 +1686,7 @@ export default {
         aa5 = [];
       let count = this.OGCount(this.reportlistok);
       await this.reportlistok.forEach((e, i) => {
-        ws_data.push([i + 1, e.idcard,` ${e.firstName}+" "+${e.lastName} `, "41001", this.countSuminstallments(e)]);
+        ws_data.push([i + 1, e.idcard, e.firstName+" "+e.lastName, , "41001", this.countSuminstallments(e)]);
       });
       aa = [" ", " ", "รวม อก.", count];
       aa2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
@@ -1708,7 +1710,7 @@ export default {
         bb5 = [];
       let count2 = this.OGCount(this.reportListssn);
       await this.reportListssn.forEach((el, i) => {
-        ws_data2.push([i + 1, el.idcard, ` ${el.firstName}+" "+${el.lastName} `,"41001", this.countSuminstallments(el)]);
+        ws_data2.push([i + 1, el.idcard, el.firstName+" "+el.lastName ,"41001", this.countSuminstallments(el)]);
       });
       bb = [" ", " ", "รวม อก.", count2];
       bb2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
@@ -1732,7 +1734,7 @@ export default {
         cc5 = [];
       let count3 = this.OGCount(this.reportListssn);
       await this.reportlistlj.forEach((el2, i) => {
-        ws_data3.push([i + 1, el2.idcard,` ${el2.firstName}+" "+${el2.lastName} `, "41001", this.countSuminstallments(el2)]);
+        ws_data3.push([i + 1, el2.idcard, el2.firstName+" "+el2.lastName,, "41001", this.countSuminstallments(el2)]);
       });
       cc = [" ", " ", "รวม อก.", count3];
       cc2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
@@ -2003,7 +2005,7 @@ export default {
 
     exportPdfinsurance() {
       let listData = [];
-      if (this.typeReport == "ตร.") listData = this.reportListTD;
+      if (this.typeReport == "ตร.") listData = this.reportlistTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
 
       if (listData.length > 0) {
@@ -2066,6 +2068,9 @@ export default {
           ...e,
           numberNo: this.thaiNumber(e.numberNo),
           MaintenanceSum: this.thaiNumber(e.MaintenanceSum),
+          maintenancefeeSum: this.thaiNumber(e.maintenancefeeSum),
+          maintenancefee: this.thaiNumber(e.maintenancefee),
+          roomnumber: e.roomnumber || "-",
           waterbillSum: this.thaiNumber(e.waterbillSum),
           electricitybillSum: this.thaiNumber(e.electricitybillSum),
           SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
@@ -2127,7 +2132,7 @@ export default {
     exportPdfWaterBill() {
       let listData = [];
       let mss = "";
-      if (this.typeReport == "ตร.") listData = this.reportListTD;
+      if (this.typeReport == "ตร.") listData = this.reportlistTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
         if (this.typeReport == "ตร.")
@@ -2155,7 +2160,7 @@ export default {
         const docDefinition = {
           content: [
             {
-              text: `${this.mss}`,
+              text: `${mss}`,
               style: "header",
               alignment: "center",
             },
@@ -2195,6 +2200,9 @@ export default {
           ...e,
           numberNo: this.thaiNumber(e.numberNo),
           MaintenanceSum: this.thaiNumber(e.MaintenanceSum),
+          maintenancefeeSum: this.thaiNumber(e.maintenancefeeSum),
+          maintenancefee: this.thaiNumber(e.maintenancefee),
+          roomnumber: e.roomnumber || "-",
           waterbillSum: this.thaiNumber(e.waterbillSum),
           electricitybillSum: this.thaiNumber(e.electricitybillSum),
           SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
@@ -2216,7 +2224,7 @@ export default {
           "",
           "",
           "",
-          { text: thaiNum[0].MaintenanceSum, style: "header", alignment: "center" },
+          { text: thaiNum[0].maintenancefeeSum, style: "header", alignment: "center" },
           { text: thaiNum[0].waterbillSum, style: "header", alignment: "center" },
           { text: thaiNum[0].centralSum, style: "header", alignment: "center" },
           { text: thaiNum[0].SumCostSumCentral, style: "header", alignment: "center" },
@@ -2242,6 +2250,8 @@ export default {
           { text: "สาเหตุที่หักไม่ได้", style: "header", alignment: "center" },
         ],
       ];
+
+      console.log(thaiNum);
       thaiNum.forEach(function (row) {
         var dataRow = [];
         columns.forEach(function (column) {
@@ -2249,11 +2259,13 @@ export default {
         });
         body.push(dataRow);
       });
+      console.log(body);
       arr = body.concat(footer);
       return arr;
     },
 
     tableCentral(data, columns) {
+      console.log(data);
       return {
         table: {
           widths: [20, 50, "*", 30, 30, 30, 30, 30, 30, 30, 20, 20, 50],
@@ -2265,7 +2277,8 @@ export default {
 
     exportPdfCentral() {
       let listData = [];
-      if (this.typeReport == "ตร.") listData = this.reportListTD;
+      let mss = ''
+      if (this.typeReport == "ตร.") listData = this.reportlistTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
         if (this.typeReport == "ตร.")
@@ -2293,7 +2306,7 @@ export default {
         const docDefinition = {
           content: [
             {
-              text: `${this.mss}`,
+              text: `${mss}`,
               style: "header",
               alignment: "center",
             },
@@ -2334,6 +2347,8 @@ export default {
     buildTableBodyCosts(data, columns) {
       var body = [];
       let arr = [];
+      console.log(data);
+      console.log(data);
       var thaiNum = data.map((e) => {
         return {
           ...e,
@@ -2400,7 +2415,7 @@ export default {
 
     exportPdfCosts() {
       let listData = [];
-      if (this.typeReport == "ตร.") listData = this.reportListTD;
+      if (this.typeReport == "ตร.") listData = this.reportlistTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
         pdfMake.fonts = {
@@ -2548,7 +2563,7 @@ export default {
 
     exportPdfAccumulated() {
       let listData = [];
-      if (this.typeReport == "ตร.") listData = this.reportListTD;
+      if (this.typeReport == "ตร.") listData = this.reportlistTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
 
       if (listData.length > 0) {
@@ -2683,7 +2698,7 @@ export default {
 
     exportPdfCostCentral() {
       let listData = [];
-      if (this.typeReport == "ตร.") listData = this.reportListTD;
+      if (this.typeReport == "ตร.") listData = this.reportlistTD;
       else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
       if (listData.length > 0) {
         pdfMake.fonts = {
