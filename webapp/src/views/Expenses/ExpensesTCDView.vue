@@ -342,8 +342,8 @@ export default {
               style="margin-bottom: 0px"
               variant="gradient"
               color="success"
-              @click="genInsurance()"
-              
+              data-bs-toggle="modal"
+              data-bs-target="#costBackdrop"
               >คำนวณค่าใช้จ่าย</MaterialButton
             >
             <!-- :disabled="openBtn" -->
@@ -381,7 +381,43 @@ export default {
         </div>
       </div>
     </div>
-
+    <div
+      class="modal fade"
+      id="costBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">คำควณค่าใช้จ่าย</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">คุณต้องการที่จะคำนวนค่าใช้จ่ายใช่หรือไม่</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              ยกเลิก
+            </button>
+            <MaterialButton
+              variant="gradient"
+              color="danger"
+              @click="genInsurance"
+              html-type="submit"
+              data-bs-dismiss="modal"
+              >ตกลง</MaterialButton
+            >
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 <style>
