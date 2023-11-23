@@ -1,6 +1,8 @@
 
-const users = require('./users.json')
-const rooms = require('./rooms.json')
+// const users = require('./users.json')
+const users = require('./new_user.json')
+const rooms = require('./new_room.json')
+// const rooms = require('./rooms.json')
 const queue = require('./queue.json')
 const building = require('./building.json')
 const Expenses = require('./Expenses.json')
@@ -216,7 +218,7 @@ app.delete('/buildings/:builId', (req, res) => {
 
 app.get('/expenses', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    res.json(users)
+    res.json(new_user)
 })
 
 app.post('/expenses', (req, res) => {
