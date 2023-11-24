@@ -27,7 +27,7 @@ export default {
             <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body text-center">
-                        <p class="card-title" style="font-weight: bold; color: #000">ทะเบียน</p>
+                        <h5 class="card-title" style="font-weight: bold; color: #000">ทะเบียน</h5>
                         <img src="../../../assets/img/register.png"  alt="title" loading="lazy" class="w-50" />
                         <RouterLink :to="{ name: 'users' }" class="dropdown-item border-radius-md">
                             <a href="#" class="btn btn-success mt-4">ทะเบียน</a>
@@ -39,7 +39,7 @@ export default {
             <div class="col-sm-3 mb-3 mb-sm-0">
                 <div class="card">
                     <div class="card-body text-center">
-                        <p class="card-title" style="font-weight: bold; color: #000">สถานะห้องพัก</p>
+                        <h5 class="card-title" style="font-weight: bold; color: #000">สถานะห้องพัก</h5>
                         <img src="../../../assets/img/status.png" alt="title" loading="lazy" class="w-50" />
                         <RouterLink :to="{ name: 'room' }" class="dropdown-item border-radius-md">
                             <a href="#" class="btn btn-success mt-4">สถานะห้องพัก</a>
@@ -50,7 +50,7 @@ export default {
             <div class="col-sm-3">
                 <div class="card">
                     <div class="card-body text-center">
-                        <p class="card-title" style="font-weight: bold; color: #000">ผังห้องพัก</p>
+                        <h5 class="card-title" style="font-weight: bold; color: #000">ผังห้องพัก</h5>
                         <img src="../../../assets/img/layout.png" alt="title" loading="lazy" class="w-50" />
                         <RouterLink :to="{ name: 'layout' }" class="dropdown-item border-radius-md">
                           <a href="#" class="btn btn-success mt-4">ผังห้องพัก</a>
@@ -72,7 +72,7 @@ export default {
             <div class="col-sm-3 ">
                 <div class="card">
                     <div class="card-body text-center">
-                        <p class="card-title" style="font-weight: bold; color: #000">ระบบคิว</p>
+                        <h5 class="card-title" style="font-weight: bold; color: #000">ระบบคิว</h5>
                         <img src="../../../assets/img/queue.png" alt="title" loading="lazy" class="w-50" />
                         <RouterLink :to="{ name: 'queue' }" class="dropdown-item border-radius-md">
                           <a href="#" class="btn btn-success mt-4">ระบบคิว</a>
@@ -83,7 +83,7 @@ export default {
             <div class="col-sm-3 mt-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <p class="card-title" style="font-weight: bold; color: #000">ระบบเรียกรายงาน</p>
+                        <h5 class="card-title" style="font-weight: bold; color: #000">ระบบเรียกรายงาน</h5>
                         <img src="../../../assets/img/result.png" alt="title" loading="lazy" class="w-50" />
                         <RouterLink :to="{ name: 'reports' }" class="dropdown-item border-radius-md">
                           <a href="#" class="btn btn-success mt-4">ระบบเรียกรายงาน</a>
@@ -94,7 +94,7 @@ export default {
             <div class="col-sm-3 mt-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <p class="card-title" style="font-weight: bold; color: #000">บันทึกค่าใช้จ่ายรายเดือน ตร.</p>
+                        <h6 class="card-title" style="font-weight: bold; color: #000">บันทึกค่าใช้จ่ายรายเดือน ตร.</h6>
                         <img src="../../../assets/img/accounting.png" alt="title" loading="lazy" class="w-50" />
                         <RouterLink :to="{ name: 'expenses' }" class="dropdown-item border-radius-md">
                           <a href="#" class="btn btn-success mt-4">บันทึกค่าใช้จ่ายรายเดือน ตร.</a>
@@ -105,7 +105,7 @@ export default {
             <div class="col-sm-3 mt-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <p class="card-title" style="font-weight: bold; color: #000">บันทึกค่าใช้จ่ายรายเดือน บช.ตชด.</p>
+                        <h6 class="card-title" style="font-weight: bold; color: #000">บันทึกค่าใช้จ่ายรายเดือน บช.ตชด.</h6>
                         <img src="../../../assets/img/finance.png" alt="title" loading="lazy" class="w-50" />
                         <RouterLink :to="{ name: 'expensesTCD' }" class="dropdown-item border-radius-md">
                           <a href="#" class="btn btn-success mt-4">บันทึกค่าใช้จ่ายรายเดือน บช.ตชด.</a>
@@ -116,7 +116,7 @@ export default {
             <div class="col-sm-3 mt-4">
                 <div class="card">
                     <div class="card-body text-center">
-                        <p class="card-title" style="font-weight: bold; color: #000">คืนเงินประกัน</p>
+                        <h5 class="card-title" style="font-weight: bold; color: #000">คืนเงินประกัน</h5>
                         <img src="../../../assets/img/pay.png" alt="title" loading="lazy" class="w-50" />
                         <RouterLink :to="{ name: 'amountPaid' }" class="dropdown-item border-radius-md">
                           <a href="#" class="btn btn-success mt-4">คืนเงินประกัน</a>

@@ -2024,12 +2024,10 @@ export default {
         return {
           ...e,
           numberNo: this.thaiNumber(e.numberNo),
-          MaintenanceSum: this.thaiNumber(e.MaintenanceSum),
-          InsuranceSum: this.thaiNumber(e.InsuranceSum),
-          SumCostSumInsurance: this.thaiNumber(e.SumCostSumInsurance),
-          sumCostnsurance: this.thaiNumber(e.sumCostnsurance),
-          maintenance: this.thaiNumber(e.maintenance),
-          insurance: this.thaiNumber(e.insurance),
+          value: e.value,
+          sumdataMaintenance: this.thaiNumber(e.sumdataMaintenance),
+          sumdataInsurance: this.thaiNumber(e.sumdataInsurance),
+          sumCostdataInsurance: this.thaiNumber(e.sumCostdataInsurance)
         };
       });
 
@@ -2037,9 +2035,9 @@ export default {
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
           "",
-          { text: thaiNum[0].MaintenanceSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].InsuranceSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].SumCostSumInsurance, style: "header", alignment: "center" },
+          { text: this.thaiNumber(thaiNum[0].countMaintenanceAll), style: "header", alignment: "center" },
+          { text: this.thaiNumber(thaiNum[0].countInsuranceAll), style: "header", alignment: "center" },
+          { text: this.thaiNumber(thaiNum[0].countCostSumAll), style: "header", alignment: "center" },
         ],
       ];
       var body = [
@@ -2082,9 +2080,12 @@ export default {
 
     exportPdfinsurance() {
       let listData = [];
-      if (this.typeReport == "ตร.") listData = this.reportlistTD;
-      else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
-
+        listData = this.AffiliationListCTD.map((el,i)=> {
+          return {
+            ...el,
+            numberNo: i+1
+          }
+        });
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
@@ -2117,16 +2118,16 @@ export default {
               alignment: "center",
             },
             {
-              text: `(เฉพาะอาคารบ้านพัก ${this.typeReport} แยกตามสังกัด)`,
+              text: `(เฉพาะอาคารบ้านพัก บช.ตชด. แยกตามสังกัด)`,
               style: "subheader",
               alignment: "center",
             },
             this.tableInsurance(listData, [
               "numberNo",
-              "typeAffiliation",
-              "maintenance",
-              "insurance",
-              "sumCostnsurance",
+              "value",
+              "sumdataMaintenance",
+              "sumdataInsurance",
+              "sumCostdataInsurance",
             ]),
           ],
           defaultStyle: {
@@ -2144,27 +2145,21 @@ export default {
         return {
           ...e,
           numberNo: this.thaiNumber(e.numberNo),
-          MaintenanceSum: this.thaiNumber(e.MaintenanceSum),
-          maintenancefeeSum: this.thaiNumber(e.maintenancefeeSum),
-          maintenancefee: this.thaiNumber(e.maintenancefee),
-          roomnumber: e.roomnumber || "-",
-          waterbillSum: this.thaiNumber(e.waterbillSum),
-          electricitybillSum: this.thaiNumber(e.electricitybillSum),
-          SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
-          sumCostwaterbill: this.thaiNumber(e.sumCostwaterbill),
-          maintenance: this.thaiNumber(e.maintenance),
-          waterbill: this.thaiNumber(e.waterbill),
-          electricitybill: this.thaiNumber(e.electricitybill),
+          value: e.value,
+          sumdataMaintenancefee: this.thaiNumber(e.sumdataMaintenancefee),
+          sumdatawaterbill: this.thaiNumber(e.sumdatawaterbill),
+          sumdataelectricitybill: this.thaiNumber(e.sumdataelectricitybill),
+          sumCostdatawaterbill: this.thaiNumber(e.sumCostdatawaterbill),
         };
       });
       var footer = [
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
           "",
-          { text: thaiNum[0].MaintenanceSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].waterbillSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].electricitybillSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].SumCostSumwater, style: "header", alignment: "center" },
+          { text: this.thaiNumber(thaiNum[0].countMaintenancefeeAll), style: "header", alignment: "center" },
+          { text: this.thaiNumber(thaiNum[0].countwaterbilAll), style: "header", alignment: "center" },
+          { text: this.thaiNumber(thaiNum[0].countelectricitybillAll), style: "header", alignment: "center" },
+          { text: this.thaiNumber(thaiNum[0].countCostwaterbillAll), style: "header", alignment: "center" },
         ],
       ];
       var body = [
@@ -2207,10 +2202,15 @@ export default {
     },
 
     exportPdfWaterBill() {
+      console.log('listData');
       let listData = [];
       let mss = "";
-      if (this.typeReport == "ตร.") listData = this.reportlistTD;
-      else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
+        listData = this.AffiliationListTD.map((e,i)=> {
+          return {
+            ...e,
+            numberNo: i+1
+          }
+        });
       if (listData.length > 0) {
         if (this.typeReport == "ตร.")
           mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";
@@ -2253,11 +2253,11 @@ export default {
             },
             this.tablewaterBill(listData, [
               "numberNo",
-              "typeAffiliation",
-              "maintenancefee",
-              "waterbill",
-              "electricitybill",
-              "sumCostwaterbill",
+              "value",
+              "sumdataMaintenancefee",
+              "sumdatawaterbill",
+              "sumdataelectricitybill",
+              "sumCostdatawaterbill",
             ]),
           ],
           defaultStyle: {
@@ -2328,7 +2328,6 @@ export default {
         ],
       ];
 
-      console.log(thaiNum);
       thaiNum.forEach(function (row) {
         var dataRow = [];
         columns.forEach(function (column) {
@@ -2424,33 +2423,23 @@ export default {
     buildTableBodyCosts(data, columns) {
       var body = [];
       let arr = [];
-      console.log(data);
-      console.log(data);
       var thaiNum = data.map((e) => {
         return {
           ...e,
           numberNo: this.thaiNumber(e.numberNo),
-          MaintenanceSum: this.thaiNumber(e.MaintenanceSum),
-          waterbillSum: this.thaiNumber(e.waterbillSum),
-          electricitybillSum: this.thaiNumber(e.electricitybillSum),
-          SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
-          sumCostwaterbill: this.thaiNumber(e.sumCostwaterbill),
-          maintenance: this.thaiNumber(e.maintenance),
-          waterbill: this.thaiNumber(e.waterbill),
-          electricitybill: this.thaiNumber(e.electricitybill),
-          central: this.thaiNumber(e.central),
-          sumCostCentral: this.thaiNumber(e.sumCostCentral),
-          centralSum: this.thaiNumber(e.centralSum),
-          SumCostSumCentral: this.thaiNumber(e.SumCostSumCentral),
+          value: e.value,
+          sumdatacentral: this.thaiNumber(e.sumdatacentral),
+          sumdatacosts: this.thaiNumber(e.sumdatacosts),
+          sumCostdataCostCosts: this.thaiNumber(e.sumCostdataCostCosts),
         };
       });
       var footer = [
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
           "",
-          { text: thaiNum[0].centralSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].costsSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].SumCostSumCosts, style: "header", alignment: "center" },
+          { text:  this.thaiNumber(thaiNum[0].countcentraAll), style: "header", alignment: "center" },
+          { text:  this.thaiNumber(thaiNum[0].countcostsAll), style: "header", alignment: "center" },
+          { text:  this.thaiNumber(thaiNum[0].countCostCostsSumAll), style: "header", alignment: "center" },
         ],
       ];
       var body = [
@@ -2492,8 +2481,13 @@ export default {
 
     exportPdfCosts() {
       let listData = [];
-      if (this.typeReport == "ตร.") listData = this.reportlistTD;
-      else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
+      listData = this.AffiliationListTD.map((el,i)=> {
+          return {
+            ...el,
+            numberNo: i+1
+          }
+        });
+        console.log(this.AffiliationListTD);
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
@@ -2532,10 +2526,10 @@ export default {
             },
             this.tableCosts(listData, [
               "numberNo",
-              "typeAffiliation",
-              "central",
-              "costs",
-              "sumCostCosts",
+              "value",
+              "sumdatacentral",
+              "sumdatacosts",
+              "sumCostdataCostCosts",
             ]),
           ],
           defaultStyle: {
@@ -3319,7 +3313,7 @@ export default {
                           </tr>
                           <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>{{ reportlistTD[0]?.MaintenanceSum }}</th>
+                            <th>{{ reportlistTD[0]?.maintenancefeeSum }}</th>
                             <th>{{ reportlistTD[0]?.waterbillSum }}</th>
                             <th>{{ reportlistTD[0]?.centralSum }}</th>
                             <th>{{ reportlistTD[0]?.SumCostSumCentral }}</th>

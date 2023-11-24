@@ -61,7 +61,8 @@ export default {
       contractExpenses: "",
       id: "",
       months: "",
-      dataSummit: []
+      dataSummit: [],
+      listCheckbox: [],
     };
   },
   created() {
@@ -69,12 +70,14 @@ export default {
     if (userold === null) this.$router.push({ path: `/login` });
     this.getExpenses();
     this.getMonths();
-    this.getRoomsByid();
   },
   watch: {
     selectedColor: function (newValue) {
       // this.updateColor(newValue)
       console.log(newValue);
+    },
+    listCheckbox: function (newValue) {
+      if (newValue !== null && newValue !== undefined) this.dataSummit = newValue;
     },
   },
   computed: {
@@ -117,37 +120,7 @@ export default {
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
-            console.log(data );
             this.expensesList = data;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    async getRoomsByid() {
-      //   this.id = id;
-      try {
-        await axios
-          .get(`http://localhost:3897/users/`)
-          .then((res) => {
-            console.log(res);
-            // this.userByid = res.data;
-            // this.rank = this.userByid.rank;
-            // (this.firstName = this.userByid.firstName),
-            //   (this.lastName = this.userByid.firstName);
-            // (this.Insurancecost = this.userByid.insurancecost),
-            //   (this.installmentsRooom = this.userByid.installmentsRooom),
-            //   (this.Waterbill = this.userByid.Waterbill),
-            //   (this.Electricitybill = this.userByid.Electricitybill),
-            //   (this.Central = this.userByid.Central),
-            //   (this.Costs = this.userByid.Costs),
-            //   (this.typeContract = this.userByid.typeContract),
-            //   (this.contractExpenses = this.userByid.contractExpenses),
-            //   (this.sumCost = this.userByid.sumCost);
           })
           .catch((err) => {
             console.log(err);
@@ -180,11 +153,13 @@ export default {
       return b || 0;
     },
 
-    opendeposit(data){
-      this.dataSummit = data
+    async summitloopData() {
+      await  this.dataSummit.forEach((element) => {
+        this.summitdeposit(element);
+      });
     },
 
-    async summitdeposit() {
+    async summitdeposit(element) {
       let body = {
         houseRegistration: " ",
         payMonth: " ",
@@ -203,7 +178,7 @@ export default {
         deposit: "คืนเงินประกันแล้ว",
       };
       await axios
-        .put(`http://localhost:3897/users/${this.dataSummit.id}`, body, {
+        .put(`http://localhost:3897/users/${element.id}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -211,11 +186,7 @@ export default {
           },
         })
         .then((res) => {
-          notify({
-            title: "ทำรายการสำเร็จ",
-            type: "success",
-          });
-          this.updateRoom(this.dataSummit.roomId);
+          this.updateRoom(element.roomId);
           this.getExpenses();
         })
         .catch((err) => {
@@ -296,8 +267,18 @@ export default {
               <span>ย้อนกลับ</span>
             </a>
           </div>
+          <div class="d-flex justify-content-between align-items-baseline pt-1">
+            <h4>คืนเงินประกัน &nbsp; ประจำเดือน {{ months }}</h4>
+            <MaterialButton
+              style="margin-bottom: 0px"
+              variant="gradient"
+              color="success"
+              data-bs-toggle="modal"
+              data-bs-target="#returnBackdrop"
+              >บันทึกคืนเงินประกันครบจำนวน</MaterialButton
+            >
+          </div>
 
-          <h4>คืนเงินประกัน &nbsp; ประจำเดือน {{ months }}</h4>
           <notifications class="pt-6" position="top center" width="400px" />
           <!-- <div class="d-flex justify-content-end align-items-baseline pt-1">
               <label  style="margin-right:20px;">
@@ -332,16 +313,18 @@ export default {
                 <tr v-for="(item, index) in this.expensesList" :key="index">
                   <!-- <th scope="row">{{ index + 1 }}</th> -->
                   <td>
-                    <MaterialButton
-                      style="margin-bottom: 0px"
-                      variant="gradient"
-                      color="success"
-                      data-bs-toggle="modal"
-                      data-bs-target="#returnBackdrop"
-                      @click="opendeposit(item)"
-                      >บันทึกคืนเงินประกันครบจำนวน</MaterialButton
-                    >
+                    <label>
+                      <input
+                        type="checkbox"
+                        :id="item?.id"
+                        :value="item"
+                        :name="item?.id"
+                        v-model="listCheckbox"
+                      />
+                      <span class="check-box-effect"></span>
+                    </label>
                   </td>
+
                   <td>{{ item?.rank }}</td>
                   <td>{{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.typeAffiliation || "-" }}</td>
@@ -381,7 +364,9 @@ export default {
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">คุณต้องการที่จะบันทึกคืนเงินประกับครบจำนวนใช่หรือไม่</div>
+          <div class="modal-body">
+            คุณต้องการที่จะบันทึกคืนเงินประกับครบจำนวนใช่หรือไม่
+          </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               ยกเลิก
@@ -391,14 +376,13 @@ export default {
               color="danger"
               html-type="submit"
               data-bs-dismiss="modal"
-              @click="summitdeposit"
+              @click="summitloopData"
               >ตกลง</MaterialButton
             >
           </div>
         </div>
       </div>
     </div>
-
   </section>
 </template>
 <style>
@@ -433,5 +417,93 @@ input[type="number"] {
 }
 .breadcrumb-item a:hover {
   color: #4caf50 !important;
+}
+</style>
+
+<style scoped>
+label .check-box-effect {
+  display: inline-block;
+  position: relative;
+  background-color: transparent;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #dcdcdc;
+  border-radius: 10%;
+}
+
+label .check-box-effect:before {
+  content: "";
+  width: 0px;
+  height: 2px;
+  border-radius: 2px;
+  background: #626262;
+  position: absolute;
+  transform: rotate(45deg);
+  top: 7px;
+  left: 5px;
+  transition: width 50ms ease 50ms;
+  transform-origin: 0% 0%;
+}
+
+label .check-box-effect:after {
+  content: "";
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: #626262;
+  position: absolute;
+  transform: rotate(305deg);
+  top: 10px;
+  left: 6px;
+  transition: width 50ms ease;
+  transform-origin: 0% 0%;
+}
+
+label:hover .check-box-effect:before {
+  width: 5px;
+  transition: width 100ms ease;
+}
+
+label:hover .check-box-effect:after {
+  width: 10px;
+  transition: width 150ms ease 100ms;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input[type="checkbox"]:checked + .check-box-effect {
+  background-color: #4caf50 !important;
+  transform: scale(1.25);
+}
+
+input[type="checkbox"]:checked + .check-box-effect:after {
+  width: 10px;
+  background: #fff;
+  transition: width 150ms ease 100ms;
+}
+
+input[type="checkbox"]:checked + .check-box-effect:before {
+  width: 5px;
+  background: #fff;
+  transition: width 150ms ease 100ms;
+}
+
+input[type="checkbox"]:checked:hover + .check-box-effect {
+  background-color: #dcdcdc;
+  transform: scale(1.25);
+}
+
+input[type="checkbox"]:checked:hover + .check-box-effect:after {
+  width: 10px;
+  background: #fff;
+  transition: width 150ms ease 100ms;
+}
+
+input[type="checkbox"]:checked:hover + .check-box-effect:before {
+  width: 5px;
+  background: #fff;
+  transition: width 150ms ease 100ms;
 }
 </style>
