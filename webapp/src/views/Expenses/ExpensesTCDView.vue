@@ -261,10 +261,10 @@ export default {
           },
         })
         .then((res) => {
-          // notify({
-          //   title: "แก้ไขข้อมูลสำเร็จ",
-          //   type: "success",
-          // });
+          notify({
+            title: "คำนวณค่าใช้จ่ายสำเร็จ",
+            type: "success",
+          });
           this.saveToreport(index);
           this.submitRoom(index);
           this.getExpenses();
@@ -275,7 +275,6 @@ export default {
     },
 
     async submitRoom(index) {
-      console.log(index);
       let id = index.roomId;
       let body = {
         amountPaid: index.amountPaid || 0,
@@ -366,6 +365,7 @@ export default {
               color="success"
               data-bs-toggle="modal"
               data-bs-target="#costBackdrop"
+              :disabled="openBtn"
               >คำนวณค่าใช้จ่าย</MaterialButton
             >
             <!-- :disabled="openBtn" -->

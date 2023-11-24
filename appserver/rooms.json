@@ -14004,16 +14004,22 @@
     "buildingName": "อาคารแฟลต 1/11",
     "amountPaid": 400,
     "dateApproved": "2023-11-23T16:01:08.647Z",
-    "insurance": "2000",
-    "installments": "10",
-    "maintenance": "100",
+    "insurance": " ",
+    "installments": " ",
+    "maintenance": " ",
     "queue": "none",
     "userId": "c3e4008d-070c-4c4c-8a13-8f650d248a33",
     "monthly": "พฤศจิกายน",
     "years": 2023,
-    "deposit": "รอคืนเงินประกัน",
+    "deposit": " ",
     "dateReturn": "2023-11-23T16:05:17.521Z",
     "customerOld": "คืนห้องพักแล้ว",
-    "typeUser": "บช.ตชด."
+    "typeUser": "บช.ตชด.",
+    "houseRegistration": " ",
+    "payMonth": " ",
+    "houseRegistrationcause": " ",
+    "payMonthcause": " ",
+    "payMonthcausetwo": " ",
+    "roomKeycause": " "
   }
 ]

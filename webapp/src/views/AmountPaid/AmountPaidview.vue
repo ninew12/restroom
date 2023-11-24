@@ -61,6 +61,7 @@ export default {
       contractExpenses: "",
       id: "",
       months: "",
+      dataSummit: []
     };
   },
   created() {
@@ -116,6 +117,7 @@ export default {
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
+            console.log(data );
             this.expensesList = data;
           })
           .catch((err) => {
@@ -178,7 +180,11 @@ export default {
       return b || 0;
     },
 
-    async summitdeposit(data) {
+    opendeposit(data){
+      this.dataSummit = data
+    },
+
+    async summitdeposit() {
       let body = {
         houseRegistration: " ",
         payMonth: " ",
@@ -192,10 +198,12 @@ export default {
         roomnumber: "",
         roomKey: "",
         roomId: "",
+        monthly: "",
+        years: "",
         deposit: "คืนเงินประกันแล้ว",
       };
       await axios
-        .put(`http://localhost:3897/users/${data.id}`, body, {
+        .put(`http://localhost:3897/users/${this.dataSummit.id}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -207,7 +215,7 @@ export default {
             title: "ทำรายการสำเร็จ",
             type: "success",
           });
-          this.updateRoom(data.roomId);
+          this.updateRoom(this.dataSummit.roomId);
           this.getExpenses();
         })
         .catch((err) => {
@@ -227,6 +235,8 @@ export default {
         insurance: " ",
         installments: " ",
         deposit: " ",
+        monthly: "",
+        years: "",
       };
       axios.put(`http://localhost:3897/rooms/${id}`, body, {
         headers: {
@@ -305,19 +315,16 @@ export default {
               <thead class="border border-2 border-success border-bottom">
                 <tr>
                   <th></th>
+                  <th scope="col">ยศ</th>
                   <th scope="col">ชื่อ-สกุล</th>
-                  <th scope="col">สังกัด</th>
+                  <th scope="col">สังกัดเดิม</th>
                   <th scope="col">อาคาร</th>
-                  <th scope="col">เลขที่ห้อง</th>
-                  <th scope="col">ประเภทห้อง</th>
-                  <th scope="col">เงินประกันที่ชำระแล้ว</th>
-                  <th scope="col">งวดเงินประกัน</th>
-                  <th scope="col">ยอดเงินประกันคงเหลือ</th>
-                  <th scope="col">ธนาคาร</th>
+                  <th scope="col">ห้องเลขที่</th>
+                  <th scope="col">แบบ</th>
+                  <th scope="col">จำนวนเงิน</th>
                   <th scope="col">เลขบัญชีธนาคาร</th>
-                  <th scope="col">ทะเบียนบ้าน</th>
-                  <th scope="col">กุญแจห้อง</th>
-                  <th scope="col">หลักฐานแสดงการชําระค่าไฟเดือนล่าสุด</th>
+                  <th scope="col">ธนาคาร</th>
+                  <th scope="col">หมายเลขโทรศัพท์</th>
                   <th scope="col">หมายเหตุ</th>
                 </tr>
               </thead>
@@ -329,29 +336,22 @@ export default {
                       style="margin-bottom: 0px"
                       variant="gradient"
                       color="success"
-                      @click="summitdeposit(item)"
+                      data-bs-toggle="modal"
+                      data-bs-target="#returnBackdrop"
+                      @click="opendeposit(item)"
                       >บันทึกคืนเงินประกันครบจำนวน</MaterialButton
                     >
                   </td>
-                  <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
+                  <td>{{ item?.rank }}</td>
+                  <td>{{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.typeAffiliation || "-" }}</td>
                   <td>{{ item?.buildingName || "-" }}</td>
                   <td>{{ item?.roomnumber || "-" }}</td>
                   <td>{{ item?.typeRoom || "-" }}</td>
                   <td>{{ item?.insurance || "-" }}</td>
-                  <td>{{ item?.installmentsCost || "-" }}</td>
-                  <td>
-                    <span v-if="item?.installments > 0">
-                      {{ item?.maintenanceCost }}/{{ item?.installments }}
-                    </span>
-                    <span v-if="item?.installments == 0"> - </span>
-                  </td>
-                  <td>{{ item?.amountPaidCost || "-" }}</td>
-                  <td>{{ item?.bankbookName || "-" }}</td>
                   <td>{{ item?.bankbookNumber || "-" }}</td>
-                  <td>{{ item?.houseRegistration || "-" }}</td>
-                  <td>{{ item?.roomKey || "-" }}</td>
-                  <td>{{ item?.payMonth || "-" }}</td>
+                  <td>{{ item?.bankbookName || "-" }}</td>
+                  <td>{{ item?.phone || "-" }}</td>
                   <td>{{ item?.payMonthcause || "-" }}</td>
                 </tr>
               </tbody>
@@ -361,7 +361,43 @@ export default {
       </div>
     </div>
 
-
+    <div
+      class="modal fade"
+      id="returnBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">คืนเงินประกัน</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">คุณต้องการที่จะบันทึกคืนเงินประกับครบจำนวนใช่หรือไม่</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              ยกเลิก
+            </button>
+            <MaterialButton
+              variant="gradient"
+              color="danger"
+              html-type="submit"
+              data-bs-dismiss="modal"
+              @click="summitdeposit"
+              >ตกลง</MaterialButton
+            >
+          </div>
+        </div>
+      </div>
+    </div>
 
   </section>
 </template>
