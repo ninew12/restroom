@@ -438,8 +438,7 @@ export default {
             );
             // console.log(data);
             this.mapData(data, data2);
-            console.log(data);
-            console.log(data2);
+;
             this.reportlistok = data5;
             this.reportListssn = data6;
             this.reportlistlj = data7;
@@ -2017,6 +2016,225 @@ export default {
       window.history.back();
     },
 
+    buildTableBodysummary(data, data2, data3) {
+
+      var body1 = [];
+      let arr = [];
+      
+      let sum = (this.sumAllcount + this.Costdatawaterbillcount) + this.CostCostsAllcount
+
+       body1 = [
+        [
+          {
+              text: "ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิระ บช.ตชด.",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: `ประจําเดือน ${this.monthYear} `,
+              style: "subheader",
+              alignment: "center",
+            },
+        ],
+        [
+          { text: "หน่วยงาน",  style: "header", alignment: "center" },
+          { text: "ค่าบํารุงฯ",  style: "header", alignment: "center" },
+          { text: "ค่าประกันฯ",  style: "header", alignment: "center" },
+          { text: "รวม", style: "header", alignment: "center" }
+        ],
+        [
+          { text: "อำนวยการ",  style: "header", alignment: "center" },
+          { text: this.thaiNumber(data[0]?.sumdataMaintenance || 0) ,  style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data[0]?.sumdataInsurance || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data[0]?.sumCostdataInsurance || 0),  style: "subheader", alignment: "center" }
+        ],
+        [
+          { text: "สนับสนุน",  style: "header", alignment: "center" },
+          { text: this.thaiNumber(data2[0]?.sumdataMaintenance || 0),  style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data2[0]?.sumdataInsurance || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data2[0]?.sumCostdataInsurance || 0),  style: "subheader", alignment: "center" }
+        ],
+        [
+          { text: "ลูกจ้าง",  style: "header", alignment: "center" },
+          { text: this.thaiNumber(data3[0]?.sumdataMaintenance || 0), style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data3[0]?.sumdataInsurance || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data3[0]?.sumCostdataInsurance || 0),  style: "subheader", alignment: "center" }
+        ],
+        [
+          { text: "รวมเงิน", style: "header", alignment: "center" },
+          { text: this.thaiNumber(this.maintenanceAllcount || 0), style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(this.insuranceAllcount || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(this.sumAllcount || 0),  style: "subheader", alignment: "center" }
+        ],
+      ];
+
+      var body2 = [
+        [
+          {
+              text: "  ยอดเงินค่าธรรมเนียม และค่าสาธารณูปโภค อาคารบ้านพัก ตร.ส่วนกลาง",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: `ประจําเดือน ${this.monthYear} `,
+              style: "subheader",
+              alignment: "center",
+            },
+        ],
+        [
+          { text: "หน่วยงาน",  style: "header", alignment: "center" },
+          { text: "ค่าธรรมเนียม",  style: "header", alignment: "center" },
+          { text: "ค่าน้ำปะปา",  style: "header", alignment: "center" },
+          { text: "ค่าไฟฟ้า", style: "header", alignment: "center" },
+          { text: "รวม", style: "header", alignment: "center" }
+        ],
+        [
+          { text: "อำนวยการ",  style: "header", alignment: "center" },
+          { text: this.thaiNumber(data[0]?.sumdataMaintenancefee || 0),  style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data[0]?.sumdatawaterbill || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data[0]?.sumdataelectricitybill || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data[0]?.sumCostdatawaterbill || 0),  style: "subheader", alignment: "center" }
+        ],
+        [
+          { text: "สนับสนุน",  style: "header", alignment: "center" },
+          { text: this.thaiNumber(data2[0]?.sumdataMaintenancefee || 0),  style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data2[0]?.sumdatawaterbill || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data2[0]?.sumdataelectricitybill || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data2[0]?.sumCostdatawaterbill || 0),  style: "subheader", alignment: "center" }
+        ],
+        [
+          { text: "ลูกจ้าง",  style: "header", alignment: "center" },
+          { text: this.thaiNumber(data3[0]?.sumdataMaintenancefee || 0) ,  style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data3[0]?.sumdatawaterbill || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data3[0]?.sumdataelectricitybill || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data3[0]?.sumCostdatawaterbill || 0),  style: "subheader", alignment: "center" }
+        ],
+        [
+          { text: "รวมเงิน", style: "header", alignment: "center" },
+          { text: this.thaiNumber(this.maintenancefeeAllcount || 0), style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(this.waterbillAllcount || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(this.electricitybillAllcount || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(this.Costdatawaterbillcount|| 0),  style: "subheader", alignment: "center" }
+        ],
+      ];
+
+      var body3 = [
+        [
+          {
+              text: " รายการหักเพิ่มเติม ค่าไฟฟ้าส่วนกลาง/ค่าบํารุงลิฟต์อาคารบ้านพัก ตร.ส่วนกลาง",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: `ประจําเดือน ${this.monthYear} `,
+              style: "subheader",
+              alignment: "center",
+            },
+        ],
+        [
+          { text: "หน่วยงาน", rowSpan: 2, style: "header", alignment: "center" },
+          { text: "ค่าบํารุงฯ", rowSpan: 2, style: "header", alignment: "center" },
+          { text: "ค่าประกันฯ", colSpan: 3, style: "header", alignment: "center" },
+          { text: "รวม", style: "header", alignment: "center" }
+        ],
+        [
+          { text: "อำนวยการ",  style: "header", alignment: "center" },
+          { text: this.thaiNumber(data[0]?.sumdatacentral || 0),  style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data[0]?.sumdatacosts || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data[0]?.sumCostdataCostCosts || 0),  style: "subheader", alignment: "center" }
+        ],
+        [
+          { text: "สนับสนุน",  style: "header", alignment: "center" },
+          { text: this.thaiNumber(data2[0]?.sumdatacentral || 0),  style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data2[0]?.sumdatacosts || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data2[0]?.sumCostdataCostCosts || 0),  style: "subheader", alignment: "center" }
+        ],
+        [
+          { text: "ลูกจ้าง",  style: "header", alignment: "center" },
+          { text: this.thaiNumber(data3[0]?.sumdatacentral || 0), style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data3[0]?.sumdatacosts || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(data3[0]?.sumCostdataCostCosts || 0),  style: "subheader", alignment: "center" }
+        ],
+        [
+          { text: "รวมเงิน", style: "header", alignment: "center" },
+          { text: this.thaiNumber(this.centralAllcount|| 0), style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(this.costsAllcount || 0),   style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(this.CostCostsAllcount || 0),  style: "subheader", alignment: "center" }
+        ],
+      ];
+
+      var body4 = [
+        [
+          {
+              text: "ตารางสรุป ยอดรวมค่าบํารุงฯ ค่าประกัน ฯ ค่าธรรมเนียม ค่าสารณูปโภค และค่าลิฟต์",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: `ประจําเดือน ${this.monthYear} `,
+              style: "subheader",
+              alignment: "center",
+            },
+        ],
+        [
+          { text: "บช.ตชด.", rowSpan: 2, style: "header", alignment: "center" },
+          { text: "ตร.ส่วนกลาง", rowSpan: 2, style: "header", alignment: "center" },
+          { text: "ตร.ส่วนกลาง(เพิ่มเติม)", colSpan: 3, style: "header", alignment: "center" },
+          { text: "รวมเป็นเงิน", style: "header", alignment: "center" }
+        ],
+        [
+          { text: this.thaiNumber(this.sumAllcount), style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(this.Costdatawaterbillcount), style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(this.CostCostsAllcount), style: "subheader", alignment: "center" },
+          { text: this.thaiNumber(sum), style: "subheader", alignment: "center" },
+        ],
+      ];
+
+      arr = body1.concat(body2,body3,body4);
+      console.log(arr);
+      return arr;
+    },
+
+    tablesummary(data, data2,data3) {
+      return {
+        table: {
+          widths: [100, "*", 100, "*", "*","*"],
+          headerRows: 1,
+          body: this.buildTableBodysummary(data, data2,data3),
+        },
+      };
+    },
+
+    exportPdfsummary() {
+        pdfMake.fonts = {
+          Roboto: {
+            normal:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+            bold:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+            italics:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+            bolditalics:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+          },
+          THSarabunNew: {
+            normal: "THSarabunNew.ttf",
+            bold: "THSarabunNew-Bold.ttf",
+            italics: "THSarabunNew-Italic.ttf",
+            bolditalics: "THSarabunNew-BoldItalic.ttf",
+          },
+        };
+        const docDefinition = {
+          content: [
+            this.tablesummary(this.sumreportlistAll, this.sumreportlistAll2, this.sumreportlistAll3),
+          ],
+          defaultStyle: {
+            font: "THSarabunNew",
+          },
+        };
+        pdfMake.createPdf(docDefinition).open();
+    },
+
     buildTableBodyinsurance(data, columns) {
       var body = [];
       let arr = [];
@@ -2065,6 +2283,7 @@ export default {
       });
       // this.jsonFiled = body,
       arr = body.concat(footer);
+      console.log(arr);
       return arr;
     },
 
@@ -2792,13 +3011,6 @@ export default {
         };
         const docDefinition = {
           content: [
-            // {
-            //   text:
-            //     "บัญชีรายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือนเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง ตร",
-            //   style: "header",
-            //   alignment: "center",
-            // },
-            // { text: "ประจำเดือน เมษายน 2566", style: "subheader", alignment: "center" },
             this.tableCostCentral(listData, [
               "numberNo",
               "buildingName",
@@ -3595,11 +3807,10 @@ export default {
 
                         <div>
                           <MaterialButton
-                            v-if="reportType == 'บัญชีหน้างบ'"
                             size="lg"
                             class="btn-icon"
                             style="margin-right: -30px"
-                            @click="exportPdfWaterBill()"
+                            @click="exportPdfsummary()"
                           >
                             <div class="d-flex align-items-center">
                               <span style="margin-right: 5px">บันทึก</span>
@@ -3612,24 +3823,6 @@ export default {
                             </div>
                           </MaterialButton>
                           <MaterialButton
-                            v-if="reportType == 'ประกันทรัพย์สิน'"
-                            size="lg"
-                            class="btn-icon"
-                            style="margin-right: -30px"
-                            @click="exportPdfAccumulated()"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/pdf.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton
-                            v-if="reportType == 'บัญชีหน้างบ'"
                             size="lg"
                             class="btn-icon"
                             @click="ExportExcel('xlsx', 'table9')"
@@ -3644,27 +3837,11 @@ export default {
                               />
                             </div>
                           </MaterialButton>
-                          <MaterialButton
-                            v-if="reportType == 'ประกันทรัพย์สิน'"
-                            size="lg"
-                            class="btn-icon"
-                            @click="ExportExcel('xlsx', 'table10')"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
                         </div>
                       </div>
                     </div>
-                    <div class="text-center pt-4 table-responsive">
-                      <table class="table table-bordered" id="table9">
+                    <div class="text-center pt-4 table-responsive" id="table9">
+                      <table class="table table-bordered" >
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
@@ -3700,10 +3877,10 @@ export default {
                           </tr>
                           <tr>
                             <td>{{ "ลูกจ้าง" || "-" }}</td>
-                            <td>{{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}</td>
-                            <td>{{ sumreportlistAll2[0]?.sumdataInsurance || "-" }}</td>
+                            <td>{{ sumreportlistAll3[0]?.sumdataMaintenance || "-" }}</td>
+                            <td>{{ sumreportlistAll3[0]?.sumdataInsurance || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll2[0]?.sumCostdataInsurance || "-" }}
+                              {{ sumreportlistAll3[0]?.sumCostdataInsurance || "-" }}
                             </td>
                           </tr>
                           <tr>
@@ -3765,13 +3942,13 @@ export default {
                         </tr>
                         <tr>
                           <td>{{ "ลูกจ้าง" || "-" }}</td>
-                          <td>{{ sumreportlistAll2[0]?.sumdataMaintenancefee || "-" }}</td>
-                          <td>{{ sumreportlistAll2[0]?.sumdatawaterbill || "-" }}</td>
+                          <td>{{ sumreportlistAll3[0]?.sumdataMaintenancefee || "-" }}</td>
+                          <td>{{ sumreportlistAll3[0]?.sumdatawaterbill || "-" }}</td>
                           <td>
-                            {{ sumreportlistAll2[0]?.sumdataelectricitybill || "-" }}
+                            {{ sumreportlistAll3[0]?.sumdataelectricitybill || "-" }}
                           </td>
                           <td>
-                            {{ sumreportlistAll2[0]?.sumCostdatawaterbill || "-" }}
+                            {{ sumreportlistAll3[0]?.sumCostdatawaterbill || "-" }}
                           </td>
                         </tr>
                         <tr>
@@ -3781,6 +3958,9 @@ export default {
                           </td>
                           <td>
                             {{ waterbillAllcount }}
+                          </td>
+                          <td>
+                            {{ Costdatawaterbillcount }}
                           </td>
                           <td>
                             {{ Costdatawaterbillcount }}
@@ -3826,10 +4006,10 @@ export default {
                           </tr>
                           <tr>
                             <td>{{ "ลูกจ้าง" || "-" }}</td>
-                            <td>{{ sumreportlistAll2[0]?.sumdatacentral || "-" }}</td>
-                            <td>{{ sumreportlistAll2[0]?.sumdatacosts || "-" }}</td>
+                            <td>{{ sumreportlistAll3[0]?.sumdatacentral || "-" }}</td>
+                            <td>{{ sumreportlistAll3[0]?.sumdatacosts || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll2[0]?.sumCostdataCostCosts || "-" }}
+                              {{ sumreportlistAll3[0]?.sumCostdataCostCosts || "-" }}
                             </td>
                           </tr>
                           <tr>
@@ -3864,11 +4044,11 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
-                            <td>{{ "-" }}</td>
-                            <td>{{ "-" }}</td>
-                            <td>{{ "-" }}</td>
-                            <td>{{ "-" }}</td>
+                          <tr>
+                            <td>{{ sumAllcount || "-" }}</td>
+                            <td>{{ Costdatawaterbillcount || "-" }}</td>
+                            <td>{{ CostCostsAllcount || "-" }}</td>
+                            <td>{{ sumAllcount+Costdatawaterbillcount+CostCostsAllcount || "-" }}</td>
                           </tr>
                         </tbody>
                       </table>
