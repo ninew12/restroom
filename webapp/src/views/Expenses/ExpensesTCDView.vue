@@ -208,6 +208,7 @@ export default {
               this.typeContract = this.userByid.typeContract,
               this.contractExpenses = this.userByid.contractExpenses,
               this.sumCost = this.userByid.sumCost;
+              this.rankNumber = this.userByid.rankNumber
           })
           .catch((err) => {
             console.log(err);
@@ -261,10 +262,10 @@ export default {
           },
         })
         .then((res) => {
-          notify({
-            title: "คำนวณค่าใช้จ่ายสำเร็จ",
-            type: "success",
-          });
+          // notify({
+          //   title: "คำนวณค่าใช้จ่ายสำเร็จ",
+          //   type: "success",
+          // });
           this.saveToreport(index);
           this.submitRoom(index);
           this.getExpenses();
@@ -295,6 +296,7 @@ export default {
         amountPaid: index.amountPaid || 0,
         monthly: this.months,
         years: this.years,
+        rankNumber : this.rankNumber 
       };
       await axios.put(`http://localhost:3897/reportUser/${id}`, body, {
         headers: {

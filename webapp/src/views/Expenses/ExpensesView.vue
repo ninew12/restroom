@@ -149,6 +149,7 @@ export default {
             this.rank = this.userByid.rank;
             this.userId = this.userByid.id;
             this.typeUser = this.userByid.typeUser;
+            this.rankNumber = this.userByid.rankNumber,
             this.buildingType = this.userByid.buildingType;
             this.firstName = this.userByid.firstName,
             this.lastName = this.userByid.lastName;
@@ -261,6 +262,7 @@ export default {
         status: this.userByid.status,
         typeAffiliation: this.userByid.typeAffiliation,
         typeRanks: this.userByid.typeRanks,
+        rankNumber: this.userByid.rankNumber,
         roomnumber: this.Roomnumber,
         pickedBook: this.dateData.toISOString(),
         buildingType: this.buildingType,
@@ -292,6 +294,7 @@ export default {
       let body = {
         typeUser: "ตร.",
         userId: this.userByid.userId,
+        rankNumber: this.userByid.rankNumber,
         pickedBook: this.dateData.toISOString(),
         buildingType: this.buildingType,
         numberfirst: this.numberfirst,

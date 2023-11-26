@@ -4177,29 +4177,29 @@ export default {
                 role="tablist"
                 aria-orientation="vertical"
               >
-                <button
-                  class="nav-link active"
-                  id="v-pills-messages-tab"
+              <button
+                  class="nav-link"
+                  id="v-pills4-tab"
                   data-bs-toggle="pill"
-                  data-bs-target="#v-pills-messages"
+                  data-bs-target="#v-pills4"
                   type="button"
                   role="tab"
-                  aria-controls="v-pills-messages"
+                  aria-controls="v-pills4"
                   aria-selected="false"
                 >
-                  บัญชียอดหักค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจําเดือน
+                  บัญชียอดหักเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ บช.ตชด.
                 </button>
                 <button
                   class="nav-link"
-                  id="v-pills2-tab"
+                  id="v-pills5-tab"
                   data-bs-toggle="pill"
-                  data-bs-target="#v-pills2"
+                  data-bs-target="#v-pills5"
                   type="button"
                   role="tab"
-                  aria-controls="v-pills2"
+                  aria-controls="v-pills5"
                   aria-selected="false"
                 >
-                  บัญชีถอนค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจําเดือน
+                 บัญชียอดหักเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ  ตร
                 </button>
                 <button
                   class="nav-link"
@@ -4211,8 +4211,34 @@ export default {
                   aria-controls="v-pills-home"
                   aria-selected="false"
                 >
-                  บัญชียอดหักค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์ประจําเดือน
+                 บัญชียอดถอดเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ  ตร
                 </button>
+                <button
+                  class="nav-link active"
+                  id="v-pills-messages-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-messages"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills-messages"
+                  aria-selected="false"
+                >
+                  บัญชียอดหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจำเดือน  ของ  ตร
+                </button>
+               
+                <button
+                  class="nav-link"
+                  id="v-pills2-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills2"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills2"
+                  aria-selected="false"
+                >
+                  บัญชียอดถอดเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจำเดือน  ของ  ตร
+                </button>
+
                 <button
                   class="nav-link"
                   id="v-pills3-tab"
@@ -4225,31 +4251,8 @@ export default {
                 >
                   บัญชีสรุป ยอดเงิน แยกตามบ้านพัก ของ ตร. กับ บช.ตชด.
                 </button>
-                <button
-                  class="nav-link"
-                  id="v-pills4-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills4"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills4"
-                  aria-selected="false"
-                >
-                  บัญชีการหักเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย
-                </button>
-                <button
-                  class="nav-link"
-                  id="v-pills5-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills5"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills5"
-                  aria-selected="false"
-                >
-                  บัญชีรายชื่อผู้พักอาศัยที่หักเงินเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง
-                  ตร.
-                </button>
+             
+              
                 <!-- <button
                   class="nav-link"
                   id="v-pills-home-tab"
@@ -4321,17 +4324,6 @@ export default {
                             <v-select
                               :options="masterData?.AffiliationList"
                               v-model="selectedAffiliation"
-                            ></v-select>
-                          </div>
-                          <div
-                            v-if="reportType == 'ประกันทรัพย์สิน'"
-                            class="mb-3 w-20"
-                            style="margin-left: 5px"
-                          >
-                            <label>ลำดับยศ</label>
-                            <v-select
-                              :options="masterData?.ranksAll"
-                              v-model="selectedranksAll"
                             ></v-select>
                           </div>
                           <div>
@@ -4577,17 +4569,6 @@ export default {
                           <v-select
                             :options="masterData?.AffiliationList"
                             v-model="selectedAffiliation"
-                          ></v-select>
-                        </div>
-                        <div
-                          v-if="reportType == 'ประกันทรัพย์สิน'"
-                          class="mb-3 w-20"
-                          style="margin-left: 5px"
-                        >
-                          <label>ลำดับยศ</label>
-                          <v-select
-                            :options="masterData?.ranksAll"
-                            v-model="selectedranksAll"
                           ></v-select>
                         </div>
                         <div>
@@ -4845,17 +4826,6 @@ export default {
                           <v-select
                             :options="masterData?.AffiliationList"
                             v-model="selectedAffiliation"
-                          ></v-select>
-                        </div>
-                        <div
-                          v-if="reportType == 'ประกันทรัพย์สิน'"
-                          class="mb-3 w-20"
-                          style="margin-left: 5px"
-                        >
-                          <label>ลำดับยศ</label>
-                          <v-select
-                            :options="masterData?.ranksAll"
-                            v-model="selectedranksAll"
                           ></v-select>
                         </div>
                         <div>
@@ -5398,17 +5368,6 @@ export default {
                                 v-model="selectedAffiliation"
                               ></v-select>
                             </div>
-                            <div
-                              v-if="reportType == 'ประกันทรัพย์สิน'"
-                              class="mb-3 w-20"
-                              style="margin-left: 5px"
-                            >
-                              <label>ลำดับยศ</label>
-                              <v-select
-                                :options="masterData?.ranksAll"
-                                v-model="selectedranksAll"
-                              ></v-select>
-                            </div>
                             <div>
                               <MaterialButton
                                 v-if="reportType == 'บัญชีหน้างบ'"
@@ -5657,21 +5616,11 @@ export default {
                         <div class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
-                            :options="masterData?.AffiliationListn"
+                            :options="masterData?.AffiliationList"
                             v-model="selectedAffiliation"
                           ></v-select>
                         </div>
-                        <div
-                          v-if="reportType == 'ประกันทรัพย์สิน'"
-                          class="mb-3 w-20"
-                          style="margin-left: 5px"
-                        >
-                          <label>ลำดับยศ</label>
-                          <v-select
-                            :options="masterData?.ranksAll"
-                            v-model="selectedranksAll"
-                          ></v-select>
-                        </div>
+                        
                         <div>
                           <MaterialButton
                             v-if="reportType == 'บัญชีหน้างบ'"
@@ -5776,7 +5725,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in AffiliationListCTD" :key="index">
+                          <tr v-for="(item, index) in AffiliationListTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.value || "-" }}</td>
                             <td>{{ item?.sumdataMaintenancefee || "-" }}</td>
@@ -5818,7 +5767,7 @@ export default {
                           </tr>
                           <tr>
                             <td colspan="9" style="border: 0">
-                              ประจําเดือน {{ monthYearNow }} หน่วยงาน บช.ตชด.
+                              ประจําเดือน {{ monthYear }} หน่วยงาน บช.ตชด.
                             </td>
                           </tr>
                           <tr>
@@ -5838,7 +5787,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.roomnumber || "-" }}</td>
                             <td>
