@@ -165,7 +165,7 @@ export default {
            this.rank = data.rank,
            this.idcard = data.idcard,
            this.phone = data.phone,
-           this.rank = data.rank,
+           this.rankNumber = data.rankNumber,
            this.status = data.status,
            this.typeAffiliation = data.typeAffiliation,
            this.typeRanks = data.typeRanks,
@@ -186,7 +186,6 @@ export default {
       try {
         axios.get(`http://localhost:3897/rooms/${id}`).then((res) => {
           this.data = res.data;
-          console.log(this.data);
           this.dateApproved = this.convertDateTolocal(this.data.dateApproved);
           this.typeroom = this.data.typeRoom;
           this.numberRoom = this.data.numberRoom;
@@ -333,6 +332,7 @@ export default {
         selectedAffiliation :  this.affiliation,
         affiliation: this.affiliation,
         selectedRanks :  this.rank,
+        rankNumber: this.rankNumber,
         idcard :  this.idcard,
         phone :  this.phone,
         rank: this.rank,
@@ -395,6 +395,7 @@ export default {
         selectedAffiliation :  this.affiliation,
         affiliation: this.affiliation,
         selectedRanks :  this.rank,
+        rankNumber: this.rankNumber,
         idcard :  this.idcard,
         phone :  this.phone,
         rank: this.rank,
@@ -425,6 +426,7 @@ export default {
         selectedAffiliation :  this.affiliation,
         affiliation: this.affiliation,
         selectedRanks :  this.rank,
+        rankNumber: this.rankNumber,
         idcard :  this.idcard,
         phone :  this.phone,
         ranks: this.rank,
@@ -476,7 +478,8 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: this.affiliation,
-        ranks: this.selectedRanks.value,
+        ranks: this.selectedRanks.label,
+        rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
         typeRoom: this.typeRoom,

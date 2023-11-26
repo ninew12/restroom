@@ -1682,8 +1682,6 @@ export default {
       let arr2 = [];
       this.datalistCTD = [];
       this.datalistTD = [];
-      console.log(this.datalistTD);
-      console.log(data2);
       arr = await data.map((el) => {
         return {
           ...el,
@@ -1808,8 +1806,9 @@ export default {
         }
         return a;
       });
-      this.reportlistCTD = arr3;
-      this.reportlistTD = arr4;
+
+      this.reportlistCTD = arr3.sort((a, b) => b.rankNumber - a.rankNumber);;
+      this.reportlistTD = arr4.sort((a, b) => b.rankNumber - a.rankNumber);;
     },
     // numberWithCommas
 
@@ -1922,7 +1921,7 @@ export default {
 
     countSumWaterbill(item) {
       return (
-        parseInt(item.maintenance) +
+        parseInt(item.maintenancefee) +
           parseInt(item.waterbill) +
           parseInt(item.electricitybill) || 0
       );
@@ -2933,7 +2932,6 @@ export default {
     buildTableBodyCentral(data, columns) {
       var body = [];
       let arr = [];
-      console.log(data);
       var thaiNum = data.map((e) => {
         return {
           ...e,
@@ -3095,7 +3093,6 @@ export default {
     buildTableBodyCentralCTD(data, columns) {
       var body = [];
       let arr = [];
-      console.log(data);
       var thaiNum = data.map((e) => {
         return {
           ...e,
