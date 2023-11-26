@@ -315,6 +315,8 @@ export default {
       electricitybillAllcount: 0,
       waterbillAllcount: 0,
       maintenancefeeAllcount: 0,
+      ranksAll: "",
+      selectedranksAll: "เลือกยศ",
     };
   },
   created() {
@@ -333,7 +335,17 @@ export default {
     selectedAffiliation: function (newValue) {
       if (newValue !== null && newValue.label !== undefined) {
         this.Affiliation = newValue.value;
-        this.getReportAffiliation(this.mountNumber, this.yearNumber, this.Affiliation);
+        this.getReportAffiliation(this.mountLable, this.yearNumber, this.Affiliation);
+      }
+    },
+    selectedranksAll: function (newValue) {
+      if (newValue !== null && newValue.label !== undefined) {
+        if (newValue.label != "ทั้งหมด") {
+          this.ranksAll = newValue.value;
+          this.getReportRanksAll(this.mountLable, this.yearNumber, this.ranksAll);
+        } else {
+          this.getReport(this.mountLable, this.yearNumber);
+        }
       }
     },
     selectedMonth: function (newValue) {
@@ -342,6 +354,7 @@ export default {
         let y = this.dateData.getFullYear();
         this.mountNumber = x + 1;
         this.yearNumber = y;
+        this.mountLable = newValue.label;
         const result = this.dateData.toLocaleDateString("th-TH", {
           year: "numeric",
         });
@@ -362,6 +375,7 @@ export default {
       let x = this.optionMonth.findIndex((el) => el.label == m);
       this.mountNumber = x + 1;
       this.yearNumber = y;
+      this.mountLable = m;
       let mm = this.dateData.getMonth();
       this.selectedMonth = m;
       const today = new Date();
@@ -1482,8 +1496,42 @@ export default {
             );
 
             arr = data.filter((ele) => ele.typeAffiliation === Affiliation);
-            arr2 = data2.filter((el2) => el2.typeAffiliation === Affiliation);
+            arr2 = data2.filter((el3) => el3.typeAffiliation === Affiliation);
 
+            this.mapData(arr, arr2);
+            // this.reportlistTD = data2;
+            // console.log(this.reportlistCTD);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    getReportRanksAll(m, y, ranksType) {
+      try {
+        axios
+          .get("http://localhost:3897/report")
+          .then((res) => {
+            let data = [];
+            let data2 = [];
+            let arr = [];
+            let arr2 = [];
+            let data3 = res.data;
+            let data4 = res.data;
+            this.reportList = res.data;
+
+            data = data3.filter(
+              (el) => el.typeUser == "บช.ตชด." && el.monthly == m && el.years == y
+            );
+            data2 = data4.filter(
+              (ele2) => ele2.typeUser == "ตร." && ele2.monthly == m && ele2.years == y
+            );
+
+            arr = data.filter((ele) => ele.rank == ranksType);
+            arr2 = data2.filter((el3) => el3.rank == ranksType);
             this.mapData(arr, arr2);
             // this.reportlistTD = data2;
             // console.log(this.reportlistCTD);
@@ -1693,7 +1741,8 @@ export default {
           maintenancefeeSum: this.numberWithCommas(el2.maintenancefeeSum) || 0,
           waterbill: this.numberWithCommas(el2.waterbill) || 0,
           electricitybill: this.numberWithCommas(el2.electricitybill) || 0,
-          contelectricitybillSum: parseInt(el2.electricitybillSum)+parseInt(el2.costsSum) || 0,
+          contelectricitybillSum:
+            parseInt(el2.electricitybillSum) + parseInt(el2.costsSum) || 0,
         };
       });
       arr4 = await data2.map((el3) => {
@@ -1723,7 +1772,8 @@ export default {
           maintenancefee: this.numberWithCommas(el3.maintenancefee) || 0,
           maintenancefeeSum: this.numberWithCommas(el3.maintenancefeeSum) || 0,
           electricitybill: this.numberWithCommas(el3.electricitybill) || 0,
-          contelectricitybillSum: parseInt(el3.electricitybillSum)+parseInt(el3.costsSum) || 0,
+          contelectricitybillSum:
+            parseInt(el3.electricitybillSum) + parseInt(el3.costsSum) || 0,
         };
       });
       this.mapTypeContact(arr3, arr4);
@@ -4201,7 +4251,17 @@ export default {
                               v-model="selectedAffiliation"
                             ></v-select>
                           </div>
-
+                          <div
+                            v-if="reportType == 'ประกันทรัพย์สิน'"
+                            class="mb-3 w-20"
+                            style="margin-left: 5px"
+                          >
+                            <label>ลำดับยศ</label>
+                            <v-select
+                              :options="masterData?.ranksAll"
+                              v-model="selectedranksAll"
+                            ></v-select>
+                          </div>
                           <div>
                             <MaterialButton
                               v-if="reportType == 'บัญชีหน้างบ'"
@@ -4384,7 +4444,6 @@ export default {
                               <th>{{ reportlistTD[0]?.electricitybillSum }}</th>
                               <th>{{ reportlistTD[0]?.costsSum }}</th>
                               <th>{{ reportlistTD[0]?.contelectricitybillSum }}</th>
-                              
                             </tr>
                           </tbody>
                         </table>
@@ -4448,7 +4507,17 @@ export default {
                             v-model="selectedAffiliation"
                           ></v-select>
                         </div>
-
+                        <div
+                          v-if="reportType == 'ประกันทรัพย์สิน'"
+                          class="mb-3 w-20"
+                          style="margin-left: 5px"
+                        >
+                          <label>ลำดับยศ</label>
+                          <v-select
+                            :options="masterData?.ranksAll"
+                            v-model="selectedranksAll"
+                          ></v-select>
+                        </div>
                         <div>
                           <MaterialButton
                             v-if="reportType == 'บัญชีหน้างบ'"
@@ -4706,7 +4775,17 @@ export default {
                             v-model="selectedAffiliation"
                           ></v-select>
                         </div>
-
+                        <div
+                          v-if="reportType == 'ประกันทรัพย์สิน'"
+                          class="mb-3 w-20"
+                          style="margin-left: 5px"
+                        >
+                          <label>ลำดับยศ</label>
+                          <v-select
+                            :options="masterData?.ranksAll"
+                            v-model="selectedranksAll"
+                          ></v-select>
+                        </div>
                         <div>
                           <MaterialButton
                             v-if="reportType == 'บัญชีหน้างบ'"
@@ -4785,8 +4864,7 @@ export default {
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
-                              ถอนเงินค่าไฟฟ้าส่วนกลาง
-                              และค่าบํารุงลิฟต์เพิ่มเติม
+                              ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติม
                             </td>
                           </tr>
                           <tr>
@@ -4919,7 +4997,7 @@ export default {
                             v-model="selectedAffiliation"
                           ></v-select>
                         </div>
-
+                      
                         <div>
                           <MaterialButton
                             size="lg"
@@ -5248,7 +5326,17 @@ export default {
                                 v-model="selectedAffiliation"
                               ></v-select>
                             </div>
-
+                            <div
+                              v-if="reportType == 'ประกันทรัพย์สิน'"
+                              class="mb-3 w-20"
+                              style="margin-left: 5px"
+                            >
+                              <label>ลำดับยศ</label>
+                              <v-select
+                                :options="masterData?.ranksAll"
+                                v-model="selectedranksAll"
+                              ></v-select>
+                            </div>
                             <div>
                               <MaterialButton
                                 v-if="reportType == 'บัญชีหน้างบ'"
@@ -5502,7 +5590,17 @@ export default {
                             v-model="selectedAffiliation"
                           ></v-select>
                         </div>
-
+                        <div
+                          v-if="reportType == 'ประกันทรัพย์สิน'"
+                          class="mb-3 w-20"
+                          style="margin-left: 5px"
+                        >
+                          <label>ลำดับยศ</label>
+                          <v-select
+                            :options="masterData?.ranksAll"
+                            v-model="selectedranksAll"
+                          ></v-select>
+                        </div>
                         <div>
                           <MaterialButton
                             v-if="reportType == 'บัญชีหน้างบ'"
