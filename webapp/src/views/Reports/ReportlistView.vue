@@ -314,7 +314,7 @@ export default {
       Costdatawaterbillcount: 0,
       electricitybillAllcount: 0,
       waterbillAllcount: 0,
-      maintenancefeeAllcount: 0
+      maintenancefeeAllcount: 0,
     };
   },
   created() {
@@ -397,9 +397,9 @@ export default {
 
     async getReport(m, y) {
       this.reportlistok = [];
-            this.reportListssn = [];
-            this.reportlistlj = [];
-            
+      this.reportListssn = [];
+      this.reportlistlj = [];
+
       try {
         axios
           .get("http://localhost:3897/report")
@@ -438,7 +438,6 @@ export default {
             );
             // console.log(data);
             this.mapData(data, data2);
-;
             this.reportlistok = data5;
             this.reportListssn = data6;
             this.reportlistlj = data7;
@@ -496,10 +495,10 @@ export default {
               0 + this.sumreportlistAll3[0]?.sumdataMaintenance ||
               0),
               (this.maintenancefeeAllcount =
-              this.sumreportlistAll[0]?.sumdataMaintenancefree ||
-              0 + this.sumreportlistAll2[0]?.sumdataMaintenancefree ||
-              0 + this.sumreportlistAll3[0]?.sumdataMaintenancefree ||
-              0),
+                this.sumreportlistAll[0]?.sumdataMaintenancefree ||
+                0 + this.sumreportlistAll2[0]?.sumdataMaintenancefree ||
+                0 + this.sumreportlistAll3[0]?.sumdataMaintenancefree ||
+                0),
               (this.insuranceAllcount =
                 this.sumreportlistAll[0]?.sumdataInsurance ||
                 0 + this.sumreportlistAll2[0]?.sumdataInsurance ||
@@ -550,7 +549,7 @@ export default {
     },
 
     async filterAffiliation(listdata) {
-      let listTD = []
+      let listTD = [];
       listTD = listdata;
       let data,
         data2,
@@ -569,384 +568,384 @@ export default {
         data15,
         data16,
         data17 = [];
-        data = listTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
-        let sumCostdataInsuranceAll = this.SumCostSummaintenanceAll(data);
-        let sumdataInsuranceAll = this.InsuranceSumAll(data);
-        let sumdatamaintenancefeeSumAll = this.maintenancefeeCount(data);
-        let sumdatawaterbillSumAll = this.WaterbillSum(data);
-        let sumdataelectricitybillSumAll = this.ElectricitybillSum(data);
-        let sumdataCostwaterbillSumAll = this.SumCostSumwater(data);
-        let sumdatacentralSumAll = this.CentralSum(data);
-        let sumdatacostsSumAll = this.CostsSum(data);
-        let sumdataCostCostsSumAll = this.SumCostSumCentral(data);
-        
-        data2 = listTD.filter((el) => el.typeAffiliation == "บก.อก.");
-        let sumCostdata2InsuranceAll = this.SumCostSummaintenanceAll(data2);
-        let sumdata2InsuranceAll = this.InsuranceSumAll(data2);
-        let sumdata2maintenancefeeSumAll = this.maintenancefeeCount(data2);
-        let sumdata2waterbillSumAll = this.WaterbillSum(data2);
-        let sumdata2electricitybillSumAll = this.ElectricitybillSum(data2);
-        let sumdata2CostwaterbillSumAll = this.SumCostSumwater(data2);
-        let sumdata2centralSumAll = this.CentralSum(data2);
-        let sumdata2costsSumAll = this.CostsSum(data2);
-        let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
-        data3 = listTD.filter((el) => el.typeAffiliation == "บก.สนน.");
-        let sumCostdata3InsuranceAll = this.SumCostSummaintenanceAll(data3);
-        let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
-        let sumdata3maintenancefeeSumAll = this.maintenancefeeCount(data3);
-        let sumdata3waterbillSumAll = this.WaterbillSum(data3);
-        let sumdata3electricitybillSumAll = this.ElectricitybillSum(data3);
-        let sumdata3CostwaterbillSumAll = this.SumCostSumwater(data3);
-        let sumdata3centralSumAll = this.CentralSum(data3);
-        let sumdata3costsSumAll = this.CostsSum(data3);
-        let sumdata3CostCostsSumAll = this.SumCostSumCentral(data3);
-        data4 = listTD.filter((el) => el.typeAffiliation == "ฝอ.1");
-        let sumCostdata4InsuranceAll = this.SumCostSummaintenanceAll(data4);
-        let sumdata4InsuranceAll = this.InsuranceSumAll(data4);
-        let sumdata4maintenancefeeSumAll = this.maintenancefeeCount(data4);
-        let sumdata4waterbillSumAll = this.WaterbillSum(data4);
-        let sumdata4electricitybillSumAll = this.ElectricitybillSum(data4);
-        let sumdata4CostwaterbillSumAll = this.SumCostSumwater(data4);
-        let sumdata4centralSumAll = this.CentralSum(data4);
-        let sumdata4costsSumAll = this.CostsSum(data4);
-        let sumdata4CostCostsSumAll = this.SumCostSumCentral(data4);
-        data5 = listTD.filter((el) => el.typeAffiliation == "ฝอ.2");
-        let sumCostdata5InsuranceAll = this.SumCostSummaintenanceAll(data5);
-        let sumdata5InsuranceAll = this.InsuranceSumAll(data5);
-        let sumdata5maintenancefeeSumAll = this.maintenancefeeCount(data5);
-        let sumdata5waterbillSumAll = this.WaterbillSum(data5);
-        let sumdata5electricitybillSumAll = this.ElectricitybillSum(data5);
-        let sumdata5CostwaterbillSumAll = this.SumCostSumwater(data5);
-        let sumdata5centralSumAll = this.CentralSum(data5);
-        let sumdata5costsSumAll = this.CostsSum(data5);
-        let sumdata5CostCostsSumAll = this.SumCostSumCentral(data5);
-        data6 = listTD.filter((el) => el.typeAffiliation == "ฝอ.3");
-        let sumCostdata6InsuranceAll = this.SumCostSummaintenanceAll(data6);
-        let sumdata6InsuranceAll = this.InsuranceSumAll(data6);
-        let sumdata6maintenancefeeSumAll = this.maintenancefeeCount(data6);
-        let sumdata6waterbillSumAll = this.WaterbillSum(data6);
-        let sumdata6electricitybillSumAll = this.ElectricitybillSum(data6);
-        let sumdata6CostwaterbillSumAll = this.SumCostSumwater(data6);
-        let sumdata6centralSumAll = this.CentralSum(data6);
-        let sumdata6costsSumAll = this.CostsSum(data6);
-        let sumdata6CostCostsSumAll = this.SumCostSumCentral(data6);
-        data7 = listTD.filter((el) => el.typeAffiliation == "ฝอ.4");
-        let sumCostdata7InsuranceAll = this.SumCostSummaintenanceAll(data7);
-        let sumdata7InsuranceAll = this.InsuranceSumAll(data7);
-        let sumdata7maintenancefeeSumAll = this.maintenancefeeCount(data7);
-        let sumdata7waterbillSumAll = this.WaterbillSum(data7);
-        let sumdata7electricitybillSumAll = this.ElectricitybillSum(data7);
-        let sumdata7CostwaterbillSumAll = this.SumCostSumwater(data7);
-        let sumdata7centralSumAll = this.CentralSum(data7);
-        let sumdata7costsSumAll = this.CostsSum(data7);
-        let sumdata7CostCostsSumAll = this.SumCostSumCentral(data7);
-        data8 = listTD.filter((el) => el.typeAffiliation == "ฝอ.5");
-        let sumCostdata8InsuranceAll = this.SumCostSummaintenanceAll(data8);
-        let sumdata8InsuranceAll = this.InsuranceSumAll(data8);
-        let sumdata8maintenancefeeSumAll = this.maintenancefeeCount(data8);
-        let sumdata8waterbillSumAll = this.WaterbillSum(data8);
-        let sumdata8electricitybillSumAll = this.ElectricitybillSum(data8);
-        let sumdata8CostwaterbillSumAll = this.SumCostSumwater(data8);
-        let sumdata8centralSumAll = this.CentralSum(data8);
-        let sumdata8costsSumAll = this.CostsSum(data8);
-        let sumdata8CostCostsSumAll = this.SumCostSumCentral(data8);
-        data9 = listTD.filter((el) => el.typeAffiliation == "ฝอ.6");
-        let sumCostdata9InsuranceAll = this.SumCostSummaintenanceAll(data9);
-        let sumdata9InsuranceAll = this.InsuranceSumAll(data9);
-        let sumdata9maintenancefeeSumAll = this.maintenancefeeCount(data9);
-        let sumdata9waterbillSumAll = this.WaterbillSum(data9);
-        let sumdata9electricitybillSumAll = this.ElectricitybillSum(data9);
-        let sumdata9CostwaterbillSumAll = this.SumCostSumwater(data9);
-        let sumdata9centralSumAll = this.CentralSum(data9);
-        let sumdata9costsSumAll = this.CostsSum(data9);
-        let sumdata9CostCostsSumAll = this.SumCostSumCentral(data9);
-        data10 = listTD.filter((el) => el.typeAffiliation == "ฝอ.7");
-        let sumCostdata10InsuranceAll = this.SumCostSummaintenanceAll(data10);
-        let sumdata10InsuranceAll = this.InsuranceSumAll(data10);
-        let sumdata10maintenancefeeSumAll = this.maintenancefeeCount(data10);
-        let sumdata10waterbillSumAll = this.WaterbillSum(data10);
-        let sumdata10electricitybillSumAll = this.ElectricitybillSum(data10);
-        let sumdata10CostwaterbillSumAll = this.SumCostSumwater(data10);
-        let sumdata10centralSumAll = this.CentralSum(data10);
-        let sumdata10costsSumAll = this.CostsSum(data10);
-        let sumdata10CostCostsSumAll = this.SumCostSumCentral(data10);
-        data11 = listTD.filter((el) => el.typeAffiliation == "ฝอ.8");
-        let sumCostdata11InsuranceAll = this.SumCostSummaintenanceAll(data11);
-        let sumdata11InsuranceAll = this.InsuranceSumAll(data11);
-        let sumdata11maintenancefeeSumAll = this.maintenancefeeCount(data11);
-        let sumdata11waterbillSumAll = this.WaterbillSum(data11);
-        let sumdata11electricitybillSumAll = this.ElectricitybillSum(data11);
-        let sumdata11CostwaterbillSumAll = this.SumCostSumwater(data11);
-        let sumdata11centralSumAll = this.CentralSum(data11);
-        let sumdata11costsSumAll = this.CostsSum(data11);
-        let sumdata11CostCostsSumAll = this.SumCostSumCentral(data11);
-        data12 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.1");
-        let sumCostdata12InsuranceAll = this.SumCostSummaintenanceAll(data12);
-        let sumdata12InsuranceAll = this.InsuranceSumAll(data12);
-        let sumdata12maintenancefeeSumAll = this.maintenancefeeCount(data12);
-        let sumdata12waterbillSumAll = this.WaterbillSum(data12);
-        let sumdata12electricitybillSumAll = this.ElectricitybillSum(data12);
-        let sumdata12CostwaterbillSumAll = this.SumCostSumwater(data12);
-        let sumdata12centralSumAll = this.CentralSum(data12);
-        let sumdata12costsSumAll = this.CostsSum(data12);
-        let sumdata12CostCostsSumAll = this.SumCostSumCentral(data12);
-        data13 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.2");
-        let sumCostdata13InsuranceAll = this.SumCostSummaintenanceAll(data13);
-        let sumdata13InsuranceAll = this.InsuranceSumAll(data13);
-        let sumdata13maintenancefeeSumAll = this.maintenancefeeCount(data13);
-        let sumdata13waterbillSumAll = this.WaterbillSum(data13);
-        let sumdata13lectricitybillSumAll = this.ElectricitybillSum(data13);
-        let sumdata13CostwaterbillSumAll = this.SumCostSumwater(data13);
-        let sumdata13centralSumAll = this.CentralSum(data13);
-        let sumdata13costsSumAll = this.CostsSum(data13);
-        let sumdata13CostCostsSumAll = this.SumCostSumCentral(data13);
-        data14 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.3");
-        let sumCostdata14InsuranceAll = this.SumCostSummaintenanceAll(data14);
-        let sumdata14InsuranceAll = this.InsuranceSumAll(data14);
-        let sumdata14maintenancefeeSumAll = this.maintenancefeeCount(data14);
-        let sumdata14waterbillSumAll = this.WaterbillSum(data14);
-        let sumdata14electricitybillSumAll = this.ElectricitybillSum(data14);
-        let sumdata14CostwaterbillSumAll = this.SumCostSumwater(data14);
-        let sumdata14centralSumAll = this.CentralSum(data14);
-        let sumdata14costsSumAll = this.CostsSum(data14);
-        let sumdata14CostCostsSumAll = this.SumCostSumCentral(data14);
-        data15 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.4");
-        let sumCostdata15InsuranceAll = this.SumCostSummaintenanceAll(data15);
-        let sumdata15InsuranceAll = this.InsuranceSumAll(data15);
-        let sumdata15maintenancefeeSumAll = this.maintenancefeeCount(data15);
-        let sumdata15waterbillSumAll = this.WaterbillSum(data15);
-        let sumdata15electricitybillSumAll = this.ElectricitybillSum(data15);
-        let sumdata15CostwaterbillSumAll = this.SumCostSumwater(data15);
-        let sumdata15centralSumAll = this.CentralSum(data15);
-        let sumdata15costsSumAll = this.CostsSum(data15);
-        let sumdata15CostCostsSumAll = this.SumCostSumCentral(data15);
-        data16 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.5");
-        let sumCostdata16InsuranceAll = this.SumCostSummaintenanceAll(data16);
-        let sumdata16InsuranceAll = this.InsuranceSumAll(data16);
-        let sumdata16maintenancefeeSumAll = this.maintenancefeeCount(data16);
-        let sumdata16waterbillSumAll = this.WaterbillSum(data16);
-        let sumdata16electricitybillSumAll = this.ElectricitybillSum(data16);
-        let sumdata16CostwaterbillSumAll = this.SumCostSumwater(data16);
-        let sumdata16centralSumAll = this.CentralSum(data16);
-        let sumdata16costsSumAll = this.CostsSum(data16);
-        let sumdata16CostCostsSumAll = this.SumCostSumCentral(data16);
-        data17 = listTD.filter((el) => el.typeAffiliation == "ลูกจ้าง");
-        let sumCostdata17InsuranceAll = this.SumCostSummaintenanceAll(data17);
-        let sumdata17InsuranceAll = this.InsuranceSumAll(data17);
-        let sumdata17maintenancefeeSumAll = this.maintenancefeeCount(data17);
-        let sumdata17waterbillSumAll = this.WaterbillSum(data17);
-        let sumdata17electricitybillSumAll = this.ElectricitybillSum(data17);
-        let sumdata17CostwaterbillSumAll = this.SumCostSumwater(data17);
-        let sumdata17centralSumAll = this.CentralSum(data17);
-        let sumdata17costsSumAll = this.CostsSum(data17);
-        let sumdata17CostCostsSumAll = this.SumCostSumCentral(data17);
-        await this.AffiliationListTD.map((el) => {
-          if (el.label == "บช.ตชด.") {
-            el["sumdataMaintenancefee"] = sumdatamaintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdataInsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdataInsuranceAll;
-            el["sumdatawaterbill"] = sumdatawaterbillSumAll;
-            el["sumdataelectricitybill"] = sumdataelectricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdataCostwaterbillSumAll;
-            el["sumdatacentral"] = sumdatacentralSumAll;
-            el["sumdatacosts"] = sumdatacostsSumAll;
-            el["sumCostdataCostCosts"] = sumdataCostCostsSumAll;
-          }
-          if (el.label == "บก.อก.") {
-            el["sumdataMaintenancefee"] = sumdata2maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata2InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata2InsuranceAll;
-            el["sumdatawaterbill"] = sumdata2waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata2electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata2CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata2centralSumAll;
-            el["sumdatacosts"] = sumdata2costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata2CostCostsSumAll;
-          }
-          if (el.label == "บก.สนน.") {
-            el["sumdataMaintenancefee"] = sumdata3maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata3InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
-            el["sumdatawaterbill"] = sumdata3waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata3electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata3CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata3centralSumAll;
-            el["sumdatacosts"] = sumdata3costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata3CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.1") {
-            el["sumdataMaintenancefee"] = sumdata4maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata4InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata4InsuranceAll;
-            el["sumdatawaterbill"] = sumdata4waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata4electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata4CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata4centralSumAll;
-            el["sumdatacosts"] = sumdata4costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata4CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.2") {
-            el["sumdataMaintenancefee"] = sumdata5maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata5InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata5InsuranceAll;
-            el["sumdatawaterbill"] = sumdata5waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata5electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata5CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata5centralSumAll;
-            el["sumdatacosts"] = sumdata5costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata5CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.3") {
-            el["sumdataMaintenancefee"] = sumdata6maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata6InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata6InsuranceAll;
-            el["sumdatawaterbill"] = sumdata6waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata6electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata6CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata6centralSumAll;
-            el["sumdatacosts"] = sumdata6costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata6CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.4") {
-            el["sumdataMaintenancefee"] = sumdata7maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata7InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata7InsuranceAll;
-            el["sumdatawaterbill"] = sumdata7waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata7electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata7CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata7centralSumAll;
-            el["sumdatacosts"] = sumdata7costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata7CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.5") {
-            el["sumdataMaintenancefee"] = sumdata8maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata8InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata8InsuranceAll;
-            el["sumdatawaterbill"] = sumdata8waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata8electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata8CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata8centralSumAll;
-            el["sumdatacosts"] = sumdata8costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata8CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.6") {
-            el["sumdataMaintenancefee"] = sumdata9maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata9InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata9InsuranceAll;
-            el["sumdatawaterbill"] = sumdata9waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata9electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata9CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata9centralSumAll;
-            el["sumdatacosts"] = sumdata9costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata9CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.7") {
-            el["sumdataMaintenancefee"] = sumdata10maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata10InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata10InsuranceAll;
-            el["sumdatawaterbill"] = sumdata10waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata10electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata10CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata10centralSumAll;
-            el["sumdatacosts"] = sumdata10costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata10CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.8") {
-            el["sumdataMaintenancefee"] = sumdata11maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata11InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata11InsuranceAll;
-            el["sumdatawaterbill"] = sumdata11waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata11electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata11CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata11centralSumAll;
-            el["sumdatacosts"] = sumdata11costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata11CostCostsSumAll;
-          }
-          if (el.label == "ฝสสน.1") {
-            el["sumdataMaintenancefee"] = sumdata12maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata12InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata12InsuranceAll;
-            el["sumdatawaterbill"] = sumdata12waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata12electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata12CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata12centralSumAll;
-            el["sumdatacosts"] = sumdata12costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata12CostCostsSumAll;
-          }
-          if (el.label == "ฝสสน.2") {
-            el["sumdataMaintenancefee"] = sumdata13maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata13InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata13InsuranceAll;
-            el["sumdatawaterbill"] = sumdata13waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata13lectricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata13CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata13centralSumAll;
-            el["sumdatacosts"] = sumdata13costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata13CostCostsSumAll;
-          }
-          if (el.label == "ฝสสน.3") {
-            el["sumdataMaintenancefee"] = sumdata14maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata14InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata14InsuranceAll;
-            el["sumdatawaterbill"] = sumdata14waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata14electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata14CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata14centralSumAll;
-            el["sumdatacosts"] = sumdata14costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata14CostCostsSumAll;
-          }
-          if (el.label == "ฝสสน.4") {
-            el["sumdataMaintenancefee"] = sumdata15maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata15InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata15InsuranceAll;
-            el["sumdatawaterbill"] = sumdata15waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata15electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata15CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata15centralSumAll;
-            el["sumdatacosts"] = sumdata15costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata15CostCostsSumAll;
-          }
-          if (el.label == "ฝสสน.5") {
-            el["sumdataMaintenancefee"] = sumdata16maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata16InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata16InsuranceAll;
-            el["sumdatawaterbill"] = sumdata16waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata16electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata16CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata16centralSumAll;
-            el["sumdatacosts"] = sumdata16costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata16CostCostsSumAll;
-          }
-          if (el.label == "ลูกจ้าง") {
-            el["sumdataMaintenancefee"] = sumdata17maintenancefeeSumAll;
-            el["sumdataInsurance"] = sumdata17InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata17InsuranceAll;
-            el["sumdatawaterbill"] = sumdata17waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata17electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata17CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata17centralSumAll;
-            el["sumdatacosts"] = sumdata17costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata17CostCostsSumAll;
-          }
+      data = listTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
+      let sumCostdataInsuranceAll = this.SumCostSummaintenanceAll(data);
+      let sumdataInsuranceAll = this.InsuranceSumAll(data);
+      let sumdatamaintenancefeeSumAll = this.maintenancefeeCount(data);
+      let sumdatawaterbillSumAll = this.WaterbillSum(data);
+      let sumdataelectricitybillSumAll = this.ElectricitybillSum(data);
+      let sumdataCostwaterbillSumAll = this.SumCostSumwater(data);
+      let sumdatacentralSumAll = this.CentralSum(data);
+      let sumdatacostsSumAll = this.CostsSum(data);
+      let sumdataCostCostsSumAll = this.SumCostSumCentral(data);
 
-          return el;
-        });
-        this.AffiliationListTD.map((e) => {
-          e["countMaintenancefeeAll"] = this.countMaintenancefeeAll(this.AffiliationListTD);
-          e["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListTD);
-          e["countCostSumAll"] = this.countCostSumAll(this.AffiliationListTD);
-          e["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListTD);
-          e["countelectricitybillAll"] = this.countelectricitybillAll(
-            this.AffiliationListTD
-          );
-          e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(
-            this.AffiliationListTD
-          );
-          e["countcentraAll"] = this.countcentralAll(this.AffiliationListTD);
-          e["countcostsAll"] = this.countcostsAll(this.AffiliationListTD);
-          e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListTD);
-          return e;
-        });
+      data2 = listTD.filter((el) => el.typeAffiliation == "บก.อก.");
+      let sumCostdata2InsuranceAll = this.SumCostSummaintenanceAll(data2);
+      let sumdata2InsuranceAll = this.InsuranceSumAll(data2);
+      let sumdata2maintenancefeeSumAll = this.maintenancefeeCount(data2);
+      let sumdata2waterbillSumAll = this.WaterbillSum(data2);
+      let sumdata2electricitybillSumAll = this.ElectricitybillSum(data2);
+      let sumdata2CostwaterbillSumAll = this.SumCostSumwater(data2);
+      let sumdata2centralSumAll = this.CentralSum(data2);
+      let sumdata2costsSumAll = this.CostsSum(data2);
+      let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
+      data3 = listTD.filter((el) => el.typeAffiliation == "บก.สนน.");
+      let sumCostdata3InsuranceAll = this.SumCostSummaintenanceAll(data3);
+      let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
+      let sumdata3maintenancefeeSumAll = this.maintenancefeeCount(data3);
+      let sumdata3waterbillSumAll = this.WaterbillSum(data3);
+      let sumdata3electricitybillSumAll = this.ElectricitybillSum(data3);
+      let sumdata3CostwaterbillSumAll = this.SumCostSumwater(data3);
+      let sumdata3centralSumAll = this.CentralSum(data3);
+      let sumdata3costsSumAll = this.CostsSum(data3);
+      let sumdata3CostCostsSumAll = this.SumCostSumCentral(data3);
+      data4 = listTD.filter((el) => el.typeAffiliation == "ฝอ.1");
+      let sumCostdata4InsuranceAll = this.SumCostSummaintenanceAll(data4);
+      let sumdata4InsuranceAll = this.InsuranceSumAll(data4);
+      let sumdata4maintenancefeeSumAll = this.maintenancefeeCount(data4);
+      let sumdata4waterbillSumAll = this.WaterbillSum(data4);
+      let sumdata4electricitybillSumAll = this.ElectricitybillSum(data4);
+      let sumdata4CostwaterbillSumAll = this.SumCostSumwater(data4);
+      let sumdata4centralSumAll = this.CentralSum(data4);
+      let sumdata4costsSumAll = this.CostsSum(data4);
+      let sumdata4CostCostsSumAll = this.SumCostSumCentral(data4);
+      data5 = listTD.filter((el) => el.typeAffiliation == "ฝอ.2");
+      let sumCostdata5InsuranceAll = this.SumCostSummaintenanceAll(data5);
+      let sumdata5InsuranceAll = this.InsuranceSumAll(data5);
+      let sumdata5maintenancefeeSumAll = this.maintenancefeeCount(data5);
+      let sumdata5waterbillSumAll = this.WaterbillSum(data5);
+      let sumdata5electricitybillSumAll = this.ElectricitybillSum(data5);
+      let sumdata5CostwaterbillSumAll = this.SumCostSumwater(data5);
+      let sumdata5centralSumAll = this.CentralSum(data5);
+      let sumdata5costsSumAll = this.CostsSum(data5);
+      let sumdata5CostCostsSumAll = this.SumCostSumCentral(data5);
+      data6 = listTD.filter((el) => el.typeAffiliation == "ฝอ.3");
+      let sumCostdata6InsuranceAll = this.SumCostSummaintenanceAll(data6);
+      let sumdata6InsuranceAll = this.InsuranceSumAll(data6);
+      let sumdata6maintenancefeeSumAll = this.maintenancefeeCount(data6);
+      let sumdata6waterbillSumAll = this.WaterbillSum(data6);
+      let sumdata6electricitybillSumAll = this.ElectricitybillSum(data6);
+      let sumdata6CostwaterbillSumAll = this.SumCostSumwater(data6);
+      let sumdata6centralSumAll = this.CentralSum(data6);
+      let sumdata6costsSumAll = this.CostsSum(data6);
+      let sumdata6CostCostsSumAll = this.SumCostSumCentral(data6);
+      data7 = listTD.filter((el) => el.typeAffiliation == "ฝอ.4");
+      let sumCostdata7InsuranceAll = this.SumCostSummaintenanceAll(data7);
+      let sumdata7InsuranceAll = this.InsuranceSumAll(data7);
+      let sumdata7maintenancefeeSumAll = this.maintenancefeeCount(data7);
+      let sumdata7waterbillSumAll = this.WaterbillSum(data7);
+      let sumdata7electricitybillSumAll = this.ElectricitybillSum(data7);
+      let sumdata7CostwaterbillSumAll = this.SumCostSumwater(data7);
+      let sumdata7centralSumAll = this.CentralSum(data7);
+      let sumdata7costsSumAll = this.CostsSum(data7);
+      let sumdata7CostCostsSumAll = this.SumCostSumCentral(data7);
+      data8 = listTD.filter((el) => el.typeAffiliation == "ฝอ.5");
+      let sumCostdata8InsuranceAll = this.SumCostSummaintenanceAll(data8);
+      let sumdata8InsuranceAll = this.InsuranceSumAll(data8);
+      let sumdata8maintenancefeeSumAll = this.maintenancefeeCount(data8);
+      let sumdata8waterbillSumAll = this.WaterbillSum(data8);
+      let sumdata8electricitybillSumAll = this.ElectricitybillSum(data8);
+      let sumdata8CostwaterbillSumAll = this.SumCostSumwater(data8);
+      let sumdata8centralSumAll = this.CentralSum(data8);
+      let sumdata8costsSumAll = this.CostsSum(data8);
+      let sumdata8CostCostsSumAll = this.SumCostSumCentral(data8);
+      data9 = listTD.filter((el) => el.typeAffiliation == "ฝอ.6");
+      let sumCostdata9InsuranceAll = this.SumCostSummaintenanceAll(data9);
+      let sumdata9InsuranceAll = this.InsuranceSumAll(data9);
+      let sumdata9maintenancefeeSumAll = this.maintenancefeeCount(data9);
+      let sumdata9waterbillSumAll = this.WaterbillSum(data9);
+      let sumdata9electricitybillSumAll = this.ElectricitybillSum(data9);
+      let sumdata9CostwaterbillSumAll = this.SumCostSumwater(data9);
+      let sumdata9centralSumAll = this.CentralSum(data9);
+      let sumdata9costsSumAll = this.CostsSum(data9);
+      let sumdata9CostCostsSumAll = this.SumCostSumCentral(data9);
+      data10 = listTD.filter((el) => el.typeAffiliation == "ฝอ.7");
+      let sumCostdata10InsuranceAll = this.SumCostSummaintenanceAll(data10);
+      let sumdata10InsuranceAll = this.InsuranceSumAll(data10);
+      let sumdata10maintenancefeeSumAll = this.maintenancefeeCount(data10);
+      let sumdata10waterbillSumAll = this.WaterbillSum(data10);
+      let sumdata10electricitybillSumAll = this.ElectricitybillSum(data10);
+      let sumdata10CostwaterbillSumAll = this.SumCostSumwater(data10);
+      let sumdata10centralSumAll = this.CentralSum(data10);
+      let sumdata10costsSumAll = this.CostsSum(data10);
+      let sumdata10CostCostsSumAll = this.SumCostSumCentral(data10);
+      data11 = listTD.filter((el) => el.typeAffiliation == "ฝอ.8");
+      let sumCostdata11InsuranceAll = this.SumCostSummaintenanceAll(data11);
+      let sumdata11InsuranceAll = this.InsuranceSumAll(data11);
+      let sumdata11maintenancefeeSumAll = this.maintenancefeeCount(data11);
+      let sumdata11waterbillSumAll = this.WaterbillSum(data11);
+      let sumdata11electricitybillSumAll = this.ElectricitybillSum(data11);
+      let sumdata11CostwaterbillSumAll = this.SumCostSumwater(data11);
+      let sumdata11centralSumAll = this.CentralSum(data11);
+      let sumdata11costsSumAll = this.CostsSum(data11);
+      let sumdata11CostCostsSumAll = this.SumCostSumCentral(data11);
+      data12 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.1");
+      let sumCostdata12InsuranceAll = this.SumCostSummaintenanceAll(data12);
+      let sumdata12InsuranceAll = this.InsuranceSumAll(data12);
+      let sumdata12maintenancefeeSumAll = this.maintenancefeeCount(data12);
+      let sumdata12waterbillSumAll = this.WaterbillSum(data12);
+      let sumdata12electricitybillSumAll = this.ElectricitybillSum(data12);
+      let sumdata12CostwaterbillSumAll = this.SumCostSumwater(data12);
+      let sumdata12centralSumAll = this.CentralSum(data12);
+      let sumdata12costsSumAll = this.CostsSum(data12);
+      let sumdata12CostCostsSumAll = this.SumCostSumCentral(data12);
+      data13 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.2");
+      let sumCostdata13InsuranceAll = this.SumCostSummaintenanceAll(data13);
+      let sumdata13InsuranceAll = this.InsuranceSumAll(data13);
+      let sumdata13maintenancefeeSumAll = this.maintenancefeeCount(data13);
+      let sumdata13waterbillSumAll = this.WaterbillSum(data13);
+      let sumdata13lectricitybillSumAll = this.ElectricitybillSum(data13);
+      let sumdata13CostwaterbillSumAll = this.SumCostSumwater(data13);
+      let sumdata13centralSumAll = this.CentralSum(data13);
+      let sumdata13costsSumAll = this.CostsSum(data13);
+      let sumdata13CostCostsSumAll = this.SumCostSumCentral(data13);
+      data14 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.3");
+      let sumCostdata14InsuranceAll = this.SumCostSummaintenanceAll(data14);
+      let sumdata14InsuranceAll = this.InsuranceSumAll(data14);
+      let sumdata14maintenancefeeSumAll = this.maintenancefeeCount(data14);
+      let sumdata14waterbillSumAll = this.WaterbillSum(data14);
+      let sumdata14electricitybillSumAll = this.ElectricitybillSum(data14);
+      let sumdata14CostwaterbillSumAll = this.SumCostSumwater(data14);
+      let sumdata14centralSumAll = this.CentralSum(data14);
+      let sumdata14costsSumAll = this.CostsSum(data14);
+      let sumdata14CostCostsSumAll = this.SumCostSumCentral(data14);
+      data15 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.4");
+      let sumCostdata15InsuranceAll = this.SumCostSummaintenanceAll(data15);
+      let sumdata15InsuranceAll = this.InsuranceSumAll(data15);
+      let sumdata15maintenancefeeSumAll = this.maintenancefeeCount(data15);
+      let sumdata15waterbillSumAll = this.WaterbillSum(data15);
+      let sumdata15electricitybillSumAll = this.ElectricitybillSum(data15);
+      let sumdata15CostwaterbillSumAll = this.SumCostSumwater(data15);
+      let sumdata15centralSumAll = this.CentralSum(data15);
+      let sumdata15costsSumAll = this.CostsSum(data15);
+      let sumdata15CostCostsSumAll = this.SumCostSumCentral(data15);
+      data16 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.5");
+      let sumCostdata16InsuranceAll = this.SumCostSummaintenanceAll(data16);
+      let sumdata16InsuranceAll = this.InsuranceSumAll(data16);
+      let sumdata16maintenancefeeSumAll = this.maintenancefeeCount(data16);
+      let sumdata16waterbillSumAll = this.WaterbillSum(data16);
+      let sumdata16electricitybillSumAll = this.ElectricitybillSum(data16);
+      let sumdata16CostwaterbillSumAll = this.SumCostSumwater(data16);
+      let sumdata16centralSumAll = this.CentralSum(data16);
+      let sumdata16costsSumAll = this.CostsSum(data16);
+      let sumdata16CostCostsSumAll = this.SumCostSumCentral(data16);
+      data17 = listTD.filter((el) => el.typeAffiliation == "ลูกจ้าง");
+      let sumCostdata17InsuranceAll = this.SumCostSummaintenanceAll(data17);
+      let sumdata17InsuranceAll = this.InsuranceSumAll(data17);
+      let sumdata17maintenancefeeSumAll = this.maintenancefeeCount(data17);
+      let sumdata17waterbillSumAll = this.WaterbillSum(data17);
+      let sumdata17electricitybillSumAll = this.ElectricitybillSum(data17);
+      let sumdata17CostwaterbillSumAll = this.SumCostSumwater(data17);
+      let sumdata17centralSumAll = this.CentralSum(data17);
+      let sumdata17costsSumAll = this.CostsSum(data17);
+      let sumdata17CostCostsSumAll = this.SumCostSumCentral(data17);
+      await this.AffiliationListTD.map((el) => {
+        if (el.label == "บช.ตชด.") {
+          el["sumdataMaintenancefee"] = sumdatamaintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdataInsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdataInsuranceAll;
+          el["sumdatawaterbill"] = sumdatawaterbillSumAll;
+          el["sumdataelectricitybill"] = sumdataelectricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdataCostwaterbillSumAll;
+          el["sumdatacentral"] = sumdatacentralSumAll;
+          el["sumdatacosts"] = sumdatacostsSumAll;
+          el["sumCostdataCostCosts"] = sumdataCostCostsSumAll;
+        }
+        if (el.label == "บก.อก.") {
+          el["sumdataMaintenancefee"] = sumdata2maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata2InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata2InsuranceAll;
+          el["sumdatawaterbill"] = sumdata2waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata2electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata2CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata2centralSumAll;
+          el["sumdatacosts"] = sumdata2costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata2CostCostsSumAll;
+        }
+        if (el.label == "บก.สนน.") {
+          el["sumdataMaintenancefee"] = sumdata3maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata3InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
+          el["sumdatawaterbill"] = sumdata3waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata3electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata3CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata3centralSumAll;
+          el["sumdatacosts"] = sumdata3costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata3CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.1") {
+          el["sumdataMaintenancefee"] = sumdata4maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata4InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata4InsuranceAll;
+          el["sumdatawaterbill"] = sumdata4waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata4electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata4CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata4centralSumAll;
+          el["sumdatacosts"] = sumdata4costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata4CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.2") {
+          el["sumdataMaintenancefee"] = sumdata5maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata5InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata5InsuranceAll;
+          el["sumdatawaterbill"] = sumdata5waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata5electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata5CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata5centralSumAll;
+          el["sumdatacosts"] = sumdata5costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata5CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.3") {
+          el["sumdataMaintenancefee"] = sumdata6maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata6InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata6InsuranceAll;
+          el["sumdatawaterbill"] = sumdata6waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata6electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata6CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata6centralSumAll;
+          el["sumdatacosts"] = sumdata6costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata6CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.4") {
+          el["sumdataMaintenancefee"] = sumdata7maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata7InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata7InsuranceAll;
+          el["sumdatawaterbill"] = sumdata7waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata7electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata7CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata7centralSumAll;
+          el["sumdatacosts"] = sumdata7costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata7CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.5") {
+          el["sumdataMaintenancefee"] = sumdata8maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata8InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata8InsuranceAll;
+          el["sumdatawaterbill"] = sumdata8waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata8electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata8CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata8centralSumAll;
+          el["sumdatacosts"] = sumdata8costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata8CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.6") {
+          el["sumdataMaintenancefee"] = sumdata9maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata9InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata9InsuranceAll;
+          el["sumdatawaterbill"] = sumdata9waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata9electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata9CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata9centralSumAll;
+          el["sumdatacosts"] = sumdata9costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata9CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.7") {
+          el["sumdataMaintenancefee"] = sumdata10maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata10InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata10InsuranceAll;
+          el["sumdatawaterbill"] = sumdata10waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata10electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata10CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata10centralSumAll;
+          el["sumdatacosts"] = sumdata10costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata10CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.8") {
+          el["sumdataMaintenancefee"] = sumdata11maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata11InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata11InsuranceAll;
+          el["sumdatawaterbill"] = sumdata11waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata11electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata11CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata11centralSumAll;
+          el["sumdatacosts"] = sumdata11costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata11CostCostsSumAll;
+        }
+        if (el.label == "ฝสสน.1") {
+          el["sumdataMaintenancefee"] = sumdata12maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata12InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata12InsuranceAll;
+          el["sumdatawaterbill"] = sumdata12waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata12electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata12CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata12centralSumAll;
+          el["sumdatacosts"] = sumdata12costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata12CostCostsSumAll;
+        }
+        if (el.label == "ฝสสน.2") {
+          el["sumdataMaintenancefee"] = sumdata13maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata13InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata13InsuranceAll;
+          el["sumdatawaterbill"] = sumdata13waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata13lectricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata13CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata13centralSumAll;
+          el["sumdatacosts"] = sumdata13costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata13CostCostsSumAll;
+        }
+        if (el.label == "ฝสสน.3") {
+          el["sumdataMaintenancefee"] = sumdata14maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata14InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata14InsuranceAll;
+          el["sumdatawaterbill"] = sumdata14waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata14electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata14CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata14centralSumAll;
+          el["sumdatacosts"] = sumdata14costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata14CostCostsSumAll;
+        }
+        if (el.label == "ฝสสน.4") {
+          el["sumdataMaintenancefee"] = sumdata15maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata15InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata15InsuranceAll;
+          el["sumdatawaterbill"] = sumdata15waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata15electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata15CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata15centralSumAll;
+          el["sumdatacosts"] = sumdata15costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata15CostCostsSumAll;
+        }
+        if (el.label == "ฝสสน.5") {
+          el["sumdataMaintenancefee"] = sumdata16maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata16InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata16InsuranceAll;
+          el["sumdatawaterbill"] = sumdata16waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata16electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata16CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata16centralSumAll;
+          el["sumdatacosts"] = sumdata16costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata16CostCostsSumAll;
+        }
+        if (el.label == "ลูกจ้าง") {
+          el["sumdataMaintenancefee"] = sumdata17maintenancefeeSumAll;
+          el["sumdataInsurance"] = sumdata17InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata17InsuranceAll;
+          el["sumdatawaterbill"] = sumdata17waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata17electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata17CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata17centralSumAll;
+          el["sumdatacosts"] = sumdata17costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata17CostCostsSumAll;
+        }
+
+        return el;
+      });
+      this.AffiliationListTD.map((e) => {
+        e["countMaintenancefeeAll"] = this.countMaintenancefeeAll(this.AffiliationListTD);
+        e["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListTD);
+        e["countCostSumAll"] = this.countCostSumAll(this.AffiliationListTD);
+        e["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListTD);
+        e["countelectricitybillAll"] = this.countelectricitybillAll(
+          this.AffiliationListTD
+        );
+        e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(
+          this.AffiliationListTD
+        );
+        e["countcentraAll"] = this.countcentralAll(this.AffiliationListTD);
+        e["countcostsAll"] = this.countcostsAll(this.AffiliationListTD);
+        e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListTD);
+        return e;
+      });
     },
 
     MaintenanceSumAll(items) {
@@ -1064,7 +1063,7 @@ export default {
     },
 
     async filterAffiliation2(listdata) {
-      let listCTD = []
+      let listCTD = [];
       listCTD = listdata;
       let data,
         data2,
@@ -1083,383 +1082,383 @@ export default {
         data15,
         data16,
         data17 = [];
-        data = listCTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
-        let sumCostdataInsuranceAll = this.SumCostSumInsuranceAll(data);
-        let sumdataInsuranceAll = this.InsuranceSumAll(data);
-        let sumdataMaintenanceSumAll = this.MaintenanceSumAll(data);
-        let sumdatawaterbillSumAll = this.WaterbillSum(data);
-        let sumdataelectricitybillSumAll = this.ElectricitybillSum(data);
-        let sumdataCostwaterbillSumAll = this.SumCostSumwater(data);
-        let sumdatacentralSumAll = this.CentralSum(data);
-        let sumdatacostsSumAll = this.CostsSum(data);
-        let sumdataCostCostsSumAll = this.SumCostSumCentral(data);
-        data2 = listCTD.filter((el) => el.typeAffiliation == "บก.อก.");
-        let sumCostdata2InsuranceAll = this.SumCostSumInsuranceAll(data2);
-        let sumdata2InsuranceAll = this.InsuranceSumAll(data2);
-        let sumdata2MaintenanceSumAll = this.MaintenanceSumAll(data2);
-        let sumdata2waterbillSumAll = this.WaterbillSum(data2);
-        let sumdata2electricitybillSumAll = this.ElectricitybillSum(data2);
-        let sumdata2CostwaterbillSumAll = this.SumCostSumwater(data2);
-        let sumdata2centralSumAll = this.CentralSum(data2);
-        let sumdata2costsSumAll = this.CostsSum(data2);
-        let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
-        data3 = listCTD.filter((el) => el.typeAffiliation == "บก.สนน.");
-        let sumCostdata3InsuranceAll = this.SumCostSumInsuranceAll(data3);
-        let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
-        let sumdata3MaintenanceSumAll = this.MaintenanceSumAll(data3);
-        let sumdata3waterbillSumAll = this.WaterbillSum(data3);
-        let sumdata3electricitybillSumAll = this.ElectricitybillSum(data3);
-        let sumdata3CostwaterbillSumAll = this.SumCostSumwater(data3);
-        let sumdata3centralSumAll = this.CentralSum(data3);
-        let sumdata3costsSumAll = this.CostsSum(data3);
-        let sumdata3CostCostsSumAll = this.SumCostSumCentral(data3);
-        data4 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.1");
-        let sumCostdata4InsuranceAll = this.SumCostSumInsuranceAll(data4);
-        let sumdata4InsuranceAll = this.InsuranceSumAll(data4);
-        let sumdata4MaintenanceSumAll = this.MaintenanceSumAll(data4);
-        let sumdata4waterbillSumAll = this.WaterbillSum(data4);
-        let sumdata4electricitybillSumAll = this.ElectricitybillSum(data4);
-        let sumdata4CostwaterbillSumAll = this.SumCostSumwater(data4);
-        let sumdata4centralSumAll = this.CentralSum(data4);
-        let sumdata4costsSumAll = this.CostsSum(data4);
-        let sumdata4CostCostsSumAll = this.SumCostSumCentral(data4);
-        data5 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.2");
-        let sumCostdata5InsuranceAll = this.SumCostSumInsuranceAll(data5);
-        let sumdata5InsuranceAll = this.InsuranceSumAll(data5);
-        let sumdata5MaintenanceSumAll = this.MaintenanceSumAll(data5);
-        let sumdata5waterbillSumAll = this.WaterbillSum(data5);
-        let sumdata5electricitybillSumAll = this.ElectricitybillSum(data5);
-        let sumdata5CostwaterbillSumAll = this.SumCostSumwater(data5);
-        let sumdata5centralSumAll = this.CentralSum(data5);
-        let sumdata5costsSumAll = this.CostsSum(data5);
-        let sumdata5CostCostsSumAll = this.SumCostSumCentral(data5);
-        data6 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.3");
-        let sumCostdata6InsuranceAll = this.SumCostSumInsuranceAll(data6);
-        let sumdata6InsuranceAll = this.InsuranceSumAll(data6);
-        let sumdata6MaintenanceSumAll = this.MaintenanceSumAll(data6);
-        let sumdata6waterbillSumAll = this.WaterbillSum(data6);
-        let sumdata6electricitybillSumAll = this.ElectricitybillSum(data6);
-        let sumdata6CostwaterbillSumAll = this.SumCostSumwater(data6);
-        let sumdata6centralSumAll = this.CentralSum(data6);
-        let sumdata6costsSumAll = this.CostsSum(data6);
-        let sumdata6CostCostsSumAll = this.SumCostSumCentral(data6);
-        data7 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.4");
-        let sumCostdata7InsuranceAll = this.SumCostSumInsuranceAll(data7);
-        let sumdata7InsuranceAll = this.InsuranceSumAll(data7);
-        let sumdata7MaintenanceSumAll = this.MaintenanceSumAll(data7);
-        let sumdata7waterbillSumAll = this.WaterbillSum(data7);
-        let sumdata7electricitybillSumAll = this.ElectricitybillSum(data7);
-        let sumdata7CostwaterbillSumAll = this.SumCostSumwater(data7);
-        let sumdata7centralSumAll = this.CentralSum(data7);
-        let sumdata7costsSumAll = this.CostsSum(data7);
-        let sumdata7CostCostsSumAll = this.SumCostSumCentral(data7);
-        data8 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.5");
-        let sumCostdata8InsuranceAll = this.SumCostSumInsuranceAll(data8);
-        let sumdata8InsuranceAll = this.InsuranceSumAll(data8);
-        let sumdata8MaintenanceSumAll = this.MaintenanceSumAll(data8);
-        let sumdata8waterbillSumAll = this.WaterbillSum(data8);
-        let sumdata8electricitybillSumAll = this.ElectricitybillSum(data8);
-        let sumdata8CostwaterbillSumAll = this.SumCostSumwater(data8);
-        let sumdata8centralSumAll = this.CentralSum(data8);
-        let sumdata8costsSumAll = this.CostsSum(data8);
-        let sumdata8CostCostsSumAll = this.SumCostSumCentral(data8);
-        data9 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.6");
-        let sumCostdata9InsuranceAll = this.SumCostSumInsuranceAll(data9);
-        let sumdata9InsuranceAll = this.InsuranceSumAll(data9);
-        let sumdata9MaintenanceSumAll = this.MaintenanceSumAll(data9);
-        let sumdata9waterbillSumAll = this.WaterbillSum(data9);
-        let sumdata9electricitybillSumAll = this.ElectricitybillSum(data9);
-        let sumdata9CostwaterbillSumAll = this.SumCostSumwater(data9);
-        let sumdata9centralSumAll = this.CentralSum(data9);
-        let sumdata9costsSumAll = this.CostsSum(data9);
-        let sumdata9CostCostsSumAll = this.SumCostSumCentral(data9);
-        data10 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.7");
-        let sumCostdata10InsuranceAll = this.SumCostSumInsuranceAll(data10);
-        let sumdata10InsuranceAll = this.InsuranceSumAll(data10);
-        let sumdata10MaintenanceSumAll = this.MaintenanceSumAll(data10);
-        let sumdata10waterbillSumAll = this.WaterbillSum(data10);
-        let sumdata10electricitybillSumAll = this.ElectricitybillSum(data10);
-        let sumdata10CostwaterbillSumAll = this.SumCostSumwater(data10);
-        let sumdata10centralSumAll = this.CentralSum(data10);
-        let sumdata10costsSumAll = this.CostsSum(data10);
-        let sumdata10CostCostsSumAll = this.SumCostSumCentral(data10);
-        data11 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.8");
-        let sumCostdata11InsuranceAll = this.SumCostSumInsuranceAll(data11);
-        let sumdata11InsuranceAll = this.InsuranceSumAll(data11);
-        let sumdata11MaintenanceSumAll = this.MaintenanceSumAll(data11);
-        let sumdata11waterbillSumAll = this.WaterbillSum(data11);
-        let sumdata11electricitybillSumAll = this.ElectricitybillSum(data11);
-        let sumdata11CostwaterbillSumAll = this.SumCostSumwater(data11);
-        let sumdata11centralSumAll = this.CentralSum(data11);
-        let sumdata11costsSumAll = this.CostsSum(data11);
-        let sumdata11CostCostsSumAll = this.SumCostSumCentral(data11);
-        data12 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.1");
-        let sumCostdata12InsuranceAll = this.SumCostSumInsuranceAll(data12);
-        let sumdata12InsuranceAll = this.InsuranceSumAll(data12);
-        let sumdata12MaintenanceSumAll = this.MaintenanceSumAll(data12);
-        let sumdata12waterbillSumAll = this.WaterbillSum(data12);
-        let sumdata12electricitybillSumAll = this.ElectricitybillSum(data12);
-        let sumdata12CostwaterbillSumAll = this.SumCostSumwater(data12);
-        let sumdata12centralSumAll = this.CentralSum(data12);
-        let sumdata12costsSumAll = this.CostsSum(data12);
-        let sumdata12CostCostsSumAll = this.SumCostSumCentral(data12);
-        data13 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.2");
-        let sumCostdata13InsuranceAll = this.SumCostSumInsuranceAll(data13);
-        let sumdata13InsuranceAll = this.InsuranceSumAll(data13);
-        let sumdata13MaintenanceSumAll = this.MaintenanceSumAll(data13);
-        let sumdata13waterbillSumAll = this.WaterbillSum(data13);
-        let sumdata13lectricitybillSumAll = this.ElectricitybillSum(data13);
-        let sumdata13CostwaterbillSumAll = this.SumCostSumwater(data13);
-        let sumdata13centralSumAll = this.CentralSum(data13);
-        let sumdata13costsSumAll = this.CostsSum(data13);
-        let sumdata13CostCostsSumAll = this.SumCostSumCentral(data13);
-        data14 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.3");
-        let sumCostdata14InsuranceAll = this.SumCostSumInsuranceAll(data14);
-        let sumdata14InsuranceAll = this.InsuranceSumAll(data14);
-        let sumdata14MaintenanceSumAll = this.MaintenanceSumAll(data14);
-        let sumdata14waterbillSumAll = this.WaterbillSum(data14);
-        let sumdata14electricitybillSumAll = this.ElectricitybillSum(data14);
-        let sumdata14CostwaterbillSumAll = this.SumCostSumwater(data14);
-        let sumdata14centralSumAll = this.CentralSum(data14);
-        let sumdata14costsSumAll = this.CostsSum(data14);
-        let sumdata14CostCostsSumAll = this.SumCostSumCentral(data14);
-        data15 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.4");
-        let sumCostdata15InsuranceAll = this.SumCostSumInsuranceAll(data15);
-        let sumdata15InsuranceAll = this.InsuranceSumAll(data15);
-        let sumdata15MaintenanceSumAll = this.MaintenanceSumAll(data15);
-        let sumdata15waterbillSumAll = this.WaterbillSum(data15);
-        let sumdata15electricitybillSumAll = this.ElectricitybillSum(data15);
-        let sumdata15CostwaterbillSumAll = this.SumCostSumwater(data15);
-        let sumdata15centralSumAll = this.CentralSum(data15);
-        let sumdata15costsSumAll = this.CostsSum(data15);
-        let sumdata15CostCostsSumAll = this.SumCostSumCentral(data15);
-        data16 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.5");
-        let sumCostdata16InsuranceAll = this.SumCostSumInsuranceAll(data16);
-        let sumdata16InsuranceAll = this.InsuranceSumAll(data16);
-        let sumdata16MaintenanceSumAll = this.MaintenanceSumAll(data16);
-        let sumdata16waterbillSumAll = this.WaterbillSum(data16);
-        let sumdata16electricitybillSumAll = this.ElectricitybillSum(data16);
-        let sumdata16CostwaterbillSumAll = this.SumCostSumwater(data16);
-        let sumdata16centralSumAll = this.CentralSum(data16);
-        let sumdata16costsSumAll = this.CostsSum(data16);
-        let sumdata16CostCostsSumAll = this.SumCostSumCentral(data16);
-        data17 = listCTD.filter((el) => el.typeAffiliation == "ลูกจ้าง");
-        let sumCostdata17InsuranceAll = this.SumCostSumInsuranceAll(data17);
-        let sumdata17InsuranceAll = this.InsuranceSumAll(data17);
-        let sumdata17MaintenanceSumAll = this.MaintenanceSumAll(data17);
-        let sumdata17waterbillSumAll = this.WaterbillSum(data17);
-        let sumdata17electricitybillSumAll = this.ElectricitybillSum(data17);
-        let sumdata17CostwaterbillSumAll = this.SumCostSumwater(data17);
-        let sumdata17centralSumAll = this.CentralSum(data17);
-        let sumdata17costsSumAll = this.CostsSum(data17);
-        let sumdata17CostCostsSumAll = this.SumCostSumCentral(data17);
-        await this.AffiliationListCTD.map((el) => {
-          if (el.label == "บช.ตชด.") {
-            el["sumdataMaintenance"] = sumdataMaintenanceSumAll;
-            el["sumdataInsurance"] = sumdataInsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdataInsuranceAll;
-            el["sumdatawaterbill"] = sumdatawaterbillSumAll;
-            el["sumdataelectricitybill"] = sumdataelectricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdataCostwaterbillSumAll;
-            el["sumdatacentral"] = sumdatacentralSumAll;
-            el["sumdatacosts"] = sumdatacostsSumAll;
-            el["sumCostdataCostCosts"] = sumdataCostCostsSumAll;
-          }
-          if (el.label == "บก.อก.") {
-            el["sumdataMaintenance"] = sumdata2MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata2InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata2InsuranceAll;
-            el["sumdatawaterbill"] = sumdata2waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata2electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata2CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata2centralSumAll;
-            el["sumdatacosts"] = sumdata2costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata2CostCostsSumAll;
-          }
-          if (el.label == "บก.สนน.") {
-            el["sumdataMaintenance"] = sumdata3MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata3InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
-            el["sumdatawaterbill"] = sumdata3waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata3electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata3CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata3centralSumAll;
-            el["sumdatacosts"] = sumdata3costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata3CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.1") {
-            el["sumdataMaintenance"] = sumdata4MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata4InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata4InsuranceAll;
-            el["sumdatawaterbill"] = sumdata4waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata4electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata4CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata4centralSumAll;
-            el["sumdatacosts"] = sumdata4costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata4CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.2") {
-            el["sumdataMaintenance"] = sumdata5MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata5InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata5InsuranceAll;
-            el["sumdatawaterbill"] = sumdata5waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata5electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata5CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata5centralSumAll;
-            el["sumdatacosts"] = sumdata5costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata5CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.3") {
-            el["sumdataMaintenance"] = sumdata6MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata6InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata6InsuranceAll;
-            el["sumdatawaterbill"] = sumdata6waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata6electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata6CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata6centralSumAll;
-            el["sumdatacosts"] = sumdata6costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata6CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.4") {
-            el["sumdataMaintenance"] = sumdata7MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata7InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata7InsuranceAll;
-            el["sumdatawaterbill"] = sumdata7waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata7electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata7CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata7centralSumAll;
-            el["sumdatacosts"] = sumdata7costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata7CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.5") {
-            el["sumdataMaintenance"] = sumdata8MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata8InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata8InsuranceAll;
-            el["sumdatawaterbill"] = sumdata8waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata8electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata8CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata8centralSumAll;
-            el["sumdatacosts"] = sumdata8costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata8CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.6") {
-            el["sumdataMaintenance"] = sumdata9MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata9InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata9InsuranceAll;
-            el["sumdatawaterbill"] = sumdata9waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata9electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata9CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata9centralSumAll;
-            el["sumdatacosts"] = sumdata9costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata9CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.7") {
-            el["sumdataMaintenance"] = sumdata10MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata10InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata10InsuranceAll;
-            el["sumdatawaterbill"] = sumdata10waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata10electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata10CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata10centralSumAll;
-            el["sumdatacosts"] = sumdata10costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata10CostCostsSumAll;
-          }
-          if (el.label == "ฝอ.8") {
-            el["sumdataMaintenance"] = sumdata11MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata11InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata11InsuranceAll;
-            el["sumdatawaterbill"] = sumdata11waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata11electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata11CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata11centralSumAll;
-            el["sumdatacosts"] = sumdata11costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata11CostCostsSumAll;
-          }
-          if (el.label == "ฝสสน.1") {
-            el["sumdataMaintenance"] = sumdata12MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata12InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata12InsuranceAll;
-            el["sumdatawaterbill"] = sumdata12waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata12electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata12CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata12centralSumAll;
-            el["sumdatacosts"] = sumdata12costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata12CostCostsSumAll;
-          }
-          if (el.label == "ฝสสน.2") {
-            el["sumdataMaintenance"] = sumdata13MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata13InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata13InsuranceAll;
-            el["sumdatawaterbill"] = sumdata13waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata13lectricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata13CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata13centralSumAll;
-            el["sumdatacosts"] = sumdata13costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata13CostCostsSumAll;
-          }
-          if (el.label == "ฝสสน.3") {
-            el["sumdataMaintenance"] = sumdata14MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata14InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata14InsuranceAll;
-            el["sumdatawaterbill"] = sumdata14waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata14electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata14CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata14centralSumAll;
-            el["sumdatacosts"] = sumdata14costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata14CostCostsSumAll;
-          }
-          if (el.label == "ฝสสน.4") {
-            el["sumdataMaintenance"] = sumdata15MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata15InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata15InsuranceAll;
-            el["sumdatawaterbill"] = sumdata15waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata15electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata15CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata15centralSumAll;
-            el["sumdatacosts"] = sumdata15costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata15CostCostsSumAll;
-          }
-          if (el.label == "ฝสสน.5") {
-            el["sumdataMaintenance"] = sumdata16MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata16InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata16InsuranceAll;
-            el["sumdatawaterbill"] = sumdata16waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata16electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata16CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata16centralSumAll;
-            el["sumdatacosts"] = sumdata16costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata16CostCostsSumAll;
-          }
-          if (el.label == "ลูกจ้าง") {
-            el["sumdataMaintenance"] = sumdata17MaintenanceSumAll;
-            el["sumdataInsurance"] = sumdata17InsuranceAll;
-            el["sumCostdataInsurance"] = sumCostdata17InsuranceAll;
-            el["sumdatawaterbill"] = sumdata17waterbillSumAll;
-            el["sumdataelectricitybill"] = sumdata17electricitybillSumAll;
-            el["sumCostdatawaterbill"] = sumdata17CostwaterbillSumAll;
-            el["sumdatacentral"] = sumdata17centralSumAll;
-            el["sumdatacosts"] = sumdata17costsSumAll;
-            el["sumCostdataCostCosts"] = sumdata17CostCostsSumAll;
-          }
+      data = listCTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
+      let sumCostdataInsuranceAll = this.SumCostSumInsuranceAll(data);
+      let sumdataInsuranceAll = this.InsuranceSumAll(data);
+      let sumdataMaintenanceSumAll = this.MaintenanceSumAll(data);
+      let sumdatawaterbillSumAll = this.WaterbillSum(data);
+      let sumdataelectricitybillSumAll = this.ElectricitybillSum(data);
+      let sumdataCostwaterbillSumAll = this.SumCostSumwater(data);
+      let sumdatacentralSumAll = this.CentralSum(data);
+      let sumdatacostsSumAll = this.CostsSum(data);
+      let sumdataCostCostsSumAll = this.SumCostSumCentral(data);
+      data2 = listCTD.filter((el) => el.typeAffiliation == "บก.อก.");
+      let sumCostdata2InsuranceAll = this.SumCostSumInsuranceAll(data2);
+      let sumdata2InsuranceAll = this.InsuranceSumAll(data2);
+      let sumdata2MaintenanceSumAll = this.MaintenanceSumAll(data2);
+      let sumdata2waterbillSumAll = this.WaterbillSum(data2);
+      let sumdata2electricitybillSumAll = this.ElectricitybillSum(data2);
+      let sumdata2CostwaterbillSumAll = this.SumCostSumwater(data2);
+      let sumdata2centralSumAll = this.CentralSum(data2);
+      let sumdata2costsSumAll = this.CostsSum(data2);
+      let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
+      data3 = listCTD.filter((el) => el.typeAffiliation == "บก.สนน.");
+      let sumCostdata3InsuranceAll = this.SumCostSumInsuranceAll(data3);
+      let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
+      let sumdata3MaintenanceSumAll = this.MaintenanceSumAll(data3);
+      let sumdata3waterbillSumAll = this.WaterbillSum(data3);
+      let sumdata3electricitybillSumAll = this.ElectricitybillSum(data3);
+      let sumdata3CostwaterbillSumAll = this.SumCostSumwater(data3);
+      let sumdata3centralSumAll = this.CentralSum(data3);
+      let sumdata3costsSumAll = this.CostsSum(data3);
+      let sumdata3CostCostsSumAll = this.SumCostSumCentral(data3);
+      data4 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.1");
+      let sumCostdata4InsuranceAll = this.SumCostSumInsuranceAll(data4);
+      let sumdata4InsuranceAll = this.InsuranceSumAll(data4);
+      let sumdata4MaintenanceSumAll = this.MaintenanceSumAll(data4);
+      let sumdata4waterbillSumAll = this.WaterbillSum(data4);
+      let sumdata4electricitybillSumAll = this.ElectricitybillSum(data4);
+      let sumdata4CostwaterbillSumAll = this.SumCostSumwater(data4);
+      let sumdata4centralSumAll = this.CentralSum(data4);
+      let sumdata4costsSumAll = this.CostsSum(data4);
+      let sumdata4CostCostsSumAll = this.SumCostSumCentral(data4);
+      data5 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.2");
+      let sumCostdata5InsuranceAll = this.SumCostSumInsuranceAll(data5);
+      let sumdata5InsuranceAll = this.InsuranceSumAll(data5);
+      let sumdata5MaintenanceSumAll = this.MaintenanceSumAll(data5);
+      let sumdata5waterbillSumAll = this.WaterbillSum(data5);
+      let sumdata5electricitybillSumAll = this.ElectricitybillSum(data5);
+      let sumdata5CostwaterbillSumAll = this.SumCostSumwater(data5);
+      let sumdata5centralSumAll = this.CentralSum(data5);
+      let sumdata5costsSumAll = this.CostsSum(data5);
+      let sumdata5CostCostsSumAll = this.SumCostSumCentral(data5);
+      data6 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.3");
+      let sumCostdata6InsuranceAll = this.SumCostSumInsuranceAll(data6);
+      let sumdata6InsuranceAll = this.InsuranceSumAll(data6);
+      let sumdata6MaintenanceSumAll = this.MaintenanceSumAll(data6);
+      let sumdata6waterbillSumAll = this.WaterbillSum(data6);
+      let sumdata6electricitybillSumAll = this.ElectricitybillSum(data6);
+      let sumdata6CostwaterbillSumAll = this.SumCostSumwater(data6);
+      let sumdata6centralSumAll = this.CentralSum(data6);
+      let sumdata6costsSumAll = this.CostsSum(data6);
+      let sumdata6CostCostsSumAll = this.SumCostSumCentral(data6);
+      data7 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.4");
+      let sumCostdata7InsuranceAll = this.SumCostSumInsuranceAll(data7);
+      let sumdata7InsuranceAll = this.InsuranceSumAll(data7);
+      let sumdata7MaintenanceSumAll = this.MaintenanceSumAll(data7);
+      let sumdata7waterbillSumAll = this.WaterbillSum(data7);
+      let sumdata7electricitybillSumAll = this.ElectricitybillSum(data7);
+      let sumdata7CostwaterbillSumAll = this.SumCostSumwater(data7);
+      let sumdata7centralSumAll = this.CentralSum(data7);
+      let sumdata7costsSumAll = this.CostsSum(data7);
+      let sumdata7CostCostsSumAll = this.SumCostSumCentral(data7);
+      data8 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.5");
+      let sumCostdata8InsuranceAll = this.SumCostSumInsuranceAll(data8);
+      let sumdata8InsuranceAll = this.InsuranceSumAll(data8);
+      let sumdata8MaintenanceSumAll = this.MaintenanceSumAll(data8);
+      let sumdata8waterbillSumAll = this.WaterbillSum(data8);
+      let sumdata8electricitybillSumAll = this.ElectricitybillSum(data8);
+      let sumdata8CostwaterbillSumAll = this.SumCostSumwater(data8);
+      let sumdata8centralSumAll = this.CentralSum(data8);
+      let sumdata8costsSumAll = this.CostsSum(data8);
+      let sumdata8CostCostsSumAll = this.SumCostSumCentral(data8);
+      data9 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.6");
+      let sumCostdata9InsuranceAll = this.SumCostSumInsuranceAll(data9);
+      let sumdata9InsuranceAll = this.InsuranceSumAll(data9);
+      let sumdata9MaintenanceSumAll = this.MaintenanceSumAll(data9);
+      let sumdata9waterbillSumAll = this.WaterbillSum(data9);
+      let sumdata9electricitybillSumAll = this.ElectricitybillSum(data9);
+      let sumdata9CostwaterbillSumAll = this.SumCostSumwater(data9);
+      let sumdata9centralSumAll = this.CentralSum(data9);
+      let sumdata9costsSumAll = this.CostsSum(data9);
+      let sumdata9CostCostsSumAll = this.SumCostSumCentral(data9);
+      data10 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.7");
+      let sumCostdata10InsuranceAll = this.SumCostSumInsuranceAll(data10);
+      let sumdata10InsuranceAll = this.InsuranceSumAll(data10);
+      let sumdata10MaintenanceSumAll = this.MaintenanceSumAll(data10);
+      let sumdata10waterbillSumAll = this.WaterbillSum(data10);
+      let sumdata10electricitybillSumAll = this.ElectricitybillSum(data10);
+      let sumdata10CostwaterbillSumAll = this.SumCostSumwater(data10);
+      let sumdata10centralSumAll = this.CentralSum(data10);
+      let sumdata10costsSumAll = this.CostsSum(data10);
+      let sumdata10CostCostsSumAll = this.SumCostSumCentral(data10);
+      data11 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.8");
+      let sumCostdata11InsuranceAll = this.SumCostSumInsuranceAll(data11);
+      let sumdata11InsuranceAll = this.InsuranceSumAll(data11);
+      let sumdata11MaintenanceSumAll = this.MaintenanceSumAll(data11);
+      let sumdata11waterbillSumAll = this.WaterbillSum(data11);
+      let sumdata11electricitybillSumAll = this.ElectricitybillSum(data11);
+      let sumdata11CostwaterbillSumAll = this.SumCostSumwater(data11);
+      let sumdata11centralSumAll = this.CentralSum(data11);
+      let sumdata11costsSumAll = this.CostsSum(data11);
+      let sumdata11CostCostsSumAll = this.SumCostSumCentral(data11);
+      data12 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.1");
+      let sumCostdata12InsuranceAll = this.SumCostSumInsuranceAll(data12);
+      let sumdata12InsuranceAll = this.InsuranceSumAll(data12);
+      let sumdata12MaintenanceSumAll = this.MaintenanceSumAll(data12);
+      let sumdata12waterbillSumAll = this.WaterbillSum(data12);
+      let sumdata12electricitybillSumAll = this.ElectricitybillSum(data12);
+      let sumdata12CostwaterbillSumAll = this.SumCostSumwater(data12);
+      let sumdata12centralSumAll = this.CentralSum(data12);
+      let sumdata12costsSumAll = this.CostsSum(data12);
+      let sumdata12CostCostsSumAll = this.SumCostSumCentral(data12);
+      data13 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.2");
+      let sumCostdata13InsuranceAll = this.SumCostSumInsuranceAll(data13);
+      let sumdata13InsuranceAll = this.InsuranceSumAll(data13);
+      let sumdata13MaintenanceSumAll = this.MaintenanceSumAll(data13);
+      let sumdata13waterbillSumAll = this.WaterbillSum(data13);
+      let sumdata13lectricitybillSumAll = this.ElectricitybillSum(data13);
+      let sumdata13CostwaterbillSumAll = this.SumCostSumwater(data13);
+      let sumdata13centralSumAll = this.CentralSum(data13);
+      let sumdata13costsSumAll = this.CostsSum(data13);
+      let sumdata13CostCostsSumAll = this.SumCostSumCentral(data13);
+      data14 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.3");
+      let sumCostdata14InsuranceAll = this.SumCostSumInsuranceAll(data14);
+      let sumdata14InsuranceAll = this.InsuranceSumAll(data14);
+      let sumdata14MaintenanceSumAll = this.MaintenanceSumAll(data14);
+      let sumdata14waterbillSumAll = this.WaterbillSum(data14);
+      let sumdata14electricitybillSumAll = this.ElectricitybillSum(data14);
+      let sumdata14CostwaterbillSumAll = this.SumCostSumwater(data14);
+      let sumdata14centralSumAll = this.CentralSum(data14);
+      let sumdata14costsSumAll = this.CostsSum(data14);
+      let sumdata14CostCostsSumAll = this.SumCostSumCentral(data14);
+      data15 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.4");
+      let sumCostdata15InsuranceAll = this.SumCostSumInsuranceAll(data15);
+      let sumdata15InsuranceAll = this.InsuranceSumAll(data15);
+      let sumdata15MaintenanceSumAll = this.MaintenanceSumAll(data15);
+      let sumdata15waterbillSumAll = this.WaterbillSum(data15);
+      let sumdata15electricitybillSumAll = this.ElectricitybillSum(data15);
+      let sumdata15CostwaterbillSumAll = this.SumCostSumwater(data15);
+      let sumdata15centralSumAll = this.CentralSum(data15);
+      let sumdata15costsSumAll = this.CostsSum(data15);
+      let sumdata15CostCostsSumAll = this.SumCostSumCentral(data15);
+      data16 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.5");
+      let sumCostdata16InsuranceAll = this.SumCostSumInsuranceAll(data16);
+      let sumdata16InsuranceAll = this.InsuranceSumAll(data16);
+      let sumdata16MaintenanceSumAll = this.MaintenanceSumAll(data16);
+      let sumdata16waterbillSumAll = this.WaterbillSum(data16);
+      let sumdata16electricitybillSumAll = this.ElectricitybillSum(data16);
+      let sumdata16CostwaterbillSumAll = this.SumCostSumwater(data16);
+      let sumdata16centralSumAll = this.CentralSum(data16);
+      let sumdata16costsSumAll = this.CostsSum(data16);
+      let sumdata16CostCostsSumAll = this.SumCostSumCentral(data16);
+      data17 = listCTD.filter((el) => el.typeAffiliation == "ลูกจ้าง");
+      let sumCostdata17InsuranceAll = this.SumCostSumInsuranceAll(data17);
+      let sumdata17InsuranceAll = this.InsuranceSumAll(data17);
+      let sumdata17MaintenanceSumAll = this.MaintenanceSumAll(data17);
+      let sumdata17waterbillSumAll = this.WaterbillSum(data17);
+      let sumdata17electricitybillSumAll = this.ElectricitybillSum(data17);
+      let sumdata17CostwaterbillSumAll = this.SumCostSumwater(data17);
+      let sumdata17centralSumAll = this.CentralSum(data17);
+      let sumdata17costsSumAll = this.CostsSum(data17);
+      let sumdata17CostCostsSumAll = this.SumCostSumCentral(data17);
+      await this.AffiliationListCTD.map((el) => {
+        if (el.label == "บช.ตชด.") {
+          el["sumdataMaintenance"] = sumdataMaintenanceSumAll;
+          el["sumdataInsurance"] = sumdataInsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdataInsuranceAll;
+          el["sumdatawaterbill"] = sumdatawaterbillSumAll;
+          el["sumdataelectricitybill"] = sumdataelectricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdataCostwaterbillSumAll;
+          el["sumdatacentral"] = sumdatacentralSumAll;
+          el["sumdatacosts"] = sumdatacostsSumAll;
+          el["sumCostdataCostCosts"] = sumdataCostCostsSumAll;
+        }
+        if (el.label == "บก.อก.") {
+          el["sumdataMaintenance"] = sumdata2MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata2InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata2InsuranceAll;
+          el["sumdatawaterbill"] = sumdata2waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata2electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata2CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata2centralSumAll;
+          el["sumdatacosts"] = sumdata2costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata2CostCostsSumAll;
+        }
+        if (el.label == "บก.สนน.") {
+          el["sumdataMaintenance"] = sumdata3MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata3InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
+          el["sumdatawaterbill"] = sumdata3waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata3electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata3CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata3centralSumAll;
+          el["sumdatacosts"] = sumdata3costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata3CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.1") {
+          el["sumdataMaintenance"] = sumdata4MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata4InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata4InsuranceAll;
+          el["sumdatawaterbill"] = sumdata4waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata4electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata4CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata4centralSumAll;
+          el["sumdatacosts"] = sumdata4costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata4CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.2") {
+          el["sumdataMaintenance"] = sumdata5MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata5InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata5InsuranceAll;
+          el["sumdatawaterbill"] = sumdata5waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata5electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata5CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata5centralSumAll;
+          el["sumdatacosts"] = sumdata5costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata5CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.3") {
+          el["sumdataMaintenance"] = sumdata6MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata6InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata6InsuranceAll;
+          el["sumdatawaterbill"] = sumdata6waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata6electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata6CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata6centralSumAll;
+          el["sumdatacosts"] = sumdata6costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata6CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.4") {
+          el["sumdataMaintenance"] = sumdata7MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata7InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata7InsuranceAll;
+          el["sumdatawaterbill"] = sumdata7waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata7electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata7CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata7centralSumAll;
+          el["sumdatacosts"] = sumdata7costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata7CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.5") {
+          el["sumdataMaintenance"] = sumdata8MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata8InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata8InsuranceAll;
+          el["sumdatawaterbill"] = sumdata8waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata8electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata8CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata8centralSumAll;
+          el["sumdatacosts"] = sumdata8costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata8CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.6") {
+          el["sumdataMaintenance"] = sumdata9MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata9InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata9InsuranceAll;
+          el["sumdatawaterbill"] = sumdata9waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata9electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata9CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata9centralSumAll;
+          el["sumdatacosts"] = sumdata9costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata9CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.7") {
+          el["sumdataMaintenance"] = sumdata10MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata10InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata10InsuranceAll;
+          el["sumdatawaterbill"] = sumdata10waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata10electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata10CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata10centralSumAll;
+          el["sumdatacosts"] = sumdata10costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata10CostCostsSumAll;
+        }
+        if (el.label == "ฝอ.8") {
+          el["sumdataMaintenance"] = sumdata11MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata11InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata11InsuranceAll;
+          el["sumdatawaterbill"] = sumdata11waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata11electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata11CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata11centralSumAll;
+          el["sumdatacosts"] = sumdata11costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata11CostCostsSumAll;
+        }
+        if (el.label == "ฝสสน.1") {
+          el["sumdataMaintenance"] = sumdata12MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata12InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata12InsuranceAll;
+          el["sumdatawaterbill"] = sumdata12waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata12electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata12CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata12centralSumAll;
+          el["sumdatacosts"] = sumdata12costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata12CostCostsSumAll;
+        }
+        if (el.label == "ฝสสน.2") {
+          el["sumdataMaintenance"] = sumdata13MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata13InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata13InsuranceAll;
+          el["sumdatawaterbill"] = sumdata13waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata13lectricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata13CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata13centralSumAll;
+          el["sumdatacosts"] = sumdata13costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata13CostCostsSumAll;
+        }
+        if (el.label == "ฝสสน.3") {
+          el["sumdataMaintenance"] = sumdata14MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata14InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata14InsuranceAll;
+          el["sumdatawaterbill"] = sumdata14waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata14electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata14CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata14centralSumAll;
+          el["sumdatacosts"] = sumdata14costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata14CostCostsSumAll;
+        }
+        if (el.label == "ฝสสน.4") {
+          el["sumdataMaintenance"] = sumdata15MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata15InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata15InsuranceAll;
+          el["sumdatawaterbill"] = sumdata15waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata15electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata15CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata15centralSumAll;
+          el["sumdatacosts"] = sumdata15costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata15CostCostsSumAll;
+        }
+        if (el.label == "ฝสสน.5") {
+          el["sumdataMaintenance"] = sumdata16MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata16InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata16InsuranceAll;
+          el["sumdatawaterbill"] = sumdata16waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata16electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata16CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata16centralSumAll;
+          el["sumdatacosts"] = sumdata16costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata16CostCostsSumAll;
+        }
+        if (el.label == "ลูกจ้าง") {
+          el["sumdataMaintenance"] = sumdata17MaintenanceSumAll;
+          el["sumdataInsurance"] = sumdata17InsuranceAll;
+          el["sumCostdataInsurance"] = sumCostdata17InsuranceAll;
+          el["sumdatawaterbill"] = sumdata17waterbillSumAll;
+          el["sumdataelectricitybill"] = sumdata17electricitybillSumAll;
+          el["sumCostdatawaterbill"] = sumdata17CostwaterbillSumAll;
+          el["sumdatacentral"] = sumdata17centralSumAll;
+          el["sumdatacosts"] = sumdata17costsSumAll;
+          el["sumCostdataCostCosts"] = sumdata17CostCostsSumAll;
+        }
 
-          return el;
-        });
-        this.AffiliationListCTD.map((e) => {
-          e["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListCTD);
-          e["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListCTD);
-          e["countCostSumAll"] = this.countCostSumAll(this.AffiliationListCTD);
-          e["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListCTD);
-          e["countelectricitybillAll"] = this.countelectricitybillAll(
-            this.AffiliationListCTD
-          );
-          e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(
-            this.AffiliationListCTD
-          );
-          e["countcentraAll"] = this.countcentralAll(this.AffiliationListCTD);
-          e["countcostsAll"] = this.countcostsAll(this.AffiliationListCTD);
-          e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListCTD);
-          return e;
-        });
+        return el;
+      });
+      this.AffiliationListCTD.map((e) => {
+        e["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListCTD);
+        e["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListCTD);
+        e["countCostSumAll"] = this.countCostSumAll(this.AffiliationListCTD);
+        e["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListCTD);
+        e["countelectricitybillAll"] = this.countelectricitybillAll(
+          this.AffiliationListCTD
+        );
+        e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(
+          this.AffiliationListCTD
+        );
+        e["countcentraAll"] = this.countcentralAll(this.AffiliationListCTD);
+        e["countcostsAll"] = this.countcostsAll(this.AffiliationListCTD);
+        e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListCTD);
+        return e;
+      });
     },
 
     getReportAffiliation(m, y, Affiliation) {
@@ -1513,8 +1512,9 @@ export default {
           buildingName: el.buildingName || "-",
           maintenance: el.maintenance || 0,
           insurance: el.insurance || 0,
-          accumulated: el.insurance / el.installments,
+          accumulated: el.insurance / el.installments || 0,
           roomnumber: el.roomnumber,
+          amountPaid: el.amountPaid || 0,
           maintenancefee: el.maintenancefee || 0,
           amountPaidSum: this.AmountPaidSum(data),
           waterbillSum: this.WaterbillSum(data),
@@ -1545,7 +1545,7 @@ export default {
           numberfirst: el2.numberfirst || 0,
           central: el2.central || 0,
           typeAffiliation: el2.typeAffiliation || "-",
-          accumulated: el2.insurance / el2.installments,
+          accumulated: el2.insurance / el2.installments || 0,
           typeContract: el2.typeContract || "-",
           contractExpenses: el2.contractExpenses || "-",
           buildingName: el2.buildingName || "-",
@@ -1553,6 +1553,7 @@ export default {
           insurance: el2.insurance || 0,
           maintenancefee: el2.maintenancefee || 0,
           roomnumber: el2.roomnumber,
+          amountPaid: el2.amountPaid || 0,
           amountPaidSum: this.AmountPaidSum(data2),
           waterbillSum: this.WaterbillSum(data2),
           maintenancefeeSum: this.maintenancefeeCount(data2),
@@ -1604,20 +1605,12 @@ export default {
       }
     },
 
-    checkTypeContract(index) {
-      if (index.typeContract == "หักได้") return "/";
-      else if (index.typeContract == "หักไม่ได้") return "/";
-      else return "-";
-    },
-
     async mapdataSum(data, data2) {
       let arr = [];
       let arr2 = [];
       arr = await data.map((el) => {
         return {
           ...el,
-          typeContractYes: this.checkTypeContract(el),
-          typeContractNo: this.checkTypeContract(el),
           sumCostwaterbill: this.countSumWaterbill(el),
           sumCostCentral: this.countSumcentral(el),
           sumCostCosts: this.countSumcosts(el),
@@ -1627,8 +1620,6 @@ export default {
       arr2 = await data2.map((el2) => {
         return {
           ...el2,
-          typeContractYes: this.checkTypeContract(el2),
-          typeContractNo: this.checkTypeContract(el2),
           sumCostwaterbill: this.countSumWaterbill(el2),
           sumCostCentral: this.countSumcentral(el2),
           sumCostCosts: this.countSumcosts(el2),
@@ -1699,9 +1690,10 @@ export default {
           MaintenanceSum: this.numberWithCommas(el2.MaintenanceSum) || 0,
           accumulatedSum: this.numberWithCommas(el2.accumulatedSum) || 0,
           maintenancefee: this.numberWithCommas(el2.maintenancefee) || 0,
-          maintenancefeeSum : this.numberWithCommas(el2.maintenancefeeSum) || 0,
+          maintenancefeeSum: this.numberWithCommas(el2.maintenancefeeSum) || 0,
           waterbill: this.numberWithCommas(el2.waterbill) || 0,
           electricitybill: this.numberWithCommas(el2.electricitybill) || 0,
+          contelectricitybillSum: parseInt(el2.electricitybillSum)+parseInt(el2.costsSum) || 0,
         };
       });
       arr4 = await data2.map((el3) => {
@@ -1729,13 +1721,45 @@ export default {
           accumulatedSum: this.numberWithCommas(el3.accumulatedSum) || 0,
           waterbill: this.numberWithCommas(el3.waterbill) || 0,
           maintenancefee: this.numberWithCommas(el3.maintenancefee) || 0,
-          maintenancefeeSum : this.numberWithCommas(el3.maintenancefeeSum) || 0,
+          maintenancefeeSum: this.numberWithCommas(el3.maintenancefeeSum) || 0,
           electricitybill: this.numberWithCommas(el3.electricitybill) || 0,
+          contelectricitybillSum: parseInt(el3.electricitybillSum)+parseInt(el3.costsSum) || 0,
         };
+      });
+      this.mapTypeContact(arr3, arr4);
+    },
+
+    mapTypeContact(arr, arr2) {
+      let arr3 = [];
+      let arr4 = [];
+      arr3 = arr.map((a) => {
+        if (a.typeContract == "หักได้") {
+          a["typeContractYes"] = "/";
+          a["typeContractNo"] = "-";
+        } else if (a.typeContract == "หักไม่ได้") {
+          a["typeContractNo"] = "/";
+          a["typeContractYes"] = "-";
+        } else {
+          a["typeContractYes"] = "-";
+          a["typeContractNo"] = "-";
+        }
+        return a;
+      });
+      arr4 = arr2.map((a) => {
+        if (a.typeContract == "หักได้") {
+          a["typeContractYes"] = "/";
+          a["typeContractNo"] = "-";
+        } else if (a.typeContract == "หักไม่ได้") {
+          a["typeContractNo"] = "/";
+          a["typeContractYes"] = "-";
+        } else {
+          a["typeContractYes"] = "-";
+          a["typeContractNo"] = "-";
+        }
+        return a;
       });
       this.reportlistCTD = arr3;
       this.reportlistTD = arr4;
-  console.log(this.reportlistCTD);
     },
     // numberWithCommas
 
@@ -1762,7 +1786,14 @@ export default {
         aa5 = [];
       let count = this.OGCount(this.reportlistok);
       await this.reportlistok.forEach((e, i) => {
-        ws_data.push([i + 1, e.idcard, e.firstName+" "+e.lastName, , "41001", this.countSuminstallments(e)]);
+        ws_data.push([
+          i + 1,
+          e.idcard,
+          e.firstName + " " + e.lastName,
+          ,
+          "41001",
+          this.countSuminstallments(e),
+        ]);
       });
       aa = [" ", " ", "รวม อก.", count];
       aa2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
@@ -1786,7 +1817,13 @@ export default {
         bb5 = [];
       let count2 = this.OGCount(this.reportListssn);
       await this.reportListssn.forEach((el, i) => {
-        ws_data2.push([i + 1, el.idcard, el.firstName+" "+el.lastName ,"41001", this.countSuminstallments(el)]);
+        ws_data2.push([
+          i + 1,
+          el.idcard,
+          el.firstName + " " + el.lastName,
+          "41001",
+          this.countSuminstallments(el),
+        ]);
       });
       bb = [" ", " ", "รวม อก.", count2];
       bb2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
@@ -1810,7 +1847,14 @@ export default {
         cc5 = [];
       let count3 = this.OGCount(this.reportListssn);
       await this.reportlistlj.forEach((el2, i) => {
-        ws_data3.push([i + 1, el2.idcard, el2.firstName+" "+el2.lastName,, "41001", this.countSuminstallments(el2)]);
+        ws_data3.push([
+          i + 1,
+          el2.idcard,
+          el2.firstName + " " + el2.lastName,
+          ,
+          "41001",
+          this.countSuminstallments(el2),
+        ]);
       });
       cc = [" ", " ", "รวม อก.", count3];
       cc2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
@@ -1835,7 +1879,10 @@ export default {
     },
 
     countSuminstallments(item) {
-      return (parseInt(item.insurance) / parseInt(item.installments))+ parseInt(item.maintenance || 0) || 0;
+      return (
+        parseInt(item.insurance) / parseInt(item.installments) +
+          parseInt(item.maintenance || 0) || 0
+      );
     },
 
     countSumcentral(item) {
@@ -1876,7 +1923,8 @@ export default {
     // },
     maintenancefeeCount(items) {
       return items.reduce((maintenancefeeSum, ele) => {
-        if (ele.maintenancefee !== undefined) return maintenancefeeSum + parseInt(ele.maintenancefee);
+        if (ele.maintenancefee !== undefined)
+          return maintenancefeeSum + parseInt(ele.maintenancefee);
         else return maintenancefeeSum;
       }, 0);
     },
@@ -2016,223 +2064,506 @@ export default {
       window.history.back();
     },
 
-    buildTableBodysummary(data, data2, data3) {
-
-      var body1 = [];
-      let arr = [];
-      
-      let sum = (this.sumAllcount + this.Costdatawaterbillcount) + this.CostCostsAllcount
-
-       body1 = [
-        [
-          {
-              text: "ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิระ บช.ตชด.",
-              style: "header",
-              alignment: "center",
-            },
-            {
-              text: `ประจําเดือน ${this.monthYear} `,
-              style: "subheader",
-              alignment: "center",
-            },
-        ],
-        [
-          { text: "หน่วยงาน",  style: "header", alignment: "center" },
-          { text: "ค่าบํารุงฯ",  style: "header", alignment: "center" },
-          { text: "ค่าประกันฯ",  style: "header", alignment: "center" },
-          { text: "รวม", style: "header", alignment: "center" }
-        ],
-        [
-          { text: "อำนวยการ",  style: "header", alignment: "center" },
-          { text: this.thaiNumber(data[0]?.sumdataMaintenance || 0) ,  style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data[0]?.sumdataInsurance || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data[0]?.sumCostdataInsurance || 0),  style: "subheader", alignment: "center" }
-        ],
-        [
-          { text: "สนับสนุน",  style: "header", alignment: "center" },
-          { text: this.thaiNumber(data2[0]?.sumdataMaintenance || 0),  style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data2[0]?.sumdataInsurance || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data2[0]?.sumCostdataInsurance || 0),  style: "subheader", alignment: "center" }
-        ],
-        [
-          { text: "ลูกจ้าง",  style: "header", alignment: "center" },
-          { text: this.thaiNumber(data3[0]?.sumdataMaintenance || 0), style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data3[0]?.sumdataInsurance || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data3[0]?.sumCostdataInsurance || 0),  style: "subheader", alignment: "center" }
-        ],
-        [
-          { text: "รวมเงิน", style: "header", alignment: "center" },
-          { text: this.thaiNumber(this.maintenanceAllcount || 0), style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(this.insuranceAllcount || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(this.sumAllcount || 0),  style: "subheader", alignment: "center" }
-        ],
-      ];
-
-      var body2 = [
-        [
-          {
-              text: "  ยอดเงินค่าธรรมเนียม และค่าสาธารณูปโภค อาคารบ้านพัก ตร.ส่วนกลาง",
-              style: "header",
-              alignment: "center",
-            },
-            {
-              text: `ประจําเดือน ${this.monthYear} `,
-              style: "subheader",
-              alignment: "center",
-            },
-        ],
-        [
-          { text: "หน่วยงาน",  style: "header", alignment: "center" },
-          { text: "ค่าธรรมเนียม",  style: "header", alignment: "center" },
-          { text: "ค่าน้ำปะปา",  style: "header", alignment: "center" },
-          { text: "ค่าไฟฟ้า", style: "header", alignment: "center" },
-          { text: "รวม", style: "header", alignment: "center" }
-        ],
-        [
-          { text: "อำนวยการ",  style: "header", alignment: "center" },
-          { text: this.thaiNumber(data[0]?.sumdataMaintenancefee || 0),  style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data[0]?.sumdatawaterbill || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data[0]?.sumdataelectricitybill || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data[0]?.sumCostdatawaterbill || 0),  style: "subheader", alignment: "center" }
-        ],
-        [
-          { text: "สนับสนุน",  style: "header", alignment: "center" },
-          { text: this.thaiNumber(data2[0]?.sumdataMaintenancefee || 0),  style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data2[0]?.sumdatawaterbill || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data2[0]?.sumdataelectricitybill || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data2[0]?.sumCostdatawaterbill || 0),  style: "subheader", alignment: "center" }
-        ],
-        [
-          { text: "ลูกจ้าง",  style: "header", alignment: "center" },
-          { text: this.thaiNumber(data3[0]?.sumdataMaintenancefee || 0) ,  style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data3[0]?.sumdatawaterbill || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data3[0]?.sumdataelectricitybill || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data3[0]?.sumCostdatawaterbill || 0),  style: "subheader", alignment: "center" }
-        ],
-        [
-          { text: "รวมเงิน", style: "header", alignment: "center" },
-          { text: this.thaiNumber(this.maintenancefeeAllcount || 0), style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(this.waterbillAllcount || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(this.electricitybillAllcount || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(this.Costdatawaterbillcount|| 0),  style: "subheader", alignment: "center" }
-        ],
-      ];
-
-      var body3 = [
-        [
-          {
-              text: " รายการหักเพิ่มเติม ค่าไฟฟ้าส่วนกลาง/ค่าบํารุงลิฟต์อาคารบ้านพัก ตร.ส่วนกลาง",
-              style: "header",
-              alignment: "center",
-            },
-            {
-              text: `ประจําเดือน ${this.monthYear} `,
-              style: "subheader",
-              alignment: "center",
-            },
-        ],
-        [
-          { text: "หน่วยงาน", rowSpan: 2, style: "header", alignment: "center" },
-          { text: "ค่าบํารุงฯ", rowSpan: 2, style: "header", alignment: "center" },
-          { text: "ค่าประกันฯ", colSpan: 3, style: "header", alignment: "center" },
-          { text: "รวม", style: "header", alignment: "center" }
-        ],
-        [
-          { text: "อำนวยการ",  style: "header", alignment: "center" },
-          { text: this.thaiNumber(data[0]?.sumdatacentral || 0),  style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data[0]?.sumdatacosts || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data[0]?.sumCostdataCostCosts || 0),  style: "subheader", alignment: "center" }
-        ],
-        [
-          { text: "สนับสนุน",  style: "header", alignment: "center" },
-          { text: this.thaiNumber(data2[0]?.sumdatacentral || 0),  style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data2[0]?.sumdatacosts || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data2[0]?.sumCostdataCostCosts || 0),  style: "subheader", alignment: "center" }
-        ],
-        [
-          { text: "ลูกจ้าง",  style: "header", alignment: "center" },
-          { text: this.thaiNumber(data3[0]?.sumdatacentral || 0), style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data3[0]?.sumdatacosts || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(data3[0]?.sumCostdataCostCosts || 0),  style: "subheader", alignment: "center" }
-        ],
-        [
-          { text: "รวมเงิน", style: "header", alignment: "center" },
-          { text: this.thaiNumber(this.centralAllcount|| 0), style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(this.costsAllcount || 0),   style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(this.CostCostsAllcount || 0),  style: "subheader", alignment: "center" }
-        ],
-      ];
-
-      var body4 = [
-        [
-          {
-              text: "ตารางสรุป ยอดรวมค่าบํารุงฯ ค่าประกัน ฯ ค่าธรรมเนียม ค่าสารณูปโภค และค่าลิฟต์",
-              style: "header",
-              alignment: "center",
-            },
-            {
-              text: `ประจําเดือน ${this.monthYear} `,
-              style: "subheader",
-              alignment: "center",
-            },
-        ],
-        [
-          { text: "บช.ตชด.", rowSpan: 2, style: "header", alignment: "center" },
-          { text: "ตร.ส่วนกลาง", rowSpan: 2, style: "header", alignment: "center" },
-          { text: "ตร.ส่วนกลาง(เพิ่มเติม)", colSpan: 3, style: "header", alignment: "center" },
-          { text: "รวมเป็นเงิน", style: "header", alignment: "center" }
-        ],
-        [
-          { text: this.thaiNumber(this.sumAllcount), style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(this.Costdatawaterbillcount), style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(this.CostCostsAllcount), style: "subheader", alignment: "center" },
-          { text: this.thaiNumber(sum), style: "subheader", alignment: "center" },
-        ],
-      ];
-
-      arr = body1.concat(body2,body3,body4);
-      console.log(arr);
-      return arr;
-    },
-
-    tablesummary(data, data2,data3) {
-      return {
-        table: {
-          widths: [100, "*", 100, "*", "*","*"],
-          headerRows: 1,
-          body: this.buildTableBodysummary(data, data2,data3),
+    async exportPdfsummary() {
+      let sum = this.sumAllcount + this.Costdatawaterbillcount + this.CostCostsAllcount;
+      pdfMake.fonts = {
+        Roboto: {
+          normal:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+          bold:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+          italics:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+          bolditalics:
+            "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+        },
+        THSarabunNew: {
+          normal: "THSarabunNew.ttf",
+          bold: "THSarabunNew-Bold.ttf",
+          italics: "THSarabunNew-Italic.ttf",
+          bolditalics: "THSarabunNew-BoldItalic.ttf",
         },
       };
-    },
 
-    exportPdfsummary() {
-        pdfMake.fonts = {
-          Roboto: {
-            normal:
-              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
-            bold:
-              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
-            italics:
-              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
-            bolditalics:
-              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+      const docDefinition = {
+        content: [
+          {
+            text: "ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิระ บช.ตชด.",
+            style: "header",
+            alignment: "center",
           },
-          THSarabunNew: {
-            normal: "THSarabunNew.ttf",
-            bold: "THSarabunNew-Bold.ttf",
-            italics: "THSarabunNew-Italic.ttf",
-            bolditalics: "THSarabunNew-BoldItalic.ttf",
+          {
+            text: `ประจําเดือน ${this.monthYear} `,
+            style: "header",
+            alignment: "center",
           },
-        };
-        const docDefinition = {
-          content: [
-            this.tablesummary(this.sumreportlistAll, this.sumreportlistAll2, this.sumreportlistAll3),
-          ],
-          defaultStyle: {
-            font: "THSarabunNew",
+          {
+            style: "tableExample",
+            table: {
+              widths: [200, "*", "*", "*"],
+              body: [
+                [
+                  { text: "หน่วยงาน", style: "header", alignment: "center" },
+                  { text: "ค่าบํารุงฯ", style: "header", alignment: "center" },
+                  { text: "ค่าประกันฯ", style: "header", alignment: "center" },
+                  { text: "รวม", style: "header", alignment: "center" },
+                ],
+                [
+                  { text: "อำนวยการ", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll[0]?.sumdataMaintenance || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll[0]?.sumdataInsurance || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll[0]?.sumCostdataInsurance || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "สนับสนุน", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll2[0]?.sumdataMaintenance || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll2[0]?.sumdataInsurance || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll2[0]?.sumCostdataInsurance || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "ลูกจ้าง", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll3[0]?.sumdataMaintenance || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll3[0]?.sumdataInsurance || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll3[0]?.sumCostdataInsurance || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "รวมเงิน", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(this.maintenanceAllcount || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.insuranceAllcount || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.sumAllcount || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "", colSpan: 2, style: "subheader", alignment: "center" },
+                  "",
+                  {
+                    text: "ยอดรวม",
+                    style: "header",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.sumAllcount || 0),
+                    style: "header",
+                    alignment: "center",
+                  },
+                ],
+              ],
+            },
           },
-        };
-        pdfMake.createPdf(docDefinition).open();
+          {
+            text: "ยอดเงินค่าธรรมเนียม และค่าสาธารณูปโภค อาคารบ้านพัก ตร.ส่วนกลาง",
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: `ประจําเดือน ${this.monthYear} `,
+            style: "header",
+            alignment: "center",
+          },
+          {
+            style: "tableExample",
+            table: {
+              widths: [100, "*", "*", "*", "*"],
+              body: [
+                [
+                  { text: "หน่วยงาน", style: "header", alignment: "center" },
+                  { text: "ค่าธรรมเนียม", style: "header", alignment: "center" },
+                  { text: "ค่าน้ำปะปา", style: "header", alignment: "center" },
+                  { text: "ค่าไฟฟ้า", style: "header", alignment: "center" },
+                  { text: "รวม", style: "header", alignment: "center" },
+                ],
+                [
+                  { text: "อำนวยการ", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll[0]?.sumdataMaintenancefee || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll[0]?.sumdatawaterbill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll[0]?.sumdataelectricitybill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll[0]?.sumCostdatawaterbill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "สนับสนุน", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll2[0]?.sumdataMaintenancefee || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll2[0]?.sumdatawaterbill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll2[0]?.sumdataelectricitybill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll2[0]?.sumCostdatawaterbill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "ลูกจ้าง", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll3[0]?.sumdataMaintenancefee || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll3[0]?.sumdatawaterbill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll3[0]?.sumdataelectricitybill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll3[0]?.sumCostdatawaterbill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "รวมเงิน", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(this.maintenancefeeAllcount || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.waterbillAllcount || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.electricitybillAllcount || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.Costdatawaterbillcount || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "", colSpan: 3, style: "subheader", alignment: "center" },
+                  "",
+                  "",
+                  {
+                    text: "ยอดรวม",
+                    style: "header",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.Costdatawaterbillcount || 0),
+                    style: "header",
+                    alignment: "center",
+                  },
+                ],
+              ],
+            },
+          },
+          {
+            text:
+              "รายการหักเพิ่มเติม ค่าไฟฟ้าส่วนกลาง/ค่าบํารุงลิฟต์อาคารบ้านพัก ตร.ส่วนกลาง",
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: `ประจําเดือน ${this.monthYear} `,
+            style: "header",
+            alignment: "center",
+          },
+          {
+            style: "tableExample",
+            table: {
+              widths: [200, "*", "*", "*"],
+              body: [
+                [
+                  { text: "หน่วยงาน", style: "header", alignment: "center" },
+                  {
+                    text: "ค่าบํารุงฯ",
+                    style: "header",
+                    alignment: "center",
+                  },
+                  {
+                    text: "ค่าประกันฯ",
+                    style: "header",
+                    alignment: "center",
+                  },
+                  { text: "รวม", style: "header", alignment: "center" },
+                ],
+                [
+                  { text: "อำนวยการ", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(this.sumreportlistAll[0]?.sumdatacentral || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.sumreportlistAll[0]?.sumdatacosts || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll[0]?.sumCostdataCostCosts || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "สนับสนุน", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(this.sumreportlistAll2[0]?.sumdatacentral || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.sumreportlistAll2[0]?.sumdatacosts || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll2[0]?.sumCostdataCostCosts || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "ลูกจ้าง", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(this.sumreportlistAll3[0]?.sumdatacentral || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.sumreportlistAll3[0]?.sumdatacosts || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll3[0]?.sumCostdataCostCosts || 0
+                    ),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "รวมเงิน", style: "header", alignment: "center" },
+                  {
+                    text: this.thaiNumber(this.centralAllcount || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.costsAllcount || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.CostCostsAllcount || 0),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                ],
+                [
+                  { text: "", colSpan: 2, style: "subheader", alignment: "center" },
+                  "",
+                  {
+                    text: "ยอดรวม",
+                    style: "header",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.CostCostsAllcount || 0),
+                    style: "header",
+                    alignment: "center",
+                  },
+                ],
+              ],
+            },
+          },
+          {
+            text:
+              "ตารางสรุป ยอดรวมค่าบํารุงฯ ค่าประกัน ฯ ค่าธรรมเนียม ค่าสารณูปโภค และค่าลิฟต์",
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: `ประจําเดือน ${this.monthYear} `,
+            style: "header",
+            alignment: "center",
+          },
+          {
+            style: "tableExample",
+            table: {
+              widths: ["*", "*", "*", "*"],
+              body: [
+                [
+                  { text: "บช.ตชด.", style: "header", alignment: "center" },
+                  { text: "ตร.ส่วนกลาง", style: "header", alignment: "center" },
+                  {
+                    text: "ตร.ส่วนกลาง(เพิ่มเติม)",
+                    style: "header",
+                    alignment: "center",
+                  },
+                  { text: "รวมเป็นเงิน", style: "header", alignment: "center" },
+                ],
+                [
+                  {
+                    text: this.thaiNumber(this.sumAllcount),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.Costdatawaterbillcount),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  {
+                    text: this.thaiNumber(this.CostCostsAllcount),
+                    style: "subheader",
+                    alignment: "center",
+                  },
+                  { text: this.thaiNumber(sum), style: "subheader", alignment: "center" },
+                ],
+              ],
+            },
+          },
+        ],
+        styles: {
+          header: {
+            fontSize: 14,
+            bold: true,
+            margin: [0, 0, 0, 3],
+          },
+          subheader: {
+            fontSize: 13,
+            bold: false,
+          },
+          tableExample: {
+            margin: [0, 5, 0, 5],
+          },
+        },
+
+        defaultStyle: {
+          font: "THSarabunNew",
+        },
+      };
+      await pdfMake.createPdf(docDefinition).open();
     },
 
     buildTableBodyinsurance(data, columns) {
@@ -2245,7 +2576,7 @@ export default {
           value: e.value,
           sumdataMaintenance: this.thaiNumber(e.sumdataMaintenance),
           sumdataInsurance: this.thaiNumber(e.sumdataInsurance),
-          sumCostdataInsurance: this.thaiNumber(e.sumCostdataInsurance)
+          sumCostdataInsurance: this.thaiNumber(e.sumCostdataInsurance),
         };
       });
 
@@ -2253,9 +2584,21 @@ export default {
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
           "",
-          { text: this.thaiNumber(thaiNum[0].countMaintenanceAll), style: "header", alignment: "center" },
-          { text: this.thaiNumber(thaiNum[0].countInsuranceAll), style: "header", alignment: "center" },
-          { text: this.thaiNumber(thaiNum[0].countCostSumAll), style: "header", alignment: "center" },
+          {
+            text: this.thaiNumber(thaiNum[0].countMaintenanceAll),
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: this.thaiNumber(thaiNum[0].countInsuranceAll),
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: this.thaiNumber(thaiNum[0].countCostSumAll),
+            style: "header",
+            alignment: "center",
+          },
         ],
       ];
       var body = [
@@ -2282,15 +2625,16 @@ export default {
         body.push(dataRow);
       });
       // this.jsonFiled = body,
+
       arr = body.concat(footer);
-      console.log(arr);
       return arr;
     },
 
     tableInsurance(data, columns) {
       return {
+        style: "tableExample",
         table: {
-          widths: [100, "*", 100, "*", "*"],
+          widths: [50, 200, "*", "*", "*"],
           headerRows: 2,
           body: this.buildTableBodyinsurance(data, columns),
         },
@@ -2299,12 +2643,12 @@ export default {
 
     exportPdfinsurance() {
       let listData = [];
-        listData = this.AffiliationListCTD.map((el,i)=> {
-          return {
-            ...el,
-            numberNo: i+1
-          }
-        });
+      listData = this.AffiliationListCTD.map((el, i) => {
+        return {
+          ...el,
+          numberNo: i + 1,
+        };
+      });
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
@@ -2349,6 +2693,22 @@ export default {
               "sumCostdataInsurance",
             ]),
           ],
+          styles: {
+            header: {
+              fontSize: 18,
+              bold: true,
+              margin: [0, 0, 0, 5],
+            },
+            subheader: {
+              fontSize: 18,
+              bold: false,
+            },
+            tableExample: {
+              fontSize: 18,
+              bold: false,
+              margin: [0, 5, 0, 5],
+            },
+          },
           defaultStyle: {
             font: "THSarabunNew",
           },
@@ -2375,10 +2735,26 @@ export default {
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
           "",
-          { text: this.thaiNumber(thaiNum[0].countMaintenancefeeAll), style: "header", alignment: "center" },
-          { text: this.thaiNumber(thaiNum[0].countwaterbilAll), style: "header", alignment: "center" },
-          { text: this.thaiNumber(thaiNum[0].countelectricitybillAll), style: "header", alignment: "center" },
-          { text: this.thaiNumber(thaiNum[0].countCostwaterbillAll), style: "header", alignment: "center" },
+          {
+            text: this.thaiNumber(thaiNum[0].countMaintenancefeeAll),
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: this.thaiNumber(thaiNum[0].countwaterbilAll),
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: this.thaiNumber(thaiNum[0].countelectricitybillAll),
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: this.thaiNumber(thaiNum[0].countCostwaterbillAll),
+            style: "header",
+            alignment: "center",
+          },
         ],
       ];
       var body = [
@@ -2412,8 +2788,9 @@ export default {
 
     tablewaterBill(data, columns) {
       return {
+        style: "tableExample",
         table: {
-          widths: [50, "*", "*", "*", "*", 100],
+          widths: [30, 150, "*", "*", "*", "*"],
           headerRows: 2,
           body: this.buildTableBodywaterBill(data, columns),
         },
@@ -2421,15 +2798,14 @@ export default {
     },
 
     exportPdfWaterBill() {
-      console.log('listData');
       let listData = [];
       let mss = "";
-        listData = this.AffiliationListTD.map((e,i)=> {
-          return {
-            ...e,
-            numberNo: i+1
-          }
-        });
+      listData = this.AffiliationListTD.map((e, i) => {
+        return {
+          ...e,
+          numberNo: i + 1,
+        };
+      });
       if (listData.length > 0) {
         if (this.typeReport == "ตร.")
           mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";
@@ -2479,6 +2855,22 @@ export default {
               "sumCostdatawaterbill",
             ]),
           ],
+          styles: {
+            header: {
+              fontSize: 18,
+              bold: true,
+              margin: [0, 0, 0, 5],
+            },
+            subheader: {
+              fontSize: 18,
+              bold: false,
+            },
+            tableExample: {
+              fontSize: 18,
+              bold: false,
+              margin: [0, 5, 0, 5],
+            },
+          },
           defaultStyle: {
             font: "THSarabunNew",
           },
@@ -2491,6 +2883,7 @@ export default {
     buildTableBodyCentral(data, columns) {
       var body = [];
       let arr = [];
+      console.log(data);
       var thaiNum = data.map((e) => {
         return {
           ...e,
@@ -2554,16 +2947,15 @@ export default {
         });
         body.push(dataRow);
       });
-      console.log(body);
       arr = body.concat(footer);
       return arr;
     },
 
     tableCentral(data, columns) {
-      console.log(data);
       return {
+        style: "tableExample",
         table: {
-          widths: [20, 50, "*", 30, 30, 30, 30, 30, 30, 30, 20, 20, 50],
+          widths: [20, 20, "*", 27, 27, 25, 27, 25, 32, 20, 20, 20, 55],
           headerRows: 2,
           body: this.buildTableBodyCentral(data, columns),
         },
@@ -2572,14 +2964,10 @@ export default {
 
     exportPdfCentral() {
       let listData = [];
-      let mss = ''
-      if (this.typeReport == "ตร.") listData = this.reportlistTD;
-      else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
+      let mss = "";
+      listData = this.reportlistTD;
       if (listData.length > 0) {
-        if (this.typeReport == "ตร.")
-          mss = "การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบำรุงลิฟต์เพิ่มเติม";
-        else if (this.typeReport == "บช.ตชด.")
-          mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";
+        mss = "การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบำรุงลิฟต์เพิ่มเติม";
         pdfMake.fonts = {
           Roboto: {
             normal:
@@ -2631,6 +3019,183 @@ export default {
               "contractExpenses",
             ]),
           ],
+          styles: {
+            header: {
+              fontSize: 12,
+              bold: true,
+            },
+            subheader: {
+              fontSize: 12,
+              bold: false,
+            },
+            tableExample: {
+              fontSize: 12,
+              bold: false,
+              margin: [0, 5, 0, 5],
+            },
+          },
+          defaultStyle: {
+            font: "THSarabunNew",
+          },
+        };
+        pdfMake.createPdf(docDefinition).open();
+      }
+    },
+
+    buildTableBodyCentralCTD(data, columns) {
+      var body = [];
+      let arr = [];
+      console.log(data);
+      var thaiNum = data.map((e) => {
+        return {
+          ...e,
+          numberNo: this.thaiNumber(e.numberNo),
+          MaintenanceSum: this.thaiNumber(e.MaintenanceSum),
+          maintenancefeeSum: this.thaiNumber(e.maintenancefeeSum),
+          maintenancefee: this.thaiNumber(e.maintenancefee),
+          roomnumber: e.roomnumber || "-",
+          waterbillSum: this.thaiNumber(e.waterbillSum),
+          electricitybillSum: this.thaiNumber(e.electricitybillSum),
+          SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
+          sumCostwaterbill: this.thaiNumber(e.sumCostwaterbill),
+          maintenance: this.thaiNumber(e.maintenance),
+          waterbill: this.thaiNumber(e.waterbill),
+          electricitybill: this.thaiNumber(e.electricitybill),
+          central: this.thaiNumber(e.central),
+          sumCostCentral: this.thaiNumber(e.sumCostCentral),
+          centralSum: this.thaiNumber(e.centralSum),
+          SumCostSumCentral: this.thaiNumber(e.SumCostSumCentral),
+        };
+      });
+      var footer = [
+        [
+          { text: "รวมเงิน", colSpan: 6, style: "header", alignment: "center" },
+          "",
+          "",
+          "",
+          "",
+          "",
+          { text: thaiNum[0].maintenancefeeSum, style: "header", alignment: "center" },
+          { text: thaiNum[0].waterbillSum, style: "header", alignment: "center" },
+          { text: thaiNum[0].centralSum, style: "header", alignment: "center" },
+          { text: thaiNum[0].SumCostSumCentral, style: "header", alignment: "center" },
+          "",
+          "",
+          "",
+        ],
+      ];
+      var body = [
+        [
+          { text: "ลำดับ", style: "header", alignment: "center" },
+          { text: "เลขที่ห้อง", style: "header", alignment: "center" },
+          { text: "ชื่อ-สกุล", style: "header", alignment: "center" },
+          { text: "เลขก่อน", style: "header", alignment: "center" },
+          { text: "เลขหลัง", style: "header", alignment: "center" },
+          { text: "ยอดใช้", style: "header", alignment: "center" },
+          { text: "ค่าธรรมเนียม", style: "header", alignment: "center" },
+          { text: "ค่าน้ำปะปา", style: "header", alignment: "center" },
+          { text: "ค่าไฟฟ้าส่วนกลาง", style: "header", alignment: "center" },
+          { text: "รวม", style: "header", alignment: "center" },
+          { text: "หักได้", style: "header", alignment: "center" },
+          { text: "หักไม่ได้", style: "header", alignment: "center" },
+          { text: "สาเหตุที่หักไม่ได้", style: "header", alignment: "center" },
+        ],
+      ];
+
+      thaiNum.forEach(function (row) {
+        var dataRow = [];
+        columns.forEach(function (column) {
+          dataRow.push(row[column].toString());
+        });
+        body.push(dataRow);
+      });
+      arr = body.concat(footer);
+      return arr;
+    },
+
+    tableCentralCTD(data, columns) {
+      return {
+        style: "tableExample",
+        table: {
+          widths: [20, 20, "*", 27, 27, 25, 27, 25, 32, 20, 20, 20, 55],
+          headerRows: 2,
+          body: this.buildTableBodyCentralCTD(data, columns),
+        },
+      };
+    },
+
+    exportPdfCentralCTD() {
+      let listData = [];
+      let mss = "";
+      listData = this.reportlistCTD;
+      if (listData.length > 0) {
+        mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";
+        pdfMake.fonts = {
+          Roboto: {
+            normal:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+            bold:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+            italics:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+            bolditalics:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+          },
+          THSarabunNew: {
+            normal: "THSarabunNew.ttf",
+            bold: "THSarabunNew-Bold.ttf",
+            italics: "THSarabunNew-Italic.ttf",
+            bolditalics: "THSarabunNew-BoldItalic.ttf",
+          },
+        };
+        const docDefinition = {
+          content: [
+            {
+              text: `${mss}`,
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: " ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: ` ประจําเดือน ${this.monthYear} หน่วยงาน บช.ตชด.`,
+              style: "subheader",
+              alignment: "center",
+            },
+            this.tableCentralCTD(listData, [
+              "numberNo",
+              "roomnumber",
+              "fullname",
+              "numberfirst",
+              "lastnumber",
+              "unitWater",
+              "maintenancefee",
+              "waterbill",
+              "central",
+              "sumCostCentral",
+              "typeContractYes",
+              "typeContractNo",
+              "contractExpenses",
+            ]),
+          ],
+          styles: {
+            header: {
+              fontSize: 12,
+              bold: true,
+            },
+            subheader: {
+              fontSize: 12,
+              bold: false,
+            },
+            tableExample: {
+              fontSize: 12,
+              bold: false,
+              margin: [0, 5, 0, 5],
+            },
+          },
           defaultStyle: {
             font: "THSarabunNew",
           },
@@ -2656,9 +3221,21 @@ export default {
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
           "",
-          { text:  this.thaiNumber(thaiNum[0].countcentraAll), style: "header", alignment: "center" },
-          { text:  this.thaiNumber(thaiNum[0].countcostsAll), style: "header", alignment: "center" },
-          { text:  this.thaiNumber(thaiNum[0].countCostCostsSumAll), style: "header", alignment: "center" },
+          {
+            text: this.thaiNumber(thaiNum[0].countcentraAll),
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: this.thaiNumber(thaiNum[0].countcostsAll),
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: this.thaiNumber(thaiNum[0].countCostCostsSumAll),
+            style: "header",
+            alignment: "center",
+          },
         ],
       ];
       var body = [
@@ -2690,8 +3267,9 @@ export default {
 
     tableCosts(data, columns) {
       return {
+        style: "tableExample",
         table: {
-          widths: [30, "*", "*", "*", "*"],
+          widths: [30, 200, "*", "*", "*"],
           headerRows: 2,
           body: this.buildTableBodyCosts(data, columns),
         },
@@ -2700,13 +3278,12 @@ export default {
 
     exportPdfCosts() {
       let listData = [];
-      listData = this.AffiliationListTD.map((el,i)=> {
-          return {
-            ...el,
-            numberNo: i+1
-          }
-        });
-        console.log(this.AffiliationListTD);
+      listData = this.AffiliationListCTD.map((el, i) => {
+        return {
+          ...el,
+          numberNo: i + 1,
+        };
+      });
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
@@ -2751,6 +3328,168 @@ export default {
               "sumCostdataCostCosts",
             ]),
           ],
+          styles: {
+            header: {
+              fontSize: 18,
+              bold: true,
+            },
+            subheader: {
+              fontSize: 16,
+              bold: false,
+            },
+            tableExample: {
+              fontSize: 18,
+              bold: false,
+              margin: [0, 5, 0, 5],
+            },
+          },
+          defaultStyle: {
+            font: "THSarabunNew",
+          },
+        };
+        pdfMake.createPdf(docDefinition).open();
+      }
+    },
+
+    buildTableBodyCostselectricity(data, columns) {
+      var body = [];
+      let arr = [];
+      var thaiNum = data.map((e) => {
+        return {
+          ...e,
+          numberNo: this.thaiNumber(e.numberNo),
+          value: e.value,
+          sumdataelectricitybill: this.thaiNumber(e.sumdataelectricitybill),
+          sumdatacosts: this.thaiNumber(e.sumdatacosts),
+          sumCostdataCostCosts: this.thaiNumber(e.sumCostdataCostCosts),
+        };
+      });
+      var footer = [
+        [
+          { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
+          "",
+          {
+            text: this.thaiNumber(thaiNum[0].countelectricitybillAll),
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: this.thaiNumber(thaiNum[0].countcostsAll),
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: this.thaiNumber(thaiNum[0].countCostCostsSumAll),
+            style: "header",
+            alignment: "center",
+          },
+        ],
+      ];
+      var body = [
+        [
+          { text: "ลำดับ", rowSpan: 2, style: "header", alignment: "center" },
+          { text: "รายการ", rowSpan: 2, style: "header", alignment: "center" },
+          { text: "จำนวนเงิน (บาท)", colSpan: 3, style: "header", alignment: "center" },
+          "",
+          "",
+        ],
+        [
+          "",
+          "",
+          { text: "ค่าไฟฟ้าส่วนกลาง", style: "header", alignment: "center" },
+          { text: "ค่าบำรุงลิฟต์", style: "header", alignment: "center" },
+          { text: "รวม", style: "header", alignment: "center" },
+        ],
+      ];
+      thaiNum.forEach(function (row) {
+        var dataRow = [];
+        columns.forEach(function (column) {
+          dataRow.push(row[column].toString());
+        });
+        body.push(dataRow);
+      });
+      arr = body.concat(footer);
+      return arr;
+    },
+
+    tableCostselectricity(data, columns) {
+      return {
+        style: "tableExample",
+        table: {
+          widths: [30, 200, "*", "*", "*"],
+          headerRows: 2,
+          body: this.buildTableBodyCostselectricity(data, columns),
+        },
+      };
+    },
+
+    exportPdfCostselectricity() {
+      let listData = [];
+      listData = this.AffiliationListTD.map((el, i) => {
+        return {
+          ...el,
+          numberNo: i + 1,
+        };
+      });
+      if (listData.length > 0) {
+        pdfMake.fonts = {
+          Roboto: {
+            normal:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+            bold:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+            italics:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+            bolditalics:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+          },
+          THSarabunNew: {
+            normal: "THSarabunNew.ttf",
+            bold: "THSarabunNew-Bold.ttf",
+            italics: "THSarabunNew-Italic.ttf",
+            bolditalics: "THSarabunNew-BoldItalic.ttf",
+          },
+        };
+        const docDefinition = {
+          content: [
+            {
+              text: `  การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์`,
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: " ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: ` ประจําเดือน ${this.monthYear} `,
+              style: "subheader",
+              alignment: "center",
+            },
+            this.tableCostselectricity(listData, [
+              "numberNo",
+              "value",
+              "sumdataelectricitybill",
+              "sumdatacosts",
+              "sumCostdataCostCosts",
+            ]),
+          ],
+          styles: {
+            header: {
+              fontSize: 18,
+              bold: true,
+            },
+            subheader: {
+              fontSize: 16,
+              bold: false,
+            },
+            tableExample: {
+              fontSize: 18,
+              bold: false,
+              margin: [0, 5, 0, 5],
+            },
+          },
           defaultStyle: {
             font: "THSarabunNew",
           },
@@ -2784,6 +3523,7 @@ export default {
           amountPaid: this.thaiNumber(e.amountPaid),
           roomnumber: this.thaiNumber(e.roomnumber),
           Installmenttime: this.thaiNumber(e.Installmenttime),
+          InsuranceSum: this.thaiNumber(e.InsuranceSum),
         };
       });
       var footer = [
@@ -2792,7 +3532,7 @@ export default {
           "",
           "",
           "",
-          "",
+          { text: thaiNum[0].InsuranceSum, style: "header", alignment: "center" },
           { text: thaiNum[0].MaintenanceSum, style: "header", alignment: "center" },
           { text: thaiNum[0].accumulatedSum, style: "header", alignment: "center" },
           { text: thaiNum[0].amountPaidSum, style: "header", alignment: "center" },
@@ -2843,6 +3583,7 @@ export default {
 
     tableAccumulated(data, columns) {
       return {
+        style: "tableExample",
         table: {
           // widths: [30, "*", "*", "*", "*"],
           headerRows: 2,
@@ -2853,9 +3594,12 @@ export default {
 
     exportPdfAccumulated() {
       let listData = [];
-      if (this.typeReport == "ตร.") listData = this.reportlistTD;
-      else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
-
+      listData = this.reportlistCTD.map((el, i) => {
+        return {
+          ...el,
+          numberNo: i + 1,
+        };
+      });
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
@@ -2905,7 +3649,21 @@ export default {
               "Installmenttime",
             ]),
           ],
-
+          styles: {
+            header: {
+              fontSize: 12,
+              bold: true,
+            },
+            subheader: {
+              fontSize: 12,
+              bold: false,
+            },
+            tableExample: {
+              fontSize: 12,
+              bold: false,
+              margin: [0, 5, 0, 5],
+            },
+          },
           defaultStyle: {
             font: "THSarabunNew",
           },
@@ -2978,8 +3736,9 @@ export default {
 
     tableCostCentral(data, columns) {
       return {
+        style: "tableExample",
         table: {
-          widths: [20, 50, "*", 30, 30, 30, 30, 30, 30, 50, 50],
+          widths: [27, 30, 38, "*", 35, 35, 45, 25, 27, 32, 63],
           headerRows: 2,
           body: this.buildTableBodyCostCentral(data, columns),
         },
@@ -2988,8 +3747,12 @@ export default {
 
     exportPdfCostCentral() {
       let listData = [];
-      if (this.typeReport == "ตร.") listData = this.reportlistTD;
-      else if (this.typeReport == "บช.ตชด.") listData = this.reportlistCTD;
+      listData = this.reportlistCTD.map((el, i) => {
+        return {
+          ...el,
+          numberNo: i + 1,
+        };
+      });
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
@@ -3011,6 +3774,21 @@ export default {
         };
         const docDefinition = {
           content: [
+            {
+              text: ` บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง `,
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: " ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์ (เพิ่มเติม)",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: ` ประจําเดือน ${this.monthYear} หน่วยงาน บช.ตชด.`,
+              style: "subheader",
+              alignment: "center",
+            },
             this.tableCostCentral(listData, [
               "numberNo",
               "buildingName",
@@ -3025,6 +3803,178 @@ export default {
               "contractExpenses",
             ]),
           ],
+          styles: {
+            header: {
+              fontSize: 13,
+              bold: true,
+            },
+            subheader: {
+              fontSize: 12,
+              bold: false,
+            },
+            tableExample: {
+              fontSize: 12,
+              bold: false,
+              margin: [0, 5, 0, 5],
+            },
+          },
+          defaultStyle: {
+            font: "THSarabunNew",
+          },
+        };
+        pdfMake.createPdf(docDefinition).open();
+      }
+    },
+    buildTableBodyCostCentralTD(data, columns) {
+      var body = [];
+      let arr = [];
+      var thaiNum = data.map((e) => {
+        return {
+          ...e,
+          numberNo: this.thaiNumber(e.numberNo),
+          MaintenanceSum: this.thaiNumber(e.MaintenanceSum),
+          waterbillSum: this.thaiNumber(e.waterbillSum),
+          electricitybillSum: this.thaiNumber(e.electricitybillSum),
+          SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
+          sumCostwaterbill: this.thaiNumber(e.sumCostwaterbill),
+          maintenance: this.thaiNumber(e.maintenance),
+          waterbill: this.thaiNumber(e.waterbill),
+          electricitybill: this.thaiNumber(e.electricitybill),
+          central: this.thaiNumber(e.central),
+          sumCostCentral: this.thaiNumber(e.sumCostCentral),
+          centralSum: this.thaiNumber(e.centralSum),
+          SumCostSumCentral: this.thaiNumber(e.SumCostSumCentral),
+          subill: this.thaiNumber(e.subill),
+          costs: this.thaiNumber(e.costs),
+          costsSum: this.thaiNumber(e.costsSum),
+        };
+      });
+      var footer = [
+        [
+          { text: "รวมเงิน", colSpan: 5, style: "header", alignment: "center" },
+          "",
+          "",
+          "",
+          "",
+          { text: thaiNum[0].electricitybillSum, style: "header", alignment: "center" },
+          { text: thaiNum[0].costsSum, style: "header", alignment: "center" },
+          { text: thaiNum[0].subill, style: "header", alignment: "center" },
+          "",
+          "",
+          "",
+        ],
+      ];
+      var body = [
+        [
+          { text: "ลำดับ", style: "header", alignment: "center" },
+          { text: "บ้านพัก", style: "header", alignment: "center" },
+          { text: "เลขที่ห้อง", style: "header", alignment: "center" },
+          { text: "ชื่อ-สกุล", style: "header", alignment: "center" },
+          { text: "หน่วย", style: "header", alignment: "center" },
+          { text: "ค่าไฟฟ้าส่วนกลาง", style: "header", alignment: "center" },
+          { text: "ค่าบำรุงลิฟต์", style: "header", alignment: "center" },
+          { text: "รวม", style: "header", alignment: "center" },
+          { text: "หักได้", style: "header", alignment: "center" },
+          { text: "หักไม่ได้", style: "header", alignment: "center" },
+          { text: "สาเหตุที่หักไม่ได้", style: "header", alignment: "center" },
+        ],
+      ];
+      thaiNum.forEach(function (row) {
+        var dataRow = [];
+        columns.forEach(function (column) {
+          dataRow.push(row[column].toString());
+        });
+        body.push(dataRow);
+      });
+      arr = body.concat(footer);
+      return arr;
+    },
+
+    tableCostCentralTD(data, columns) {
+      return {
+        style: "tableExample",
+        table: {
+          widths: [27, 30, 38, "*", 35, 35, 45, 25, 27, 32, 63],
+          headerRows: 2,
+          body: this.buildTableBodyCostCentralTD(data, columns),
+        },
+      };
+    },
+
+    exportPdfCostCentralTD() {
+      let listData = [];
+      listData = this.reportlistTD.map((el, i) => {
+        return {
+          ...el,
+          subill: parseInt(el.electricitybill) + parseInt(el.costs) || 0,
+          numberNo: i + 1,
+        };
+      });
+      if (listData.length > 0) {
+        pdfMake.fonts = {
+          Roboto: {
+            normal:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Regular.ttf",
+            bold:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Medium.ttf",
+            italics:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-Italic.ttf",
+            bolditalics:
+              "https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.66/fonts/Roboto/Roboto-MediumItalic.ttf",
+          },
+          THSarabunNew: {
+            normal: "THSarabunNew.ttf",
+            bold: "THSarabunNew-Bold.ttf",
+            italics: "THSarabunNew-Italic.ttf",
+            bolditalics: "THSarabunNew-BoldItalic.ttf",
+          },
+        };
+        const docDefinition = {
+          content: [
+            {
+              text: ` บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง `,
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: " การหักค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์ ",
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: ` ประจําเดือน ${this.monthYear}`,
+              style: "subheader",
+              alignment: "center",
+            },
+            this.tableCostCentralTD(listData, [
+              "numberNo",
+              "buildingName",
+              "roomnumber",
+              "fullname",
+              "unitWater",
+              "electricitybill",
+              "costs",
+              "subill",
+              "typeContractYes",
+              "typeContractNo",
+              "contractExpenses",
+            ]),
+          ],
+          styles: {
+            header: {
+              fontSize: 13,
+              bold: true,
+            },
+            subheader: {
+              fontSize: 12,
+              bold: false,
+            },
+            tableExample: {
+              fontSize: 12,
+              bold: false,
+              margin: [0, 5, 0, 5],
+            },
+          },
           defaultStyle: {
             font: "THSarabunNew",
           },
@@ -3115,7 +4065,7 @@ export default {
                   aria-controls="v-pills-messages"
                   aria-selected="false"
                 >
-                  บัญชียอดหักค่าไฟฟ่าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจําเดือน
+                  บัญชียอดหักค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจําเดือน
                 </button>
                 <button
                   class="nav-link"
@@ -3127,7 +4077,19 @@ export default {
                   aria-controls="v-pills2"
                   aria-selected="false"
                 >
-                  บัญชีถอนค่าไฟฟ่าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจําเดือน
+                  บัญชีถอนค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจําเดือน
+                </button>
+                <button
+                  class="nav-link"
+                  id="v-pills-home-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-home"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills-home"
+                  aria-selected="false"
+                >
+                  บัญชียอดหักค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์ประจําเดือน
                 </button>
                 <button
                   class="nav-link"
@@ -3163,7 +4125,7 @@ export default {
                   aria-controls="v-pills5"
                   aria-selected="false"
                 >
-                  บัญชีรายชื่อผู้พักอาศัยที่ถอนเงินเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง
+                  บัญชีรายชื่อผู้พักอาศัยที่หักเงินเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง
                   ตร.
                 </button>
                 <!-- <button
@@ -3192,6 +4154,38 @@ export default {
                     <div>
                       <div class="pt-4 text-start">
                         <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                        <div class="mb-3">
+                          <div class="form-check form-check-inline">
+                            <label style="margin-right: 20px">ประเภท</label>
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="typeUser99"
+                              id="typeUser99"
+                              value="บัญชีหน้างบ"
+                              :checked="reportType == 'บัญชีหน้างบ'"
+                              @change="typeUserchange('บัญชีหน้างบ', 'table55')"
+                            />
+                            <label class="form-check-label" for="typeUser99"
+                              >บัญชีหน้างบ</label
+                            >
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="typeUser66"
+                              id="typeUser66"
+                              value="ประกันทรัพย์สิน"
+                              :checked="reportType == 'ประกันทรัพย์สิน'"
+                              @change="typeUserchange('ประกันทรัพย์สิน', 'table66')"
+                            />
+                            <label class="form-check-label" for="typeUser66">
+                              รายละเอียดการหักเงินค่าบํารุงสถานที่
+                              และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                            >
+                          </div>
+                        </div>
                         <div class="d-flex justify-content-end align-items-center">
                           <div class="mb-3 w-20" style="margin-right: 5px">
                             <label>เดือน</label>
@@ -3209,11 +4203,12 @@ export default {
                           </div>
 
                           <div>
-                            <!-- <MaterialButton
+                            <MaterialButton
+                              v-if="reportType == 'บัญชีหน้างบ'"
                               size="lg"
                               class="btn-icon"
                               style="margin-right: -30px"
-                              @click="exportPdfWaterBill()"
+                              @click="exportPdfCostselectricity()"
                             >
                               <div class="d-flex align-items-center">
                                 <span style="margin-right: 5px">บันทึก</span>
@@ -3224,11 +4219,45 @@ export default {
                                   width="40"
                                 />
                               </div>
-                            </MaterialButton> -->
+                            </MaterialButton>
                             <MaterialButton
+                              v-if="reportType == 'ประกันทรัพย์สิน'"
                               size="lg"
                               class="btn-icon"
-                              @click="ExportExcel('xlsx', 'table1')"
+                              style="margin-right: -30px"
+                              @click="exportPdfCostCentralTD()"
+                            >
+                              <div class="d-flex align-items-center">
+                                <span style="margin-right: 5px">บันทึก</span>
+                                <img
+                                  src="../../assets/img/pdf.png"
+                                  alt="title"
+                                  loading="lazy"
+                                  width="40"
+                                />
+                              </div>
+                            </MaterialButton>
+                            <MaterialButton
+                              v-if="reportType == 'บัญชีหน้างบ'"
+                              size="lg"
+                              class="btn-icon"
+                              @click="ExportExcel('xlsx', 'table55')"
+                            >
+                              <div class="d-flex align-items-center">
+                                <span style="margin-right: 5px">บันทึก</span>
+                                <img
+                                  src="../../assets/img/excel.png"
+                                  alt="title"
+                                  loading="lazy"
+                                  width="40"
+                                />
+                              </div>
+                            </MaterialButton>
+                            <MaterialButton
+                              v-if="reportType == 'ประกันทรัพย์สิน'"
+                              size="lg"
+                              class="btn-icon"
+                              @click="ExportExcel('xlsx', 'table66')"
                             >
                               <div class="d-flex align-items-center">
                                 <span style="margin-right: 5px">บันทึก</span>
@@ -3243,19 +4272,20 @@ export default {
                           </div>
                         </div>
                       </div>
-                      <div class="text-center pt-4 table-responsive">
-                        <table class="table table-bordered" id="table1">
+                      <div
+                        v-if="reportType == 'บัญชีหน้างบ'"
+                        class="text-center pt-4 table-responsive"
+                      >
+                        <table class="table table-bordered" id="table55">
                           <thead>
                             <tr>
                               <td colspan="6" style="border: 0">
-                                รายละเอียดการหักเงิน ค่าบำรุงฯ ค่าประกันฯ
-                                ผู้ได้สิทธิพักอาศัยบ้านพัก บช.ตชด.
+                                การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์
                               </td>
                             </tr>
                             <tr>
                               <td colspan="6" style="border: 0">
-                                และค่าสาธารณูปโภค ผู้ได้สิทธิพักอาศัยบ้านพักส่วนกลาง ตร.
-                                (อก.)
+                                ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.
                               </td>
                             </tr>
                             <tr>
@@ -3263,15 +4293,98 @@ export default {
                                 ประจําเดือน {{ monthYear }}
                               </td>
                             </tr>
-                          </thead>
-                          <!-- reportlistCTD -->
-                          <tbody v-for="(item, index) in reportlistCTD" :key="index">
                             <tr>
+                              <th rowspan="2">ลำดับ</th>
+                              <th rowspan="2">รายการ</th>
+                              <th colspan="3">จำนวนเงิน(บาท)</th>
+                            </tr>
+                            <tr>
+                              <th>ค่าไฟฟ้าส่วนกลาง</th>
+                              <th>ค่าบำรุงลิฟต์</th>
+                              <th>รวม</th>
+                            </tr>
+                          </thead>
+                          <tr v-for="(item, index) in AffiliationListTD" :key="index">
+                            <th scope="row">{{ index + 1 }}</th>
+                            <td>{{ item?.value || "-" }}</td>
+                            <td>{{ item?.sumdataelectricitybill || "-" }}</td>
+                            <td>{{ item?.sumdatacosts || "-" }}</td>
+                            <td>{{ item?.sumCostdataCostCosts || "-" }}</td>
+                          </tr>
+                          <tr v-if="AffiliationListTD?.length > 0">
+                            <th scope="row" colspan="2">รวมเงิน</th>
+                            <th>
+                              {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
+                            </th>
+                            <th>{{ AffiliationListTD[0]?.countcostsAll || 0 }}</th>
+                            <th>{{ AffiliationListTD[0]?.countCostCostsSumAll || 0 }}</th>
+                          </tr>
+                        </table>
+                      </div>
+                      <div
+                        v-if="reportType == 'ประกันทรัพย์สิน'"
+                        class="text-center pt-4 table-responsive"
+                      >
+                        <table class="table table-bordered" id="table66">
+                          <thead>
+                            <tr>
+                              <td colspan="9" style="border: 0">
+                                บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="9" style="border: 0">
+                                ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="9" style="border: 0">
+                                ประจําเดือน {{ monthYear }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <th scope="col">ลำดับ</th>
+                              <th scope="col">บ้านพัก</th>
+                              <th scope="col">เลขที่ห้อง</th>
+                              <th scope="col">ชื่อ-สกุล</th>
+                              <th scope="col">หน่วย</th>
+                              <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                              <th scope="col">ค่าบำรุงลิฟต์</th>
+                              <th scope="col">รวม</th>
+                              <th scope="col">หักได้</th>
+                              <th scope="col">หักไม่ได้</th>
+                              <th scope="col">สาเหตุที่หักไม่ได้</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(item, index) in reportlistTD" :key="index">
                               <th scope="row">{{ index + 1 }}</th>
-                              <td>{{ item?.idcard || "-" }}</td>
-                              <td>{{ item?.fullname || "-" }}</td>
-                              <td>{{ item?.amountPaidSum || "-" }}</td>
-                              <td>{{ item?.amountPaidSum || "-" }}</td>
+                              <td>{{ item?.buildingName || "-" }}</td>
+                              <td>{{ item?.roomnumber || "-" }}</td>
+                              <td>
+                                {{ item?.rank }} {{ item?.firstName }}
+                                {{ item?.lastName }}
+                              </td>
+                              <td>
+                                {{ item?.lastnumber - item?.numberfirst || "-" }}
+                              </td>
+                              <td>{{ item?.electricitybill || "-" }}</td>
+                              <td>{{ item?.costs || "-" }}</td>
+                              <td>{{ item?.sumCostCosts || "-" }}</td>
+                              <td>
+                                <span v-if="item?.typeContract == 'หักได้'">/</span>
+                              </td>
+                              <td>
+                                <span v-if="item?.typeContract == 'หักไม่ได้'">/</span>
+                              </td>
+                              <td>{{ item?.contractExpenses || "-" }}</td>
+                            </tr>
+                            <tr v-if="reportlistTD?.length > 0">
+                              <th scope="row" colspan="5">รวมเงิน</th>
+                              <th>{{ reportlistTD[0]?.electricitybillSum }}</th>
+                              <th>{{ reportlistTD[0]?.costsSum }}</th>
+                              <th>{{ reportlistTD[0]?.contelectricitybillSum }}</th>
+                              
                             </tr>
                           </tbody>
                         </table>
@@ -3451,7 +4564,9 @@ export default {
                           </tr>
                           <tr v-if="AffiliationListTD?.length > 0">
                             <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>{{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}</th>
+                            <th>
+                              {{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}
+                            </th>
                             <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
                             <th>
                               {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
@@ -3481,7 +4596,7 @@ export default {
                           </tr>
                           <tr>
                             <td colspan="9" style="border: 0">
-                              ประจําเดือน {{ monthYear }} หน่วยงาน ฝอ.๘.บก.อก.บช.ตชด. 
+                              ประจําเดือน {{ monthYear }} หน่วยงาน ฝอ.๘.บก.อก.บช.ตชด.
                             </td>
                           </tr>
                           <tr>
@@ -3670,7 +4785,7 @@ export default {
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
-                              การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง
+                              ถอนเงินค่าไฟฟ้าส่วนกลาง
                               และค่าบํารุงลิฟต์เพิ่มเติม
                             </td>
                           </tr>
@@ -3695,18 +4810,18 @@ export default {
                             <th>รวม</th>
                           </tr>
                         </thead>
-                        <tr v-for="(item, index) in AffiliationListTD" :key="index">
+                        <tr v-for="(item, index) in AffiliationListCTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.value || "-" }}</td>
                           <td>{{ item?.sumdatacentral || "-" }}</td>
                           <td>{{ item?.sumdatacosts || "-" }}</td>
                           <td>{{ item?.sumCostdataCostCosts || "-" }}</td>
                         </tr>
-                        <tr v-if="AffiliationListTD?.length > 0">
+                        <tr v-if="AffiliationListCTD?.length > 0">
                           <th scope="row" colspan="2">รวมเงิน</th>
-                          <th>{{ AffiliationListTD[0]?.countcentraAll || 0 }}</th>
-                          <th>{{ AffiliationListTD[0]?.countcostsAll || 0 }}</th>
-                          <th>{{ AffiliationListTD[0]?.countCostCostsSumAll || 0 }}</th>
+                          <th>{{ AffiliationListCTD[0]?.countcentraAll || 0 }}</th>
+                          <th>{{ AffiliationListCTD[0]?.countcostsAll || 0 }}</th>
+                          <th>{{ AffiliationListCTD[0]?.countCostCostsSumAll || 0 }}</th>
                         </tr>
                       </table>
                     </div>
@@ -3746,7 +4861,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
+                          <tr v-for="(item, index) in reportlistCTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.buildingName || "-" }}</td>
                             <td>{{ item?.roomnumber || "-" }}</td>
@@ -3768,11 +4883,11 @@ export default {
                             </td>
                             <td>{{ item?.contractExpenses || "-" }}</td>
                           </tr>
-                          <tr v-if="reportlistTD?.length > 0">
+                          <tr v-if="reportlistCTD?.length > 0">
                             <th scope="row" colspan="5">รวมเงิน</th>
-                            <th>{{ reportlistTD[0]?.centralSum }}</th>
-                            <th>{{ reportlistTD[0]?.costsSum }}</th>
-                            <th>{{ reportlistTD[0]?.SumCostSumCosts }}</th>
+                            <th>{{ reportlistCTD[0]?.centralSum }}</th>
+                            <th>{{ reportlistCTD[0]?.costsSum }}</th>
+                            <th>{{ reportlistCTD[0]?.SumCostSumCosts }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -3840,218 +4955,238 @@ export default {
                         </div>
                       </div>
                     </div>
-                    <div class="text-center pt-4 table-responsive" id="table9">
-                      <table class="table table-bordered" >
-                        <thead>
-                          <tr>
-                            <td colspan="6" style="border: 0">
-                              ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิระ บช.ตชด.
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
-                          </tr>
-                          <tr>
-                            <th>หน่วยงาน</th>
-                            <th>ค่าบํารุงฯ</th>
-                            <th>ค่าประกันฯ</th>
-                            <th>รวม</th>
-                          </tr>
-                        </thead>
-                        <tbody>
+                    <div id="table9">
+                      <div class="text-center pt-4 table-responsive">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <td colspan="6" style="border: 0">
+                                ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิระ บช.ตชด.
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
+                            </tr>
+                            <tr>
+                              <th>หน่วยงาน</th>
+                              <th>ค่าบํารุงฯ</th>
+                              <th>ค่าประกันฯ</th>
+                              <th>รวม</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{{ "อำนวยการ" || "-" }}</td>
+                              <td>
+                                {{ sumreportlistAll[0]?.sumdataMaintenance || "-" }}
+                              </td>
+                              <td>{{ sumreportlistAll[0]?.sumdataInsurance || "-" }}</td>
+                              <td>
+                                {{ sumreportlistAll[0]?.sumCostdataInsurance || "-" }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>{{ "สนับสนุน" || "-" }}</td>
+                              <td>
+                                {{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}
+                              </td>
+                              <td>{{ sumreportlistAll2[0]?.sumdataInsurance || "-" }}</td>
+                              <td>
+                                {{ sumreportlistAll2[0]?.sumCostdataInsurance || "-" }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>{{ "ลูกจ้าง" || "-" }}</td>
+                              <td>
+                                {{ sumreportlistAll3[0]?.sumdataMaintenance || "-" }}
+                              </td>
+                              <td>{{ sumreportlistAll3[0]?.sumdataInsurance || "-" }}</td>
+                              <td>
+                                {{ sumreportlistAll3[0]?.sumCostdataInsurance || "-" }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>{{ "รวม" || "-" }}</td>
+                              <td>
+                                {{ maintenanceAllcount }}
+                              </td>
+                              <td>
+                                {{ insuranceAllcount }}
+                              </td>
+                              <td>
+                                {{ sumAllcount }}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="text-center pt-4 table-responsive">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <td colspan="6" style="border: 0">
+                                ยอดเงินค่าธรรมเนียม และค่าสาธารณูปโภค อาคารบ้านพัก
+                                ตร.ส่วนกลาง
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
+                            </tr>
+                            <tr>
+                              <th>หน่วยงาน</th>
+                              <th>ค่าธรรมเนียม</th>
+                              <th>ค่าน้ําประปา</th>
+                              <th>ค่าไฟฟ้า</th>
+                              <th>รวม</th>
+                            </tr>
+                          </thead>
                           <tr>
                             <td>{{ "อำนวยการ" || "-" }}</td>
-                            <td>{{ sumreportlistAll[0]?.sumdataMaintenance || "-" }}</td>
-                            <td>{{ sumreportlistAll[0]?.sumdataInsurance || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll[0]?.sumCostdataInsurance || "-" }}
+                              {{ sumreportlistAll[0]?.sumdataMaintenancefee || "-" }}
+                            </td>
+                            <td>{{ sumreportlistAll[0]?.sumdatawaterbill || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll[0]?.sumdataelectricitybill || "-" }}
+                            </td>
+                            <td>
+                              {{ sumreportlistAll[0]?.sumCostdatawaterbill || "-" }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "สนับสนุน" || "-" }}</td>
-                            <td>{{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}</td>
-                            <td>{{ sumreportlistAll2[0]?.sumdataInsurance || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll2[0]?.sumCostdataInsurance || "-" }}
+                              {{ sumreportlistAll2[0]?.sumdataMaintenancefee || "-" }}
+                            </td>
+                            <td>{{ sumreportlistAll2[0]?.sumdatawaterbill || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll2[0]?.sumdataelectricitybill || "-" }}
+                            </td>
+                            <td>
+                              {{ sumreportlistAll2[0]?.sumCostdatawaterbill || "-" }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "ลูกจ้าง" || "-" }}</td>
-                            <td>{{ sumreportlistAll3[0]?.sumdataMaintenance || "-" }}</td>
-                            <td>{{ sumreportlistAll3[0]?.sumdataInsurance || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll3[0]?.sumCostdataInsurance || "-" }}
+                              {{ sumreportlistAll3[0]?.sumdataMaintenancefee || "-" }}
+                            </td>
+                            <td>{{ sumreportlistAll3[0]?.sumdatawaterbill || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll3[0]?.sumdataelectricitybill || "-" }}
+                            </td>
+                            <td>
+                              {{ sumreportlistAll3[0]?.sumCostdatawaterbill || "-" }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "รวม" || "-" }}</td>
                             <td>
-                              {{ maintenanceAllcount }}
+                              {{ maintenancefeeAllcount }}
                             </td>
                             <td>
-                              {{ insuranceAllcount }}
+                              {{ waterbillAllcount }}
                             </td>
                             <td>
-                              {{ sumAllcount }}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="text-center pt-4 table-responsive">
-                      <table class="table table-bordered" id="table10">
-                        <thead>
-                          <tr>
-                            <td colspan="6" style="border: 0">
-                              ยอดเงินค่าธรรมเนียม และค่าสาธารณูปโภค อาคารบ้านพัก
-                              ตร.ส่วนกลาง
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
-                          </tr>
-                          <tr>
-                            <th>หน่วยงาน</th>
-                            <th>ค่าธรรมเนียม</th>
-                            <th>ค่าน้ําประปา</th>
-                            <th>ค่าไฟฟ้า</th>
-                            <th>รวม</th>
-                          </tr>
-                        </thead>
-                        <tr>
-                          <td>{{ "อำนวยการ" || "-" }}</td>
-                          <td>{{ sumreportlistAll[0]?.sumdataMaintenancefee || "-" }}</td>
-                          <td>{{ sumreportlistAll[0]?.sumdatawaterbill || "-" }}</td>
-                          <td>
-                            {{ sumreportlistAll[0]?.sumdataelectricitybill || "-" }}
-                          </td>
-                          <td>
-                            {{ sumreportlistAll[0]?.sumCostdatawaterbill || "-" }}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>{{ "สนับสนุน" || "-" }}</td>
-                          <td>{{ sumreportlistAll2[0]?.sumdataMaintenancefee || "-" }}</td>
-                          <td>{{ sumreportlistAll2[0]?.sumdatawaterbill || "-" }}</td>
-                          <td>
-                            {{ sumreportlistAll2[0]?.sumdataelectricitybill || "-" }}
-                          </td>
-                          <td>
-                            {{ sumreportlistAll2[0]?.sumCostdatawaterbill || "-" }}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>{{ "ลูกจ้าง" || "-" }}</td>
-                          <td>{{ sumreportlistAll3[0]?.sumdataMaintenancefee || "-" }}</td>
-                          <td>{{ sumreportlistAll3[0]?.sumdatawaterbill || "-" }}</td>
-                          <td>
-                            {{ sumreportlistAll3[0]?.sumdataelectricitybill || "-" }}
-                          </td>
-                          <td>
-                            {{ sumreportlistAll3[0]?.sumCostdatawaterbill || "-" }}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>{{ "รวม" || "-" }}</td>
-                          <td>
-                            {{ maintenancefeeAllcount }}
-                          </td>
-                          <td>
-                            {{ waterbillAllcount }}
-                          </td>
-                          <td>
-                            {{ Costdatawaterbillcount }}
-                          </td>
-                          <td>
-                            {{ Costdatawaterbillcount }}
-                          </td>
-                        </tr>
-                      </table>
-                    </div>
-                    <div class="text-center pt-4 table-responsive">
-                      <table class="table table-bordered" id="table10">
-                        <thead>
-                          <tr>
-                            <td colspan="6" style="border: 0">
-                              รายการหักเพิ่มเติม
-                              ค่าไฟฟ้าส่วนกลาง/ค่าบํารุงลิฟต์อาคารบ้านพัก ตร.ส่วนกลาง
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
-                          </tr>
-                          <tr>
-                            <th>หน่วยงาน</th>
-                            <th>ค่าไฟฟ้าส่วนกลาง</th>
-                            <th>ค่าบํารุงลิฟต์</th>
-                            <th>รวม</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>{{ "อำนวยการ" || "-" }}</td>
-                            <td>{{ sumreportlistAll[0]?.sumdatacentral || "-" }}</td>
-                            <td>{{ sumreportlistAll[0]?.sumdatacosts || "-" }}</td>
-                            <td>
-                              {{ sumreportlistAll[0]?.sumCostdataCostCosts || "-" }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>{{ "สนับสนุน" || "-" }}</td>
-                            <td>{{ sumreportlistAll2[0]?.sumdatacentral || "-" }}</td>
-                            <td>{{ sumreportlistAll2[0]?.sumdatacosts || "-" }}</td>
-                            <td>
-                              {{ sumreportlistAll2[0]?.sumCostdataCostCosts || "-" }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>{{ "ลูกจ้าง" || "-" }}</td>
-                            <td>{{ sumreportlistAll3[0]?.sumdatacentral || "-" }}</td>
-                            <td>{{ sumreportlistAll3[0]?.sumdatacosts || "-" }}</td>
-                            <td>
-                              {{ sumreportlistAll3[0]?.sumCostdataCostCosts || "-" }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>{{ "รวม" || "-" }}</td>
-                            <td>
-                              {{ centralAllcount }}
+                              {{ Costdatawaterbillcount }}
                             </td>
                             <td>
-                              {{ costsAllcount }}
-                            </td>
-                            <td>
-                              {{ CostCostsAllcount }}
+                              {{ Costdatawaterbillcount }}
                             </td>
                           </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="text-center pt-4 table-responsive">
-                      <table class="table table-bordered" id="table10">
-                        <thead>
-                          <tr>
-                            <td colspan="6" style="border: 0">
-                              ตารางสรุป ยอดรวมค่าบํารุงฯ ค่าประกัน ฯ ค่าธรรมเนียม
-                              ค่าสารณูปโภค และค่าลิฟต์
-                            </td>
-                          </tr>
-                          <tr>
-                            <th>บช.ตชด.</th>
-                            <th>ตร.ส่วนกลาง</th>
-                            <th>ตร.ส่วนกลาง(เพิ่มเติม)</th>
-                            <th>รวมเป็นเงิน</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>{{ sumAllcount || "-" }}</td>
-                            <td>{{ Costdatawaterbillcount || "-" }}</td>
-                            <td>{{ CostCostsAllcount || "-" }}</td>
-                            <td>{{ sumAllcount+Costdatawaterbillcount+CostCostsAllcount || "-" }}</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                        </table>
+                      </div>
+                      <div class="text-center pt-4 table-responsive">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <td colspan="6" style="border: 0">
+                                รายการหักเพิ่มเติม
+                                ค่าไฟฟ้าส่วนกลาง/ค่าบํารุงลิฟต์อาคารบ้านพัก ตร.ส่วนกลาง
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
+                            </tr>
+                            <tr>
+                              <th>หน่วยงาน</th>
+                              <th>ค่าไฟฟ้าส่วนกลาง</th>
+                              <th>ค่าบํารุงลิฟต์</th>
+                              <th>รวม</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{{ "อำนวยการ" || "-" }}</td>
+                              <td>{{ sumreportlistAll[0]?.sumdatacentral || "-" }}</td>
+                              <td>{{ sumreportlistAll[0]?.sumdatacosts || "-" }}</td>
+                              <td>
+                                {{ sumreportlistAll[0]?.sumCostdataCostCosts || "-" }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>{{ "สนับสนุน" || "-" }}</td>
+                              <td>{{ sumreportlistAll2[0]?.sumdatacentral || "-" }}</td>
+                              <td>{{ sumreportlistAll2[0]?.sumdatacosts || "-" }}</td>
+                              <td>
+                                {{ sumreportlistAll2[0]?.sumCostdataCostCosts || "-" }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>{{ "ลูกจ้าง" || "-" }}</td>
+                              <td>{{ sumreportlistAll3[0]?.sumdatacentral || "-" }}</td>
+                              <td>{{ sumreportlistAll3[0]?.sumdatacosts || "-" }}</td>
+                              <td>
+                                {{ sumreportlistAll3[0]?.sumCostdataCostCosts || "-" }}
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>{{ "รวม" || "-" }}</td>
+                              <td>
+                                {{ centralAllcount }}
+                              </td>
+                              <td>
+                                {{ costsAllcount }}
+                              </td>
+                              <td>
+                                {{ CostCostsAllcount }}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="text-center pt-4 table-responsive">
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <td colspan="6" style="border: 0">
+                                ตารางสรุป ยอดรวมค่าบํารุงฯ ค่าประกัน ฯ ค่าธรรมเนียม
+                                ค่าสารณูปโภค และค่าลิฟต์
+                              </td>
+                            </tr>
+                            <tr>
+                              <th>บช.ตชด.</th>
+                              <th>ตร.ส่วนกลาง</th>
+                              <th>ตร.ส่วนกลาง(เพิ่มเติม)</th>
+                              <th>รวมเป็นเงิน</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{{ sumAllcount || "-" }}</td>
+                              <td>{{ Costdatawaterbillcount || "-" }}</td>
+                              <td>{{ CostCostsAllcount || "-" }}</td>
+                              <td>
+                                {{
+                                  sumAllcount +
+                                    Costdatawaterbillcount +
+                                    CostCostsAllcount || "-"
+                                }}
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -4064,254 +5199,250 @@ export default {
                   <div>
                     <div class="text-center pt-4 table-responsive">
                       <div>
-                            <div class="pt-4 text-start">
-                              <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
-                              <div class="mb-3">
-                                <div class="form-check form-check-inline">
-                                  <label style="margin-right: 20px">ประเภท</label>
-                                  <input
-                                    class="form-check-input"
-                                    type="radio"
-                                    name="typeUser21"
-                                    id="typeUser21"
-                                    value="บัญชีหน้างบ"
-                                    :checked="reportType == 'บัญชีหน้างบ'"
-                                    @change="typeUserchange('บัญชีหน้างบ', 'table13')"
-                                  />
-                                  <label class="form-check-label" for="typeUser21"
-                                    >บัญชีหน้างบ</label
-                                  >
-                                </div>
-                                <div class="form-check form-check-inline">
-                                  <input
-                                    class="form-check-input"
-                                    type="radio"
-                                    name="typeUser22"
-                                    id="typeUser22"
-                                    value="ประกันทรัพย์สิน"
-                                    :checked="reportType == 'ประกันทรัพย์สิน'"
-                                    @change="typeUserchange('ประกันทรัพย์สิน', 'table14')"
-                                  />
-                                  <label class="form-check-label" for="typeUser22">
-                                    รายละเอียดการหักเงินค่าบํารุงสถานที่
-                                    และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
-                                  >
-                                </div>
-                              </div>
-                              <div class="d-flex justify-content-end align-items-center">
-                                <div class="mb-3 w-20" style="margin-right: 5px">
-                                  <label>เดือน</label>
-                                  <v-select
-                                    :options="optionMonth"
-                                    v-model="selectedMonth"
-                                  ></v-select>
-                                </div>
-                                <div class="mb-3 w-20">
-                                  <label>สังกัด</label>
-                                  <v-select
-                                    :options="masterData?.AffiliationList"
-                                    v-model="selectedAffiliation"
-                                  ></v-select>
-                                </div>
-
-                                <div>
-                                  <MaterialButton
-                                    v-if="reportType == 'บัญชีหน้างบ'"
-                                    size="lg"
-                                    class="btn-icon"
-                                    style="margin-right: -30px"
-                                    @click="exportPdfinsurance()"
-                                  >
-                                    <div class="d-flex align-items-center">
-                                      <span style="margin-right: 5px">บันทึก</span>
-                                      <img
-                                        src="../../assets/img/pdf.png"
-                                        alt="title"
-                                        loading="lazy"
-                                        width="40"
-                                      />
-                                    </div>
-                                  </MaterialButton>
-                                  <MaterialButton
-                                    v-if="reportType == 'ประกันทรัพย์สิน'"
-                                    size="lg"
-                                    class="btn-icon"
-                                    style="margin-right: -30px"
-                                    @click="exportPdfAccumulated()"
-                                  >
-                                    <div class="d-flex align-items-center">
-                                      <span style="margin-right: 5px">บันทึก</span>
-                                      <img
-                                        src="../../assets/img/pdf.png"
-                                        alt="title"
-                                        loading="lazy"
-                                        width="40"
-                                      />
-                                    </div>
-                                  </MaterialButton>
-                                  <MaterialButton
-                                    v-if="reportType == 'บัญชีหน้างบ'"
-                                    size="lg"
-                                    class="btn-icon"
-                                    @click="ExportExcel('xlsx', 'table13')"
-                                  >
-                                    <div class="d-flex align-items-center">
-                                      <span style="margin-right: 5px">บันทึก</span>
-                                      <img
-                                        src="../../assets/img/excel.png"
-                                        alt="title"
-                                        loading="lazy"
-                                        width="40"
-                                      />
-                                    </div>
-                                  </MaterialButton>
-                                  <MaterialButton
-                                    v-if="reportType == 'ประกันทรัพย์สิน'"
-                                    size="lg"
-                                    class="btn-icon"
-                                    @click="ExportExcel('xlsx', 'table14')"
-                                  >
-                                    <div class="d-flex align-items-center">
-                                      <span style="margin-right: 5px">บันทึก</span>
-                                      <img
-                                        src="../../assets/img/excel.png"
-                                        alt="title"
-                                        loading="lazy"
-                                        width="40"
-                                      />
-                                    </div>
-                                  </MaterialButton>
-                                </div>
-                              </div>
+                        <div class="pt-4 text-start">
+                          <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                          <div class="mb-3">
+                            <div class="form-check form-check-inline">
+                              <label style="margin-right: 20px">ประเภท</label>
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="typeUser21"
+                                id="typeUser21"
+                                value="บัญชีหน้างบ"
+                                :checked="reportType == 'บัญชีหน้างบ'"
+                                @change="typeUserchange('บัญชีหน้างบ', 'table13')"
+                              />
+                              <label class="form-check-label" for="typeUser21"
+                                >บัญชีหน้างบ</label
+                              >
                             </div>
-                            <div
-                              v-if="reportType == 'บัญชีหน้างบ'"
-                              class="text-center pt-4 table-responsive"
-                            >
-                              <table class="table table-bordered" id="table13">
-                                <thead>
-                                  <tr>
-                                    <td colspan="6" style="border: 0">
-                                      สรุปยอดหักค่าบํารุงสถานที่
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="6" style="border: 0">
-                                      และค่าประกันทรัพย์สินเสียหายประจําเดือน
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <td colspan="6" style="border: 0">
-                                      (เฉพาะอาคารบ้านพัก บช.ตชด. แยกตามสังกัด)
-                                    </td>
-                                  </tr>
-                                  <tr>
-                                    <th rowspan="2">ลำดับ</th>
-                                    <th rowspan="2">หน่วยงาน</th>
-                                    <th colspan="3">จำนวนเงิน (บาท)</th>
-                                  </tr>
-                                  <tr>
-                                    <th>ค่าบำรุง</th>
-                                    <th>ค่าประกัน</th>
-                                    <th>รวม</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr
-                                    v-for="(item, index) in AffiliationListCTD"
-                                    :key="index"
-                                  >
-                                    <th scope="row">{{ index + 1 }}</th>
-                                    <td>{{ item?.value || "-" }}</td>
-                                    <td>{{ item?.sumdataMaintenance || "-" }}</td>
-                                    <td>{{ item?.sumdataInsurance || "-" }}</td>
-                                    <td>{{ item?.sumCostdataInsurance || "-" }}</td>
-                                  </tr>
-                                  <tr v-if="AffiliationListCTD.length > 0">
-                                    <th scope="row" colspan="2">รวมยอดส่งหัก</th>
-                                    <th>
-                                      {{
-                                        AffiliationListCTD[0]?.countMaintenanceAll || 0
-                                      }}
-                                    </th>
-                                    <th>
-                                      {{ AffiliationListCTD[0]?.countInsuranceAll || 0 }}
-                                    </th>
-                                    <th>
-                                      {{ AffiliationListCTD[0]?.countCostSumAll || 0 }}
-                                    </th>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                            <div
-                              v-if="reportType == 'ประกันทรัพย์สิน'"
-                              class="text-center pt-4 table-responsive"
-                            >
-                              <div>
-                                <table class="table table-bordered" id="table14">
-                                  <thead>
-                                    <tr>
-                                      <td colspan="7" style="border: 0">
-                                        บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด.
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td colspan="7" style="border: 0">
-                                        ที่หักเงินเดือนเป็นค่าบํารุงรักษาสถานที่และค่าประกันทรัพย์สินเสียหาย
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <td colspan="7" style="border: 0">
-                                        ประจําเดือน {{ monthYear }} หน่วยงาน ฝอ.๘.บก.อก.บช.ตชด. 
-                                      </td>
-                                    </tr>
-                                    <tr>
-                                      <th rowspan="2">ลำดับ</th>
-                                      <th rowspan="2">ชื่อ-สกุล</th>
-                                      <th rowspan="2">อาคาร</th>
-                                      <th rowspan="2">เลขที่ห้อง</th>
-                                      <th rowspan="2">การหักเงินค่าบำรุงฯ</th>
-                                      <th colspan="3">การหักเงินค่าประกันฯ</th>
-                                    </tr>
-                                    <tr>
-                                      <th>ยอดหัก</th>
-                                      <th>ยอดหักสะสม</th>
-                                      <th>หมายเหตุ</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr
-                                      v-for="(item, index) in reportlistCTD"
-                                      :key="index"
-                                    >
-                                      <th scope="row">{{ index + 1 }}</th>
-                                      <td>
-                                        {{ item?.rank }} {{ item?.firstName }}
-                                        {{ item?.lastName }}
-                                      </td>
-                                      <td>{{ item?.buildingName || "-" }}</td>
-                                      <td>{{ item?.roomnumber || "-" }}</td>
-                                      <td>{{ item?.maintenance || "-" }}</td>
-                                      <td>
-                                        {{ item?.accumulated || "-" }}
-                                      </td>
-                                      <td>{{ item?.amountPaid || "-" }}</td>
-                                      <td>{{ item?.Installmenttime || "-" }}</td>
-                                    </tr>
-
-                                    <tr v-if="reportlistCTD.length > 0">
-                                      <th scope="row" colspan="4">รวมเงิน</th>
-                                      <th>{{ reportlistCTD[0].MaintenanceSum }}</th>
-                                      <th>{{ reportlistCTD[0]?.accumulatedSum }}</th>
-                                      <th>{{ reportlistCTD[0]?.amountPaidSum }}</th>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
+                            <div class="form-check form-check-inline">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="typeUser22"
+                                id="typeUser22"
+                                value="ประกันทรัพย์สิน"
+                                :checked="reportType == 'ประกันทรัพย์สิน'"
+                                @change="typeUserchange('ประกันทรัพย์สิน', 'table14')"
+                              />
+                              <label class="form-check-label" for="typeUser22">
+                                รายละเอียดการหักเงินค่าบํารุงสถานที่
+                                และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                              >
                             </div>
                           </div>
+                          <div class="d-flex justify-content-end align-items-center">
+                            <div class="mb-3 w-20" style="margin-right: 5px">
+                              <label>เดือน</label>
+                              <v-select
+                                :options="optionMonth"
+                                v-model="selectedMonth"
+                              ></v-select>
+                            </div>
+                            <div class="mb-3 w-20">
+                              <label>สังกัด</label>
+                              <v-select
+                                :options="masterData?.AffiliationList"
+                                v-model="selectedAffiliation"
+                              ></v-select>
+                            </div>
 
+                            <div>
+                              <MaterialButton
+                                v-if="reportType == 'บัญชีหน้างบ'"
+                                size="lg"
+                                class="btn-icon"
+                                style="margin-right: -30px"
+                                @click="exportPdfinsurance()"
+                              >
+                                <div class="d-flex align-items-center">
+                                  <span style="margin-right: 5px">บันทึก</span>
+                                  <img
+                                    src="../../assets/img/pdf.png"
+                                    alt="title"
+                                    loading="lazy"
+                                    width="40"
+                                  />
+                                </div>
+                              </MaterialButton>
+                              <MaterialButton
+                                v-if="reportType == 'ประกันทรัพย์สิน'"
+                                size="lg"
+                                class="btn-icon"
+                                style="margin-right: -30px"
+                                @click="exportPdfAccumulated()"
+                              >
+                                <div class="d-flex align-items-center">
+                                  <span style="margin-right: 5px">บันทึก</span>
+                                  <img
+                                    src="../../assets/img/pdf.png"
+                                    alt="title"
+                                    loading="lazy"
+                                    width="40"
+                                  />
+                                </div>
+                              </MaterialButton>
+                              <MaterialButton
+                                v-if="reportType == 'บัญชีหน้างบ'"
+                                size="lg"
+                                class="btn-icon"
+                                @click="ExportExcel('xlsx', 'table13')"
+                              >
+                                <div class="d-flex align-items-center">
+                                  <span style="margin-right: 5px">บันทึก</span>
+                                  <img
+                                    src="../../assets/img/excel.png"
+                                    alt="title"
+                                    loading="lazy"
+                                    width="40"
+                                  />
+                                </div>
+                              </MaterialButton>
+                              <MaterialButton
+                                v-if="reportType == 'ประกันทรัพย์สิน'"
+                                size="lg"
+                                class="btn-icon"
+                                @click="ExportExcel('xlsx', 'table14')"
+                              >
+                                <div class="d-flex align-items-center">
+                                  <span style="margin-right: 5px">บันทึก</span>
+                                  <img
+                                    src="../../assets/img/excel.png"
+                                    alt="title"
+                                    loading="lazy"
+                                    width="40"
+                                  />
+                                </div>
+                              </MaterialButton>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          v-if="reportType == 'บัญชีหน้างบ'"
+                          class="text-center pt-4 table-responsive"
+                        >
+                          <table class="table table-bordered" id="table13">
+                            <thead>
+                              <tr>
+                                <td colspan="6" style="border: 0">
+                                  สรุปยอดหักค่าบํารุงสถานที่
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="6" style="border: 0">
+                                  และค่าประกันทรัพย์สินเสียหายประจําเดือน
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="6" style="border: 0">
+                                  (เฉพาะอาคารบ้านพัก บช.ตชด. แยกตามสังกัด)
+                                </td>
+                              </tr>
+                              <tr>
+                                <th rowspan="2">ลำดับ</th>
+                                <th rowspan="2">หน่วยงาน</th>
+                                <th colspan="3">จำนวนเงิน (บาท)</th>
+                              </tr>
+                              <tr>
+                                <th>ค่าบำรุง</th>
+                                <th>ค่าประกัน</th>
+                                <th>รวม</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                v-for="(item, index) in AffiliationListCTD"
+                                :key="index"
+                              >
+                                <th scope="row">{{ index + 1 }}</th>
+                                <td>{{ item?.value || "-" }}</td>
+                                <td>{{ item?.sumdataMaintenance || "-" }}</td>
+                                <td>{{ item?.sumdataInsurance || "-" }}</td>
+                                <td>{{ item?.sumCostdataInsurance || "-" }}</td>
+                              </tr>
+                              <tr v-if="AffiliationListCTD.length > 0">
+                                <th scope="row" colspan="2">รวมยอดส่งหัก</th>
+                                <th>
+                                  {{ AffiliationListCTD[0]?.countMaintenanceAll || 0 }}
+                                </th>
+                                <th>
+                                  {{ AffiliationListCTD[0]?.countInsuranceAll || 0 }}
+                                </th>
+                                <th>
+                                  {{ AffiliationListCTD[0]?.countCostSumAll || 0 }}
+                                </th>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div
+                          v-if="reportType == 'ประกันทรัพย์สิน'"
+                          class="text-center pt-4 table-responsive"
+                        >
+                          <div>
+                            <table class="table table-bordered" id="table14">
+                              <thead>
+                                <tr>
+                                  <td colspan="7" style="border: 0">
+                                    บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด.
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="7" style="border: 0">
+                                    ที่หักเงินเดือนเป็นค่าบํารุงรักษาสถานที่และค่าประกันทรัพย์สินเสียหาย
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="7" style="border: 0">
+                                    ประจําเดือน {{ monthYear }} หน่วยงาน
+                                    ฝอ.๘.บก.อก.บช.ตชด.
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <th rowspan="2">ลำดับ</th>
+                                  <th rowspan="2">ชื่อ-สกุล</th>
+                                  <th rowspan="2">อาคาร</th>
+                                  <th rowspan="2">เลขที่ห้อง</th>
+                                  <th rowspan="2">การหักเงินค่าบำรุงฯ</th>
+                                  <th colspan="3">การหักเงินค่าประกันฯ</th>
+                                </tr>
+                                <tr>
+                                  <th>ยอดหัก</th>
+                                  <th>ยอดหักสะสม</th>
+                                  <th>หมายเหตุ</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-for="(item, index) in reportlistCTD" :key="index">
+                                  <th scope="row">{{ index + 1 }}</th>
+                                  <td>
+                                    {{ item?.rank }} {{ item?.firstName }}
+                                    {{ item?.lastName }}
+                                  </td>
+                                  <td>{{ item?.buildingName || "-" }}</td>
+                                  <td>{{ item?.roomnumber || "-" }}</td>
+                                  <td>{{ item?.maintenance || "-" }}</td>
+                                  <td>
+                                    {{ item?.accumulated || "-" }}
+                                  </td>
+                                  <td>{{ item?.amountPaid || "-" }}</td>
+                                  <td>{{ item?.Installmenttime || "-" }}</td>
+                                </tr>
+
+                                <tr v-if="reportlistCTD.length > 0">
+                                  <th scope="row" colspan="4">รวมเงิน</th>
+                                  <th>{{ reportlistCTD[0]?.MaintenanceSum }}</th>
+                                  <th>{{ reportlistCTD[0]?.InsuranceSum }}</th>
+                                  <th>{{ reportlistCTD[0]?.accumulatedSum }}</th>
+                                  <th>{{ reportlistCTD[0]?.amountPaidSum }}</th>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -4378,7 +5509,7 @@ export default {
                             size="lg"
                             class="btn-icon"
                             style="margin-right: -30px"
-                            @click="exportPdfWaterBill()"
+                            @click="exportPdfinsurance()"
                           >
                             <div class="d-flex align-items-center">
                               <span style="margin-right: 5px">บันทึก</span>
@@ -4395,7 +5526,7 @@ export default {
                             size="lg"
                             class="btn-icon"
                             style="margin-right: -30px"
-                            @click="exportPdfCentral()"
+                            @click="exportPdfCentralCTD()"
                           >
                             <div class="d-flex align-items-center">
                               <span style="margin-right: 5px">บันทึก</span>
@@ -4476,7 +5607,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in AffiliationListTD" :key="index">
+                          <tr v-for="(item, index) in AffiliationListCTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.value || "-" }}</td>
                             <td>{{ item?.sumdataMaintenancefee || "-" }}</td>
@@ -4486,7 +5617,9 @@ export default {
                           </tr>
                           <tr v-if="AffiliationListTD?.length > 0">
                             <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>{{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}</th>
+                            <th>
+                              {{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}
+                            </th>
                             <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
                             <th>
                               {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}

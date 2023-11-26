@@ -25,6 +25,7 @@ export default {
       DataObtion: [
         { label: "โสด", value: "โสด" },
         { label: "สมรส", value: "สมรส" },
+        { label: "อื่นๆ", value: "อื่นๆ" },
       ],
       selectedDataObtion: "โสด",
       selectedRanks: "",

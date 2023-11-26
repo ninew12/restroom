@@ -401,8 +401,8 @@ export default {
                   <th scope="col">ยอดใช้</th>
                   <th scope="col">ค่าธรรมเนียม</th>
                   <th scope="col">ค่าน้ำประปา</th>
-                  <th scope="col">ค่าไฟฟ้า</th>
                   <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                  <th scope="col">ส่วนกลาง(เพิ่มเติม)</th>
                   <th scope="col">ค่าบำรุงลิฟท์</th>
                   <th scope="col">หักได้</th>
                   <th scope="col">หักไม่ได้</th>
@@ -554,23 +554,23 @@ export default {
                 />
               </div>
               <div class="mb-3">
-                <label class="starRed">ค่าไฟฟ้า</label>
+                <label class="starRed">ค่าไฟฟ้าส่วนกลาง</label>
                 <MaterialInput
                   :value="Electricitybill"
                   @input="(event) => (Electricitybill = event.target.value)"
                   class="input-group-static"
                   type="text"
-                  placeholder="ค่าไฟฟ้า"
+                  placeholder="ค่าไฟฟ้าส่วนกลาง"
                 />
               </div>
               <div class="mb-3">
-                <label class="starRed">ค่าไฟฟ้าส่วนกลาง</label>
+                <label class="starRed">ส่วนกลาง(เพิ่มเติม)</label>
                 <MaterialInput
                   :value="Central"
                   @input="(event) => (Central = event.target.value)"
                   class="input-group-static"
                   type="text"
-                  placeholder="ค่าไฟฟ้าส่วนกลาง"
+                  placeholder="ส่วนกลาง(เพิ่มเติม)"
                 />
               </div>
               <div class="mb-3">

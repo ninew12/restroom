@@ -136,7 +136,8 @@ app.put('/users/:id', (req, res) => {
     if (req.body.years) parsedData.years = req.body.years
     if (req.body.leniency) parsedData.leniency = req.body.leniency
     if (req.body.typeUser) parsedData.typeUser = req.body.typeUser
-    
+    if (req.body.bookNumber) parsedData.bookNumber = req.body.bookNumber
+    if (req.body.contract) parsedData.contract = req.body.contract
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata), (err) => {
         if (err) {
@@ -391,6 +392,8 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
     if (req.body.roomnumber) parsedData.roomnumber = req.body.roomnumber
     if (req.body.typeUser) parsedData.typeUser = req.body.typeUser
+    if (req.body.bookNumber) parsedData.bookNumber = req.body.bookNumber
+    if (req.body.contract) parsedData.contract = req.body.contract
     filterdata.push(parsedData)
     fs.writeFileSync('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -459,6 +462,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
     if (req.body.roomnumber) parsedData.roomnumber = req.body.roomnumber
     if (req.body.typeUser) parsedData.typeUser = req.body.typeUser
+    
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -533,6 +537,7 @@ app.put('/history/:id', (req, res) => {
     if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
     if (req.body.roomnumber) parsedData.roomnumber = req.body.roomnumber
     if (req.body.typeUser) parsedData.typeUser = req.body.typeUser
+    if (req.body.contract) parsedData.contract = req.body.contract
     filterdata.push(parsedData)
     fs.writeFileSync('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -675,7 +680,8 @@ app.put('/report/:id', (req, res) => {
     if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
     if (req.body.roomnumber) parsedData.roomnumber = req.body.roomnumber
     if (req.body.typeUser) parsedData.typeUser = req.body.typeUser
-    
+    if (req.body.bookNumber) parsedData.bookNumber = req.body.bookNumber
+    if (req.body.contract) parsedData.contract = req.body.contract
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -731,6 +737,8 @@ app.put('/reportUser/:id', (req, res) => {
     if (req.body.maintenancefee) parsedData.maintenancefee = req.body.maintenancefee
     if (req.body.roomnumber) parsedData.roomnumber = req.body.roomnumber
     if (req.body.typeUser) parsedData.typeUser = req.body.typeUser
+    if (req.body.bookNumber) parsedData.bookNumber = req.body.bookNumber
+    if (req.body.contract) parsedData.contract = req.body.contract
     
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {

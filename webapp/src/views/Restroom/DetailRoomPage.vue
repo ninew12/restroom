@@ -82,7 +82,9 @@ export default {
       maintenanceFix: '',
       userByid: '',
       reportId: '',
-    reportType: ''
+    reportType: '',
+    bookNumber: '',
+    contract: ''
     };
   },
   created() {
@@ -153,6 +155,7 @@ export default {
             this.getreportByid(id);
             let data = res.data;
             this.userByid = res.data;
+            console.log(this.userByid);
            if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
            if (data.typeRanks == "สัญญาบัตร") this.maintenanceFix = "100";
            this.userId = id,
@@ -168,6 +171,8 @@ export default {
            this.typeRanks = data.typeRanks,
            this.typeRoom = data.typeRoom
            this.typeUser = data.typeUser
+           this.contract = data.contract
+           this.bookNumber = data.bookNumber
           })
           .catch((err) => {
             console.log(err);
@@ -181,12 +186,14 @@ export default {
       try {
         axios.get(`http://localhost:3897/rooms/${id}`).then((res) => {
           this.data = res.data;
+          console.log(this.data);
           this.dateApproved = this.convertDateTolocal(this.data.dateApproved);
           this.typeroom = this.data.typeRoom;
           this.numberRoom = this.data.numberRoom;
           this.roomId = this.data.id;
           this.buildingName = this.data.name
           this.Affiliation = this.data.affiliation;
+          if(this.data.userId){this.getAllusersByid(this.data.userId)}
           if (this.data.roomStatus == "return") this.statusRoom = "ผ่อนผัน";
           if (this.data.roomStatus == "special") this.statusRoom = "กรณีพิเศษ";
           if (this.data.roomStatus == "waiting") this.statusRoom = "ชำรุด";
@@ -307,7 +314,8 @@ export default {
         dateApproved: this.dateApp.toISOString(),
         roomId: this.roomId,
         roomnumber: this.numberRoom,
-        buildingName: this.buildingName
+        buildingName: this.buildingName,
+        contract: this.contract,
       };
       await axios.put(`http://localhost:3897/users/${this.userId}`, body, {
         headers: {
@@ -506,6 +514,29 @@ export default {
           console.log(err);
         });
     },
+
+    updateUser(){
+      let body = {
+        bookNumber: this.bookNumber,
+        contract: this.contract
+      }
+      axios
+        .put(`http://localhost:3897/users/${this.userId}`, body, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        }).then((res) => {
+          notify({
+            title: "แก้ไขข้อมูลสำเร็จ",
+            type: "success",
+          });
+          this.getAllusersByid(this.userId);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     Previous() {
       window.history.back();
     },
@@ -574,10 +605,15 @@ export default {
                 data-bs-target="#userBackdrop"
                 >กรณีพิเศษ</MaterialButton
               >
-              <MaterialButton variant="gradient" color="success" @click="gotoAction()"
+              <MaterialButton  style="margin-right: 20px" variant="gradient" color="success" @click="gotoAction()"
                 >จัดการห้องพัก</MaterialButton
               >
+              <MaterialButton v-if="this.mode == 'edit'" variant="gradient" color="success"   data-bs-toggle="modal"
+                data-bs-target="#updateUserSpaciaBackdrop"
+                >แก้ไขรายละเอียกผู้พักอาศัย</MaterialButton
+              >
             </div>
+            
           </div>
           <div class="row pt-4">
             <div class="card mb-3">
@@ -593,10 +629,9 @@ export default {
                         <p class="card-text">สถานะห้อง : {{ statusRoom }}</p>
                         <p class="card-text">สังกัด : {{ Affiliation }}</p>
                         <p class="card-text">เลขบัตรประชาชน : {{ data?.idcard }}</p>
-                        <p class="card-text">วันที่ได้รับอนุมัติ : {{ dateApproved }}</p>
-
+                        <p class="card-text">วันที่ได้รับอนุมัติ : {{ contract || "-" }}</p>
                         <p class="card-text">
-                          ระยะเวลาที่เข้าพัก : {{ data?.checkintime || 0 }} เดือน
+                          เลขลงรับหนังสือ : {{ bookNumber || "-"}} 
                         </p>
                       </div>
                       <div class="col-7">
@@ -656,7 +691,7 @@ export default {
                           <td>{{ item?.buildingName }}</td>
                           <td>{{ item?.idcard }}</td>
                           <td>{{ item?.phone }}</td>
-                          <td>{{ item?.bookNumber }}</td>
+                          <td>{{ item?.bookNumber || "-" }}</td>
                           <td>
                             <MaterialButton
                               variant="gradient"
@@ -713,7 +748,7 @@ export default {
                   placeholder="วันที่ได้รับอนุมัติ"
                 />
               </div>
-              <div class="mb-3">
+              <!-- <div class="mb-3">
                 <label class="starRed">ระยะเวลาที่เข้าพัก(เดือน)</label>
                 <MaterialInput
                   :value="Checkintime"
@@ -722,7 +757,7 @@ export default {
                   type="text"
                   placeholder="จำนวนเดือนที่เข้าพัก"
                 />
-              </div>
+              </div> -->
               <!-- <div class="mb-3">
                 <MaterialInput
                   :value="Maintenance"
@@ -988,26 +1023,6 @@ export default {
                 />
               </div>
               <div class="mb-3">
-                <label class="starRed">ระยะเวลาที่เข้าพัก(เดือน)</label>
-                <MaterialInput
-                  :value="Checkintime"
-                  @input="(event) => (Checkintime = event.target.value)"
-                  class="input-group-static"
-                  type="text"
-                  placeholder="จำนวนเดือนที่เข้าพัก"
-                />
-              </div>
-              <!-- <div class="mb-3">
-                <MaterialInput
-                  :value="Maintenance"
-                  @input="(event) => (Maintenance = event.target.value)"
-                  class="input-group-static"
-                  label="ค่าบำรุง"
-                  type="text"
-                  placeholder="ค่าบำรุง"
-                />
-              </div> -->
-              <div class="mb-3">
                 <label class="starRed">เงินค่าประกัน</label>
                 <MaterialInput
                   :value="insurance"
@@ -1172,6 +1187,70 @@ export default {
         </div>
       </div>
     </div>
+
+    <div
+      class="modal fade"
+      id="updateUserSpaciaBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">
+              แก้ไขรายละเอียกผู้พักอาศัย
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+                <label class="starRed">วันที่ได้รับอนุมัติ</label>
+                <MaterialInput
+                  name="contract"
+                  :value="contract"
+                  @input="(event) => (contract = event.target.value)"
+                  class="input-group-static"
+                  type="text"
+                  placeholder="วันที่ได้รับอนุมัติ"
+                />
+              </div>
+              <div class="mb-3">
+                <label style="margin-left: -5px">กรอกเลขลงรับหนังสือ</label>
+                <textarea
+                  :value="bookNumber"
+                  @input="(event) => (bookNumber = event.target.value)"
+                  class="form-control"
+                  id="exampleFormControlTextarea1"
+                  rows="3"
+                  placeholder="ตัวอย่าง : 11244"
+                ></textarea>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              ปิดหน้าต่าง
+            </button>
+            <MaterialButton
+              variant="gradient"
+              color="success"
+              @click="updateUser();"
+              data-bs-dismiss="modal"
+              html-type="submit"
+              >บันทึก</MaterialButton
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 </template>
 <style>

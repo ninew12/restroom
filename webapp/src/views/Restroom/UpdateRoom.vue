@@ -83,6 +83,7 @@ export default {
       historyOld: [],
       bankbookName: "",
       bankbookNumber: "",
+      typeRoom: ""
     };
   },
   created() {
@@ -131,7 +132,8 @@ export default {
             this.firstName = this.roomData.firstName,
             this.lastName = this.roomData.lastName
             this.leniency = this.roomData.leniency
-             console.log(this.roomData);
+            this.typeRoom = this.roomData.typeRoom
+            //  console.log(this.roomData);
             this.getHistoryRoom(this.roomData.id);
           })
           .catch((err) => {
@@ -282,6 +284,7 @@ export default {
         queue: "none",
         deposit: "รอคืนเงินประกัน",
         roomKey: this.roomKey,
+        typeRoom: this.typeRoom,
         houseRegistration: this.houseRegistration,
         payMonth: this.payMonth,
         houseRegistrationcause: this.houseRegistrationcause,
@@ -309,6 +312,7 @@ export default {
         firstName : this.firstName,
         lastName :  this.lastName,
         roomKey: this.roomKey,
+        typeRoom: this.typeRoom,
         houseRegistration: this.houseRegistration,
         payMonth: this.payMonth,
         houseRegistrationcause: this.houseRegistrationcause,

@@ -120,7 +120,6 @@ export default {
             this.olddatatypeQueue = this.queueList;
             this.queueList.sort((a, b) => a.pickedBook - b.pickedBook);
             this.no = this.queueList.length + 1;
-            console.log(this.queueList);
             this.queuefilter("ทั้งหมด");
           })
           .catch((err) => {
@@ -235,12 +234,28 @@ export default {
             title: "ทำรายการสำเร็จ",
             type: "success",
           });
+          this.updateUser()
           this.getAllqueue();
         })
         .catch((err) => {
           console.log(err);
         });
     },
+
+    updateUser(){
+      let body = {
+        bookNumber: this.bookNumber,
+      }
+      axios
+        .put(`http://localhost:3897/users/${this.userId}`, body, {
+          headers: {
+            // remove headers
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        })
+    },
+
     EditsubmitForm() {
       let body = {
         typeRoom: this.typeroomByqueue,
@@ -267,9 +282,8 @@ export default {
       };
       delete body.id;
       axios
-        .put(`http://localhost:3897/queue/${this.userId}`, body, {
+        .put(`http://localhost:3897/users/${this.userId}`, body, {
           headers: {
-            // remove headers
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
           },
