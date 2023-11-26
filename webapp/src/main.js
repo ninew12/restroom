@@ -13,6 +13,7 @@ import materialKit from "./material-kit";
 import  VueSelect  from "vue-select";
 import Notifications from '@kyvg/vue3-notification'
 import JsonExcel from "vue-json-excel3";
+import VueHtmlToPaper from "vue-html-to-paper";
 
 const app = createApp(App);
 app.component("v-select", VueSelect)
@@ -21,5 +22,6 @@ app.use(createPinia());
 app.use(router);
 app.use(materialKit)
 app.use(Notifications)
+app.use(VueHtmlToPaper)
 
 app.mount("#app");

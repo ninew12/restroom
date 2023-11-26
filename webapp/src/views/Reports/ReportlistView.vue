@@ -391,7 +391,6 @@ export default {
       });
       this.monthYear = m + " " + this.thaiNumber(result, "year");
       this.monthYearNow = this.dateNow + " " + this.thaiNumber(result, "year");
-      console.log(this.monthYearNow);
       await this.getReport(m, this.yearNumber);
     },
 
@@ -1881,8 +1880,8 @@ export default {
         return a;
       });
 
-      this.reportlistCTD = arr3.sort((a, b) => b.rankNumber - a.rankNumber);;
-      this.reportlistTD = arr4.sort((a, b) => b.rankNumber - a.rankNumber);;
+      this.reportlistCTD = arr3.sort((a, b) => a.rankNumber - b.rankNumber);;
+      this.reportlistTD = arr4.sort((a, b) => a.rankNumber - b.rankNumber);;
     },
     // numberWithCommas
 
@@ -4202,18 +4201,7 @@ export default {
                  บัญชียอดหักเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ  ตร
                 </button>
                 <button
-                  class="nav-link"
-                  id="v-pills-home-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills-home"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills-home"
-                  aria-selected="false"
-                >
-                 บัญชียอดถอดเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ  ตร
-                </button>
-                <button
+                 
                   class="nav-link active"
                   id="v-pills-messages-tab"
                   data-bs-toggle="pill"
@@ -4221,6 +4209,18 @@ export default {
                   type="button"
                   role="tab"
                   aria-controls="v-pills-messages"
+                  aria-selected="false"
+                >
+                 บัญชียอดถอดเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ  ตร
+                </button>
+                <button
+                class="nav-link"
+                  id="v-pills-home-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-home"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills-home"
                   aria-selected="false"
                 >
                   บัญชียอดหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจำเดือน  ของ  ตร
@@ -4251,20 +4251,7 @@ export default {
                 >
                   บัญชีสรุป ยอดเงิน แยกตามบ้านพัก ของ ตร. กับ บช.ตชด.
                 </button>
-             
-              
-                <!-- <button
-                  class="nav-link"
-                  id="v-pills-home-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills-home"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills-home"
-                  aria-selected="true"
-                >
-                  บัญชีสรุปส่งการเงิน
-                </button> -->
+          
               </div>
             </div>
             <div class="col-lg-9">

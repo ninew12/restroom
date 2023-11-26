@@ -5,6 +5,8 @@ import MaterialCheckbox from "@/components/MaterialCheckbox.vue";
 import vueMkHeader from "@/assets/img/bg.jpg";
 import Breadcrumbs from "@/examples/Breadcrumbs.vue";
 import { notify } from "@kyvg/vue3-notification";
+import htmlToPdfmake from 'html-to-pdfmake';
+import pdfFonts from "@/assets/fonts/vfs_font_v2.js";
 // import posts from "../posts.json";
 import axios from "axios";
 
@@ -330,6 +332,25 @@ export default {
     Previous() {
       window.history.back();
     },
+    async printTer() {
+      console.warn(this, this.$htmlToPaper);
+      // Pass the element id here
+      await this.$htmlToPaper("printMe");
+    },
+//     printDocument() {
+     
+         
+//      //get table html
+//      const pdfTable = document.getElementById('divToPrint');
+//      //html to pdf format
+//      var html = htmlToPdfmake(pdfTable.innerHTML);
+   
+//      const documentDefinition = { content: html };
+//     //  pdfMake.vfs = pdfFonts.pdfMake.vfs;
+//     pdfMake.vfs = pdfFonts;
+//      pdfMake.createPdf(documentDefinition).open();
+   
+// }
   },
 };
 </script>
@@ -382,7 +403,7 @@ export default {
           <h4>สถานะห้องพัก</h4>
 
           <div class="row pt-4 align-items-baseline">
-            <div class="col-4">
+            <div class="col-4" >
               <div class="mb-3">
                 <div class="form-check form-check-inline">
                   <input
@@ -448,7 +469,8 @@ export default {
             <div class="col-8">
               <div class="d-flex justify-content-end align-items-baseline">
                 <div class="d-flex">
-                  <MaterialButton size="lg" class="btn-icon" style="margin-right: -30px">
+                  <!-- <MaterialButton size="lg" class="btn-icon" style="margin-right: -30px"
+                  @click="printTer()">
                     <div class="d-flex align-items-center">
                       <span style="margin-right: 5px">บันทึก</span>
                       <img
@@ -458,7 +480,7 @@ export default {
                         width="40"
                       />
                     </div>
-                  </MaterialButton>
+                  </MaterialButton> -->
                   <!-- <MaterialCheckbox id="terms6">
                     <a href="javascript:;" class="font-weight-bolder"> ตึกทั้งหมด</a>
                   </MaterialCheckbox> -->
@@ -591,7 +613,7 @@ export default {
               </div>
             </div>
 
-            <div v-for="(item, index) in roomList" :key="index">
+            <div v-for="(item, index) in roomList" :key="index"  id="printMe">
               <div class="card mb-2">
                 <div class="card-body">
                   <p class="text-start">
