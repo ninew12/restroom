@@ -210,14 +210,15 @@ app.post('/buildings', (req, res) => {
 app.delete('/buildings/:builId', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     const deletedIndex = building.filter(buil => buil.buildingId !== (req.params.builId))
-    fs.writeFileSync('./building.json', JSON.stringify(deletedIndex, null, 2), (err) => {
+    const parsedData = deletedIndex;
+    fs.writeFileSync('./building.json', JSON.stringify(parsedData), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
         }
         console.log("Updated file successfully");
     });
-    res.send(`Delete user completed.`)
+    res.json(building)
 })
 
 app.get('/expenses', (req, res) => {

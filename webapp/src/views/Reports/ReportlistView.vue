@@ -456,8 +456,9 @@ export default {
             data2 = data4.filter(
               (el2) => el2.typeUser == "ตร." && el2.monthly == m && el2.years == y
             );
-            // console.log(data);
+            // console.log(data); typeContract: el.typeContract || "-",
             this.mapData(data, data2);
+            this.mapFiltertypeContract(data2)
             this.reportlistok = data5;
             this.reportListssn = data6;
             this.reportlistlj = data7;
@@ -588,10 +589,10 @@ export default {
         data15,
         data16,
         data17 = [];
-        data = listTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
-      let sumCostdataInsuranceAll = this.SumCostSumInsuranceAll(data);
+      data = listTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
+      let sumCostdataInsuranceAll = this.SumCostSummaintenanceAll(data);
       let sumdataInsuranceAll = this.InsuranceSumAll(data);
-      let sumdataMaintenanceSumAll = this.MaintenanceSumAll(data);
+      let sumdatamaintenancefeeSumAll = this.maintenancefeeCount(data);
       let sumdatawaterbillSumAll = this.WaterbillSum(data);
       let sumdataelectricitybillSumAll = this.ElectricitybillSum(data);
       let sumdataCostwaterbillSumAll = this.SumCostSumwater(data);
@@ -600,9 +601,9 @@ export default {
       let sumdataCostCostsSumAll = this.SumCostSumCentral(data);
       let sumdataCostCentralSumAll = this.CentralSumallCount(data);
       data2 = listTD.filter((el) => el.typeAffiliation == "บก.อก.");
-      let sumCostdata2InsuranceAll = this.SumCostSumInsuranceAll(data2);
+      let sumCostdata2InsuranceAll = this.SumCostSummaintenanceAll(data2);
       let sumdata2InsuranceAll = this.InsuranceSumAll(data2);
-      let sumdata2MaintenanceSumAll = this.MaintenanceSumAll(data2);
+      let sumdata2maintenancefeeSumAll = this.maintenancefeeCount(data2);
       let sumdata2waterbillSumAll = this.WaterbillSum(data2);
       let sumdata2electricitybillSumAll = this.ElectricitybillSum(data2);
       let sumdata2CostwaterbillSumAll = this.SumCostSumwater(data2);
@@ -611,9 +612,9 @@ export default {
       let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
       let sumdata2CostCentralSumAll = this.CentralSumallCount(data2);
       data3 = listTD.filter((el) => el.typeAffiliation == "บก.สนน.");
-      let sumCostdata3InsuranceAll = this.SumCostSumInsuranceAll(data3);
+      let sumCostdata3InsuranceAll = this.SumCostSummaintenanceAll(data3);
       let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
-      let sumdata3MaintenanceSumAll = this.MaintenanceSumAll(data3);
+      let sumdata3maintenancefeeSumAll = this.maintenancefeeCount(data3);
       let sumdata3waterbillSumAll = this.WaterbillSum(data3);
       let sumdata3electricitybillSumAll = this.ElectricitybillSum(data3);
       let sumdata3CostwaterbillSumAll = this.SumCostSumwater(data3);
@@ -622,9 +623,9 @@ export default {
       let sumdata3CostCostsSumAll = this.SumCostSumCentral(data3);
       let sumdata3CostCentralSumAll = this.CentralSumallCount(data3);
       data4 = listTD.filter((el) => el.typeAffiliation == "ฝอ.1");
-      let sumCostdata4InsuranceAll = this.SumCostSumInsuranceAll(data4);
+      let sumCostdata4InsuranceAll = this.SumCostSummaintenanceAll(data4);
       let sumdata4InsuranceAll = this.InsuranceSumAll(data4);
-      let sumdata4MaintenanceSumAll = this.MaintenanceSumAll(data4);
+      let sumdata4maintenancefeeSumAll = this.maintenancefeeCount(data4);
       let sumdata4waterbillSumAll = this.WaterbillSum(data4);
       let sumdata4electricitybillSumAll = this.ElectricitybillSum(data4);
       let sumdata4CostwaterbillSumAll = this.SumCostSumwater(data4);
@@ -633,9 +634,9 @@ export default {
       let sumdata4CostCostsSumAll = this.SumCostSumCentral(data4);
       let sumdata4CostCentralSumAll = this.CentralSumallCount(data4);
       data5 = listTD.filter((el) => el.typeAffiliation == "ฝอ.2");
-      let sumCostdata5InsuranceAll = this.SumCostSumInsuranceAll(data5);
+      let sumCostdata5InsuranceAll = this.SumCostSummaintenanceAll(data5);
       let sumdata5InsuranceAll = this.InsuranceSumAll(data5);
-      let sumdata5MaintenanceSumAll = this.MaintenanceSumAll(data5);
+      let sumdata5maintenancefeeSumAll = this.maintenancefeeCount(data5);
       let sumdata5waterbillSumAll = this.WaterbillSum(data5);
       let sumdata5electricitybillSumAll = this.ElectricitybillSum(data5);
       let sumdata5CostwaterbillSumAll = this.SumCostSumwater(data5);
@@ -644,9 +645,9 @@ export default {
       let sumdata5CostCostsSumAll = this.SumCostSumCentral(data5);
       let sumdata5CostCentralSumAll = this.CentralSumallCount(data5);
       data6 = listTD.filter((el) => el.typeAffiliation == "ฝอ.3");
-      let sumCostdata6InsuranceAll = this.SumCostSumInsuranceAll(data6);
+      let sumCostdata6InsuranceAll = this.SumCostSummaintenanceAll(data6);
       let sumdata6InsuranceAll = this.InsuranceSumAll(data6);
-      let sumdata6MaintenanceSumAll = this.MaintenanceSumAll(data6);
+      let sumdata6maintenancefeeSumAll = this.maintenancefeeCount(data6);
       let sumdata6waterbillSumAll = this.WaterbillSum(data6);
       let sumdata6electricitybillSumAll = this.ElectricitybillSum(data6);
       let sumdata6CostwaterbillSumAll = this.SumCostSumwater(data6);
@@ -655,9 +656,9 @@ export default {
       let sumdata6CostCostsSumAll = this.SumCostSumCentral(data6);
       let sumdata6CostCentralSumAll = this.CentralSumallCount(data6);
       data7 = listTD.filter((el) => el.typeAffiliation == "ฝอ.4");
-      let sumCostdata7InsuranceAll = this.SumCostSumInsuranceAll(data7);
+      let sumCostdata7InsuranceAll = this.SumCostSummaintenanceAll(data7);
       let sumdata7InsuranceAll = this.InsuranceSumAll(data7);
-      let sumdata7MaintenanceSumAll = this.MaintenanceSumAll(data7);
+      let sumdata7maintenancefeeSumAll = this.maintenancefeeCount(data7);
       let sumdata7waterbillSumAll = this.WaterbillSum(data7);
       let sumdata7electricitybillSumAll = this.ElectricitybillSum(data7);
       let sumdata7CostwaterbillSumAll = this.SumCostSumwater(data7);
@@ -666,9 +667,9 @@ export default {
       let sumdata7CostCostsSumAll = this.SumCostSumCentral(data7);
       let sumdata7CostCentralSumAll = this.CentralSumallCount(data7);
       data8 = listTD.filter((el) => el.typeAffiliation == "ฝอ.5");
-      let sumCostdata8InsuranceAll = this.SumCostSumInsuranceAll(data8);
+      let sumCostdata8InsuranceAll = this.SumCostSummaintenanceAll(data8);
       let sumdata8InsuranceAll = this.InsuranceSumAll(data8);
-      let sumdata8MaintenanceSumAll = this.MaintenanceSumAll(data8);
+      let sumdata8maintenancefeeSumAll = this.maintenancefeeCount(data8);
       let sumdata8waterbillSumAll = this.WaterbillSum(data8);
       let sumdata8electricitybillSumAll = this.ElectricitybillSum(data8);
       let sumdata8CostwaterbillSumAll = this.SumCostSumwater(data8);
@@ -677,9 +678,9 @@ export default {
       let sumdata8CostCostsSumAll = this.SumCostSumCentral(data8);
       let sumdata8CostCentralSumAll = this.CentralSumallCount(data8);
       data9 = listTD.filter((el) => el.typeAffiliation == "ฝอ.6");
-      let sumCostdata9InsuranceAll = this.SumCostSumInsuranceAll(data9);
+      let sumCostdata9InsuranceAll = this.SumCostSummaintenanceAll(data9);
       let sumdata9InsuranceAll = this.InsuranceSumAll(data9);
-      let sumdata9MaintenanceSumAll = this.MaintenanceSumAll(data9);
+      let sumdata9maintenancefeeSumAll = this.maintenancefeeCount(data9);
       let sumdata9waterbillSumAll = this.WaterbillSum(data9);
       let sumdata9electricitybillSumAll = this.ElectricitybillSum(data9);
       let sumdata9CostwaterbillSumAll = this.SumCostSumwater(data9);
@@ -688,9 +689,9 @@ export default {
       let sumdata9CostCostsSumAll = this.SumCostSumCentral(data9);
       let sumdata9CostCentralSumAll = this.CentralSumallCount(data9);
       data10 = listTD.filter((el) => el.typeAffiliation == "ฝอ.7");
-      let sumCostdata10InsuranceAll = this.SumCostSumInsuranceAll(data10);
+      let sumCostdata10InsuranceAll = this.SumCostSummaintenanceAll(data10);
       let sumdata10InsuranceAll = this.InsuranceSumAll(data10);
-      let sumdata10MaintenanceSumAll = this.MaintenanceSumAll(data10);
+      let sumdata10maintenancefeeSumAll = this.maintenancefeeCount(data10);
       let sumdata10waterbillSumAll = this.WaterbillSum(data10);
       let sumdata10electricitybillSumAll = this.ElectricitybillSum(data10);
       let sumdata10CostwaterbillSumAll = this.SumCostSumwater(data10);
@@ -699,9 +700,9 @@ export default {
       let sumdata10CostCostsSumAll = this.SumCostSumCentral(data10);
       let sumdata10CostCentralSumAll = this.CentralSumallCount(data10);
       data11 = listTD.filter((el) => el.typeAffiliation == "ฝอ.8");
-      let sumCostdata11InsuranceAll = this.SumCostSumInsuranceAll(data11);
+      let sumCostdata11InsuranceAll = this.SumCostSummaintenanceAll(data11);
       let sumdata11InsuranceAll = this.InsuranceSumAll(data11);
-      let sumdata11MaintenanceSumAll = this.MaintenanceSumAll(data11);
+      let sumdata11maintenancefeeSumAll = this.maintenancefeeCount(data11);
       let sumdata11waterbillSumAll = this.WaterbillSum(data11);
       let sumdata11electricitybillSumAll = this.ElectricitybillSum(data11);
       let sumdata11CostwaterbillSumAll = this.SumCostSumwater(data11);
@@ -710,9 +711,9 @@ export default {
       let sumdata11CostCostsSumAll = this.SumCostSumCentral(data11);
       let sumdata11CostCentralSumAll = this.CentralSumallCount(data11);
       data12 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.1");
-      let sumCostdata12InsuranceAll = this.SumCostSumInsuranceAll(data12);
+      let sumCostdata12InsuranceAll = this.SumCostSummaintenanceAll(data12);
       let sumdata12InsuranceAll = this.InsuranceSumAll(data12);
-      let sumdata12MaintenanceSumAll = this.MaintenanceSumAll(data12);
+      let sumdata12maintenancefeeSumAll = this.maintenancefeeCount(data12);
       let sumdata12waterbillSumAll = this.WaterbillSum(data12);
       let sumdata12electricitybillSumAll = this.ElectricitybillSum(data12);
       let sumdata12CostwaterbillSumAll = this.SumCostSumwater(data12);
@@ -721,9 +722,9 @@ export default {
       let sumdata12CostCostsSumAll = this.SumCostSumCentral(data12);
       let sumdata12CostCentralSumAll = this.CentralSumallCount(data12);
       data13 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.2");
-      let sumCostdata13InsuranceAll = this.SumCostSumInsuranceAll(data13);
+      let sumCostdata13InsuranceAll = this.SumCostSummaintenanceAll(data13);
       let sumdata13InsuranceAll = this.InsuranceSumAll(data13);
-      let sumdata13MaintenanceSumAll = this.MaintenanceSumAll(data13);
+      let sumdata13maintenancefeeSumAll = this.maintenancefeeCount(data13);
       let sumdata13waterbillSumAll = this.WaterbillSum(data13);
       let sumdata13lectricitybillSumAll = this.ElectricitybillSum(data13);
       let sumdata13CostwaterbillSumAll = this.SumCostSumwater(data13);
@@ -732,9 +733,9 @@ export default {
       let sumdata13CostCostsSumAll = this.SumCostSumCentral(data13);
       let sumdata13CostCentralSumAll = this.CentralSumallCount(data13);
       data14 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.3");
-      let sumCostdata14InsuranceAll = this.SumCostSumInsuranceAll(data14);
+      let sumCostdata14InsuranceAll = this.SumCostSummaintenanceAll(data14);
       let sumdata14InsuranceAll = this.InsuranceSumAll(data14);
-      let sumdata14MaintenanceSumAll = this.MaintenanceSumAll(data14);
+      let sumdata14maintenancefeeSumAll = this.maintenancefeeCount(data14);
       let sumdata14waterbillSumAll = this.WaterbillSum(data14);
       let sumdata14electricitybillSumAll = this.ElectricitybillSum(data14);
       let sumdata14CostwaterbillSumAll = this.SumCostSumwater(data14);
@@ -743,9 +744,9 @@ export default {
       let sumdata14CostCostsSumAll = this.SumCostSumCentral(data14);
       let sumdata14CostCentralSumAll = this.CentralSumallCount(data14);
       data15 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.4");
-      let sumCostdata15InsuranceAll = this.SumCostSumInsuranceAll(data15);
+      let sumCostdata15InsuranceAll = this.SumCostSummaintenanceAll(data15);
       let sumdata15InsuranceAll = this.InsuranceSumAll(data15);
-      let sumdata15MaintenanceSumAll = this.MaintenanceSumAll(data15);
+      let sumdata15maintenancefeeSumAll = this.maintenancefeeCount(data15);
       let sumdata15waterbillSumAll = this.WaterbillSum(data15);
       let sumdata15electricitybillSumAll = this.ElectricitybillSum(data15);
       let sumdata15CostwaterbillSumAll = this.SumCostSumwater(data15);
@@ -754,9 +755,9 @@ export default {
       let sumdata15CostCostsSumAll = this.SumCostSumCentral(data15);
       let sumdata15CostCentralSumAll = this.CentralSumallCount(data15);
       data16 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.5");
-      let sumCostdata16InsuranceAll = this.SumCostSumInsuranceAll(data16);
+      let sumCostdata16InsuranceAll = this.SumCostSummaintenanceAll(data16);
       let sumdata16InsuranceAll = this.InsuranceSumAll(data16);
-      let sumdata16MaintenanceSumAll = this.MaintenanceSumAll(data16);
+      let sumdata16maintenancefeeSumAll = this.maintenancefeeCount(data16);
       let sumdata16waterbillSumAll = this.WaterbillSum(data16);
       let sumdata16electricitybillSumAll = this.ElectricitybillSum(data16);
       let sumdata16CostwaterbillSumAll = this.SumCostSumwater(data16);
@@ -765,9 +766,9 @@ export default {
       let sumdata16CostCostsSumAll = this.SumCostSumCentral(data16);
       let sumdata16CostCentralSumAll = this.CentralSumallCount(data16);
       data17 = listTD.filter((el) => el.typeAffiliation == "ลูกจ้าง");
-      let sumCostdata17InsuranceAll = this.SumCostSumInsuranceAll(data17);
+      let sumCostdata17InsuranceAll = this.SumCostSummaintenanceAll(data17);
       let sumdata17InsuranceAll = this.InsuranceSumAll(data17);
-      let sumdata17MaintenanceSumAll = this.MaintenanceSumAll(data17);
+      let sumdata17maintenancefeeSumAll = this.maintenancefeeCount(data17);
       let sumdata17waterbillSumAll = this.WaterbillSum(data17);
       let sumdata17electricitybillSumAll = this.ElectricitybillSum(data17);
       let sumdata17CostwaterbillSumAll = this.SumCostSumwater(data17);
@@ -777,7 +778,7 @@ export default {
       let sumdata17CostCentralSumAll = this.CentralSumallCount(data17);
       await this.AffiliationListTD.map((el) => {
         if (el.label == "บช.ตชด.") {
-          el["sumdataMaintenance"] = sumdataMaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdatamaintenancefeeSumAll;
           el["sumdataInsurance"] = sumdataInsuranceAll;
           el["sumCostdataInsurance"] = sumCostdataInsuranceAll;
           el["sumdatawaterbill"] = sumdatawaterbillSumAll;
@@ -789,7 +790,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdataCostCentralSumAll
         }
         if (el.label == "บก.อก.") {
-          el["sumdataMaintenance"] = sumdata2MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata2maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata2InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata2InsuranceAll;
           el["sumdatawaterbill"] = sumdata2waterbillSumAll;
@@ -801,7 +802,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata2CostCentralSumAll
         }
         if (el.label == "บก.สนน.") {
-          el["sumdataMaintenance"] = sumdata3MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata3maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata3InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
           el["sumdatawaterbill"] = sumdata3waterbillSumAll;
@@ -813,7 +814,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata3CostCentralSumAll
         }
         if (el.label == "ฝอ.1") {
-          el["sumdataMaintenance"] = sumdata4MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata4maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata4InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata4InsuranceAll;
           el["sumdatawaterbill"] = sumdata4waterbillSumAll;
@@ -825,7 +826,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata4CostCentralSumAll
         }
         if (el.label == "ฝอ.2") {
-          el["sumdataMaintenance"] = sumdata5MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata5maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata5InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata5InsuranceAll;
           el["sumdatawaterbill"] = sumdata5waterbillSumAll;
@@ -837,7 +838,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata5CostCentralSumAll
         }
         if (el.label == "ฝอ.3") {
-          el["sumdataMaintenance"] = sumdata6MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata6maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata6InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata6InsuranceAll;
           el["sumdatawaterbill"] = sumdata6waterbillSumAll;
@@ -849,7 +850,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata6CostCentralSumAll
         }
         if (el.label == "ฝอ.4") {
-          el["sumdataMaintenance"] = sumdata7MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata7maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata7InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata7InsuranceAll;
           el["sumdatawaterbill"] = sumdata7waterbillSumAll;
@@ -861,7 +862,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata7CostCentralSumAll
         }
         if (el.label == "ฝอ.5") {
-          el["sumdataMaintenance"] = sumdata8MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata8maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata8InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata8InsuranceAll;
           el["sumdatawaterbill"] = sumdata8waterbillSumAll;
@@ -873,7 +874,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata8CostCentralSumAll
         }
         if (el.label == "ฝอ.6") {
-          el["sumdataMaintenance"] = sumdata9MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata9maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata9InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata9InsuranceAll;
           el["sumdatawaterbill"] = sumdata9waterbillSumAll;
@@ -885,7 +886,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata9CostCentralSumAll
         }
         if (el.label == "ฝอ.7") {
-          el["sumdataMaintenance"] = sumdata10MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata10maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata10InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata10InsuranceAll;
           el["sumdatawaterbill"] = sumdata10waterbillSumAll;
@@ -897,7 +898,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata10CostCentralSumAll
         }
         if (el.label == "ฝอ.8") {
-          el["sumdataMaintenance"] = sumdata11MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata11maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata11InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata11InsuranceAll;
           el["sumdatawaterbill"] = sumdata11waterbillSumAll;
@@ -909,7 +910,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata11CostCentralSumAll
         }
         if (el.label == "ฝสสน.1") {
-          el["sumdataMaintenance"] = sumdata12MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata12maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata12InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata12InsuranceAll;
           el["sumdatawaterbill"] = sumdata12waterbillSumAll;
@@ -921,7 +922,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata12CostCentralSumAll
         }
         if (el.label == "ฝสสน.2") {
-          el["sumdataMaintenance"] = sumdata13MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata13maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata13InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata13InsuranceAll;
           el["sumdatawaterbill"] = sumdata13waterbillSumAll;
@@ -933,7 +934,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata13CostCentralSumAll
         }
         if (el.label == "ฝสสน.3") {
-          el["sumdataMaintenance"] = sumdata14MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata14maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata14InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata14InsuranceAll;
           el["sumdatawaterbill"] = sumdata14waterbillSumAll;
@@ -945,7 +946,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata14CostCentralSumAll
         }
         if (el.label == "ฝสสน.4") {
-          el["sumdataMaintenance"] = sumdata15MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata15maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata15InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata15InsuranceAll;
           el["sumdatawaterbill"] = sumdata15waterbillSumAll;
@@ -957,7 +958,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata15CostCentralSumAll
         }
         if (el.label == "ฝสสน.5") {
-          el["sumdataMaintenance"] = sumdata16MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata16maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata16InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata16InsuranceAll;
           el["sumdatawaterbill"] = sumdata16waterbillSumAll;
@@ -969,7 +970,7 @@ export default {
           el["sumdataCostCentralAllSum"] = sumdata16CostCentralSumAll
         }
         if (el.label == "ลูกจ้าง") {
-          el["sumdataMaintenance"] = sumdata17MaintenanceSumAll;
+          el["sumdataMaintenancefee"] = sumdata17maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata17InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata17InsuranceAll;
           el["sumdatawaterbill"] = sumdata17waterbillSumAll;
@@ -1000,6 +1001,8 @@ export default {
         return e;
       });
     },
+
+
 
     MaintenanceSumAll(items) {
       return items.reduce((MaintenanceSumAll, ele) => {
@@ -1697,7 +1700,15 @@ export default {
       });
       await this.mapdataSum(arr, arr2);
     },
-
+    mapFiltertypeContract(data){
+      // typeContract: el.typeContract 
+      let arr = []
+      let arr2 = []
+      arr = data.filter(e => e.typeContract == 'หักได้')
+      arr2 = data.filter(e => e.typeContract == 'หักไม่ได้')
+      console.log(arr);
+      console.log(arr2);
+    },
     checkMonth(index, installments) {
       let td = installments || 0;
       var d = new Date(index);
@@ -2929,6 +2940,7 @@ export default {
           numberNo: i + 1,
         };
       });
+      console.log(listData);
       if (listData.length > 0) {
         if (this.typeReport == "ตร.")
           mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";

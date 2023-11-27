@@ -53,6 +53,7 @@ export default {
       typeStatusroom: "ทั้งหมด",
       typeRoomselect: [],
     };
+    
   },
   created() {
     // this.$route.query
@@ -333,9 +334,9 @@ export default {
       window.history.back();
     },
     async printTer() {
-      console.warn(this, this.$htmlToPaper);
+      // console.warn(this, this.$htmlToPaper);
       // Pass the element id here
-      await this.$htmlToPaper("printMe");
+      // await this.$htmlToPaper("printMe");
     },
 //     printDocument() {
      

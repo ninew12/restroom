@@ -315,6 +315,7 @@ export default {
         roomnumber: this.numberRoom,
         buildingName: this.buildingName,
         contract: this.contract,
+        no:""
       };
       await axios.put(`http://localhost:3897/users/${this.userId}`, body, {
         headers: {
@@ -410,6 +411,7 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        no:""
       };
       await axios.put(`http://localhost:3897/queue/${this.userId}`, body, {
         headers: {
@@ -496,6 +498,7 @@ export default {
         amountPaid: this.amountPaid,
         buildingName: this.buildingName,
         dateApproved: this.dateApp.toISOString(),
+  
       };
 
       await axios
@@ -521,7 +524,8 @@ export default {
     updateUser(){
       let body = {
         bookNumber: this.bookNumber,
-        contract: this.contract
+        contract: this.contract,
+        no:""
       }
       axios
         .put(`http://localhost:3897/users/${this.userId}`, body, {

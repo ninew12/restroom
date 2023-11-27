@@ -214,6 +214,7 @@ export default {
     Previous() {
       window.history.back();
     },
+
     deleteLayour(id) {
       this.builId = id;
     },
@@ -222,7 +223,10 @@ export default {
       axios
         .delete(`http://localhost:3897/buildings/${this.builId}`)
         .then((res) => {
-          this.getAlluser();
+          setTimeout(() => {
+            this.getAlluser();
+          }, 1000);
+       
           notify({
             title: "ลบข้อมูลสำเร็จ",
             type: "success",
@@ -232,7 +236,9 @@ export default {
           console.log(err);
         });
     },
+    
     getAlluser() {
+      this.buildingList = []
       try {
         axios
           .get("http://localhost:3897/buildings")
