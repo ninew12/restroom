@@ -209,6 +209,15 @@ export default {
       }
     },
 
+    seleteUser(){
+      this.selectedUser = "เลือกชื่อผู้พักอาศัย",
+      this.seleteBuildingType = "เลือกอาคาร1",
+      this.selectedBuildingName = "เลือกอาคาร2",
+      this.bookNumber = "",
+      this.picked = new Date(),
+      this.typeroomByqueue = ""
+    },
+
     submitForm() {
       let body = {
         ...this.userByid,
@@ -235,25 +244,13 @@ export default {
             type: "success",
           });
           this.updateUser()
-          this.getAllqueue();
+          setTimeout(() => {
+            this.getAllqueue();
+          }, 500);  
         })
         .catch((err) => {
           console.log(err);
         });
-    },
-
-    updateUser(){
-      let body = {
-        bookNumber: this.bookNumber,
-      }
-      axios
-        .put(`http://localhost:3897/users/${this.userId}`, body, {
-          headers: {
-            // remove headers
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        })
     },
 
     EditsubmitForm() {
@@ -279,6 +276,7 @@ export default {
     updateUser() {
       let body = {
         buildingName: this.buildingName,
+        bookNumber: this.bookNumber,
       };
       delete body.id;
       axios
@@ -289,10 +287,6 @@ export default {
           },
         })
         .then((res) => {
-          notify({
-            title: "แก้ไขสำเร็จ",
-            type: "success",
-          });
           this.getAllqueue();
         })
         .catch((err) => {
@@ -420,6 +414,7 @@ export default {
                 color="success"
                 data-bs-toggle="modal"
                 data-bs-target="#seleteUserBackdrop"
+                @click="seleteUser"
                 >เพิ่มผู้พักอาศัยลงคิว</MaterialButton
               >
             </div>
@@ -442,7 +437,7 @@ export default {
               </thead>
               <tbody>
                 <tr v-for="(item, index) in queueList" :key="index">
-                  <th scope="row">{{ item?.no }}</th>
+                  <th scope="row">{{ index+1 }}</th>
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.affiliation }}</td>
                   <td>{{ item?.buildingType }}</td>

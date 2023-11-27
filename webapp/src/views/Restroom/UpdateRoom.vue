@@ -83,7 +83,8 @@ export default {
       historyOld: [],
       bankbookName: "",
       bankbookNumber: "",
-      typeRoom: ""
+      typeRoom: "",
+      roomconditionsCause: ""
     };
   },
   created() {
@@ -133,6 +134,7 @@ export default {
             this.lastName = this.roomData.lastName
             this.leniency = this.roomData.leniency
             this.typeRoom = this.roomData.typeRoom
+            this.roomconditionsCause = this.roomData.roomconditionsCause
             //  console.log(this.roomData);
             this.getHistoryRoom(this.roomData.id);
           })
@@ -189,6 +191,7 @@ export default {
         numberRoom: this.numberRoom,
         typeRoom: this.selectedRoomtype.label,
         roomconditions: this.Roomconditions,
+        roomconditionsCause: this.roomconditionsCause
       };
       axios
         .put(`http://localhost:3897/rooms/${this.id}`, body, {
@@ -242,6 +245,7 @@ export default {
         ranks: " ",
         Affiliation: " ",
         affiliation: " ",
+        roomconditionsCause: "",
         queue: "none",
         roomKey: this.roomKey,
         houseRegistration: this.houseRegistration,
@@ -288,6 +292,7 @@ export default {
         houseRegistration: this.houseRegistration,
         payMonth: this.payMonth,
         houseRegistrationcause: this.houseRegistrationcause,
+        roomconditionsCause: this.roomconditionsCause,
         payMonthcause: this.payMonthcause,
         payMonthcausetwo: this.payMonthcausetwo,
         roomId: this.roomId,
@@ -318,6 +323,7 @@ export default {
         houseRegistrationcause: this.houseRegistrationcause,
         payMonthcause: this.payMonthcause,
         payMonthcausetwo: this.payMonthcausetwo,
+        roomconditionsCause: this.roomconditionsCause,
         roomId: this.roomId,
         dateReturn: this.dateApp.toISOString(),
         customerOld: "คืนห้องพักแล้ว",
@@ -478,7 +484,7 @@ export default {
                         ></v-select>
                       </div>
 
-                      <div class="mb-3">
+                      <div class="mb-3" style="display: flex; justify-content: flex-start; align-items: center;">
                         <div class="form-check form-check-inline">
                           <label style="margin-right: 20px" class="starRed">สภาพห้อง</label>
                           <input
@@ -503,6 +509,16 @@ export default {
                             :checked="Roomconditions == 'ชำรุด'"
                           />
                           <label class="form-check-label" for="inlineRadio2">ชำรุด</label>
+                        </div>
+                        <div style="width: 250px; margin-bottom: 10px; margin-left: 20px">
+                          <MaterialInput
+                            name="roomconditionsCause"
+                            :value="roomconditionsCause"
+                            @input="(event) => (roomconditionsCause = event.target.value)"
+                            class="input-group-static"
+                            type="text"
+                            placeholder="สาเหตุ"
+                          />
                         </div>
                       </div>
                     </div>

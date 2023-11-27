@@ -175,6 +175,7 @@ export default {
         roomId: "",
         monthly: "",
         years: "",
+        amountPaid: "",
         deposit: "คืนเงินประกันแล้ว",
       };
       await axios
@@ -331,7 +332,7 @@ export default {
                   <td>{{ item?.buildingName || "-" }}</td>
                   <td>{{ item?.roomnumber || "-" }}</td>
                   <td>{{ item?.typeRoom || "-" }}</td>
-                  <td>{{ item?.insurance || "-" }}</td>
+                  <td>{{ item?.amountPaid || "-" }}</td>
                   <td>{{ item?.bankbookNumber || "-" }}</td>
                   <td>{{ item?.bankbookName || "-" }}</td>
                   <td>{{ item?.phone || "-" }}</td>

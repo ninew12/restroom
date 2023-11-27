@@ -336,8 +336,12 @@ export default {
     },
     selectedAffiliation: function (newValue) {
       if (newValue !== null && newValue.label !== undefined) {
-        this.Affiliation = newValue.value;
-        this.getReportAffiliation(this.mountLable, this.yearNumber, this.Affiliation);
+        if (newValue.label != "ทั้งหมด") {
+          this.Affiliation = newValue.value;
+          this.getReportAffiliation(this.mountLable, this.yearNumber, this.Affiliation);
+        } else {
+          this.getReport(this.mountLable, this.yearNumber);
+        }
       }
     },
     selectedranksAll: function (newValue) {
@@ -361,8 +365,14 @@ export default {
         const result = this.dateData.toLocaleDateString("th-TH", {
           year: "numeric",
         });
+        if(this.optionMonth[x-1] !== undefined){
+          this.mountCT = this.optionMonth[x-1].label
+        }else{
+          this.mountCT =  "ธันวาคม"
+          this.yearNumber = (this.dateData.getFullYear()-1);
+        }
         let m = newValue.label;
-        this.monthYear = newValue.label + " " + this.thaiNumber(result, "year");
+        this.monthYear = this.mountCT + " " + this.thaiNumber(result, "year");
         this.monthYearNow = newValue.label + " " + this.thaiNumber(result, "year");
         this.getReport(m, this.yearNumber);
       }
@@ -381,6 +391,7 @@ export default {
       this.yearNumber = y;
       this.mountLable = m;
       this.selectedMonth = m;
+      this.mountCT = m
       const today = new Date();
       const todaynew = new Date();
       const month = today.getMonth();
@@ -419,7 +430,9 @@ export default {
       this.reportlistok = [];
       this.reportListssn = [];
       this.reportlistlj = [];
-
+      this.sumreportlistAll = []
+      this.sumreportlistAll2 = []
+      this.sumreportlistAll3 = []
       try {
         axios
           .get("http://localhost:3897/report")
@@ -440,25 +453,25 @@ export default {
             );
             data6 = data3.filter(
               (el5) =>
-                el5.typeAffiliation == "ลูกจ้าง" && el5.monthly == m && el5.years == y
+                el5.typeAffiliation == "ลูกจ้าง" && el5.monthly == this.mountCT && el5.years == y
             );
             data7 = data3.filter(
               (el4) =>
                 el4.typeAffiliation !== "ลูกจ้าง" &&
                 el4.typeAffiliation !== "บช.ตชด." &&
                 el4.typeAffiliation !== "บก.อก." &&
-                el4.monthly == m &&
+                el4.monthly == this.mountCT &&
                 el4.years == y
             );
             data = data3.filter(
-              (el) => el.typeUser == "บช.ตชด." && el.monthly == this.dateNow  && el.years == y
+              (el) => el.typeUser == "บช.ตชด." && el.typeContract == 'หักได้' && el.monthly == this.dateNow  && el.years == y
             );
             data2 = data4.filter(
-              (el2) => el2.typeUser == "ตร." && el2.monthly == m && el2.years == y
+              (el2) => el2.typeUser == "ตร." && el2.typeContract == 'หักได้' && el2.monthly == this.mountCT && el2.years == y
             );
             // console.log(data); typeContract: el.typeContract || "-",
             this.mapData(data, data2);
-            this.mapFiltertypeContract(data2)
+            this.mapFiltertypeContract(data, data2)
             this.reportlistok = data5;
             this.reportListssn = data6;
             this.reportlistlj = data7;
@@ -1700,14 +1713,17 @@ export default {
       });
       await this.mapdataSum(arr, arr2);
     },
-    mapFiltertypeContract(data){
+    mapFiltertypeContract(data,data2){
       // typeContract: el.typeContract 
       let arr = []
       let arr2 = []
+      let arr3 = []
+      let arr4 = []
       arr = data.filter(e => e.typeContract == 'หักได้')
       arr2 = data.filter(e => e.typeContract == 'หักไม่ได้')
-      console.log(arr);
-      console.log(arr2);
+      arr3 = data2.filter(e => e.typeContract == 'หักได้')
+      arr4 = data2.filter(e => e.typeContract == 'หักไม่ได้')
+
     },
     checkMonth(index, installments) {
       let td = installments || 0;
@@ -4189,7 +4205,7 @@ export default {
                 aria-orientation="vertical"
               >
               <button
-                  class="nav-link"
+                  class="nav-link active"
                   id="v-pills4-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#v-pills4"
@@ -4214,7 +4230,7 @@ export default {
                 </button>
                 <button
                  
-                  class="nav-link active"
+                  class="nav-link "
                   id="v-pills-messages-tab"
                   data-bs-toggle="pill"
                   data-bs-target="#v-pills-messages"
@@ -4223,7 +4239,7 @@ export default {
                   aria-controls="v-pills-messages"
                   aria-selected="false"
                 >
-                 บัญชียอดถอดเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ  ตร
+                 บัญชียอดถอนเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ  ตร
                 </button>
                 <button
                 class="nav-link"
@@ -4248,7 +4264,7 @@ export default {
                   aria-controls="v-pills2"
                   aria-selected="false"
                 >
-                  บัญชียอดถอดเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจำเดือน  ของ  ตร
+                  บัญชียอดถอนเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจำเดือน  ของ  ตร
                 </button>
 
                 <button
@@ -4318,7 +4334,7 @@ export default {
                               v-model="selectedMonth"
                             ></v-select>
                           </div>
-                          <div class="mb-3 w-20">
+                          <div  v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20" >
                             <label>สังกัด</label>
                             <v-select
                               :options="masterData?.AffiliationList"
@@ -4482,14 +4498,14 @@ export default {
                           <tbody>
                             <tr v-for="(item, index) in reportlistTD" :key="index">
                               <th scope="row">{{ index + 1 }}</th>
-                              <td>{{ item?.buildingName || "-" }}</td>
+                              <td>{{ item?.buildingType || "-" }}</td>
                               <td>{{ item?.roomnumber || "-" }}</td>
                               <td>
                                 {{ item?.rank }} {{ item?.firstName }}
                                 {{ item?.lastName }}
                               </td>
                               <td>
-                                {{ item?.lastnumber - item?.numberfirst || "-" }}
+                                {{ item?.affiliation || "-" }}
                               </td>
                               <td>{{ item?.electricitybill || "-" }}</td>
                               <td>{{ item?.costs || "-" }}</td>
@@ -4515,7 +4531,7 @@ export default {
                   </div>
                 </div>
                 <div
-                  class="tab-pane fade show active"
+                  class="tab-pane fade show "
                   id="v-pills-messages"
                   role="tabpanel"
                   aria-labelledby="v-pills-messages-tab"
@@ -4563,7 +4579,7 @@ export default {
                             v-model="selectedMonth"
                           ></v-select>
                         </div>
-                        <div class="mb-3 w-20">
+                        <div  v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
                             :options="masterData?.AffiliationList"
@@ -4820,7 +4836,7 @@ export default {
                             v-model="selectedMonth"
                           ></v-select>
                         </div>
-                        <div class="mb-3 w-20">
+                        <div  v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
                             :options="masterData?.AffiliationList"
@@ -4980,16 +4996,17 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
+                          {{ reportlistCTD }}
                           <tr v-for="(item, index) in reportlistCTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item?.buildingName || "-" }}</td>
+                            <td>{{ item?.buildingType || "-" }}</td>
                             <td>{{ item?.roomnumber || "-" }}</td>
                             <td>
                               {{ item?.rank }} {{ item?.firstName }}
                               {{ item?.lastName }}
                             </td>
                             <td>
-                              {{ item?.lastnumber - item?.numberfirst || "-" }}
+                              {{ item?.affiliation || "-" }}
                             </td>
                             <td>{{ item?.central || "-" }}</td>
                             <td>{{ item?.costs || "-" }}</td>
@@ -5031,7 +5048,7 @@ export default {
                             v-model="selectedMonth"
                           ></v-select>
                         </div>
-                        <div class="mb-3 w-20">
+                        <div   v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
                             :options="masterData?.AffiliationList"
@@ -5310,7 +5327,7 @@ export default {
                   </div>
                 </div>
                 <div
-                  class="tab-pane fade show"
+                  class="tab-pane fade show active"
                   id="v-pills4"
                   role="tabpanel"
                   aria-labelledby="v-pills4-tab"
@@ -5360,7 +5377,7 @@ export default {
                                 v-model="selectedMonth"
                               ></v-select>
                             </div>
-                            <div class="mb-3 w-20">
+                            <div  v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
                               <label>สังกัด</label>
                               <v-select
                                 :options="masterData?.AffiliationList"
@@ -5612,7 +5629,7 @@ export default {
                             v-model="selectedMonth"
                           ></v-select>
                         </div>
-                        <div class="mb-3 w-20">
+                        <div  v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
                             :options="masterData?.AffiliationList"

@@ -79,12 +79,14 @@ export default {
       dateApp: new Date(),
       numberRoom: "",
       roomId: "",
-      maintenanceFix: '',
-      userByid: '',
-      reportId: '',
-    reportType: '',
-    bookNumber: '',
-    contract: ''
+      maintenanceFix: "",
+      userByid: "",
+      reportId: "",
+      reportType: "",
+      bookNumber: "",
+      contract: "",
+      vehicleNumber: "",
+      numberPeople: "",
     };
   },
   created() {
@@ -94,12 +96,11 @@ export default {
       this.getroomByid(this.id);
     }
     this.getAllinqueue();
-    this.getMonths()
+    this.getMonths();
   },
   watch: {
     selectedUser: function (newValue) {
-      if(newValue !== null)
-      this.getAllusersByid(newValue.value);
+      if (newValue !== null) this.getAllusersByid(newValue.value);
     },
   },
   methods: {
@@ -113,7 +114,7 @@ export default {
           .then((res) => {
             this.queueList = res.data;
             this.queuefilter = this.queueList.filter((e) => e.typeRoom === this.typeroom);
-            console.log(this.queuefilter);
+
           })
           .catch((err) => {
             console.log(err);
@@ -128,9 +129,9 @@ export default {
         axios
           .get(`http://localhost:3897/users`)
           .then((res) => {
-            let arr = res.data
-            let arr2 = []
-            arr2 = arr.filter(e=> e.typeUser == "บช.ตชด." && e.queue !== "inroom")
+            let arr = res.data;
+            let arr2 = [];
+            arr2 = arr.filter((e) => e.typeUser == "บช.ตชด." && e.queue !== "inroom");
             this.userList = arr2.map((ele) => {
               return {
                 label: ele.rank + " " + ele.firstName + " " + ele.lastName,
@@ -155,24 +156,25 @@ export default {
             this.getreportByid(id);
             let data = res.data;
             this.userByid = res.data;
-            console.log(this.userByid);
-           if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
-           if (data.typeRanks == "สัญญาบัตร") this.maintenanceFix = "100";
-           this.userId = id,
-           this.firstName = data.firstName,
-           this.lastName = data.lastName,
-           this.affiliation = data.affiliation,
-           this.rank = data.rank,
-           this.idcard = data.idcard,
-           this.phone = data.phone,
-           this.rankNumber = data.rankNumber,
-           this.status = data.status,
-           this.typeAffiliation = data.typeAffiliation,
-           this.typeRanks = data.typeRanks,
-           this.typeRoom = data.typeRoom
-           this.typeUser = data.typeUser
-           this.contract = data.contract
-           this.bookNumber = data.bookNumber
+            if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
+            if (data.typeRanks == "สัญญาบัตร") this.maintenanceFix = "100";
+              this.userId = id,
+              this.firstName = data.firstName,
+              this.lastName = data.lastName,
+              this.affiliation = data.affiliation,
+              this.rank = data.rank,
+              this.idcard = data.idcard,
+              this.phone = data.phone,
+              this.rankNumber = data.rankNumber,
+              this.status = data.status,
+              this.typeAffiliation = data.typeAffiliation,
+              this.typeRanks = data.typeRanks,
+              this.typeRoom = data.typeRoom;
+              this.typeUser = data.typeUser;
+              this.contract = data.contract;
+              this.bookNumber = data.bookNumber;
+              this.vehicleNumber = data.vehicleNumber
+              this.numberPeople = data.numberPeople
           })
           .catch((err) => {
             console.log(err);
@@ -190,15 +192,17 @@ export default {
           this.typeroom = this.data.typeRoom;
           this.numberRoom = this.data.numberRoom;
           this.roomId = this.data.id;
-          this.buildingName = this.data.name
+          this.buildingName = this.data.name;
           this.Affiliation = this.data.affiliation;
-          if(this.data.userId){this.getAllusersByid(this.data.userId)}
+          if (this.data.userId) {
+            this.getAllusersByid(this.data.userId);
+          }
           if (this.data.roomStatus == "return") this.statusRoom = "ผ่อนผัน";
           if (this.data.roomStatus == "special") this.statusRoom = "กรณีพิเศษ";
           if (this.data.roomStatus == "waiting") this.statusRoom = "ชำรุด";
           if (this.data.roomStatus == "unavailable") this.statusRoom = "ไม่ว่าง";
           if (this.data.roomStatus == "free") this.statusRoom = "ว่าง";
-          this.data['maintenanceCost'] = this.countinsamaintenance(this.data)
+          this.data["maintenanceCost"] = this.countinsamaintenance(this.data);
           this.getAllqueue();
         });
       } catch (e) {
@@ -211,12 +215,12 @@ export default {
         await axios
           .get(`http://localhost:3897/reportId/${id}`)
           .then((res) => {
-            if(res.data !== "")this.reportId = res.data.id;
+            if (res.data !== "") this.reportId = res.data.id;
             let data = res.data;
-            if(data !== '' && data !== undefined){
-              this.reportType = "havedata"
-            }else{
-              this.reportType = "none"
+            if (data !== "" && data !== undefined) {
+              this.reportType = "havedata";
+            } else {
+              this.reportType = "none";
             }
             this.reportId = res.data.id;
           })
@@ -247,7 +251,7 @@ export default {
       let m = this.optionMonth[d.getMonth()];
       let y = d.getFullYear();
       this.months = d.getMonth();
-      this.years = y
+      this.years = y;
     },
 
     countinsamaintenance(e) {
@@ -269,6 +273,8 @@ export default {
         amountPaid: this.amountPaid,
         roomId: this.roomId,
         roomnumber: this.numberRoom,
+        vehicleNumber: this.vehicleNumber,
+        numberPeople: this.numberPeople,
         dateApproved: this.dateApp.toISOString(),
       };
       await axios
@@ -284,7 +290,7 @@ export default {
           } else if (this.reportType == "none") {
             this.submitForm2();
           }
-        
+
           this.submitForm3();
           this.submitFormUser();
           if (index == "spacia") {
@@ -315,7 +321,9 @@ export default {
         roomnumber: this.numberRoom,
         buildingName: this.buildingName,
         contract: this.contract,
-        no:""
+        vehicleNumber: this.vehicleNumber,
+        numberPeople: this.numberPeople,
+        no: "",
       };
       await axios.put(`http://localhost:3897/users/${this.userId}`, body, {
         headers: {
@@ -328,18 +336,18 @@ export default {
     async submitForm2() {
       let body = {
         userId: this.userId,
-        firstName : this.firstName,
-        lastName :  this.lastName,
-        selectedAffiliation :  this.affiliation,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        selectedAffiliation: this.affiliation,
         affiliation: this.affiliation,
-        selectedRanks :  this.rank,
+        selectedRanks: this.rank,
         rankNumber: this.rankNumber,
-        idcard :  this.idcard,
-        phone :  this.phone,
+        idcard: this.idcard,
+        phone: this.phone,
         rank: this.rank,
-        selectedDataObtion :  this.status,
-        typeAffiliation :  this.typeAffiliation,
-        typeRanks :  this.typeRanks,
+        selectedDataObtion: this.status,
+        typeAffiliation: this.typeAffiliation,
+        typeRanks: this.typeRanks,
         typeUser: this.typeUser,
         queue: "inroom",
         contract: this.contract,
@@ -352,10 +360,12 @@ export default {
         roomnumber: this.numberRoom,
         dateApproved: this.dateApp.toISOString(),
         buildingName: this.buildingName,
-        monthly:this.months,
-        years:this.years
+        monthly: this.months,
+        years: this.years,
+        vehicleNumber: this.vehicleNumber,
+        numberPeople: this.numberPeople,
       };
-      
+
       await axios.post(`http://localhost:3897/report`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -376,10 +386,12 @@ export default {
         amountPaid: this.amountPaid,
         roomId: this.roomId,
         dateApproved: this.dateApp.toISOString(),
-        monthly:this.months,
-        years:this.years
+        monthly: this.months,
+        years: this.years,
+        vehicleNumber: this.vehicleNumber,
+        numberPeople: this.numberPeople,
       };
-      
+
       await axios.put(`http://localhost:3897/report/${this.reportId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -391,18 +403,18 @@ export default {
     async submitForm3() {
       let body = {
         userId: this.userId,
-        firstName : this.firstName,
-        lastName :  this.lastName,
-        selectedAffiliation :  this.affiliation,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        selectedAffiliation: this.affiliation,
         affiliation: this.affiliation,
-        selectedRanks :  this.rank,
+        selectedRanks: this.rank,
         rankNumber: this.rankNumber,
-        idcard :  this.idcard,
-        phone :  this.phone,
+        idcard: this.idcard,
+        phone: this.phone,
         rank: this.rank,
-        selectedDataObtion :  this.status,
-        typeAffiliation :  this.typeAffiliation,
-        typeRanks :  this.typeRanks,
+        selectedDataObtion: this.status,
+        typeAffiliation: this.typeAffiliation,
+        typeRanks: this.typeRanks,
         typeUser: this.typeUser,
         queue: "inroom",
         contract: this.contract,
@@ -411,7 +423,7 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
-        no:""
+        no: "",
       };
       await axios.put(`http://localhost:3897/queue/${this.userId}`, body, {
         headers: {
@@ -423,18 +435,18 @@ export default {
     async submitFormRoom() {
       let body = {
         userId: this.userId,
-        firstName : this.firstName,
-        lastName :  this.lastName,
-        selectedAffiliation :  this.affiliation,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        selectedAffiliation: this.affiliation,
         affiliation: this.affiliation,
-        selectedRanks :  this.rank,
+        selectedRanks: this.rank,
         rankNumber: this.rankNumber,
-        idcard :  this.idcard,
-        phone :  this.phone,
+        idcard: this.idcard,
+        phone: this.phone,
         ranks: this.rank,
-        selectedDataObtion :  this.status,
-        typeAffiliation :  this.typeAffiliation,
-        typeRanks :  this.typeRanks,
+        selectedDataObtion: this.status,
+        typeAffiliation: this.typeAffiliation,
+        typeRanks: this.typeRanks,
         typeUser: this.typeUser,
         typeRoom: this.typeRoom,
         queue: "inroom",
@@ -446,6 +458,8 @@ export default {
         installments: this.installments,
         amountPaid: this.amountPaid,
         buildingName: this.buildingName,
+        vehicleNumber: this.vehicleNumber,
+        numberPeople: this.numberPeople,
         dateApproved: this.dateApp.toISOString(),
       };
       await axios
@@ -497,8 +511,9 @@ export default {
         installments: this.installments,
         amountPaid: this.amountPaid,
         buildingName: this.buildingName,
+        vehicleNumber: this.vehicleNumber,
+        numberPeople: this.numberPeople,
         dateApproved: this.dateApp.toISOString(),
-  
       };
 
       await axios
@@ -521,19 +536,22 @@ export default {
         });
     },
 
-    updateUser(){
+    updateUser() {
       let body = {
         bookNumber: this.bookNumber,
         contract: this.contract,
-        no:""
-      }
+        vehicleNumber: this.vehicleNumber,
+        numberPeople: this.numberPeople,
+        no: "",
+      };
       axios
         .put(`http://localhost:3897/users/${this.userId}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
           },
-        }).then((res) => {
+        })
+        .then((res) => {
           notify({
             title: "แก้ไขข้อมูลสำเร็จ",
             type: "success",
@@ -558,7 +576,7 @@ export default {
       loading="lazy"
     >
       <div class="container">
-        <notifications class="pt-6 " position="top center" width="400px" />
+        <notifications class="pt-6" position="top center" width="400px" />
         <div class="text-center" style="margin-top: -80px">
           <img src="../../assets/img/logo.png" alt="title" loading="lazy" class="w-35" />
         </div>
@@ -612,15 +630,22 @@ export default {
                 data-bs-target="#userBackdrop"
                 >กรณีพิเศษ</MaterialButton
               >
-              <MaterialButton  style="margin-right: 20px" variant="gradient" color="success" @click="gotoAction()"
+              <MaterialButton
+                style="margin-right: 20px"
+                variant="gradient"
+                color="success"
+                @click="gotoAction()"
                 >จัดการห้องพัก</MaterialButton
               >
-              <MaterialButton v-if="this.mode == 'edit'" variant="gradient" color="success"   data-bs-toggle="modal"
+              <MaterialButton
+                v-if="this.mode == 'edit'"
+                variant="gradient"
+                color="success"
+                data-bs-toggle="modal"
                 data-bs-target="#updateUserSpaciaBackdrop"
                 >แก้ไขรายละเอียกผู้พักอาศัย</MaterialButton
               >
             </div>
-            
           </div>
           <div class="row pt-4">
             <div class="card mb-3">
@@ -636,18 +661,20 @@ export default {
                         <p class="card-text">สถานะห้อง : {{ statusRoom }}</p>
                         <p class="card-text">สังกัด : {{ Affiliation }}</p>
                         <p class="card-text">เลขบัตรประชาชน : {{ data?.idcard }}</p>
-                        <p class="card-text">วันที่ได้รับอนุมัติ : {{ contract || "-" }}</p>
                         <p class="card-text">
-                          เลขลงรับหนังสือ : {{ bookNumber || "-"}} 
+                          วันที่ได้รับอนุมัติ : {{ contract || "-" }}
                         </p>
+                        <p class="card-text">เลขลงรับหนังสือ : {{ bookNumber || "-" }}</p>
                       </div>
                       <div class="col-7">
                         <p class="card-text">นามสกุล : {{ data?.lastName }}</p>
                         <p class="card-text">เบอร์โทร : {{ data?.phone }}</p>
                         <p class="card-text">เงินค่าประกัน : {{ data?.insurance }}</p>
-                        <p class="card-text">งวดค่าประกัน : {{ data?.maintenanceCost }}</p>
-                        <!-- <p class="card-text">จำนวนงวดค่าประกัน : {{ data?.phone }}</p> -->
-                        <!-- <p class="card-text">ยอดคงเหลือค่าประกัน : {{ data?.phone }}</p> -->
+                        <p class="card-text">
+                          งวดค่าประกัน : {{ data?.maintenanceCost }}
+                        </p>
+                        <p class="card-text">จำนวนคนเข้าพักอาศัย : {{ numberPeople }}</p>
+                        <p class="card-text">เลขทะเบียนรถ : {{ vehicleNumber }}</p>
                       </div>
                     </div>
                     <div class="row" v-if="this.mode !== 'special'">
@@ -708,7 +735,6 @@ export default {
                               @click="getAllusersByid(item?.id)"
                               >เพิ่มผู้พักอาศัยเข้าห้องพัก</MaterialButton
                             >
-                            <!-- @click="getAllusersByid(item?.id)" -->
                           </td>
                         </tr>
                       </tbody>
@@ -755,26 +781,6 @@ export default {
                   placeholder="วันที่ได้รับอนุมัติ"
                 />
               </div>
-              <!-- <div class="mb-3">
-                <label class="starRed">ระยะเวลาที่เข้าพัก(เดือน)</label>
-                <MaterialInput
-                  :value="Checkintime"
-                  @input="(event) => (Checkintime = event.target.value)"
-                  class="input-group-static"
-                  type="text"
-                  placeholder="จำนวนเดือนที่เข้าพัก"
-                />
-              </div> -->
-              <!-- <div class="mb-3">
-                <MaterialInput
-                  :value="Maintenance"
-                  @input="(event) => (Maintenance = event.target.value)"
-                  class="input-group-static"
-                  label="ค่าบำรุง"
-                  type="text"
-                  placeholder="ค่าบำรุง"
-                />
-              </div> -->
               <div class="mb-3">
                 <label class="starRed">เงินค่าประกัน</label>
                 <MaterialInput
@@ -1019,46 +1025,66 @@ export default {
               <v-select :options="userList" v-model="selectedUser"></v-select>
             </div>
             <div class="mb-3">
-                <label class="starRed">วันที่ได้รับอนุมัติ</label>
-                <MaterialInput
-                  name="contract"
-                  :value="contract"
-                  @input="(event) => (contract = event.target.value)"
-                  class="input-group-static"
-                  type="text"
-                  placeholder="วันที่ได้รับอนุมัติ"
-                />
-              </div>
-              <div class="mb-3">
-                <label class="starRed">เงินค่าประกัน</label>
-                <MaterialInput
-                  :value="insurance"
-                  @input="(event) => (insurance = event.target.value)"
-                  class="input-group-static"
-                  type="text"
-                  placeholder="เงินค่าประกัน"
-                />
-              </div>
-              <div class="mb-3">
-                <label class="starRed">จำนวนเงินประกันที่ชำระแล้ว</label>
-                <MaterialInput
-                  :value="amountPaid"
-                  @input="(event) => (amountPaid = event.target.value)"
-                  class="input-group-static"
-                  type="text"
-                  placeholder="จำนวนเงินค่าประกันที่ชำระแล้ว"
-                />
-              </div>
-              <div class="mb-3">
-                <label class="starRed">จำนวนงวดเงินประกัน</label>
-                <MaterialInput
-                  :value="installments"
-                  @input="(event) => (installments = event.target.value)"
-                  class="input-group-static"
-                  type="text"
-                  placeholder="จำนวนงวดเงินค่าประกัน"
-                />
-              </div>
+              <MaterialInput
+                name="numberPeople"
+                :value="numberPeople"
+                @input="(event) => (numberPeople = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="จำนวนคนที่เข้าพัก"
+              />
+            </div>
+            <div class="mb-3">
+              <MaterialInput
+                name="vehicleNumber"
+                :value="vehicleNumber"
+                @input="(event) => (vehicleNumber = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="เลขทะเบียนรถ"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="starRed">วันที่ได้รับอนุมัติ</label>
+              <MaterialInput
+                name="contract"
+                :value="contract"
+                @input="(event) => (contract = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="วันที่ได้รับอนุมัติ"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="starRed">เงินค่าประกัน</label>
+              <MaterialInput
+                :value="insurance"
+                @input="(event) => (insurance = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="เงินค่าประกัน"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="starRed">จำนวนเงินประกันที่ชำระแล้ว</label>
+              <MaterialInput
+                :value="amountPaid"
+                @input="(event) => (amountPaid = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="จำนวนเงินค่าประกันที่ชำระแล้ว"
+              />
+            </div>
+            <div class="mb-3">
+              <label class="starRed">จำนวนงวดเงินประกัน</label>
+              <MaterialInput
+                :value="installments"
+                @input="(event) => (installments = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="จำนวนงวดเงินค่าประกัน"
+              />
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -1067,7 +1093,7 @@ export default {
             <MaterialButton
               variant="gradient"
               color="success"
-              @click="submitForm('normal');"
+              @click="submitForm('normal')"
               data-bs-dismiss="modal"
               html-type="submit"
               >บันทึก</MaterialButton
@@ -1176,6 +1202,26 @@ export default {
                   placeholder="เบอร์ติดต่อ"
                 />
               </div>
+              <div class="mb-3">
+              <MaterialInput
+                name="numberPeople"
+                :value="numberPeople"
+                @input="(event) => (numberPeople = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="จำนวนคนที่เข้าพัก"
+              />
+            </div>
+            <div class="mb-3">
+              <MaterialInput
+                name="vehicleNumber"
+                :value="vehicleNumber"
+                @input="(event) => (vehicleNumber = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="เลขทะเบียนรถ"
+              />
+            </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -1219,27 +1265,47 @@ export default {
           </div>
           <div class="modal-body">
             <div class="mb-3">
-                <label class="starRed">วันที่ได้รับอนุมัติ</label>
-                <MaterialInput
-                  name="contract"
-                  :value="contract"
-                  @input="(event) => (contract = event.target.value)"
-                  class="input-group-static"
-                  type="text"
-                  placeholder="วันที่ได้รับอนุมัติ"
-                />
-              </div>
-              <div class="mb-3">
-                <label style="margin-left: -5px">กรอกเลขลงรับหนังสือ</label>
-                <textarea
-                  :value="bookNumber"
-                  @input="(event) => (bookNumber = event.target.value)"
-                  class="form-control"
-                  id="exampleFormControlTextarea1"
-                  rows="3"
-                  placeholder="ตัวอย่าง : 11244"
-                ></textarea>
-              </div>
+              <label class="starRed">วันที่ได้รับอนุมัติ</label>
+              <MaterialInput
+                name="contract"
+                :value="contract"
+                @input="(event) => (contract = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="วันที่ได้รับอนุมัติ"
+              />
+            </div>
+            <div class="mb-3">
+              <label style="margin-left: -5px">กรอกเลขลงรับหนังสือ</label>
+              <textarea
+                :value="bookNumber"
+                @input="(event) => (bookNumber = event.target.value)"
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+                placeholder="ตัวอย่าง : 11244"
+              ></textarea>
+            </div>
+            <div class="mb-3">
+              <MaterialInput
+                name="numberPeople"
+                :value="numberPeople"
+                @input="(event) => (numberPeople = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="จำนวนคนที่เข้าพัก"
+              />
+            </div>
+            <div class="mb-3">
+              <MaterialInput
+                name="vehicleNumber"
+                :value="vehicleNumber"
+                @input="(event) => (vehicleNumber = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="เลขทะเบียนรถ"
+              />
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -1248,7 +1314,7 @@ export default {
             <MaterialButton
               variant="gradient"
               color="success"
-              @click="updateUser();"
+              @click="updateUser()"
               data-bs-dismiss="modal"
               html-type="submit"
               >บันทึก</MaterialButton
@@ -1257,7 +1323,6 @@ export default {
         </div>
       </div>
     </div>
-
   </section>
 </template>
 <style>
