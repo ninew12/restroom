@@ -5,6 +5,7 @@ import Breadcrumbs from "@/examples/Breadcrumbs.vue";
 import vueMkHeader from "@/assets/img/bg.jpg";
 import masterData from "@/assets/dataJson/masterData.json";
 import axios from "axios";
+import * as XLSX from "xlsx/xlsx.mjs";
 import { notify } from "@kyvg/vue3-notification";
 
 export default {
@@ -63,6 +64,7 @@ export default {
       months: "",
       dataSummit: [],
       listCheckbox: [],
+      dateNow: new Date(),
     };
   },
   created() {
@@ -153,10 +155,46 @@ export default {
       return b || 0;
     },
 
-    async summitloopData() {
-      await  this.dataSummit.forEach((element) => {
-        this.summitdeposit(element);
+    async ExportData() {
+      const result = this.dateNow.toLocaleDateString("th-TH", {
+        year: "numeric",
       });
+      var ws_data = [
+        [` คืนเงินประกัน ประจําเดือน ${this.months} ${result}`],
+        [],
+        [
+          "ยศ",
+          "ชื่อ-สกุล",
+          "สังกัดเดิม",
+          "อาคาร",
+          "ห้องเลขที่",
+          "แบบ",
+          "จำนวนเงิน",
+          "เลขบัญชีธนาคาร",
+          "ธนาคาร",
+          "หมายเลขโทรศัพท์",
+          "หมายเหตุ",
+        ],
+      ];
+      await this.dataSummit.forEach((e, i) => {
+        ws_data.push([
+          e.rank,
+          e.firstName + " " + e.lastName,
+          e.typeAffiliation,
+          e.buildingName,
+          e.roomnumber,
+          e.typeRoom,
+          e.amountPaid,
+          e.bankbookNumber,
+          e.bankbookName,
+          e.phone,
+          e.payMonthcause,
+        ]);
+      });
+      var ws = XLSX.utils.aoa_to_sheet(ws_data);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "คืนเงินประกัน");
+      XLSX.writeFile(wb, "รายงานคืนเงินประกัน.xlsx");
     },
 
     async summitdeposit(element) {
@@ -188,6 +226,7 @@ export default {
         })
         .then((res) => {
           this.updateRoom(element.roomId);
+          this.ExportData();
           this.getExpenses();
         })
         .catch((err) => {

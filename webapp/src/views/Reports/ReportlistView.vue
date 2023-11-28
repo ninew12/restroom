@@ -317,7 +317,9 @@ export default {
       maintenancefeeAllcount: 0,
       ranksAll: "",
       selectedranksAll: "เลือกยศ",
-      dateNow: ''
+      dateNow: '',
+      deductibleCTD: [],
+      deductibleTD: []
     };
   },
   created() {
@@ -441,6 +443,8 @@ export default {
             let data5 = [];
             let data6 = [];
             let data7 = [];
+            let data8 = [];
+            let data9 = [];
             let data3 = res.data;
             let data4 = res.data;
             this.reportList = res.data;
@@ -468,9 +472,16 @@ export default {
             data2 = data4.filter(
               (el2) => el2.typeUser == "ตร." && el2.typeContract == 'หักได้' && el2.monthly == this.mountCT && el2.years == y
             );
+
+            data8 = data4.filter(
+              (el8) => el8.typeUser == "ตร." && el8.typeContract == 'หักไม่ได้' && el8.monthly == this.mountCT && el8.years == y
+            );
+
+            data9 = data3.filter(
+              (el9) => el9.typeUser == "บช.ตชด." && el9.typeContract == 'หักไม่ได้' && el9.monthly == this.mountCT && el9.years == y
+            );
             // console.log(data); typeContract: el.typeContract || "-",
-            this.mapData(data, data2);
-            this.mapFiltertypeContract(data, data2)
+            this.mapData(data, data2 , data8, data9);
             this.reportlistok = data5;
             this.reportListssn = data6;
             this.reportlistlj = data7;
@@ -1632,9 +1643,11 @@ export default {
       }
     },
 
-    async mapData(data, data2) {
+    async mapData(data, data2 , data3, data4) {
       let arr = [];
       let arr2 = [];
+      let arr3 = [];
+      let arr4 = [];
       arr = await data.map((el, i) => {
         return {
           ...el,
@@ -1710,20 +1723,85 @@ export default {
           ),
         };
       });
-      await this.mapdataSum(arr, arr2);
-    },
-    mapFiltertypeContract(data,data2){
-      // typeContract: el.typeContract 
-      let arr = []
-      let arr2 = []
-      let arr3 = []
-      let arr4 = []
-      arr = data.filter(e => e.typeContract == 'หักได้')
-      arr2 = data.filter(e => e.typeContract == 'หักไม่ได้')
-      arr3 = data2.filter(e => e.typeContract == 'หักได้')
-      arr4 = data2.filter(e => e.typeContract == 'หักไม่ได้')
 
+      arr3 = await data3.map((el3, i) => {
+        return {
+          ...el3,
+          numberNo: i + 1,
+          lastnumber: el3.lastnumber || 0,
+          numberfirst: el3.numberfirst || 0,
+          central: el3.central || 0,
+          typeAffiliation: el3.typeAffiliation || "-",
+          accumulated: (parseInt(el3.insurance||0) / parseInt(el3.installments||0) ) || 0,
+          typeContract: el3.typeContract || "-",
+          contractExpenses: el3.contractExpenses || "-",
+          buildingName: el3.buildingName || "-",
+          costs: el3.costs || 0,
+          insurance: el3.insurance || 0,
+          maintenancefee: el3.maintenancefee || 0,
+          roomnumber: el3.roomnumber,
+          amountPaid: el3.amountPaid || 0,
+          amountPaidSum: this.AmountPaidSum(data3),
+          waterbillSum: this.WaterbillSum(data3),
+          maintenancefeeSum: this.maintenancefeeCount(data3),
+          electricitybillSum: this.ElectricitybillSum(data3),
+          fullname: (el3.rank || "") + " " + el3?.firstName + " " + el3?.lastName,
+          unitWater: el3.lastnumber - el3.numberfirst || 0,
+          maintenance: el3.maintenance || 0,
+          centralSum: this.CentralSum(data3),
+          costsSum: this.CostsSum(data3),
+          InsuranceSum: this.InsuranceSum(data3),
+          MaintenanceSum: this.MaintenanceSum(data3),
+          accumulatedSum: this.AccumulatedSum(data3),
+          waterbill: el3.waterbill || 0,
+          electricitybill: el3.electricitybill || 0,
+          Installmenttime: this.checkMonth(
+            el3.dateApproved || new Date(),
+            el3.installments
+          ),
+        };
+      });
+
+      arr4 = await data4.map((el4, i) => {
+        return {
+          ...el4,
+          numberNo: i + 1,
+          lastnumber: el4.lastnumber || 0,
+          numberfirst: el4.numberfirst || 0,
+          central: el4.central || 0,
+          typeAffiliation: el4.typeAffiliation || "-",
+          accumulated: (parseInt(el4.insurance||0) / parseInt(el4.installments||0) ) || 0,
+          typeContract: el4.typeContract || "-",
+          contractExpenses: el4.contractExpenses || "-",
+          buildingName: el4.buildingName || "-",
+          costs: el4.costs || 0,
+          insurance: el4.insurance || 0,
+          maintenancefee: el4.maintenancefee || 0,
+          roomnumber: el4.roomnumber,
+          amountPaid: el4.amountPaid || 0,
+          amountPaidSum: this.AmountPaidSum(data4),
+          waterbillSum: this.WaterbillSum(data4),
+          maintenancefeeSum: this.maintenancefeeCount(data4),
+          electricitybillSum: this.ElectricitybillSum(data4),
+          fullname: (el4.rank || "") + " " + el4?.firstName + " " + el4?.lastName,
+          unitWater: el4.lastnumber - el4.numberfirst || 0,
+          maintenance: el4.maintenance || 0,
+          centralSum: this.CentralSum(data4),
+          costsSum: this.CostsSum(data4),
+          InsuranceSum: this.InsuranceSum(data4),
+          MaintenanceSum: this.MaintenanceSum(data4),
+          accumulatedSum: this.AccumulatedSum(data4),
+          waterbill: el4.waterbill || 0,
+          electricitybill: el4.electricitybill || 0,
+          Installmenttime: this.checkMonth(
+            el4.dateApproved || new Date(),
+            el4.installments
+          ),
+        };
+      });
+      await this.mapdataSum(arr, arr2, arr3 , arr4);
     },
+
     checkMonth(index, installments) {
       let td = installments || 0;
       var d = new Date(index);
@@ -1752,9 +1830,11 @@ export default {
       }
     },
 
-    async mapdataSum(data, data2) {
+    async mapdataSum(data, data2 , data3, data4) {
       let arr = [];
       let arr2 = [];
+      let arr3 = [];
+      let arr4 = [];
       arr = await data.map((el) => {
         return {
           ...el,
@@ -1773,12 +1853,32 @@ export default {
           sumCostnsurance: this.countSumInsurance(el2),
         };
       });
-      this.mapdataSumTable(arr, arr2);
+      arr3 = await data3.map((el3) => {
+        return {
+          ...el3,
+          sumCostwaterbill: this.countSumWaterbill(el3),
+          sumCostCentral: this.countSumcentral(el3),
+          sumCostCosts: this.countSumcosts(el3),
+          sumCostnsurance: this.countSumInsurance(el3),
+        };
+      });
+      arr4 = await data4.map((el4) => {
+        return {
+          ...el4,
+          sumCostwaterbill: this.countSumWaterbill(el4),
+          sumCostCentral: this.countSumcentral(el4),
+          sumCostCosts: this.countSumcosts(el4),
+          sumCostnsurance: this.countSumInsurance(el4),
+        };
+      });
+      this.mapdataSumTable(arr, arr2, arr3, arr4);
     },
 
-    async mapdataSumTable(data, data2) {
+    async mapdataSumTable(data, data2, data3, data4) {
       let arr = [];
       let arr2 = [];
+      let arr3 = [];
+      let arr4 = [];
       this.datalistCTD = [];
       this.datalistTD = [];
       arr = await data.map((el) => {
@@ -1799,18 +1899,41 @@ export default {
           SumCostSumCosts: this.SumCostSumCosts(data2),
         };
       });
+
+      arr3 = await data3.map((el3) => {
+        return {
+          ...el3,
+          SumCostSumInsurance: this.SumCostSumInsurance(data3),
+          SumCostSumCentral: this.SumCostSumCentral(data3),
+          SumCostSumwater: this.SumCostSumwater(data3),
+          SumCostSumCosts: this.SumCostSumCosts(data3),
+        };
+      });
+      arr4 = await data4.map((el4) => {
+        return {
+          ...el4,
+          SumCostSumInsurance: this.SumCostSumInsurance(data4),
+          SumCostSumCentral: this.SumCostSumCentral(data4),
+          SumCostSumwater: this.SumCostSumwater(data4),
+          SumCostSumCosts: this.SumCostSumCosts(data4),
+        };
+      });
       this.datalistCTD = arr;
       this.datalistTD = arr2;
       this.filterAffiliation(arr2);
       this.filterAffiliation2(arr);
-      this.mapDataComma(arr, arr2);
+      this.mapDataComma(arr, arr2, arr3, arr4);
     },
 
-    async mapDataComma(data, data2) {
+    async mapDataComma(data, data2, data3, data4) {
       let arr3 = [];
       let arr4 = [];
+      let arr5 = [];
+      let arr6 = [];
       this.reportlistCTD = [];
       this.reportlistTD = [];
+      this.deductibleCTD = [];
+      this.deductibleTD = [];
       arr3 = await data.map((el2) => {
         return {
           ...el2,
@@ -1873,13 +1996,79 @@ export default {
             parseInt(el3.electricitybillSum) + parseInt(el3.costsSum) || 0,
         };
       });
-      this.mapTypeContact(arr3, arr4);
+
+      arr5 = await data3.map((ele) => {
+        return {
+          ...ele,
+          SumCostSumInsurance: this.numberWithCommas(ele.SumCostSumInsurance) || 0,
+          SumCostSumCentral: this.numberWithCommas(ele.SumCostSumCentral) || 0,
+          SumCostSumwater: this.numberWithCommas(ele.SumCostSumwater) || 0,
+          SumCostSumCosts: this.numberWithCommas(ele.SumCostSumCosts) || 0,
+          sumCostwaterbill: this.numberWithCommas(ele.sumCostwaterbill) || 0,
+          sumCostCentral: this.numberWithCommas(ele.sumCostCentral) || 0,
+          sumCostCosts: this.numberWithCommas(ele.sumCostCosts) || 0,
+          sumCostnsurance: this.numberWithCommas(ele.sumCostnsurance) || 0,
+          central: this.numberWithCommas(ele.central) || 0,
+          costs: this.numberWithCommas(ele.costs) || 0,
+          insurance: this.numberWithCommas(ele.insurance) || 0,
+          amountPaidSum: this.numberWithCommas(ele.amountPaidSum) || 0,
+          waterbillSum: this.numberWithCommas(ele.waterbillSum) || 0,
+          electricitybillSum: this.numberWithCommas(ele.electricitybillSum) || 0,
+          maintenance: this.numberWithCommas(ele.maintenance) || 0,
+          centralSum: this.numberWithCommas(ele.centralSum) || 0,
+          costsSum: this.numberWithCommas(ele.costsSum) || 0,
+          InsuranceSum: this.numberWithCommas(ele.InsuranceSum) || 0,
+          MaintenanceSum: this.numberWithCommas(ele.MaintenanceSum) || 0,
+          accumulatedSum: this.numberWithCommas(ele.accumulatedSum) || 0,
+          waterbill: this.numberWithCommas(ele.waterbill) || 0,
+          maintenancefee: this.numberWithCommas(ele.maintenancefee) || 0,
+          maintenancefeeSum: this.numberWithCommas(ele.maintenancefeeSum) || 0,
+          electricitybill: this.numberWithCommas(ele.electricitybill) || 0,
+          contelectricitybillSum:
+            parseInt(ele.electricitybillSum) + parseInt(ele.costsSum) || 0,
+        };
+      });
+
+      arr6 = await data4.map((el4) => {
+        return {
+          ...el4,
+          SumCostSumInsurance: this.numberWithCommas(el4.SumCostSumInsurance) || 0,
+          SumCostSumCentral: this.numberWithCommas(el4.SumCostSumCentral) || 0,
+          SumCostSumwater: this.numberWithCommas(el4.SumCostSumwater) || 0,
+          SumCostSumCosts: this.numberWithCommas(el4.SumCostSumCosts) || 0,
+          sumCostwaterbill: this.numberWithCommas(el4.sumCostwaterbill) || 0,
+          sumCostCentral: this.numberWithCommas(el4.sumCostCentral) || 0,
+          sumCostCosts: this.numberWithCommas(el4.sumCostCosts) || 0,
+          sumCostnsurance: this.numberWithCommas(el4.sumCostnsurance) || 0,
+          central: this.numberWithCommas(el4.central) || 0,
+          costs: this.numberWithCommas(el4.costs) || 0,
+          insurance: this.numberWithCommas(el4.insurance) || 0,
+          amountPaidSum: this.numberWithCommas(el4.amountPaidSum) || 0,
+          waterbillSum: this.numberWithCommas(el4.waterbillSum) || 0,
+          electricitybillSum: this.numberWithCommas(el4.electricitybillSum) || 0,
+          maintenance: this.numberWithCommas(el4.maintenance) || 0,
+          centralSum: this.numberWithCommas(el4.centralSum) || 0,
+          costsSum: this.numberWithCommas(el4.costsSum) || 0,
+          InsuranceSum: this.numberWithCommas(el4.InsuranceSum) || 0,
+          MaintenanceSum: this.numberWithCommas(el4.MaintenanceSum) || 0,
+          accumulatedSum: this.numberWithCommas(el4.accumulatedSum) || 0,
+          waterbill: this.numberWithCommas(el4.waterbill) || 0,
+          maintenancefee: this.numberWithCommas(el4.maintenancefee) || 0,
+          maintenancefeeSum: this.numberWithCommas(el4.maintenancefeeSum) || 0,
+          electricitybill: this.numberWithCommas(el4.electricitybill) || 0,
+          contelectricitybillSum:
+            parseInt(el4.electricitybillSum) + parseInt(el4.costsSum) || 0,
+        };
+      });
+      this.mapTypeContact(arr3, arr4, arr5, arr6);
     },
 
-    mapTypeContact(arr, arr2) {
+    mapTypeContact(data, data2, data3, data4 ) {
+      let arr1 = [];
+      let arr2 = [];
       let arr3 = [];
       let arr4 = [];
-      arr3 = arr.map((a) => {
+      arr1 = data.map((a) => {
         if (a.typeContract == "หักได้") {
           a["typeContractYes"] = "/";
           a["typeContractNo"] = "-";
@@ -1892,22 +2081,50 @@ export default {
         }
         return a;
       });
-      arr4 = arr2.map((a) => {
-        if (a.typeContract == "หักได้") {
-          a["typeContractYes"] = "/";
-          a["typeContractNo"] = "-";
-        } else if (a.typeContract == "หักไม่ได้") {
-          a["typeContractNo"] = "/";
-          a["typeContractYes"] = "-";
+      arr2 = data2.map((a2) => {
+        if (a2.typeContract == "หักได้") {
+          a2["typeContractYes"] = "/";
+          a2["typeContractNo"] = "-";
+        } else if (a2.typeContract == "หักไม่ได้") {
+          a2["typeContractNo"] = "/";
+          a2["typeContractYes"] = "-";
         } else {
-          a["typeContractYes"] = "-";
-          a["typeContractNo"] = "-";
+          a2["typeContractYes"] = "-";
+          a2["typeContractNo"] = "-";
         }
-        return a;
+        return a2;
+      });
+      arr3 = data3.map((a3) => {
+        if (a3.typeContract == "หักได้") {
+          a3["typeContractYes"] = "/";
+          a3["typeContractNo"] = "-";
+        } else if (a3.typeContract == "หักไม่ได้") {
+          a3["typeContractNo"] = "/";
+          a3["typeContractYes"] = "-";
+        } else {
+          a3["typeContractYes"] = "-";
+          a3["typeContractNo"] = "-";
+        }
+        return a3;
+      });
+      arr4 = data4.map((a4) => {
+        if (a4.typeContract == "หักได้") {
+          a4["typeContractYes"] = "/";
+          a4["typeContractNo"] = "-";
+        } else if (a4.typeContract == "หักไม่ได้") {
+          a4["typeContractNo"] = "/";
+          a4["typeContractYes"] = "-";
+        } else {
+          a4["typeContractYes"] = "-";
+          a4["typeContractNo"] = "-";
+        }
+        return a4;
       });
 
-      this.reportlistCTD = arr3.sort((a, b) => a.rankNumber - b.rankNumber);;
-      this.reportlistTD = arr4.sort((a, b) => a.rankNumber - b.rankNumber);;
+      this.reportlistCTD = arr1.sort((a, b) => a.rankNumber - b.rankNumber);
+      this.reportlistTD = arr2.sort((a, b) => a.rankNumber - b.rankNumber);
+      this.deductibleTD =  arr3.sort((a, b) => a.rankNumber - b.rankNumber);
+      this.deductibleCTD =  arr4.sort((a, b) => a.rankNumber - b.rankNumber);
     },
     // numberWithCommas
 
@@ -5619,6 +5836,20 @@ export default {
                             และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
                           >
                         </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="radio"
+                            name="typeUser44"
+                            id="typeUser44"
+                            value="หักไม่ได้"
+                            :checked="reportType == 'หักไม่ได้'"
+                            @change="typeUserchange('หักไม่ได้', 'table44')"
+                          />
+                          <label class="form-check-label" for="typeUser44">
+                             รายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือน</label
+                          >
+                        </div>
                       </div>
                       <div class="d-flex justify-content-end align-items-center">
                         <div class="mb-3 w-20" style="margin-right: 5px">
@@ -5676,6 +5907,22 @@ export default {
                             size="lg"
                             class="btn-icon"
                             @click="ExportExcel('xlsx', 'table15')"
+                          >
+                            <div class="d-flex align-items-center">
+                              <span style="margin-right: 5px">บันทึก</span>
+                              <img
+                                src="../../assets/img/excel.png"
+                                alt="title"
+                                loading="lazy"
+                                width="40"
+                              />
+                            </div>
+                          </MaterialButton>
+                          <MaterialButton
+                            v-if="reportType == 'ประกันทรัพย์สิน'"
+                            size="lg"
+                            class="btn-icon"
+                            @click="ExportExcel('xlsx', 'table16')"
                           >
                             <div class="d-flex align-items-center">
                               <span style="margin-right: 5px">บันทึก</span>
@@ -5827,12 +6074,80 @@ export default {
                             <td>{{ item?.contractExpenses || "-" }}</td>
                           </tr>
 
-                          <tr v-if="reportlistCTD?.length > 0">
+                          <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>{{ reportlistCTD[0]?.MaintenanceSum || 0}}</th>
-                            <th>{{ reportlistCTD[0]?.waterbillSum || 0}}</th>
-                            <th>{{ reportlistCTD[0]?.centralSum || 0}}</th>
-                            <th>{{ reportlistCTD[0]?.SumCostSumCentral || 0}}</th>
+                            <th>{{ reportlistTD[0]?.MaintenanceSum || 0}}</th>
+                            <th>{{ reportlistTD[0]?.waterbillSum || 0}}</th>
+                            <th>{{ reportlistTD[0]?.centralSum || 0}}</th>
+                            <th>{{ reportlistTD[0]?.SumCostSumCentral || 0}}</th>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div
+                      v-if="reportType == 'หักไม่ได้'"
+                      class="text-center pt-4 table-responsive"
+                    >
+                      <table class="table table-bordered" id="table44">
+                        <thead>
+                          <tr>
+                            <td colspan="9" style="border: 0">
+                              บัญชีรายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือนเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง ตร.
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="9" style="border: 0">
+                              ประจําเดือน {{ monthYear }} 
+                            </td>
+                          </tr>
+                          <tr>
+                            <th scope="col">ลำดับ</th>
+                            <th scope="col">เลขที่ห้อง</th>
+                            <th scope="col">ชื่อ-สกุล</th>
+                            <th scope="col">เลขก่อน</th>
+                            <th scope="col">เลขหลัง</th>
+                            <th scope="col">ยอดใช้</th>
+                            <th scope="col">ค่าธรรมเนียม</th>
+                            <th scope="col">ค่าน้ำ</th>
+                            <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                            <th scope="col">รวม</th>
+                            <th scope="col">หักได้</th>
+                            <th scope="col">หักไม่ได้</th>
+                            <th scope="col">สาเหตุที่หักไม่ได้</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(item, index) in deductibleTD" :key="index">
+                            <th scope="row">{{ index + 1 }}</th>
+                            <td>{{ item?.roomnumber || "-" }}</td>
+                            <td>
+                              {{ item?.rank }} {{ item?.firstName }}
+                              {{ item?.lastName }}
+                            </td>
+                            <td>{{ item?.numberfirst }}</td>
+                            <td>{{ item?.lastnumber }}</td>
+                            <td>
+                              {{ item?.lastnumber - item?.numberfirst || "-" }}
+                            </td>
+                            <td>{{ item?.maintenancefee || "-" }}</td>
+                            <td>{{ item?.waterbill || "-" }}</td>
+                            <td>{{ item?.central || "-" }}</td>
+                            <td>{{ item?.sumCostCentral || "-" }}</td>
+                            <td>
+                              <span v-if="item?.typeContract == 'หักได้'">/</span>
+                            </td>
+                            <td>
+                              <span v-if="item?.typeContract == 'หักไม่ได้'">/</span>
+                            </td>
+                            <td>{{ item?.contractExpenses || "-" }}</td>
+                          </tr>
+
+                          <tr v-if="deductibleTD?.length > 0">
+                            <th scope="row" colspan="6">รวมเงิน</th>
+                            <th>{{ deductibleTD[0]?.MaintenanceSum || 0}}</th>
+                            <th>{{ deductibleTD[0]?.waterbillSum || 0}}</th>
+                            <th>{{ deductibleTD[0]?.centralSum || 0}}</th>
+                            <th>{{ deductibleTD[0]?.SumCostSumCentral || 0}}</th>
                           </tr>
                         </tbody>
                       </table>
