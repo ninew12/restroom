@@ -5,7 +5,7 @@ import MaterialCheckbox from "@/components/MaterialCheckbox.vue";
 import vueMkHeader from "@/assets/img/bg.jpg";
 import Breadcrumbs from "@/examples/Breadcrumbs.vue";
 import { notify } from "@kyvg/vue3-notification";
-import * as xl from "excel4node";
+
 import * as jsPDF from "jspdf";
 import * as Vue3Html2pdf from "vue3-html2pdf";
 // import posts from "../posts.json";
@@ -123,26 +123,6 @@ export default {
       if (index == "special") action = "special";
       if (index == "return") action = "return";
       this.$router.push({ path: `/room/detail/${id}`, query: { mode: action } });
-    },
-
-    async exportExcel(data) {
-      const wb = new xl.Workbook({
-        defaultFont: {
-          name: "Arial",
-        },
-      });
-      var ws = wb.addWorksheet("รายงานสรุปสัญญากลุ่ม");
-      const resposne = await wb.writeToBuffer();
-      const file = new Blob([resposne], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
-      const fileURL = URL.createObjectURL(file);
-      //window.open(fileURL, '_blank')
-      const fileName = "Sales and Leaseback.xlsx";
-      const link = document.createElement("a");
-      link.href = fileURL;
-      link.setAttribute("download", fileName);
-      link.click();
     },
 
     async roomType() {

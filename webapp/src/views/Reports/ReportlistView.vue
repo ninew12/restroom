@@ -8,7 +8,6 @@ import axios from "axios";
 import pdfMake from "pdfmake";
 import * as XLSX from "xlsx/xlsx.mjs";
 import pdfFonts from "@/assets/fonts/vfs_font_v2.js";
-import * as xl  from "excel4node";
 // import pdfFonts from 'vfs_fonts.js'
 
 export default {
