@@ -84,7 +84,8 @@ export default {
       bankbookName: "",
       bankbookNumber: "",
       typeRoom: "",
-      roomconditionsCause: ""
+      roomconditionsCause: "",
+      roomconditions: ""
     };
   },
   created() {
@@ -110,6 +111,7 @@ export default {
     },
     queuetypefilter(e) {
       if (e.target) this.Roomconditions = e.target.value;
+      this.roomconditionsCause = ""
     },
     roomKeyfilter(e) {
       if (e.target) this.roomKey = e.target.value;
@@ -135,7 +137,7 @@ export default {
             this.leniency = this.roomData.leniency
             this.typeRoom = this.roomData.typeRoom
             this.roomconditionsCause = this.roomData.roomconditionsCause
-            //  console.log(this.roomData);
+            this.Roomconditions = this.roomData.roomconditions
             this.getHistoryRoom(this.roomData.id);
           })
           .catch((err) => {

@@ -51,7 +51,8 @@ export default {
       typeUserBytype: "",
       typeUserByrankr: "",
       queue: "",
-      roomId: ''
+      roomId: "",
+      migratdata : []
     };
   },
   created() {
@@ -106,17 +107,17 @@ export default {
         .then((res) => {
           let data = res.data;
           this.id = id;
-          this.firstName = data.firstName
-          this.lastName = data.lastName
-          this.selectedAffiliation = data.affiliation
-          this.selectedRanks = data.rank
-          this.idcard = data.idcard
-          this.phone = data.phone
-          this.selectedDataObtion = data.status
-          this.typeAffiliation = data.typeAffiliation
-          this.queue = data.queue
-          this.typeRanks = data.typeRanks
-          this.roomId = data.roomId
+          this.firstName = data.firstName;
+          this.lastName = data.lastName;
+          this.selectedAffiliation = data.affiliation;
+          this.selectedRanks = data.rank;
+          this.idcard = data.idcard;
+          this.phone = data.phone;
+          this.selectedDataObtion = data.status;
+          this.typeAffiliation = data.typeAffiliation;
+          this.queue = data.queue;
+          this.typeRanks = data.typeRanks;
+          this.roomId = data.roomId;
           this.modalShow = true;
         })
         .catch((err) => {
@@ -126,24 +127,25 @@ export default {
 
     getAlluser() {
       try {
-         axios
+        axios
           .get("http://localhost:3897/users")
           .then((res) => {
+            console.log(res);
             this.dataUser = res.data;
             this.olddata = res.data;
             this.typeUserfilter("ทั้งหมด");
             // this.rankrfilter("ประทวน");
-            this.searchName = ""
-            this.firstName = ""
-            this.lastName = ""
-            this.typeAffiliation = ""
-            this.selectedRanks = ""
-            this.idcard = ""
-            this.phone = ""
-            this.selectedDataObtion = "โสด"
-            this.typeAffiliation = ""
-            this.typeRanks = ""
-            this.typeUser = "ตร."
+            this.searchName = "";
+            this.firstName = "";
+            this.lastName = "";
+            this.typeAffiliation = "";
+            this.selectedRanks = "";
+            this.idcard = "";
+            this.phone = "";
+            this.selectedDataObtion = "โสด";
+            this.typeAffiliation = "";
+            this.typeRanks = "";
+            this.typeUser = "ตร.";
           })
           .catch((err) => {
             console.log(err);
@@ -152,6 +154,23 @@ export default {
         console.error(error);
       }
     },
+
+  // async  submitsync(){
+  //     await this.migratdata.forEach((element) => {
+  //       this.syncDataUser(element);
+  //     });
+  //   },
+
+  //   syncDataUser(data){
+  //     axios
+  //       .put(`http://localhost:3897/users/${data.id}`, data, {
+  //         headers: {
+  //           // remove headers
+  //           "Access-Control-Allow-Origin": "*",
+  //           "Content-Type": "application/json",
+  //         },
+  //       })
+  //   },
 
     async editForm() {
       let typeA;
@@ -188,14 +207,14 @@ export default {
             type: "success",
           });
           this.getAlluser();
-          this.updateRoom()
+          this.updateRoom();
         })
         .catch((err) => {
           console.log(err);
         });
     },
 
-    async  updateRoom() {
+    async updateRoom() {
       let typeA;
       this.typeAffiliation.label == "ลูกจ้าง"
         ? (typeA = "ลูกจ้าง")
@@ -216,14 +235,13 @@ export default {
         queue: this.queue,
       };
 
-      axios
-        .put(`http://localhost:3897/rooms/${this.roomId}`, body, {
-          headers: {
-            // remove headers
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json",
-          },
-        })
+      axios.put(`http://localhost:3897/rooms/${this.roomId}`, body, {
+        headers: {
+          // remove headers
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
     },
 
     async submitForm() {
@@ -275,18 +293,17 @@ export default {
     },
 
     submitDelete() {
-       axios
+      axios
         .delete(`http://localhost:3897/users/${this.userId}`)
         .then((res) => {
           setTimeout(() => {
             this.getAlluser2();
           }, 1000);
-         
+
           notify({
             title: "ลบข้อมูลสำเร็จ",
             type: "success",
           });
-          
         })
         .catch((err) => {
           console.log(err);
@@ -308,7 +325,6 @@ export default {
         console.error(error);
       }
     },
-
 
     Previous() {
       window.history.back();
@@ -346,7 +362,7 @@ export default {
     <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
       <div class="page-header min-vh-45">
         <div class="container">
-          <notifications class="pt-6 " position="top center" width="400px" />
+          <notifications class="pt-6" position="top center" width="400px" />
           <div>
             <Breadcrumbs
               :routes="[{ label: 'หน้าหลัก', route: '/home' }, { label: 'ทะเบียน' }]"
@@ -789,7 +805,7 @@ export default {
                 <MaterialInput
                   :value="idcard"
                   @input="(event) => (idcard = event.target.value)"
-                  class="input-group-static "
+                  class="input-group-static"
                   type="number"
                   placeholder="เลขบัตรประชาชน"
                 />
@@ -903,7 +919,7 @@ input[type="number"] {
   /* background: #44a4fc; */
   /* border-left: 5px solid #187fe7; */
 }
-.starRed::after { 
+.starRed::after {
   content: " *";
   color: red;
   font-weight: bold;

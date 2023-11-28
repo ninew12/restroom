@@ -87,6 +87,8 @@ export default {
       contract: "",
       vehicleNumber: "",
       numberPeople: "",
+      roomconditionsCause: "",
+      roomconditions: ""
     };
   },
   created() {
@@ -114,7 +116,7 @@ export default {
           .then((res) => {
             this.queueList = res.data;
             this.queuefilter = this.queueList.filter((e) => e.typeRoom === this.typeroom);
-
+            console.log( this.queueList);
           })
           .catch((err) => {
             console.log(err);
@@ -194,6 +196,8 @@ export default {
           this.roomId = this.data.id;
           this.buildingName = this.data.name;
           this.Affiliation = this.data.affiliation;
+          this.roomconditionsCause = this.data.roomconditionsCause
+          this.roomconditions = this.data.roomconditions;
           if (this.data.userId) {
             this.getAllusersByid(this.data.userId);
           }
@@ -681,8 +685,8 @@ export default {
                       <div class="col-5">
                         <h5 class="card-title pt-2">รายละเอียดห้องพัก</h5>
                         <p class="card-text">ประเภทห้องพัก : {{ data?.typeRoom }}</p>
-                        <!-- <p class="card-text">มิเตอร์น้ำ/ไฟ : 745/546</p> -->
                         <p class="card-text">สภาพห้อง : {{ data?.roomconditions }}</p>
+                        <p class="card-text" v-if="roomconditions == 'ชำรุด'">สาเหตุ : {{roomconditionsCause}}</p>
                       </div>
                     </div>
                   </div>
@@ -721,8 +725,8 @@ export default {
                           <td>
                             {{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}
                           </td>
-                          <td>{{ item?.Affiliation }}</td>
-                          <td>{{ item?.buildingName }}</td>
+                          <td>{{ item?.affiliation }}</td>
+                          <td>{{ item?.buildingName || item?.name }}</td>
                           <td>{{ item?.idcard }}</td>
                           <td>{{ item?.phone }}</td>
                           <td>{{ item?.bookNumber || "-" }}</td>

@@ -13,6 +13,7 @@ import materialKit from "./material-kit";
 import  VueSelect  from "vue-select";
 import Notifications from '@kyvg/vue3-notification'
 import JsonExcel from "vue-json-excel3";
+import VueHtml2pdf from 'vue3-html2pdf'
 
 
 
@@ -23,6 +24,5 @@ app.use(createPinia());
 app.use(router);
 app.use(materialKit)
 app.use(Notifications)
-
-
+app.use(VueHtml2pdf)
 app.mount("#app");

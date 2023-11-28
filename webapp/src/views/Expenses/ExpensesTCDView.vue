@@ -236,7 +236,6 @@ export default {
 
     async loopData() {
       await this.expensesList.forEach((element) => {
-        console.log(element);
         this.submitForm(element);
       });
     },

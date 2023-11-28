@@ -5,8 +5,9 @@ import MaterialCheckbox from "@/components/MaterialCheckbox.vue";
 import vueMkHeader from "@/assets/img/bg.jpg";
 import Breadcrumbs from "@/examples/Breadcrumbs.vue";
 import { notify } from "@kyvg/vue3-notification";
-import htmlToPdfmake from 'html-to-pdfmake';
-import pdfFonts from "@/assets/fonts/vfs_font_v2.js";
+import * as xl from "excel4node";
+import * as jsPDF from "jspdf";
+import * as Vue3Html2pdf from "vue3-html2pdf";
 // import posts from "../posts.json";
 import axios from "axios";
 
@@ -20,6 +21,8 @@ export default {
   setup() {
     return {
       vueMkHeader,
+      Vue3Html2pdf,
+      jsPDF,
       // roomData,
     };
   },
@@ -32,6 +35,13 @@ export default {
         { label: "ช2", value: "ช2" },
         { label: "ช3", value: "ช3" },
       ],
+      htmlToPdfOptions: {
+        margin: 0.5,
+        filename: "สถานะห้องพัก.pdf",
+        image: { type: "jpeg", quality: 2 },
+        html2canvas: { dpi: 192, letterRendering: true },
+        jsPDF: { unit: "in", format: "a4", orientation: "landscape" },
+      },
 
       listRoom: [],
       selectedtypeRoom: "ทั้งหมด",
@@ -52,8 +62,9 @@ export default {
       buidingId: "",
       typeStatusroom: "ทั้งหมด",
       typeRoomselect: [],
+      buildingType: "",
+      buildingName: "",
     };
-    
   },
   created() {
     // this.$route.query
@@ -70,16 +81,16 @@ export default {
   },
   watch: {
     selectedtypeRoom: function (newValue) {
-      this.roomList = this.roomListOld;    
+      this.roomList = this.roomListOld;
       let filldata = [];
       let filldata2 = [];
       if (newValue !== null) {
         if (newValue.value !== "ทั้งหมด") {
-          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor);
           filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.typeRoom == newValue.value);
           });
-      
+
           filldata2 = Object.keys(filldata).map((ele) => {
             return {
               floor: parseInt(ele) + 1,
@@ -88,7 +99,7 @@ export default {
           });
           this.roomList = filldata2.sort((a, b) => b.floor - a.floor);
         } else {
-          this.roomList = this.roomListOld.reverse()
+          this.roomList = this.roomListOld.reverse();
         }
       }
     },
@@ -112,6 +123,26 @@ export default {
       if (index == "special") action = "special";
       if (index == "return") action = "return";
       this.$router.push({ path: `/room/detail/${id}`, query: { mode: action } });
+    },
+
+    async exportExcel(data) {
+      const wb = new xl.Workbook({
+        defaultFont: {
+          name: "Arial",
+        },
+      });
+      var ws = wb.addWorksheet("รายงานสรุปสัญญากลุ่ม");
+      const resposne = await wb.writeToBuffer();
+      const file = new Blob([resposne], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const fileURL = URL.createObjectURL(file);
+      //window.open(fileURL, '_blank')
+      const fileName = "Sales and Leaseback.xlsx";
+      const link = document.createElement("a");
+      link.href = fileURL;
+      link.setAttribute("download", fileName);
+      link.click();
     },
 
     async roomType() {
@@ -169,10 +200,10 @@ export default {
               data: groupByCategory[ele].sort((a, b) => a.index - b.index),
             };
           });
-        //  console.log(arr.sort((a, b) => a.floor - b.floor));
-          datalist =  arr.sort((a, b) => b.floor - a.floor);
-          this.roomList = datalist
-          this.roomListOld = arr
+          //  console.log(arr.sort((a, b) => a.floor - b.floor));
+          datalist = arr.sort((a, b) => b.floor - a.floor);
+          this.roomList = datalist;
+          this.roomListOld = arr;
         });
       } catch (e) {
         console.error(e);
@@ -193,7 +224,9 @@ export default {
           });
           listData = this.listRoom.sort((a, b) => b.floor - a.floor);
           let roomValue = this.buildingList[0];
-          this.committee = roomValue.committee;
+          this.committee = roomValue.committee || "-";
+          this.buildingType = roomValue.buildingType;
+          this.buildingName = roomValue.name;
           // this.onChangeEventRoom("ทั้งหมด")
           // this.selectedlistRoom = { label: roomValue.buil, value: roomValue.buil };
           this.buidingId = roomValue.listRoom[0].buildingId;
@@ -258,7 +291,7 @@ export default {
       let filldata = [];
       if (e == "free") {
         if (event.target.checked) {
-          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor);
           filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.roomStatus == "free");
           });
@@ -272,7 +305,7 @@ export default {
         }
       } else if (e == "unavailable") {
         if (event.target.checked) {
-          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor);
           filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.roomStatus == "unavailable");
           });
@@ -286,7 +319,7 @@ export default {
         }
       } else if (e == "waiting") {
         if (event.target.checked) {
-          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor);
           filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.roomconditions == "ชำรุด");
           });
@@ -300,13 +333,13 @@ export default {
         }
       } else if (e == "return") {
         if (event.target.checked) {
-          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor);
           filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.roomStatus == "return");
           });
-          let t = Object.keys(filldata).map((ele,i) => {
+          let t = Object.keys(filldata).map((ele, i) => {
             return {
-              floor:  parseInt(ele) + 1,
+              floor: parseInt(ele) + 1,
               data: filldata[ele] || [],
             };
           });
@@ -314,7 +347,7 @@ export default {
         }
       } else if (e == "special") {
         if (event.target.checked) {
-          let tt = this.roomList.sort((a, b) => a.floor - b.floor)
+          let tt = this.roomList.sort((a, b) => a.floor - b.floor);
           filldata = tt.map((ele, i) => {
             return ele.data.filter((c) => c.roomStatus == "special");
           });
@@ -333,25 +366,10 @@ export default {
     Previous() {
       window.history.back();
     },
+
     async printTer() {
-      // console.warn(this, this.$htmlToPaper);
-      // Pass the element id here
-      // await this.$htmlToPaper("printMe");
+      this.$refs.html2Pdf.generatePdf();
     },
-//     printDocument() {
-     
-         
-//      //get table html
-//      const pdfTable = document.getElementById('divToPrint');
-//      //html to pdf format
-//      var html = htmlToPdfmake(pdfTable.innerHTML);
-   
-//      const documentDefinition = { content: html };
-//     //  pdfMake.vfs = pdfFonts.pdfMake.vfs;
-//     pdfMake.vfs = pdfFonts;
-//      pdfMake.createPdf(documentDefinition).open();
-   
-// }
   },
 };
 </script>
@@ -404,7 +422,7 @@ export default {
           <h4>สถานะห้องพัก</h4>
 
           <div class="row pt-4 align-items-baseline">
-            <div class="col-4" >
+            <div class="col-4">
               <div class="mb-3">
                 <div class="form-check form-check-inline">
                   <input
@@ -470,8 +488,12 @@ export default {
             <div class="col-8">
               <div class="d-flex justify-content-end align-items-baseline">
                 <div class="d-flex">
-                  <!-- <MaterialButton size="lg" class="btn-icon" style="margin-right: -30px"
-                  @click="printTer()">
+                  <MaterialButton
+                    size="lg"
+                    class="btn-icon"
+                    style="margin-right: -30px"
+                    @click="printTer()"
+                  >
                     <div class="d-flex align-items-center">
                       <span style="margin-right: 5px">บันทึก</span>
                       <img
@@ -481,10 +503,7 @@ export default {
                         width="40"
                       />
                     </div>
-                  </MaterialButton> -->
-                  <!-- <MaterialCheckbox id="terms6">
-                    <a href="javascript:;" class="font-weight-bolder"> ตึกทั้งหมด</a>
-                  </MaterialCheckbox> -->
+                  </MaterialButton>
                 </div>
                 <!-- <label style="margin-right: 10px; margin-left: 20px"
                   >ค้นหาชื่อหรือเลขห้อง
@@ -498,7 +517,155 @@ export default {
               </div>
             </div>
           </div>
-
+          <div>
+            <vue3-html2pdf
+              :show-layout="false"
+              :float-layout="true"
+              :enable-download="true"
+              :preview-modal="false"
+              :manual-pagination="true"
+              :pdf-quality="2"
+              pdf-content-width="100%"
+              :html-to-pdf-options="htmlToPdfOptions"
+              ref="html2Pdf"
+            >
+              <template v-slot:pdf-content>
+                <div class="text-center pt-4">
+                  <div class="d-flex justify-content-start align-items-baseline p-2">
+                    <h6 class="pt-1">อาคารบ้านพัก : {{ buildingType }}</h6>
+                    <h6 class="pt-1">ตึก : {{ buildingNamel }}</h6>
+                  </div>
+                  <div class="d-flex justify-content-start align-items-baseline p-2">
+                    <h6>ประเภทห้อง : {{ selectedtypeRoom?.label }}</h6>
+                    <h6>คณะกรรมการประจําตึก : {{ committee }}</h6>
+                  </div>
+                  <div v-for="(item, index) in roomList" :key="index" id="printMe">
+                    <div class="card mb-2">
+                      <div class="card-body">
+                        <p class="text-start">
+                          <MaterialButton
+                            variant="outline"
+                            color="success"
+                            data-bs-toggle="collapse"
+                            href="#collapseExample"
+                            aria-expanded="false"
+                            aria-controls="collapseExample"
+                            >ชั้น {{ item?.floor }}</MaterialButton
+                          >
+                        </p>
+                        <div
+                          class="collapse show"
+                          id="collapseExample"
+                          aria-expanded="true"
+                        >
+                          <div class="flex-container-fluid">
+                            <div v-for="(item2, index) in item.data" :key="index">
+                              <div
+                                class="card mb-2"
+                                :class="{
+                                  'bg-red':
+                                    item2?.roomStatus == 'unavailable' &&
+                                    item2?.roomconditions !== 'ชำรุด',
+                                  'bg-green':
+                                    item2?.roomStatus == 'free' &&
+                                    item2?.roomconditions !== 'ชำรุด',
+                                  'bg-warning2': item2?.roomconditions == 'ชำรุด',
+                                  'bg-return': item2?.roomStatus == 'return',
+                                  'bgg-red': item2?.roomStatus == 'special',
+                                }"
+                                :style="{ height: `150px` }"
+                              >
+                                <div class="card-body p-1">
+                                  <a
+                                    style="cursor: pointer"
+                                    @click="gotodetail(item2?.id, item2?.roomStatus)"
+                                  >
+                                    <p
+                                      class="card-title"
+                                      style="
+                                        color: #000;
+                                        border: 2px solid #f7f4f0 !important;
+                                        border-radius: 10px;
+                                        background: white;
+                                      "
+                                    >
+                                      <a style="font-size: medium"
+                                        >ห้อง {{ item2?.numberRoom }}</a
+                                      >
+                                    </p>
+                                    <p
+                                      v-if="
+                                        item2?.roomStatus == 'free' &&
+                                        item2?.roomconditions !== 'ชำรุด'
+                                      "
+                                      class="card-title bgg-green"
+                                      style="font-size: 18px"
+                                    >
+                                      {{ "ว่าง" }}
+                                    </p>
+                                    <p
+                                      v-if="
+                                        item2?.roomStatus == 'unavailable' &&
+                                        item2?.roomconditions !== 'ชำรุด'
+                                      "
+                                      class="card-title bgg-red"
+                                      style="font-size: 18px"
+                                    >
+                                      {{ "ไม่ว่าง" }}
+                                    </p>
+                                    <p
+                                      v-if="item2?.roomconditions == 'ชำรุด'"
+                                      class="card-title bgg-warning2"
+                                      style="font-size: 18px"
+                                    >
+                                      {{ "ชำรุด" }}
+                                    </p>
+                                    <p
+                                      v-if="item2?.roomStatus == 'return'"
+                                      class="card-title bgg-return"
+                                      style="font-size: 18px"
+                                    >
+                                      {{ "ผ่อนผัน" }}
+                                    </p>
+                                    <p class="card-title" style="font-size: 14px">
+                                      {{ item2?.ranks }} {{ item2?.firstName }}
+                                      {{ item2?.laststName }}
+                                    </p>
+                                    <p>
+                                      <span
+                                        v-if="item2?.roomStatus !== 'special'"
+                                        style="text-align: right; font-size: small"
+                                        >{{ item2?.affiliation }}</span
+                                      >
+                                      <span
+                                        v-if="item2?.roomStatus == 'special'"
+                                        style="
+                                          font-size: 18px;
+                                          display: flex;
+                                          align-items: center;
+                                          margin-left: 5px;
+                                        "
+                                        ><i
+                                          class="material-icons me-2"
+                                          style="cursor: pointer"
+                                          aria-hidden="true"
+                                          >star</i
+                                        >{{ "กรณีพิเศษ" }}</span
+                                      >
+                                    </p>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </vue3-html2pdf>
+          </div>
           <div class="text-center pt-4">
             <div class="d-flex justify-content-start align-items-baseline pt-1 w-35">
               <label class="w-30" style="margin-right: 5px; margin-left: -20px">
@@ -614,7 +781,7 @@ export default {
               </div>
             </div>
 
-            <div v-for="(item, index) in roomList" :key="index"  id="printMe">
+            <div v-for="(item, index) in roomList" :key="index" id="printMe">
               <div class="card mb-2">
                 <div class="card-body">
                   <p class="text-start">
@@ -634,7 +801,9 @@ export default {
                         <div
                           class="card mb-2"
                           :class="{
-                            'bg-red': item2?.roomStatus == 'unavailable' && item2?.roomconditions !== 'ชำรุด',
+                            'bg-red':
+                              item2?.roomStatus == 'unavailable' &&
+                              item2?.roomconditions !== 'ชำรุด',
                             'bg-green':
                               item2?.roomStatus == 'free' &&
                               item2?.roomconditions !== 'ชำรุด',
@@ -673,7 +842,10 @@ export default {
                                 {{ "ว่าง" }}
                               </p>
                               <p
-                                v-if="item2?.roomStatus == 'unavailable' && item2?.roomconditions !== 'ชำรุด'"
+                                v-if="
+                                  item2?.roomStatus == 'unavailable' &&
+                                  item2?.roomconditions !== 'ชำรุด'
+                                "
                                 class="card-title bgg-red"
                                 style="font-size: 18px"
                               >
@@ -888,5 +1060,8 @@ export default {
 }
 ol.breadcrumb {
   padding: 1rem !important;
+}
+.vue-html2pdf .layout-container {
+  left: -110vw !important;
 }
 </style>

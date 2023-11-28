@@ -18,6 +18,7 @@
     "express": "^4.18.2",
     "fs-web": "^1.0.1",
     "html-to-pdfmake": "^2.5.1",
+    "html2pdf.js": "^0.10.1",
     "jspdf": "^2.5.1",
     "pdfmake": "^0.2.8",
     "pinia": "2.0.14",
@@ -34,6 +35,7 @@
     "vue-select": "^4.0.0-beta.6",
     "vue3-datepicker": "^0.4.0",
     "vue3-excel-editor": "^1.0.20",
+    "vue3-html2pdf": "^1.1.2",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

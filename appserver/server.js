@@ -478,6 +478,9 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.roomnumber) parsedData.roomnumber = req.body.roomnumber
     if (req.body.typeUser) parsedData.typeUser = req.body.typeUser
     if (req.body.rankNumber) parsedData.rankNumber = req.body.rankNumber
+    if (req.body.roomconditionsCause) parsedData.roomconditionsCause = req.body.roomconditionsCause
+    if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
+    if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
     
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
