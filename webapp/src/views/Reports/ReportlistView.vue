@@ -317,9 +317,10 @@ export default {
       maintenancefeeAllcount: 0,
       ranksAll: "",
       selectedranksAll: "เลือกยศ",
-      dateNow: '',
+      dateNow: "",
       deductibleCTD: [],
-      deductibleTD: []
+      deductibleTD: [],
+      submenus: "submenu1",
     };
   },
   created() {
@@ -362,15 +363,15 @@ export default {
         this.mountNumber = x + 1;
         this.yearNumber = y;
         this.mountLable = newValue.label;
-        this.dateNow = newValue.label
+        this.dateNow = newValue.label;
         const result = this.dateData.toLocaleDateString("th-TH", {
           year: "numeric",
         });
-        if(this.optionMonth[x-1] !== undefined){
-          this.mountCT = this.optionMonth[x-1].label
-        }else{
-          this.mountCT =  "ธันวาคม"
-          this.yearNumber = (this.dateData.getFullYear()-1);
+        if (this.optionMonth[x - 1] !== undefined) {
+          this.mountCT = this.optionMonth[x - 1].label;
+        } else {
+          this.mountCT = "ธันวาคม";
+          this.yearNumber = this.dateData.getFullYear() - 1;
         }
         let m = newValue.label;
         this.monthYear = this.mountCT + " " + this.thaiNumber(result, "year");
@@ -384,6 +385,10 @@ export default {
       this.typeReport = e;
     },
 
+    seleteMenu(e) {
+      this.submenus = e;
+    },
+
     async getM() {
       let m = this.dataMonth[this.dateData.getMonth() - 1];
       let y = this.dateData.getFullYear();
@@ -392,12 +397,12 @@ export default {
       this.yearNumber = y;
       this.mountLable = m;
       this.selectedMonth = m;
-      this.mountCT = m
+      this.mountCT = m;
       const today = new Date();
       const todaynew = new Date();
       const month = today.getMonth();
       today.setMonth(month - 1);
-      this.dateNow = this.dataMonth[todaynew.getMonth()]
+      this.dateNow = this.dataMonth[todaynew.getMonth()];
       const result = today.toLocaleDateString("th-TH", {
         year: "numeric",
       });
@@ -431,9 +436,9 @@ export default {
       this.reportlistok = [];
       this.reportListssn = [];
       this.reportlistlj = [];
-      this.sumreportlistAll = []
-      this.sumreportlistAll2 = []
-      this.sumreportlistAll3 = []
+      this.sumreportlistAll = [];
+      this.sumreportlistAll2 = [];
+      this.sumreportlistAll3 = [];
       try {
         axios
           .get("http://localhost:3897/report")
@@ -452,11 +457,15 @@ export default {
             data5 = data3.filter(
               (el6) =>
                 el6.typeAffiliation == "บช.ตชด." ||
-                (el6.typeAffiliation == "บก.อก." && el6.monthly == this.dateNow && el6.years == y)
+                (el6.typeAffiliation == "บก.อก." &&
+                  el6.monthly == this.dateNow &&
+                  el6.years == y)
             );
             data6 = data3.filter(
               (el5) =>
-                el5.typeAffiliation == "ลูกจ้าง" && el5.monthly == this.mountCT && el5.years == y
+                el5.typeAffiliation == "ลูกจ้าง" &&
+                el5.monthly == this.mountCT &&
+                el5.years == y
             );
             data7 = data3.filter(
               (el4) =>
@@ -467,21 +476,37 @@ export default {
                 el4.years == y
             );
             data = data3.filter(
-              (el) => el.typeUser == "บช.ตชด." && el.typeContract == 'หักได้' && el.monthly == this.dateNow  && el.years == y
+              (el) =>
+                el.typeUser == "บช.ตชด." &&
+                el.typeContract == "หักได้" &&
+                el.monthly == this.dateNow &&
+                el.years == y
             );
             data2 = data4.filter(
-              (el2) => el2.typeUser == "ตร." && el2.typeContract == 'หักได้' && el2.monthly == this.mountCT && el2.years == y
+              (el2) =>
+                el2.typeUser == "ตร." &&
+                el2.typeContract == "หักได้" &&
+                el2.monthly == this.mountCT &&
+                el2.years == y
             );
 
             data8 = data4.filter(
-              (el8) => el8.typeUser == "ตร." && el8.typeContract == 'หักไม่ได้' && el8.monthly == this.mountCT && el8.years == y
+              (el8) =>
+                el8.typeUser == "ตร." &&
+                el8.typeContract == "หักไม่ได้" &&
+                el8.monthly == this.mountCT &&
+                el8.years == y
             );
 
             data9 = data3.filter(
-              (el9) => el9.typeUser == "บช.ตชด." && el9.typeContract == 'หักไม่ได้' && el9.monthly == this.mountCT && el9.years == y
+              (el9) =>
+                el9.typeUser == "บช.ตชด." &&
+                el9.typeContract == "หักไม่ได้" &&
+                el9.monthly == this.mountCT &&
+                el9.years == y
             );
             // console.log(data); typeContract: el.typeContract || "-",
-            this.mapData(data, data2 , data8, data9);
+            this.mapData(data, data2, data8, data9);
             this.reportlistok = data5;
             this.reportListssn = data6;
             this.reportlistlj = data7;
@@ -810,7 +835,7 @@ export default {
           el["sumdatacentral"] = sumdatacentralSumAll;
           el["sumdatacosts"] = sumdatacostsSumAll;
           el["sumCostdataCostCosts"] = sumdataCostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdataCostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdataCostCentralSumAll;
         }
         if (el.label == "บก.อก.") {
           el["sumdataMaintenancefee"] = sumdata2maintenancefeeSumAll;
@@ -822,7 +847,7 @@ export default {
           el["sumdatacentral"] = sumdata2centralSumAll;
           el["sumdatacosts"] = sumdata2costsSumAll;
           el["sumCostdataCostCosts"] = sumdata2CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata2CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata2CostCentralSumAll;
         }
         if (el.label == "บก.สนน.") {
           el["sumdataMaintenancefee"] = sumdata3maintenancefeeSumAll;
@@ -834,7 +859,7 @@ export default {
           el["sumdatacentral"] = sumdata3centralSumAll;
           el["sumdatacosts"] = sumdata3costsSumAll;
           el["sumCostdataCostCosts"] = sumdata3CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata3CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata3CostCentralSumAll;
         }
         if (el.label == "ฝอ.1") {
           el["sumdataMaintenancefee"] = sumdata4maintenancefeeSumAll;
@@ -846,7 +871,7 @@ export default {
           el["sumdatacentral"] = sumdata4centralSumAll;
           el["sumdatacosts"] = sumdata4costsSumAll;
           el["sumCostdataCostCosts"] = sumdata4CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata4CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata4CostCentralSumAll;
         }
         if (el.label == "ฝอ.2") {
           el["sumdataMaintenancefee"] = sumdata5maintenancefeeSumAll;
@@ -858,7 +883,7 @@ export default {
           el["sumdatacentral"] = sumdata5centralSumAll;
           el["sumdatacosts"] = sumdata5costsSumAll;
           el["sumCostdataCostCosts"] = sumdata5CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata5CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata5CostCentralSumAll;
         }
         if (el.label == "ฝอ.3") {
           el["sumdataMaintenancefee"] = sumdata6maintenancefeeSumAll;
@@ -870,7 +895,7 @@ export default {
           el["sumdatacentral"] = sumdata6centralSumAll;
           el["sumdatacosts"] = sumdata6costsSumAll;
           el["sumCostdataCostCosts"] = sumdata6CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata6CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata6CostCentralSumAll;
         }
         if (el.label == "ฝอ.4") {
           el["sumdataMaintenancefee"] = sumdata7maintenancefeeSumAll;
@@ -882,7 +907,7 @@ export default {
           el["sumdatacentral"] = sumdata7centralSumAll;
           el["sumdatacosts"] = sumdata7costsSumAll;
           el["sumCostdataCostCosts"] = sumdata7CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata7CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata7CostCentralSumAll;
         }
         if (el.label == "ฝอ.5") {
           el["sumdataMaintenancefee"] = sumdata8maintenancefeeSumAll;
@@ -894,7 +919,7 @@ export default {
           el["sumdatacentral"] = sumdata8centralSumAll;
           el["sumdatacosts"] = sumdata8costsSumAll;
           el["sumCostdataCostCosts"] = sumdata8CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata8CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata8CostCentralSumAll;
         }
         if (el.label == "ฝอ.6") {
           el["sumdataMaintenancefee"] = sumdata9maintenancefeeSumAll;
@@ -906,7 +931,7 @@ export default {
           el["sumdatacentral"] = sumdata9centralSumAll;
           el["sumdatacosts"] = sumdata9costsSumAll;
           el["sumCostdataCostCosts"] = sumdata9CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata9CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata9CostCentralSumAll;
         }
         if (el.label == "ฝอ.7") {
           el["sumdataMaintenancefee"] = sumdata10maintenancefeeSumAll;
@@ -918,7 +943,7 @@ export default {
           el["sumdatacentral"] = sumdata10centralSumAll;
           el["sumdatacosts"] = sumdata10costsSumAll;
           el["sumCostdataCostCosts"] = sumdata10CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata10CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata10CostCentralSumAll;
         }
         if (el.label == "ฝอ.8") {
           el["sumdataMaintenancefee"] = sumdata11maintenancefeeSumAll;
@@ -930,7 +955,7 @@ export default {
           el["sumdatacentral"] = sumdata11centralSumAll;
           el["sumdatacosts"] = sumdata11costsSumAll;
           el["sumCostdataCostCosts"] = sumdata11CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata11CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata11CostCentralSumAll;
         }
         if (el.label == "ฝสสน.1") {
           el["sumdataMaintenancefee"] = sumdata12maintenancefeeSumAll;
@@ -942,7 +967,7 @@ export default {
           el["sumdatacentral"] = sumdata12centralSumAll;
           el["sumdatacosts"] = sumdata12costsSumAll;
           el["sumCostdataCostCosts"] = sumdata12CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata12CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata12CostCentralSumAll;
         }
         if (el.label == "ฝสสน.2") {
           el["sumdataMaintenancefee"] = sumdata13maintenancefeeSumAll;
@@ -954,7 +979,7 @@ export default {
           el["sumdatacentral"] = sumdata13centralSumAll;
           el["sumdatacosts"] = sumdata13costsSumAll;
           el["sumCostdataCostCosts"] = sumdata13CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata13CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata13CostCentralSumAll;
         }
         if (el.label == "ฝสสน.3") {
           el["sumdataMaintenancefee"] = sumdata14maintenancefeeSumAll;
@@ -966,7 +991,7 @@ export default {
           el["sumdatacentral"] = sumdata14centralSumAll;
           el["sumdatacosts"] = sumdata14costsSumAll;
           el["sumCostdataCostCosts"] = sumdata14CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata14CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata14CostCentralSumAll;
         }
         if (el.label == "ฝสสน.4") {
           el["sumdataMaintenancefee"] = sumdata15maintenancefeeSumAll;
@@ -978,7 +1003,7 @@ export default {
           el["sumdatacentral"] = sumdata15centralSumAll;
           el["sumdatacosts"] = sumdata15costsSumAll;
           el["sumCostdataCostCosts"] = sumdata15CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata15CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata15CostCentralSumAll;
         }
         if (el.label == "ฝสสน.5") {
           el["sumdataMaintenancefee"] = sumdata16maintenancefeeSumAll;
@@ -990,7 +1015,7 @@ export default {
           el["sumdatacentral"] = sumdata16centralSumAll;
           el["sumdatacosts"] = sumdata16costsSumAll;
           el["sumCostdataCostCosts"] = sumdata16CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata16CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata16CostCentralSumAll;
         }
         if (el.label == "ลูกจ้าง") {
           el["sumdataMaintenancefee"] = sumdata17maintenancefeeSumAll;
@@ -1002,7 +1027,7 @@ export default {
           el["sumdatacentral"] = sumdata17centralSumAll;
           el["sumdatacosts"] = sumdata17costsSumAll;
           el["sumCostdataCostCosts"] = sumdata17CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata17CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata17CostCentralSumAll;
         }
 
         return el;
@@ -1024,8 +1049,6 @@ export default {
         return e;
       });
     },
-
-
 
     MaintenanceSumAll(items) {
       return items.reduce((MaintenanceSumAll, ele) => {
@@ -1359,7 +1382,7 @@ export default {
           el["sumdatacentral"] = sumdatacentralSumAll;
           el["sumdatacosts"] = sumdatacostsSumAll;
           el["sumCostdataCostCosts"] = sumdataCostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdataCostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdataCostCentralSumAll;
         }
         if (el.label == "บก.อก.") {
           el["sumdataMaintenance"] = sumdata2MaintenanceSumAll;
@@ -1371,7 +1394,7 @@ export default {
           el["sumdatacentral"] = sumdata2centralSumAll;
           el["sumdatacosts"] = sumdata2costsSumAll;
           el["sumCostdataCostCosts"] = sumdata2CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata2CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata2CostCentralSumAll;
         }
         if (el.label == "บก.สนน.") {
           el["sumdataMaintenance"] = sumdata3MaintenanceSumAll;
@@ -1383,7 +1406,7 @@ export default {
           el["sumdatacentral"] = sumdata3centralSumAll;
           el["sumdatacosts"] = sumdata3costsSumAll;
           el["sumCostdataCostCosts"] = sumdata3CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata3CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata3CostCentralSumAll;
         }
         if (el.label == "ฝอ.1") {
           el["sumdataMaintenance"] = sumdata4MaintenanceSumAll;
@@ -1395,7 +1418,7 @@ export default {
           el["sumdatacentral"] = sumdata4centralSumAll;
           el["sumdatacosts"] = sumdata4costsSumAll;
           el["sumCostdataCostCosts"] = sumdata4CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata4CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata4CostCentralSumAll;
         }
         if (el.label == "ฝอ.2") {
           el["sumdataMaintenance"] = sumdata5MaintenanceSumAll;
@@ -1407,7 +1430,7 @@ export default {
           el["sumdatacentral"] = sumdata5centralSumAll;
           el["sumdatacosts"] = sumdata5costsSumAll;
           el["sumCostdataCostCosts"] = sumdata5CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata5CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata5CostCentralSumAll;
         }
         if (el.label == "ฝอ.3") {
           el["sumdataMaintenance"] = sumdata6MaintenanceSumAll;
@@ -1419,7 +1442,7 @@ export default {
           el["sumdatacentral"] = sumdata6centralSumAll;
           el["sumdatacosts"] = sumdata6costsSumAll;
           el["sumCostdataCostCosts"] = sumdata6CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata6CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata6CostCentralSumAll;
         }
         if (el.label == "ฝอ.4") {
           el["sumdataMaintenance"] = sumdata7MaintenanceSumAll;
@@ -1431,7 +1454,7 @@ export default {
           el["sumdatacentral"] = sumdata7centralSumAll;
           el["sumdatacosts"] = sumdata7costsSumAll;
           el["sumCostdataCostCosts"] = sumdata7CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata7CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata7CostCentralSumAll;
         }
         if (el.label == "ฝอ.5") {
           el["sumdataMaintenance"] = sumdata8MaintenanceSumAll;
@@ -1443,7 +1466,7 @@ export default {
           el["sumdatacentral"] = sumdata8centralSumAll;
           el["sumdatacosts"] = sumdata8costsSumAll;
           el["sumCostdataCostCosts"] = sumdata8CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata8CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata8CostCentralSumAll;
         }
         if (el.label == "ฝอ.6") {
           el["sumdataMaintenance"] = sumdata9MaintenanceSumAll;
@@ -1455,7 +1478,7 @@ export default {
           el["sumdatacentral"] = sumdata9centralSumAll;
           el["sumdatacosts"] = sumdata9costsSumAll;
           el["sumCostdataCostCosts"] = sumdata9CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata9CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata9CostCentralSumAll;
         }
         if (el.label == "ฝอ.7") {
           el["sumdataMaintenance"] = sumdata10MaintenanceSumAll;
@@ -1467,7 +1490,7 @@ export default {
           el["sumdatacentral"] = sumdata10centralSumAll;
           el["sumdatacosts"] = sumdata10costsSumAll;
           el["sumCostdataCostCosts"] = sumdata10CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata10CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata10CostCentralSumAll;
         }
         if (el.label == "ฝอ.8") {
           el["sumdataMaintenance"] = sumdata11MaintenanceSumAll;
@@ -1479,7 +1502,7 @@ export default {
           el["sumdatacentral"] = sumdata11centralSumAll;
           el["sumdatacosts"] = sumdata11costsSumAll;
           el["sumCostdataCostCosts"] = sumdata11CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata11CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata11CostCentralSumAll;
         }
         if (el.label == "ฝสสน.1") {
           el["sumdataMaintenance"] = sumdata12MaintenanceSumAll;
@@ -1491,7 +1514,7 @@ export default {
           el["sumdatacentral"] = sumdata12centralSumAll;
           el["sumdatacosts"] = sumdata12costsSumAll;
           el["sumCostdataCostCosts"] = sumdata12CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata12CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata12CostCentralSumAll;
         }
         if (el.label == "ฝสสน.2") {
           el["sumdataMaintenance"] = sumdata13MaintenanceSumAll;
@@ -1503,7 +1526,7 @@ export default {
           el["sumdatacentral"] = sumdata13centralSumAll;
           el["sumdatacosts"] = sumdata13costsSumAll;
           el["sumCostdataCostCosts"] = sumdata13CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata13CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata13CostCentralSumAll;
         }
         if (el.label == "ฝสสน.3") {
           el["sumdataMaintenance"] = sumdata14MaintenanceSumAll;
@@ -1515,7 +1538,7 @@ export default {
           el["sumdatacentral"] = sumdata14centralSumAll;
           el["sumdatacosts"] = sumdata14costsSumAll;
           el["sumCostdataCostCosts"] = sumdata14CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata14CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata14CostCentralSumAll;
         }
         if (el.label == "ฝสสน.4") {
           el["sumdataMaintenance"] = sumdata15MaintenanceSumAll;
@@ -1527,7 +1550,7 @@ export default {
           el["sumdatacentral"] = sumdata15centralSumAll;
           el["sumdatacosts"] = sumdata15costsSumAll;
           el["sumCostdataCostCosts"] = sumdata15CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata15CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata15CostCentralSumAll;
         }
         if (el.label == "ฝสสน.5") {
           el["sumdataMaintenance"] = sumdata16MaintenanceSumAll;
@@ -1539,7 +1562,7 @@ export default {
           el["sumdatacentral"] = sumdata16centralSumAll;
           el["sumdatacosts"] = sumdata16costsSumAll;
           el["sumCostdataCostCosts"] = sumdata16CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata16CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata16CostCentralSumAll;
         }
         if (el.label == "ลูกจ้าง") {
           el["sumdataMaintenance"] = sumdata17MaintenanceSumAll;
@@ -1551,7 +1574,7 @@ export default {
           el["sumdatacentral"] = sumdata17centralSumAll;
           el["sumdatacosts"] = sumdata17costsSumAll;
           el["sumCostdataCostCosts"] = sumdata17CostCostsSumAll;
-          el["sumdataCostCentralAllSum"] = sumdata17CostCentralSumAll
+          el["sumdataCostCentralAllSum"] = sumdata17CostCentralSumAll;
         }
 
         return el;
@@ -1588,7 +1611,8 @@ export default {
             this.reportList = res.data;
 
             data = data3.filter(
-              (el) => el.typeUser == "บช.ตชด." && el.monthly == this.dateNow  && el.years == y
+              (el) =>
+                el.typeUser == "บช.ตชด." && el.monthly == this.dateNow && el.years == y
             );
             data2 = data4.filter(
               (ele2) => ele2.typeUser == "ตร." && ele2.monthly == m && ele2.years == y
@@ -1623,7 +1647,8 @@ export default {
             this.reportList = res.data;
 
             data = data3.filter(
-              (el) => el.typeUser == "บช.ตชด." && el.monthly == this.dateNow  && el.years == y
+              (el) =>
+                el.typeUser == "บช.ตชด." && el.monthly == this.dateNow && el.years == y
             );
             data2 = data4.filter(
               (ele2) => ele2.typeUser == "ตร." && ele2.monthly == m && ele2.years == y
@@ -1643,7 +1668,7 @@ export default {
       }
     },
 
-    async mapData(data, data2 , data3, data4) {
+    async mapData(data, data2, data3, data4) {
       let arr = [];
       let arr2 = [];
       let arr3 = [];
@@ -1661,7 +1686,7 @@ export default {
           buildingName: el.buildingName || "-",
           maintenance: el.maintenance || 0,
           insurance: el.insurance || 0,
-          accumulated: (parseInt(el.insurance||0) / parseInt(el.installments||0) ) || 0,
+          accumulated: parseInt(el.insurance || 0) / parseInt(el.installments || 0) || 0,
           roomnumber: el.roomnumber,
           amountPaid: el.amountPaid || 0,
           maintenancefee: el.maintenancefee || 0,
@@ -1694,7 +1719,8 @@ export default {
           numberfirst: el2.numberfirst || 0,
           central: el2.central || 0,
           typeAffiliation: el2.typeAffiliation || "-",
-          accumulated: (parseInt(el2.insurance||0) / parseInt(el2.installments||0) ) || 0,
+          accumulated:
+            parseInt(el2.insurance || 0) / parseInt(el2.installments || 0) || 0,
           typeContract: el2.typeContract || "-",
           contractExpenses: el2.contractExpenses || "-",
           buildingName: el2.buildingName || "-",
@@ -1732,7 +1758,8 @@ export default {
           numberfirst: el3.numberfirst || 0,
           central: el3.central || 0,
           typeAffiliation: el3.typeAffiliation || "-",
-          accumulated: (parseInt(el3.insurance||0) / parseInt(el3.installments||0) ) || 0,
+          accumulated:
+            parseInt(el3.insurance || 0) / parseInt(el3.installments || 0) || 0,
           typeContract: el3.typeContract || "-",
           contractExpenses: el3.contractExpenses || "-",
           buildingName: el3.buildingName || "-",
@@ -1770,7 +1797,8 @@ export default {
           numberfirst: el4.numberfirst || 0,
           central: el4.central || 0,
           typeAffiliation: el4.typeAffiliation || "-",
-          accumulated: (parseInt(el4.insurance||0) / parseInt(el4.installments||0) ) || 0,
+          accumulated:
+            parseInt(el4.insurance || 0) / parseInt(el4.installments || 0) || 0,
           typeContract: el4.typeContract || "-",
           contractExpenses: el4.contractExpenses || "-",
           buildingName: el4.buildingName || "-",
@@ -1799,7 +1827,7 @@ export default {
           ),
         };
       });
-      await this.mapdataSum(arr, arr2, arr3 , arr4);
+      await this.mapdataSum(arr, arr2, arr3, arr4);
     },
 
     checkMonth(index, installments) {
@@ -1830,7 +1858,7 @@ export default {
       }
     },
 
-    async mapdataSum(data, data2 , data3, data4) {
+    async mapdataSum(data, data2, data3, data4) {
       let arr = [];
       let arr2 = [];
       let arr3 = [];
@@ -2063,7 +2091,7 @@ export default {
       this.mapTypeContact(arr3, arr4, arr5, arr6);
     },
 
-    mapTypeContact(data, data2, data3, data4 ) {
+    mapTypeContact(data, data2, data3, data4) {
       let arr1 = [];
       let arr2 = [];
       let arr3 = [];
@@ -2123,8 +2151,8 @@ export default {
 
       this.reportlistCTD = arr1.sort((a, b) => a.rankNumber - b.rankNumber);
       this.reportlistTD = arr2.sort((a, b) => a.rankNumber - b.rankNumber);
-      this.deductibleTD =  arr3.sort((a, b) => a.rankNumber - b.rankNumber);
-      this.deductibleCTD =  arr4.sort((a, b) => a.rankNumber - b.rankNumber);
+      this.deductibleTD = arr3.sort((a, b) => a.rankNumber - b.rankNumber);
+      this.deductibleCTD = arr4.sort((a, b) => a.rankNumber - b.rankNumber);
     },
     // numberWithCommas
 
@@ -2282,7 +2310,10 @@ export default {
 
     CentralSumallCount(items) {
       return items.reduce((CentralSumallCount, ele) => {
-        if (ele.insurance !== undefined) return CentralSumallCount + (parseInt(ele.electricitybill)+parseInt(ele.costs));
+        if (ele.insurance !== undefined)
+          return (
+            CentralSumallCount + (parseInt(ele.electricitybill) + parseInt(ele.costs))
+          );
         else return CentralSumallCount;
       }, 0);
     },
@@ -2312,7 +2343,10 @@ export default {
     AccumulatedSum(items) {
       return items.reduce((accumulatedSum, ele) => {
         if (ele.insurance !== undefined && ele.installments !== undefined)
-          return accumulatedSum + parseInt(ele.insurance||0) / parseInt(ele.installments||0);
+          return (
+            accumulatedSum +
+            parseInt(ele.insurance || 0) / parseInt(ele.installments || 0)
+          );
         else return accumulatedSum;
       }, 0);
     },
@@ -3172,7 +3206,6 @@ export default {
           numberNo: i + 1,
         };
       });
-      console.log(listData);
       if (listData.length > 0) {
         if (this.typeReport == "ตร.")
           mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";
@@ -3492,9 +3525,16 @@ export default {
     exportPdfCentralCTD() {
       let listData = [];
       let mss = "";
+      let mss2 = ""
       listData = this.reportlistCTD;
       if (listData.length > 0) {
-        mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";
+        if(this.reportType == 'หักไม่ได้'){
+          mss = "บัญชีรายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือนเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง ตร."
+          mss2 = ""
+        }else{
+          mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";
+          mss2 = "ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร."
+        }
         pdfMake.fonts = {
           Roboto: {
             normal:
@@ -3521,7 +3561,7 @@ export default {
               alignment: "center",
             },
             {
-              text: " ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.",
+              text: `${mss2}`,
               style: "header",
               alignment: "center",
             },
@@ -4414,344 +4454,82 @@ export default {
 
           <div class="row pt-4 min-vh-45">
             <div class="col-lg-3">
-              <div
-                class="nav flex-column nav-pills me-3"
-                id="v-pills-tab"
-                role="tablist"
-                aria-orientation="vertical"
-              >
-              <button
-                  class="nav-link active"
-                  id="v-pills4-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills4"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills4"
-                  aria-selected="false"
-                >
-                  บัญชียอดหักเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ บช.ตชด.
-                </button>
-                <button
-                  class="nav-link"
-                  id="v-pills5-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills5"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills5"
-                  aria-selected="false"
-                >
-                 บัญชียอดหักเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ  ตร
-                </button>
-                <button
-                 
-                  class="nav-link "
-                  id="v-pills-messages-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills-messages"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills-messages"
-                  aria-selected="false"
-                >
-                 บัญชียอดถอนเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย  ของ  ตร
-                </button>
-                <button
-                class="nav-link"
-                  id="v-pills-home-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills-home"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills-home"
-                  aria-selected="false"
-                >
-                  บัญชียอดหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจำเดือน  ของ  ตร
-                </button>
-               
-                <button
-                  class="nav-link"
-                  id="v-pills2-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills2"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills2"
-                  aria-selected="false"
-                >
-                  บัญชียอดถอนเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติมประจำเดือน  ของ  ตร
-                </button>
-
-                <button
-                  class="nav-link"
-                  id="v-pills3-tab"
-                  data-bs-toggle="pill"
-                  data-bs-target="#v-pills3"
-                  type="button"
-                  role="tab"
-                  aria-controls="v-pills3"
-                  aria-selected="false"
-                >
-                  บัญชีสรุป ยอดเงิน แยกตามบ้านพัก ของ ตร. กับ บช.ตชด.
-                </button>
-          
-              </div>
+              <nav class="menu">
+                <ol>
+                  <li class="menu-item">
+                    <p>บ้านพัก บช.ตชด. (ส่วนกลาง)</p>
+                    <ol class="sub-menu">
+                      <li class="menu-item">
+                        <a
+                          :class="submenus == 'submenu1' ? 'textActive' : ''"
+                          href="javascript:void(0)"
+                          @click="seleteMenu('submenu1')"
+                          >บัญชียอดหักเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย
+                          ของ บช.ตชด.</a
+                        >
+                      </li>
+                    </ol>
+                  </li>
+                  <li class="menu-item">
+                    <p>บ้านพัก ตร.</p>
+                    <ol class="sub-menu">
+                      <li class="menu-item">
+                        <a
+                          :class="submenus == 'submenu2' ? 'textActive' : ''"
+                          href="javascript:void(0)"
+                          @click="seleteMenu('submenu2')"
+                          >บัญชียอดหักเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย
+                          ของ ตร.</a
+                        >
+                      </li>
+                      <li class="menu-item">
+                        <a
+                          :class="submenus == 'submenu3' ? 'textActive' : ''"
+                          href="javascript:void(0)"
+                          @click="seleteMenu('submenu3')"
+                          >บัญชียอดถอนเงินค่าบํารุงสถานที่ และค่าประกันทรัพย์สินเสียหาย
+                          ของ ตร.</a
+                        >
+                      </li>
+                      <li class="menu-item">
+                        <a
+                          :class="submenus == 'submenu4' ? 'textActive' : ''"
+                          href="javascript:void(0)"
+                          @click="seleteMenu('submenu4')"
+                          >บัญชียอดหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง
+                          และค่าบํารุงลิฟต์เพิ่มเติมประจำเดือน ของ ตร.</a
+                        >
+                      </li>
+                      <li class="menu-item">
+                        <a
+                          :class="submenus == 'submenu5' ? 'textActive' : ''"
+                          href="javascript:void(0)"
+                          @click="seleteMenu('submenu5')"
+                          >บัญชียอดถอนเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง
+                          และค่าบํารุงลิฟต์เพิ่มเติมประจำเดือน ของ ตร.</a
+                        >
+                      </li>
+                    </ol>
+                  </li>
+                  <li class="menu-item">
+                    <p>รายการสรุป</p>
+                    <ol class="sub-menu">
+                      <li class="menu-item">
+                        <a
+                          :class="submenus == 'submenu6' ? 'textActive' : ''"
+                          href="javascript:void(0)"
+                          @click="seleteMenu('submenu6')"
+                          >บัญชีสรุป ยอดเงิน แยกตามบ้านพัก ของ ตร. กับ บช.ตชด.</a
+                        >
+                      </li>
+                    </ol>
+                  </li>
+                </ol>
+              </nav>
             </div>
             <div class="col-lg-9">
-              <div class="tab-content" id="v-pills-tabContent">
-                <div
-                  class="tab-pane fade show"
-                  id="v-pills-home"
-                  role="tabpanel"
-                  aria-labelledby="v-pills-home-tab"
-                >
-                  <div>
-                    <div>
-                      <div class="pt-4 text-start">
-                        <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
-                        <div class="mb-3">
-                          <div class="form-check form-check-inline">
-                            <label style="margin-right: 20px">ประเภท</label>
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="typeUser99"
-                              id="typeUser99"
-                              value="บัญชีหน้างบ"
-                              :checked="reportType == 'บัญชีหน้างบ'"
-                              @change="typeUserchange('บัญชีหน้างบ', 'table55')"
-                            />
-                            <label class="form-check-label" for="typeUser99"
-                              >บัญชีหน้างบ</label
-                            >
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              class="form-check-input"
-                              type="radio"
-                              name="typeUser66"
-                              id="typeUser66"
-                              value="ประกันทรัพย์สิน"
-                              :checked="reportType == 'ประกันทรัพย์สิน'"
-                              @change="typeUserchange('ประกันทรัพย์สิน', 'table66')"
-                            />
-                            <label class="form-check-label" for="typeUser66">
-                              รายละเอียดการหักเงินค่าบํารุงสถานที่
-                              และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
-                            >
-                          </div>
-                        </div>
-                        <div class="d-flex justify-content-end align-items-center">
-                          <div class="mb-3 w-20" style="margin-right: 5px">
-                            <label>เดือน</label>
-                            <v-select
-                              :options="optionMonth"
-                              v-model="selectedMonth"
-                            ></v-select>
-                          </div>
-                          <div  v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20" >
-                            <label>สังกัด</label>
-                            <v-select
-                              :options="masterData?.AffiliationList"
-                              v-model="selectedAffiliation"
-                            ></v-select>
-                          </div>
-                          <div>
-                            <MaterialButton
-                              v-if="reportType == 'บัญชีหน้างบ'"
-                              size="lg"
-                              class="btn-icon"
-                              style="margin-right: -30px"
-                              @click="exportPdfCostselectricity()"
-                            >
-                              <div class="d-flex align-items-center">
-                                <span style="margin-right: 5px">บันทึก</span>
-                                <img
-                                  src="../../assets/img/pdf.png"
-                                  alt="title"
-                                  loading="lazy"
-                                  width="40"
-                                />
-                              </div>
-                            </MaterialButton>
-                            <MaterialButton
-                              v-if="reportType == 'ประกันทรัพย์สิน'"
-                              size="lg"
-                              class="btn-icon"
-                              style="margin-right: -30px"
-                              @click="exportPdfCostCentralTD()"
-                            >
-                              <div class="d-flex align-items-center">
-                                <span style="margin-right: 5px">บันทึก</span>
-                                <img
-                                  src="../../assets/img/pdf.png"
-                                  alt="title"
-                                  loading="lazy"
-                                  width="40"
-                                />
-                              </div>
-                            </MaterialButton>
-                            <MaterialButton
-                              v-if="reportType == 'บัญชีหน้างบ'"
-                              size="lg"
-                              class="btn-icon"
-                              @click="ExportExcel('xlsx', 'table55')"
-                            >
-                              <div class="d-flex align-items-center">
-                                <span style="margin-right: 5px">บันทึก</span>
-                                <img
-                                  src="../../assets/img/excel.png"
-                                  alt="title"
-                                  loading="lazy"
-                                  width="40"
-                                />
-                              </div>
-                            </MaterialButton>
-                            <MaterialButton
-                              v-if="reportType == 'ประกันทรัพย์สิน'"
-                              size="lg"
-                              class="btn-icon"
-                              @click="ExportExcel('xlsx', 'table66')"
-                            >
-                              <div class="d-flex align-items-center">
-                                <span style="margin-right: 5px">บันทึก</span>
-                                <img
-                                  src="../../assets/img/excel.png"
-                                  alt="title"
-                                  loading="lazy"
-                                  width="40"
-                                />
-                              </div>
-                            </MaterialButton>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        v-if="reportType == 'บัญชีหน้างบ'"
-                        class="text-center pt-4 table-responsive"
-                      >
-                        <table class="table table-bordered" id="table55">
-                          <thead>
-                            <tr>
-                              <td colspan="6" style="border: 0">
-                                การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="6" style="border: 0">
-                                ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="6" style="border: 0">
-                                ประจําเดือน {{ monthYear }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th rowspan="2">ลำดับ</th>
-                              <th rowspan="2">รายการ</th>
-                              <th colspan="3">จำนวนเงิน(บาท)</th>
-                            </tr>
-                            <tr>
-                              <th>ค่าไฟฟ้าส่วนกลาง</th>
-                              <th>ค่าบำรุงลิฟต์</th>
-                              <th>รวม</th>
-                            </tr>
-                          </thead>
-                          <tr v-for="(item, index) in AffiliationListTD" :key="index">
-                            <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item?.value || "-" }}</td>
-                            <td>{{ item?.sumdataelectricitybill || "-" }}</td>
-                            <td>{{ item?.sumdatacosts || "-" }}</td>
-                            <td>{{ item?.sumdataCostCentralAllSum || "-" }}</td>
-                          </tr>
-                          <tr v-if="AffiliationListTD?.length > 0">
-                            <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>
-                              {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
-                            </th>
-                            <th>{{ AffiliationListTD[0]?.countcostsAll || 0 }}</th>
-                            <th>{{ (AffiliationListTD[0]?.countelectricitybillAll+AffiliationListTD[0]?.countcostsAll) || 0 }}</th>
-                          </tr>
-                        </table>
-                      </div>
-                      <div
-                        v-if="reportType == 'ประกันทรัพย์สิน'"
-                        class="text-center pt-4 table-responsive"
-                      >
-                        <table class="table table-bordered" id="table66">
-                          <thead>
-                            <tr>
-                              <td colspan="9" style="border: 0">
-                                บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="9" style="border: 0">
-                                ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="9" style="border: 0">
-                                ประจําเดือน {{ monthYear }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <th scope="col">ลำดับ</th>
-                              <th scope="col">บ้านพัก</th>
-                              <th scope="col">เลขที่ห้อง</th>
-                              <th scope="col">ชื่อ-สกุล</th>
-                              <th scope="col">หน่วย</th>
-                              <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
-                              <th scope="col">ค่าบำรุงลิฟต์</th>
-                              <th scope="col">รวม</th>
-                              <th scope="col">หักได้</th>
-                              <th scope="col">หักไม่ได้</th>
-                              <th scope="col">สาเหตุที่หักไม่ได้</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="(item, index) in reportlistTD" :key="index">
-                              <th scope="row">{{ index + 1 }}</th>
-                              <td>{{ item?.buildingType || "-" }}</td>
-                              <td>{{ item?.roomnumber || "-" }}</td>
-                              <td>
-                                {{ item?.rank }} {{ item?.firstName }}
-                                {{ item?.lastName }}
-                              </td>
-                              <td>
-                                {{ item?.affiliation || "-" }}
-                              </td>
-                              <td>{{ item?.electricitybill || "-" }}</td>
-                              <td>{{ item?.costs || "-" }}</td>
-                              <td>{{ item?.sumCostCosts || "-" }}</td>
-                              <td>
-                                <span v-if="item?.typeContract == 'หักได้'">/</span>
-                              </td>
-                              <td>
-                                <span v-if="item?.typeContract == 'หักไม่ได้'">/</span>
-                              </td>
-                              <td>{{ item?.contractExpenses || "-" }}</td>
-                            </tr>
-                            <tr v-if="reportlistTD?.length > 0">
-                              <th scope="row" colspan="5">รวมเงิน</th>
-                              <th>{{ reportlistTD[0]?.electricitybillSum }}</th>
-                              <th>{{ reportlistTD[0]?.costsSum }}</th>
-                              <th>{{ reportlistTD[0]?.contelectricitybillSum }}</th>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="tab-pane fade show "
-                  id="v-pills-messages"
-                  role="tabpanel"
-                  aria-labelledby="v-pills-messages-tab"
-                >
+              <div>
+                <div v-if="submenus == 'submenu4'">
                   <div>
                     <div class="pt-4 text-start">
                       <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
@@ -4761,13 +4539,13 @@ export default {
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="typeUser5"
-                            id="typeUser5"
+                            name="typeUser99"
+                            id="typeUser99"
                             value="บัญชีหน้างบ"
                             :checked="reportType == 'บัญชีหน้างบ'"
-                            @change="typeUserchange('บัญชีหน้างบ', 'table3')"
+                            @change="typeUserchange('บัญชีหน้างบ', 'table55')"
                           />
-                          <label class="form-check-label" for="typeUser5"
+                          <label class="form-check-label" for="typeUser99"
                             >บัญชีหน้างบ</label
                           >
                         </div>
@@ -4775,13 +4553,13 @@ export default {
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="typeUser6"
-                            id="typeUser6"
+                            name="typeUser66"
+                            id="typeUser66"
                             value="ประกันทรัพย์สิน"
                             :checked="reportType == 'ประกันทรัพย์สิน'"
-                            @change="typeUserchange('ประกันทรัพย์สิน', 'table4')"
+                            @change="typeUserchange('ประกันทรัพย์สิน', 'table66')"
                           />
-                          <label class="form-check-label" for="typeUser6">
+                          <label class="form-check-label" for="typeUser66">
                             รายละเอียดการหักเงินค่าบํารุงสถานที่
                             และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
                           >
@@ -4795,7 +4573,7 @@ export default {
                             v-model="selectedMonth"
                           ></v-select>
                         </div>
-                        <div  v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
+                        <div v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
                           <label>สังกัด</label>
                           <v-select
                             :options="masterData?.AffiliationList"
@@ -4808,7 +4586,7 @@ export default {
                             size="lg"
                             class="btn-icon"
                             style="margin-right: -30px"
-                            @click="exportPdfWaterBill()"
+                            @click="exportPdfCostselectricity()"
                           >
                             <div class="d-flex align-items-center">
                               <span style="margin-right: 5px">บันทึก</span>
@@ -4825,7 +4603,7 @@ export default {
                             size="lg"
                             class="btn-icon"
                             style="margin-right: -30px"
-                            @click="exportPdfCentral()"
+                            @click="exportPdfCostCentralTD()"
                           >
                             <div class="d-flex align-items-center">
                               <span style="margin-right: 5px">บันทึก</span>
@@ -4841,7 +4619,7 @@ export default {
                             v-if="reportType == 'บัญชีหน้างบ'"
                             size="lg"
                             class="btn-icon"
-                            @click="ExportExcel('xlsx', 'table3')"
+                            @click="ExportExcel('xlsx', 'table55')"
                           >
                             <div class="d-flex align-items-center">
                               <span style="margin-right: 5px">บันทึก</span>
@@ -4857,7 +4635,7 @@ export default {
                             v-if="reportType == 'ประกันทรัพย์สิน'"
                             size="lg"
                             class="btn-icon"
-                            @click="ExportExcel('xlsx', 'table4')"
+                            @click="ExportExcel('xlsx', 'table66')"
                           >
                             <div class="d-flex align-items-center">
                               <span style="margin-right: 5px">บันทึก</span>
@@ -4876,268 +4654,11 @@ export default {
                       v-if="reportType == 'บัญชีหน้างบ'"
                       class="text-center pt-4 table-responsive"
                     >
-                      <table class="table table-bordered" id="table3">
+                      <table class="table table-bordered" id="table55">
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
-                              การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง
-                              และค่าบำรุงลิฟต์เพิ่มเติม
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="6" style="border: 0">
-                              ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="6" style="border: 0">
-                              ประจําเดือน {{ monthYear }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <th rowspan="2">ลำดับ</th>
-                            <th rowspan="2">รายการ</th>
-                            <th colspan="3">จำนวนเงิน(บาท)</th>
-                          </tr>
-                          <tr>
-                            <th>ค่าธรรมเนียม</th>
-                            <th>ค่าน้ําประปา</th>
-                            <th>ค่าไฟฟ้าฯ</th>
-                            <th>รวม</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in AffiliationListTD" :key="index">
-                            <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item?.value || "-" }}</td>
-                            <td>{{ item?.sumdataMaintenancefee || "-" }}</td>
-                            <td>{{ item?.sumdatawaterbill || "-" }}</td>
-                            <td>{{ item?.sumdataelectricitybill || "-" }}</td>
-                            <td>{{ item?.sumCostdatawaterbill || "-" }}</td>
-                          </tr>
-                          <tr v-if="AffiliationListTD?.length > 0">
-                            <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>
-                              {{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}
-                            </th>
-                            <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
-                            <th>
-                              {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
-                            </th>
-                            <th>
-                              {{ AffiliationListTD[0]?.countCostwaterbillAll || 0 }}
-                            </th>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div
-                      v-if="reportType == 'ประกันทรัพย์สิน'"
-                      class="text-center pt-4 table-responsive"
-                    >
-                      <table class="table table-bordered" id="table4">
-                        <thead>
-                          <tr>
-                            <td colspan="9" style="border: 0">
-                              บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="9" style="border: 0">
-                              การหักค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์ (เพิ่มเติม)
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="9" style="border: 0">
-                              ประจําเดือน {{ monthYear }} หน่วยงาน ฝอ.๘.บก.อก.บช.ตชด.
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="col">ลำดับ</th>
-                            <th scope="col">เลขที่ห้อง</th>
-                            <th scope="col">ชื่อ-สกุล</th>
-                            <th scope="col">เลขก่อน</th>
-                            <th scope="col">เลขหลัง</th>
-                            <th scope="col">ยอดใช้</th>
-                            <th scope="col">ค่าธรรมเนียม</th>
-                            <th scope="col">ค่าน้ำ</th>
-                            <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
-                            <th scope="col">รวม</th>
-                            <th scope="col">หักได้</th>
-                            <th scope="col">หักไม่ได้</th>
-                            <th scope="col">สาเหตุที่หักไม่ได้</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
-                            <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item?.roomnumber }}</td>
-                            <td>
-                              {{ item?.rank }} {{ item?.firstName }}
-                              {{ item?.lastName }}
-                            </td>
-                            <td>{{ item?.numberfirst || "-" }}</td>
-                            <td>{{ item?.lastnumber || "-" }}</td>
-                            <td>{{ item?.lastnumber - item?.numberfirst || "-" }}</td>
-                            <td>{{ item?.maintenancefee || "-" }}</td>
-                            <td>{{ item?.waterbill || "-" }}</td>
-                            <td>{{ item?.central || "-" }}</td>
-                            <td>{{ item?.sumCostCentral || "-" }}</td>
-                            <td>
-                              <span v-if="item?.typeContract == 'หักได้'">/</span>
-                            </td>
-                            <td>
-                              <span v-if="item?.typeContract == 'หักไม่ได้'">/</span>
-                            </td>
-                            <td>{{ item?.contractExpenses }}</td>
-                          </tr>
-                          <tr v-if="reportlistTD?.length > 0">
-                            <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>{{ reportlistTD[0]?.maintenancefeeSum }}</th>
-                            <th>{{ reportlistTD[0]?.waterbillSum }}</th>
-                            <th>{{ reportlistTD[0]?.centralSum }}</th>
-                            <th>{{ reportlistTD[0]?.SumCostSumCentral }}</th>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="tab-pane fade show"
-                  id="v-pills2"
-                  role="tabpanel"
-                  aria-labelledby="v-pills2-tab"
-                >
-                  <div>
-                    <div class="pt-4 text-start">
-                      <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
-                      <div class="mb-3">
-                        <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px">ประเภท</label>
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="typeUser9"
-                            id="typeUser9"
-                            value="บัญชีหน้างบ"
-                            :checked="reportType == 'บัญชีหน้างบ'"
-                            @change="typeUserchange('บัญชีหน้างบ', 'table5')"
-                          />
-                          <label class="form-check-label" for="typeUser9"
-                            >บัญชีหน้างบ</label
-                          >
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="typeUser10"
-                            id="typeUser10"
-                            value="ประกันทรัพย์สิน"
-                            :checked="reportType == 'ประกันทรัพย์สิน'"
-                            @change="typeUserchange('ประกันทรัพย์สิน', 'table6')"
-                          />
-                          <label class="form-check-label" for="typeUser10">
-                            รายละเอียดการหักเงินค่าบํารุงสถานที่
-                            และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
-                          >
-                        </div>
-                      </div>
-                      <div class="d-flex justify-content-end align-items-center">
-                        <div class="mb-3 w-20" style="margin-right: 5px">
-                          <label>เดือน</label>
-                          <v-select
-                            :options="optionMonth"
-                            v-model="selectedMonth"
-                          ></v-select>
-                        </div>
-                        <div  v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
-                          <label>สังกัด</label>
-                          <v-select
-                            :options="masterData?.AffiliationList"
-                            v-model="selectedAffiliation"
-                          ></v-select>
-                        </div>
-                        <div>
-                          <MaterialButton
-                            v-if="reportType == 'บัญชีหน้างบ'"
-                            size="lg"
-                            class="btn-icon"
-                            style="margin-right: -30px"
-                            @click="exportPdfCosts()"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/pdf.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton
-                            v-if="reportType == 'ประกันทรัพย์สิน'"
-                            size="lg"
-                            class="btn-icon"
-                            style="margin-right: -30px"
-                            @click="exportPdfCostCentral()"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/pdf.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton
-                            v-if="reportType == 'บัญชีหน้างบ'"
-                            size="lg"
-                            class="btn-icon"
-                            @click="ExportExcel('xlsx', 'table5')"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton
-                            v-if="reportType == 'ประกันทรัพย์สิน'"
-                            size="lg"
-                            class="btn-icon"
-                            @click="ExportExcel('xlsx', 'table6')"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      v-if="reportType == 'บัญชีหน้างบ'"
-                      class="text-center pt-4 table-responsive"
-                    >
-                      <table class="table table-bordered" id="table5">
-                        <thead>
-                          <tr>
-                            <td colspan="6" style="border: 0">
-                              ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติม
+                              การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์
                             </td>
                           </tr>
                           <tr>
@@ -5161,18 +4682,25 @@ export default {
                             <th>รวม</th>
                           </tr>
                         </thead>
-                        <tr v-for="(item, index) in AffiliationListCTD" :key="index">
+                        <tr v-for="(item, index) in AffiliationListTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.value || "-" }}</td>
-                          <td>{{ item?.sumdatacentral || "-" }}</td>
+                          <td>{{ item?.sumdataelectricitybill || "-" }}</td>
                           <td>{{ item?.sumdatacosts || "-" }}</td>
-                          <td>{{ item?.sumCostdataCostCosts || "-" }}</td>
+                          <td>{{ item?.sumdataCostCentralAllSum || "-" }}</td>
                         </tr>
-                        <tr v-if="AffiliationListCTD?.length > 0">
+                        <tr v-if="AffiliationListTD?.length > 0">
                           <th scope="row" colspan="2">รวมเงิน</th>
-                          <th>{{ AffiliationListCTD[0]?.countcentraAll || 0 }}</th>
-                          <th>{{ AffiliationListCTD[0]?.countcostsAll || 0 }}</th>
-                          <th>{{ AffiliationListCTD[0]?.countCostCostsSumAll || 0 }}</th>
+                          <th>
+                            {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
+                          </th>
+                          <th>{{ AffiliationListTD[0]?.countcostsAll || 0 }}</th>
+                          <th>
+                            {{
+                              AffiliationListTD[0]?.countelectricitybillAll +
+                                AffiliationListTD[0]?.countcostsAll || 0
+                            }}
+                          </th>
                         </tr>
                       </table>
                     </div>
@@ -5180,7 +4708,7 @@ export default {
                       v-if="reportType == 'ประกันทรัพย์สิน'"
                       class="text-center pt-4 table-responsive"
                     >
-                      <table class="table table-bordered" id="table6">
+                      <table class="table table-bordered" id="table66">
                         <thead>
                           <tr>
                             <td colspan="9" style="border: 0">
@@ -5189,12 +4717,12 @@ export default {
                           </tr>
                           <tr>
                             <td colspan="9" style="border: 0">
-                              ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์ (เพิ่มเติม)
+                              ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์
                             </td>
                           </tr>
                           <tr>
                             <td colspan="9" style="border: 0">
-                              ประจําเดือน {{ monthYearNow }} หน่วยงาน บช.ตชด.
+                              ประจําเดือน {{ monthYear }}
                             </td>
                           </tr>
                           <tr>
@@ -5212,8 +4740,7 @@ export default {
                           </tr>
                         </thead>
                         <tbody>
-                          {{ reportlistCTD }}
-                          <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.buildingType || "-" }}</td>
                             <td>{{ item?.roomnumber || "-" }}</td>
@@ -5224,7 +4751,7 @@ export default {
                             <td>
                               {{ item?.affiliation || "-" }}
                             </td>
-                            <td>{{ item?.central || "-" }}</td>
+                            <td>{{ item?.electricitybill || "-" }}</td>
                             <td>{{ item?.costs || "-" }}</td>
                             <td>{{ item?.sumCostCosts || "-" }}</td>
                             <td>
@@ -5235,923 +4762,1411 @@ export default {
                             </td>
                             <td>{{ item?.contractExpenses || "-" }}</td>
                           </tr>
-                          <tr v-if="reportlistCTD?.length > 0">
+                          <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="5">รวมเงิน</th>
-                            <th>{{ reportlistCTD[0]?.centralSum }}</th>
-                            <th>{{ reportlistCTD[0]?.costsSum }}</th>
-                            <th>{{ reportlistCTD[0]?.SumCostSumCosts }}</th>
+                            <th>{{ reportlistTD[0]?.electricitybillSum }}</th>
+                            <th>{{ reportlistTD[0]?.costsSum }}</th>
+                            <th>{{ reportlistTD[0]?.contelectricitybillSum }}</th>
                           </tr>
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
-                <div
-                  class="tab-pane fade show"
-                  id="v-pills3"
-                  role="tabpanel"
-                  aria-labelledby="v-pills3-tab"
-                >
-                  <div>
-                    <div class="pt-4 text-start">
-                      <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
 
-                      <div class="d-flex justify-content-end align-items-center">
-                        <div class="mb-3 w-20" style="margin-right: 5px">
-                          <label>เดือน</label>
-                          <v-select
-                            :options="optionMonth"
-                            v-model="selectedMonth"
-                          ></v-select>
-                        </div>
-                        <div   v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
-                          <label>สังกัด</label>
-                          <v-select
-                            :options="masterData?.AffiliationList"
-                            v-model="selectedAffiliation"
-                          ></v-select>
-                        </div>
-                      
-                        <div>
-                          <MaterialButton
-                            size="lg"
-                            class="btn-icon"
-                            style="margin-right: -30px"
-                            @click="exportPdfsummary()"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/pdf.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton
-                            size="lg"
-                            class="btn-icon"
-                            @click="ExportExcel('xlsx', 'table9')"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                        </div>
+                <div v-if="submenus == 'submenu3'">
+                  <div class="pt-4 text-start">
+                    <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                    <div class="mb-3">
+                      <div class="form-check form-check-inline">
+                        <label style="margin-right: 20px">ประเภท</label>
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="typeUser5"
+                          id="typeUser5"
+                          value="บัญชีหน้างบ"
+                          :checked="reportType == 'บัญชีหน้างบ'"
+                          @change="typeUserchange('บัญชีหน้างบ', 'table3')"
+                        />
+                        <label class="form-check-label" for="typeUser5"
+                          >บัญชีหน้างบ</label
+                        >
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="typeUser6"
+                          id="typeUser6"
+                          value="ประกันทรัพย์สิน"
+                          :checked="reportType == 'ประกันทรัพย์สิน'"
+                          @change="typeUserchange('ประกันทรัพย์สิน', 'table4')"
+                        />
+                        <label class="form-check-label" for="typeUser6">
+                          รายละเอียดการหักเงินค่าบํารุงสถานที่
+                          และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                        >
                       </div>
                     </div>
-                    <div id="table9">
-                      <div class="text-center pt-4 table-responsive">
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <td colspan="6" style="border: 0">
-                                ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิระ บช.ตชด.
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="6" style="border: 0">เดือน {{ monthYearNow }}</td>
-                            </tr>
-                            <tr>
-                              <th>หน่วยงาน</th>
-                              <th>ค่าบํารุงฯ</th>
-                              <th>ค่าประกันฯ</th>
-                              <th>รวม</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>{{ "อำนวยการ" || "-" }}</td>
-                              <td>
-                                {{ sumreportlistAll[0]?.sumdataMaintenance || "-" }}
-                              </td>
-                              <td>{{ sumreportlistAll[0]?.sumdataInsurance || "-" }}</td>
-                              <td>
-                                {{ sumreportlistAll[0]?.sumCostdataInsurance || "-" }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>{{ "สนับสนุน" || "-" }}</td>
-                              <td>
-                                {{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}
-                              </td>
-                              <td>{{ sumreportlistAll2[0]?.sumdataInsurance || "-" }}</td>
-                              <td>
-                                {{ sumreportlistAll2[0]?.sumCostdataInsurance || "-" }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>{{ "ลูกจ้าง" || "-" }}</td>
-                              <td>
-                                {{ sumreportlistAll3[0]?.sumdataMaintenance || "-" }}
-                              </td>
-                              <td>{{ sumreportlistAll3[0]?.sumdataInsurance || "-" }}</td>
-                              <td>
-                                {{ sumreportlistAll3[0]?.sumCostdataInsurance || "-" }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>{{ "รวม" || "-" }}</td>
-                              <td>
-                                {{ maintenanceAllcount }}
-                              </td>
-                              <td>
-                                {{ insuranceAllcount }}
-                              </td>
-                              <td>
-                                {{ sumAllcount }}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                    <div class="d-flex justify-content-end align-items-center">
+                      <div class="mb-3 w-20" style="margin-right: 5px">
+                        <label>เดือน</label>
+                        <v-select
+                          :options="optionMonth"
+                          v-model="selectedMonth"
+                        ></v-select>
                       </div>
-                      <div class="text-center pt-4 table-responsive">
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <td colspan="6" style="border: 0">
-                                ยอดเงินค่าธรรมเนียม และค่าสาธารณูปโภค อาคารบ้านพัก
-                                ตร.ส่วนกลาง
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
-                            </tr>
-                            <tr>
-                              <th>หน่วยงาน</th>
-                              <th>ค่าธรรมเนียม</th>
-                              <th>ค่าน้ําประปา</th>
-                              <th>ค่าไฟฟ้า</th>
-                              <th>รวม</th>
-                            </tr>
-                          </thead>
+                      <div v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
+                        <label>สังกัด</label>
+                        <v-select
+                          :options="masterData?.AffiliationList"
+                          v-model="selectedAffiliation"
+                        ></v-select>
+                      </div>
+                      <div>
+                        <MaterialButton
+                          v-if="reportType == 'บัญชีหน้างบ'"
+                          size="lg"
+                          class="btn-icon"
+                          style="margin-right: -30px"
+                          @click="exportPdfWaterBill()"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/pdf.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'ประกันทรัพย์สิน'"
+                          size="lg"
+                          class="btn-icon"
+                          style="margin-right: -30px"
+                          @click="exportPdfCentral()"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/pdf.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'บัญชีหน้างบ'"
+                          size="lg"
+                          class="btn-icon"
+                          @click="ExportExcel('xlsx', 'table3')"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/excel.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'ประกันทรัพย์สิน'"
+                          size="lg"
+                          class="btn-icon"
+                          @click="ExportExcel('xlsx', 'table4')"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/excel.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    v-if="reportType == 'บัญชีหน้างบ'"
+                    class="text-center pt-4 table-responsive"
+                  >
+                    <table class="table table-bordered" id="table3">
+                      <thead>
+                        <tr>
+                          <td colspan="6" style="border: 0">
+                            การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบำรุงลิฟต์เพิ่มเติม
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6" style="border: 0">
+                            ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6" style="border: 0">
+                            ประจําเดือน {{ monthYear }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th rowspan="2">ลำดับ</th>
+                          <th rowspan="2">รายการ</th>
+                          <th colspan="3">จำนวนเงิน(บาท)</th>
+                        </tr>
+                        <tr>
+                          <th>ค่าธรรมเนียม</th>
+                          <th>ค่าน้ําประปา</th>
+                          <th>ค่าไฟฟ้าฯ</th>
+                          <th>รวม</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item, index) in AffiliationListTD" :key="index">
+                          <th scope="row">{{ index + 1 }}</th>
+                          <td>{{ item?.value || "-" }}</td>
+                          <td>{{ item?.sumdataMaintenancefee || "-" }}</td>
+                          <td>{{ item?.sumdatawaterbill || "-" }}</td>
+                          <td>{{ item?.sumdataelectricitybill || "-" }}</td>
+                          <td>{{ item?.sumCostdatawaterbill || "-" }}</td>
+                        </tr>
+                        <tr v-if="AffiliationListTD?.length > 0">
+                          <th scope="row" colspan="2">รวมเงิน</th>
+                          <th>
+                            {{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}
+                          </th>
+                          <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
+                          <th>
+                            {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
+                          </th>
+                          <th>
+                            {{ AffiliationListTD[0]?.countCostwaterbillAll || 0 }}
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div
+                    v-if="reportType == 'ประกันทรัพย์สิน'"
+                    class="text-center pt-4 table-responsive"
+                  >
+                    <table class="table table-bordered" id="table4">
+                      <thead>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            การหักค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์ (เพิ่มเติม)
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            ประจําเดือน {{ monthYear }} หน่วยงาน ฝอ.๘.บก.อก.บช.ตชด.
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="col">ลำดับ</th>
+                          <th scope="col">เลขที่ห้อง</th>
+                          <th scope="col">ชื่อ-สกุล</th>
+                          <th scope="col">เลขก่อน</th>
+                          <th scope="col">เลขหลัง</th>
+                          <th scope="col">ยอดใช้</th>
+                          <th scope="col">ค่าธรรมเนียม</th>
+                          <th scope="col">ค่าน้ำ</th>
+                          <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                          <th scope="col">รวม</th>
+                          <th scope="col">หักได้</th>
+                          <th scope="col">หักไม่ได้</th>
+                          <th scope="col">สาเหตุที่หักไม่ได้</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item, index) in reportlistTD" :key="index">
+                          <th scope="row">{{ index + 1 }}</th>
+                          <td>{{ item?.roomnumber }}</td>
+                          <td>
+                            {{ item?.rank }} {{ item?.firstName }}
+                            {{ item?.lastName }}
+                          </td>
+                          <td>{{ item?.numberfirst || "-" }}</td>
+                          <td>{{ item?.lastnumber || "-" }}</td>
+                          <td>{{ item?.lastnumber - item?.numberfirst || "-" }}</td>
+                          <td>{{ item?.maintenancefee || "-" }}</td>
+                          <td>{{ item?.waterbill || "-" }}</td>
+                          <td>{{ item?.central || "-" }}</td>
+                          <td>{{ item?.sumCostCentral || "-" }}</td>
+                          <td>
+                            <span v-if="item?.typeContract == 'หักได้'">/</span>
+                          </td>
+                          <td>
+                            <span v-if="item?.typeContract == 'หักไม่ได้'">/</span>
+                          </td>
+                          <td>{{ item?.contractExpenses }}</td>
+                        </tr>
+                        <tr v-if="reportlistTD?.length > 0">
+                          <th scope="row" colspan="6">รวมเงิน</th>
+                          <th>{{ reportlistTD[0]?.maintenancefeeSum }}</th>
+                          <th>{{ reportlistTD[0]?.waterbillSum }}</th>
+                          <th>{{ reportlistTD[0]?.centralSum }}</th>
+                          <th>{{ reportlistTD[0]?.SumCostSumCentral }}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div v-if="submenus == 'submenu5'">
+                  <div class="pt-4 text-start">
+                    <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                    <div class="mb-3">
+                      <div class="form-check form-check-inline">
+                        <label style="margin-right: 20px">ประเภท</label>
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="typeUser9"
+                          id="typeUser9"
+                          value="บัญชีหน้างบ"
+                          :checked="reportType == 'บัญชีหน้างบ'"
+                          @change="typeUserchange('บัญชีหน้างบ', 'table5')"
+                        />
+                        <label class="form-check-label" for="typeUser9"
+                          >บัญชีหน้างบ</label
+                        >
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="typeUser10"
+                          id="typeUser10"
+                          value="ประกันทรัพย์สิน"
+                          :checked="reportType == 'ประกันทรัพย์สิน'"
+                          @change="typeUserchange('ประกันทรัพย์สิน', 'table6')"
+                        />
+                        <label class="form-check-label" for="typeUser10">
+                          รายละเอียดการหักเงินค่าบํารุงสถานที่
+                          และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                        >
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-center">
+                      <div class="mb-3 w-20" style="margin-right: 5px">
+                        <label>เดือน</label>
+                        <v-select
+                          :options="optionMonth"
+                          v-model="selectedMonth"
+                        ></v-select>
+                      </div>
+                      <div v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
+                        <label>สังกัด</label>
+                        <v-select
+                          :options="masterData?.AffiliationList"
+                          v-model="selectedAffiliation"
+                        ></v-select>
+                      </div>
+                      <div>
+                        <MaterialButton
+                          v-if="reportType == 'บัญชีหน้างบ'"
+                          size="lg"
+                          class="btn-icon"
+                          style="margin-right: -30px"
+                          @click="exportPdfCosts()"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/pdf.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'ประกันทรัพย์สิน'"
+                          size="lg"
+                          class="btn-icon"
+                          style="margin-right: -30px"
+                          @click="exportPdfCostCentral()"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/pdf.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'บัญชีหน้างบ'"
+                          size="lg"
+                          class="btn-icon"
+                          @click="ExportExcel('xlsx', 'table5')"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/excel.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'ประกันทรัพย์สิน'"
+                          size="lg"
+                          class="btn-icon"
+                          @click="ExportExcel('xlsx', 'table6')"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/excel.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    v-if="reportType == 'บัญชีหน้างบ'"
+                    class="text-center pt-4 table-responsive"
+                  >
+                    <table class="table table-bordered" id="table5">
+                      <thead>
+                        <tr>
+                          <td colspan="6" style="border: 0">
+                            ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติม
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6" style="border: 0">
+                            ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6" style="border: 0">
+                            ประจําเดือน {{ monthYear }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th rowspan="2">ลำดับ</th>
+                          <th rowspan="2">รายการ</th>
+                          <th colspan="3">จำนวนเงิน(บาท)</th>
+                        </tr>
+                        <tr>
+                          <th>ค่าไฟฟ้าส่วนกลาง</th>
+                          <th>ค่าบำรุงลิฟต์</th>
+                          <th>รวม</th>
+                        </tr>
+                      </thead>
+                      <tr v-for="(item, index) in AffiliationListCTD" :key="index">
+                        <th scope="row">{{ index + 1 }}</th>
+                        <td>{{ item?.value || "-" }}</td>
+                        <td>{{ item?.sumdatacentral || "-" }}</td>
+                        <td>{{ item?.sumdatacosts || "-" }}</td>
+                        <td>{{ item?.sumCostdataCostCosts || "-" }}</td>
+                      </tr>
+                      <tr v-if="AffiliationListCTD?.length > 0">
+                        <th scope="row" colspan="2">รวมเงิน</th>
+                        <th>{{ AffiliationListCTD[0]?.countcentraAll || 0 }}</th>
+                        <th>{{ AffiliationListCTD[0]?.countcostsAll || 0 }}</th>
+                        <th>{{ AffiliationListCTD[0]?.countCostCostsSumAll || 0 }}</th>
+                      </tr>
+                    </table>
+                  </div>
+                  <div
+                    v-if="reportType == 'ประกันทรัพย์สิน'"
+                    class="text-center pt-4 table-responsive"
+                  >
+                    <table class="table table-bordered" id="table6">
+                      <thead>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์ (เพิ่มเติม)
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            ประจําเดือน {{ monthYearNow }} หน่วยงาน บช.ตชด.
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="col">ลำดับ</th>
+                          <th scope="col">บ้านพัก</th>
+                          <th scope="col">เลขที่ห้อง</th>
+                          <th scope="col">ชื่อ-สกุล</th>
+                          <th scope="col">หน่วย</th>
+                          <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                          <th scope="col">ค่าบำรุงลิฟต์</th>
+                          <th scope="col">รวม</th>
+                          <th scope="col">หักได้</th>
+                          <th scope="col">หักไม่ได้</th>
+                          <th scope="col">สาเหตุที่หักไม่ได้</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {{
+                          reportlistCTD
+                        }}
+                        <tr v-for="(item, index) in reportlistCTD" :key="index">
+                          <th scope="row">{{ index + 1 }}</th>
+                          <td>{{ item?.buildingType || "-" }}</td>
+                          <td>{{ item?.roomnumber || "-" }}</td>
+                          <td>
+                            {{ item?.rank }} {{ item?.firstName }}
+                            {{ item?.lastName }}
+                          </td>
+                          <td>
+                            {{ item?.affiliation || "-" }}
+                          </td>
+                          <td>{{ item?.central || "-" }}</td>
+                          <td>{{ item?.costs || "-" }}</td>
+                          <td>{{ item?.sumCostCosts || "-" }}</td>
+                          <td>
+                            <span v-if="item?.typeContract == 'หักได้'">/</span>
+                          </td>
+                          <td>
+                            <span v-if="item?.typeContract == 'หักไม่ได้'">/</span>
+                          </td>
+                          <td>{{ item?.contractExpenses || "-" }}</td>
+                        </tr>
+                        <tr v-if="reportlistCTD?.length > 0">
+                          <th scope="row" colspan="5">รวมเงิน</th>
+                          <th>{{ reportlistCTD[0]?.centralSum }}</th>
+                          <th>{{ reportlistCTD[0]?.costsSum }}</th>
+                          <th>{{ reportlistCTD[0]?.SumCostSumCosts }}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div v-if="submenus == 'submenu6'">
+                  <div class="pt-4 text-start">
+                    <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+
+                    <div class="d-flex justify-content-end align-items-center">
+                      <div class="mb-3 w-20" style="margin-right: 5px">
+                        <label>เดือน</label>
+                        <v-select
+                          :options="optionMonth"
+                          v-model="selectedMonth"
+                        ></v-select>
+                      </div>
+                      <div v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
+                        <label>สังกัด</label>
+                        <v-select
+                          :options="masterData?.AffiliationList"
+                          v-model="selectedAffiliation"
+                        ></v-select>
+                      </div>
+
+                      <div>
+                        <MaterialButton
+                          size="lg"
+                          class="btn-icon"
+                          style="margin-right: -30px"
+                          @click="exportPdfsummary()"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/pdf.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          size="lg"
+                          class="btn-icon"
+                          @click="ExportExcel('xlsx', 'table9')"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/excel.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="table9">
+                    <div class="text-center pt-4 table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <td colspan="6" style="border: 0">
+                              ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิระ บช.ตชด.
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="6" style="border: 0">
+                              เดือน {{ monthYearNow }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <th>หน่วยงาน</th>
+                            <th>ค่าบํารุงฯ</th>
+                            <th>ค่าประกันฯ</th>
+                            <th>รวม</th>
+                          </tr>
+                        </thead>
+                        <tbody>
                           <tr>
                             <td>{{ "อำนวยการ" || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll[0]?.sumdataMaintenancefee || "-" }}
+                              {{ sumreportlistAll[0]?.sumdataMaintenance || "-" }}
                             </td>
-                            <td>{{ sumreportlistAll[0]?.sumdatawaterbill || "-" }}</td>
+                            <td>{{ sumreportlistAll[0]?.sumdataInsurance || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll[0]?.sumdataelectricitybill || "-" }}
-                            </td>
-                            <td>
-                              {{ sumreportlistAll[0]?.sumCostdatawaterbill || "-" }}
+                              {{ sumreportlistAll[0]?.sumCostdataInsurance || "-" }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "สนับสนุน" || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll2[0]?.sumdataMaintenancefee || "-" }}
+                              {{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}
                             </td>
-                            <td>{{ sumreportlistAll2[0]?.sumdatawaterbill || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdataInsurance || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll2[0]?.sumdataelectricitybill || "-" }}
-                            </td>
-                            <td>
-                              {{ sumreportlistAll2[0]?.sumCostdatawaterbill || "-" }}
+                              {{ sumreportlistAll2[0]?.sumCostdataInsurance || "-" }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "ลูกจ้าง" || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll3[0]?.sumdataMaintenancefee || "-" }}
+                              {{ sumreportlistAll3[0]?.sumdataMaintenance || "-" }}
                             </td>
-                            <td>{{ sumreportlistAll3[0]?.sumdatawaterbill || "-" }}</td>
+                            <td>{{ sumreportlistAll3[0]?.sumdataInsurance || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll3[0]?.sumdataelectricitybill || "-" }}
-                            </td>
-                            <td>
-                              {{ sumreportlistAll3[0]?.sumCostdatawaterbill || "-" }}
+                              {{ sumreportlistAll3[0]?.sumCostdataInsurance || "-" }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "รวม" || "-" }}</td>
                             <td>
-                              {{ maintenancefeeAllcount }}
+                              {{ maintenanceAllcount }}
                             </td>
                             <td>
-                              {{ waterbillAllcount }}
+                              {{ insuranceAllcount }}
                             </td>
                             <td>
-                              {{ Costdatawaterbillcount }}
-                            </td>
-                            <td>
-                              {{ Costdatawaterbillcount }}
+                              {{ sumAllcount }}
                             </td>
                           </tr>
-                        </table>
-                      </div>
-                      <div class="text-center pt-4 table-responsive">
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <td colspan="6" style="border: 0">
-                                รายการหักเพิ่มเติม
-                                ค่าไฟฟ้าส่วนกลาง/ค่าบํารุงลิฟต์อาคารบ้านพัก ตร.ส่วนกลาง
-                              </td>
-                            </tr>
-                            <tr>
-                              <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
-                            </tr>
-                            <tr>
-                              <th>หน่วยงาน</th>
-                              <th>ค่าไฟฟ้าส่วนกลาง</th>
-                              <th>ค่าบํารุงลิฟต์</th>
-                              <th>รวม</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>{{ "อำนวยการ" || "-" }}</td>
-                              <td>{{ sumreportlistAll[0]?.sumdatacentral || "-" }}</td>
-                              <td>{{ sumreportlistAll[0]?.sumdatacosts || "-" }}</td>
-                              <td>
-                                {{ sumreportlistAll[0]?.sumCostdataCostCosts || "-" }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>{{ "สนับสนุน" || "-" }}</td>
-                              <td>{{ sumreportlistAll2[0]?.sumdatacentral || "-" }}</td>
-                              <td>{{ sumreportlistAll2[0]?.sumdatacosts || "-" }}</td>
-                              <td>
-                                {{ sumreportlistAll2[0]?.sumCostdataCostCosts || "-" }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>{{ "ลูกจ้าง" || "-" }}</td>
-                              <td>{{ sumreportlistAll3[0]?.sumdatacentral || "-" }}</td>
-                              <td>{{ sumreportlistAll3[0]?.sumdatacosts || "-" }}</td>
-                              <td>
-                                {{ sumreportlistAll3[0]?.sumCostdataCostCosts || "-" }}
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>{{ "รวม" || "-" }}</td>
-                              <td>
-                                {{ centralAllcount }}
-                              </td>
-                              <td>
-                                {{ costsAllcount }}
-                              </td>
-                              <td>
-                                {{ CostCostsAllcount }}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="text-center pt-4 table-responsive">
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <td colspan="6" style="border: 0">
-                                ตารางสรุป ยอดรวมค่าบํารุงฯ ค่าประกัน ฯ ค่าธรรมเนียม
-                                ค่าสารณูปโภค และค่าลิฟต์
-                              </td>
-                            </tr>
-                            <tr>
-                              <th>บช.ตชด.</th>
-                              <th>ตร.ส่วนกลาง</th>
-                              <th>ตร.ส่วนกลาง(เพิ่มเติม)</th>
-                              <th>รวมเป็นเงิน</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>{{ sumAllcount || "-" }}</td>
-                              <td>{{ Costdatawaterbillcount || "-" }}</td>
-                              <td>{{ CostCostsAllcount || "-" }}</td>
-                              <td>
-                                {{
-                                  sumAllcount +
-                                    Costdatawaterbillcount +
-                                    CostCostsAllcount || "-"
-                                }}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                        </tbody>
+                      </table>
                     </div>
-                  </div>
-                </div>
-                <div
-                  class="tab-pane fade show active"
-                  id="v-pills4"
-                  role="tabpanel"
-                  aria-labelledby="v-pills4-tab"
-                >
-                  <div>
                     <div class="text-center pt-4 table-responsive">
-                      <div>
-                        <div class="pt-4 text-start">
-                          <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
-                          <div class="mb-3">
-                            <div class="form-check form-check-inline">
-                              <label style="margin-right: 20px">ประเภท</label>
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="typeUser21"
-                                id="typeUser21"
-                                value="บัญชีหน้างบ"
-                                :checked="reportType == 'บัญชีหน้างบ'"
-                                @change="typeUserchange('บัญชีหน้างบ', 'table13')"
-                              />
-                              <label class="form-check-label" for="typeUser21"
-                                >บัญชีหน้างบ</label
-                              >
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input
-                                class="form-check-input"
-                                type="radio"
-                                name="typeUser22"
-                                id="typeUser22"
-                                value="ประกันทรัพย์สิน"
-                                :checked="reportType == 'ประกันทรัพย์สิน'"
-                                @change="typeUserchange('ประกันทรัพย์สิน', 'table14')"
-                              />
-                              <label class="form-check-label" for="typeUser22">
-                                รายละเอียดการหักเงินค่าบํารุงสถานที่
-                                และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
-                              >
-                            </div>
-                          </div>
-                          <div class="d-flex justify-content-end align-items-center">
-                            <div class="mb-3 w-20" style="margin-right: 5px">
-                              <label>เดือน</label>
-                              <v-select
-                                :options="optionMonth"
-                                v-model="selectedMonth"
-                              ></v-select>
-                            </div>
-                            <div  v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
-                              <label>สังกัด</label>
-                              <v-select
-                                :options="masterData?.AffiliationList"
-                                v-model="selectedAffiliation"
-                              ></v-select>
-                            </div>
-                            <div>
-                              <MaterialButton
-                                v-if="reportType == 'บัญชีหน้างบ'"
-                                size="lg"
-                                class="btn-icon"
-                                style="margin-right: -30px"
-                                @click="exportPdfinsurance()"
-                              >
-                                <div class="d-flex align-items-center">
-                                  <span style="margin-right: 5px">บันทึก</span>
-                                  <img
-                                    src="../../assets/img/pdf.png"
-                                    alt="title"
-                                    loading="lazy"
-                                    width="40"
-                                  />
-                                </div>
-                              </MaterialButton>
-                              <MaterialButton
-                                v-if="reportType == 'ประกันทรัพย์สิน'"
-                                size="lg"
-                                class="btn-icon"
-                                style="margin-right: -30px"
-                                @click="exportPdfAccumulated()"
-                              >
-                                <div class="d-flex align-items-center">
-                                  <span style="margin-right: 5px">บันทึก</span>
-                                  <img
-                                    src="../../assets/img/pdf.png"
-                                    alt="title"
-                                    loading="lazy"
-                                    width="40"
-                                  />
-                                </div>
-                              </MaterialButton>
-                              <MaterialButton
-                                v-if="reportType == 'บัญชีหน้างบ'"
-                                size="lg"
-                                class="btn-icon"
-                                @click="ExportExcel('xlsx', 'table13')"
-                              >
-                                <div class="d-flex align-items-center">
-                                  <span style="margin-right: 5px">บันทึก</span>
-                                  <img
-                                    src="../../assets/img/excel.png"
-                                    alt="title"
-                                    loading="lazy"
-                                    width="40"
-                                  />
-                                </div>
-                              </MaterialButton>
-                              <MaterialButton
-                                v-if="reportType == 'ประกันทรัพย์สิน'"
-                                size="lg"
-                                class="btn-icon"
-                                @click="ExportExcel('xlsx', 'table14')"
-                              >
-                                <div class="d-flex align-items-center">
-                                  <span style="margin-right: 5px">บันทึก</span>
-                                  <img
-                                    src="../../assets/img/excel.png"
-                                    alt="title"
-                                    loading="lazy"
-                                    width="40"
-                                  />
-                                </div>
-                              </MaterialButton>
-                            </div>
-                          </div>
-                        </div>
-                        <div
-                          v-if="reportType == 'บัญชีหน้างบ'"
-                          class="text-center pt-4 table-responsive"
-                        >
-                          <table class="table table-bordered" id="table13">
-                            <thead>
-                              <tr>
-                                <td colspan="6" style="border: 0">
-                                  สรุปยอดหักค่าบํารุงสถานที่
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colspan="6" style="border: 0">
-                                  และค่าประกันทรัพย์สินเสียหายประจําเดือน
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colspan="6" style="border: 0">
-                                  (เฉพาะอาคารบ้านพัก บช.ตชด. แยกตามสังกัด)
-                                </td>
-                              </tr>
-                              <tr>
-                                <th rowspan="2">ลำดับ</th>
-                                <th rowspan="2">หน่วยงาน</th>
-                                <th colspan="3">จำนวนเงิน (บาท)</th>
-                              </tr>
-                              <tr>
-                                <th>ค่าบำรุง</th>
-                                <th>ค่าประกัน</th>
-                                <th>รวม</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr
-                                v-for="(item, index) in AffiliationListCTD"
-                                :key="index"
-                              >
-                                <th scope="row">{{ index + 1 }}</th>
-                                <td>{{ item?.value || "-" }}</td>
-                                <td>{{ item?.sumdataMaintenance || "-" }}</td>
-                                <td>{{ item?.sumdataInsurance || "-" }}</td>
-                                <td>{{ item?.sumCostdataInsurance || "-" }}</td>
-                              </tr>
-                              <tr v-if="AffiliationListCTD.length > 0">
-                                <th scope="row" colspan="2">รวมยอดส่งหัก</th>
-                                <th>
-                                  {{ AffiliationListCTD[0]?.countMaintenanceAll || 0 }}
-                                </th>
-                                <th>
-                                  {{ AffiliationListCTD[0]?.countInsuranceAll || 0 }}
-                                </th>
-                                <th>
-                                  {{ AffiliationListCTD[0]?.countCostSumAll || 0 }}
-                                </th>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                        <div
-                          v-if="reportType == 'ประกันทรัพย์สิน'"
-                          class="text-center pt-4 table-responsive"
-                        >
-                          <div>
-                            <table class="table table-bordered" id="table14">
-                              <thead>
-                                <tr>
-                                  <td colspan="7" style="border: 0">
-                                    บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด.
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td colspan="7" style="border: 0">
-                                    ที่หักเงินเดือนเป็นค่าบํารุงรักษาสถานที่และค่าประกันทรัพย์สินเสียหาย
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td colspan="7" style="border: 0">
-                                    ประจําเดือน {{ monthYearNow }} หน่วยงาน
-                                    ฝอ.๘.บก.อก.บช.ตชด.
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <th rowspan="2">ลำดับ</th>
-                                  <th rowspan="2">ชื่อ-สกุล</th>
-                                  <th rowspan="2">อาคาร</th>
-                                  <th rowspan="2">เลขที่ห้อง</th>
-                                  <th rowspan="2">การหักเงินค่าบำรุงฯ</th>
-                                  <th colspan="3">การหักเงินค่าประกันฯ</th>
-                                </tr>
-                                <tr>
-                                  <th>ยอดหัก</th>
-                                  <th>ยอดหักสะสม</th>
-                                  <th>หมายเหตุ</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr v-for="(item, index) in reportlistCTD" :key="index">
-                                  <th scope="row">{{ index + 1 }}</th>
-                                  <td>
-                                    {{ item?.rank }} {{ item?.firstName }}
-                                    {{ item?.lastName }}
-                                  </td>
-                                  <td>{{ item?.buildingName || "-" }}</td>
-                                  <td>{{ item?.roomnumber || "-" }}</td>
-                                  <td>{{ item?.maintenance || "-" }}</td>
-                                  <td>
-                                    {{ item?.accumulated || "-" }}
-                                  </td>
-                                  <td>{{ item?.amountPaid || "-" }}</td>
-                                  <td>{{ item?.Installmenttime || "-" }}</td>
-                                </tr>
-
-                                <tr v-if="reportlistCTD.length > 0">
-                                  <th scope="row" colspan="4">รวมเงิน</th>
-                                  <th>{{ reportlistCTD[0]?.MaintenanceSum || 0}}</th>
-                                  <th>{{ reportlistCTD[0]?.accumulatedSum || 0}}</th>
-                                  <th>{{ reportlistCTD[0]?.amountPaidSum || 0}}</th>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="tab-pane fade show"
-                  id="v-pills5"
-                  role="tabpanel"
-                  aria-labelledby="v-pills5-tab"
-                >
-                  <div>
-                    <div class="pt-4 text-start">
-                      <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
-                      <div class="mb-3">
-                        <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px">ประเภท</label>
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="typeUser23"
-                            id="typeUser23"
-                            value="บัญชีหน้างบ"
-                            :checked="reportType == 'บัญชีหน้างบ'"
-                            @change="typeUserchange('บัญชีหน้างบ', 'table15')"
-                          />
-                          <label class="form-check-label" for="typeUser23"
-                            >บัญชีหน้างบ</label
-                          >
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="typeUser24"
-                            id="typeUser24"
-                            value="ประกันทรัพย์สิน"
-                            :checked="reportType == 'ประกันทรัพย์สิน'"
-                            @change="typeUserchange('ประกันทรัพย์สิน', 'table16')"
-                          />
-                          <label class="form-check-label" for="typeUser24">
-                            รายละเอียดการหักเงินค่าบํารุงสถานที่
-                            และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
-                          >
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="typeUser44"
-                            id="typeUser44"
-                            value="หักไม่ได้"
-                            :checked="reportType == 'หักไม่ได้'"
-                            @change="typeUserchange('หักไม่ได้', 'table44')"
-                          />
-                          <label class="form-check-label" for="typeUser44">
-                             รายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือน</label
-                          >
-                        </div>
-                      </div>
-                      <div class="d-flex justify-content-end align-items-center">
-                        <div class="mb-3 w-20" style="margin-right: 5px">
-                          <label>เดือน</label>
-                          <v-select
-                            :options="optionMonth"
-                            v-model="selectedMonth"
-                          ></v-select>
-                        </div>
-                        <div  v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
-                          <label>สังกัด</label>
-                          <v-select
-                            :options="masterData?.AffiliationList"
-                            v-model="selectedAffiliation"
-                          ></v-select>
-                        </div>
-                        
-                        <div>
-                          <MaterialButton
-                            v-if="reportType == 'บัญชีหน้างบ'"
-                            size="lg"
-                            class="btn-icon"
-                            style="margin-right: -30px"
-                            @click="exportPdfinsurance()"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/pdf.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton
-                            v-if="reportType == 'ประกันทรัพย์สิน'"
-                            size="lg"
-                            class="btn-icon"
-                            style="margin-right: -30px"
-                            @click="exportPdfCentralCTD()"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/pdf.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton
-                            v-if="reportType == 'บัญชีหน้างบ'"
-                            size="lg"
-                            class="btn-icon"
-                            @click="ExportExcel('xlsx', 'table15')"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton
-                            v-if="reportType == 'ประกันทรัพย์สิน'"
-                            size="lg"
-                            class="btn-icon"
-                            @click="ExportExcel('xlsx', 'table16')"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                          <MaterialButton
-                            v-if="reportType == 'ประกันทรัพย์สิน'"
-                            size="lg"
-                            class="btn-icon"
-                            @click="ExportExcel('xlsx', 'table16')"
-                          >
-                            <div class="d-flex align-items-center">
-                              <span style="margin-right: 5px">บันทึก</span>
-                              <img
-                                src="../../assets/img/excel.png"
-                                alt="title"
-                                loading="lazy"
-                                width="40"
-                              />
-                            </div>
-                          </MaterialButton>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      v-if="reportType == 'บัญชีหน้างบ'"
-                      class="text-center pt-4 table-responsive"
-                    >
-                      <table class="table table-bordered" id="table15">
+                      <table class="table table-bordered">
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
-                              การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค
+                              ยอดเงินค่าธรรมเนียม และค่าสาธารณูปโภค อาคารบ้านพัก
+                              ตร.ส่วนกลาง
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">
-                              ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.
-                            </td>
+                            <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">
-                              ประจําเดือน {{ monthYear }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <th rowspan="2">ลำดับ</th>
-                            <th rowspan="2">รายการ</th>
-                            <th colspan="3">จำนวนเงิน(บาท)</th>
-                          </tr>
-                          <tr>
+                            <th>หน่วยงาน</th>
                             <th>ค่าธรรมเนียม</th>
                             <th>ค่าน้ําประปา</th>
-                            <th>ค่าไฟฟ้าฯ</th>
+                            <th>ค่าไฟฟ้า</th>
+                            <th>รวม</th>
+                          </tr>
+                        </thead>
+                        <tr>
+                          <td>{{ "อำนวยการ" || "-" }}</td>
+                          <td>
+                            {{ sumreportlistAll[0]?.sumdataMaintenancefee || "-" }}
+                          </td>
+                          <td>{{ sumreportlistAll[0]?.sumdatawaterbill || "-" }}</td>
+                          <td>
+                            {{ sumreportlistAll[0]?.sumdataelectricitybill || "-" }}
+                          </td>
+                          <td>
+                            {{ sumreportlistAll[0]?.sumCostdatawaterbill || "-" }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>{{ "สนับสนุน" || "-" }}</td>
+                          <td>
+                            {{ sumreportlistAll2[0]?.sumdataMaintenancefee || "-" }}
+                          </td>
+                          <td>{{ sumreportlistAll2[0]?.sumdatawaterbill || "-" }}</td>
+                          <td>
+                            {{ sumreportlistAll2[0]?.sumdataelectricitybill || "-" }}
+                          </td>
+                          <td>
+                            {{ sumreportlistAll2[0]?.sumCostdatawaterbill || "-" }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>{{ "ลูกจ้าง" || "-" }}</td>
+                          <td>
+                            {{ sumreportlistAll3[0]?.sumdataMaintenancefee || "-" }}
+                          </td>
+                          <td>{{ sumreportlistAll3[0]?.sumdatawaterbill || "-" }}</td>
+                          <td>
+                            {{ sumreportlistAll3[0]?.sumdataelectricitybill || "-" }}
+                          </td>
+                          <td>
+                            {{ sumreportlistAll3[0]?.sumCostdatawaterbill || "-" }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>{{ "รวม" || "-" }}</td>
+                          <td>
+                            {{ maintenancefeeAllcount }}
+                          </td>
+                          <td>
+                            {{ waterbillAllcount }}
+                          </td>
+                          <td>
+                            {{ Costdatawaterbillcount }}
+                          </td>
+                          <td>
+                            {{ Costdatawaterbillcount }}
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div class="text-center pt-4 table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <td colspan="6" style="border: 0">
+                              รายการหักเพิ่มเติม
+                              ค่าไฟฟ้าส่วนกลาง/ค่าบํารุงลิฟต์อาคารบ้านพัก ตร.ส่วนกลาง
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
+                          </tr>
+                          <tr>
+                            <th>หน่วยงาน</th>
+                            <th>ค่าไฟฟ้าส่วนกลาง</th>
+                            <th>ค่าบํารุงลิฟต์</th>
                             <th>รวม</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in AffiliationListTD" :key="index">
-                            <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item?.value || "-" }}</td>
-                            <td>{{ item?.sumdataMaintenancefee || "-" }}</td>
-                            <td>{{ item?.sumdatawaterbill || "-" }}</td>
-                            <td>{{ item?.sumdataelectricitybill || "-" }}</td>
-                            <td>{{ item?.sumCostdatawaterbill || "-" }}</td>
+                          <tr>
+                            <td>{{ "อำนวยการ" || "-" }}</td>
+                            <td>{{ sumreportlistAll[0]?.sumdatacentral || "-" }}</td>
+                            <td>{{ sumreportlistAll[0]?.sumdatacosts || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll[0]?.sumCostdataCostCosts || "-" }}
+                            </td>
                           </tr>
-                          <tr v-if="AffiliationListTD?.length > 0">
-                            <th scope="row" colspan="2">รวมเงิน</th>
-                            <th>
-                              {{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}
-                            </th>
-                            <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
-                            <th>
-                              {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
-                            </th>
-                            <th>
-                              {{ AffiliationListTD[0]?.countCostwaterbillAll || 0 }}
-                            </th>
+                          <tr>
+                            <td>{{ "สนับสนุน" || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdatacentral || "-" }}</td>
+                            <td>{{ sumreportlistAll2[0]?.sumdatacosts || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll2[0]?.sumCostdataCostCosts || "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{{ "ลูกจ้าง" || "-" }}</td>
+                            <td>{{ sumreportlistAll3[0]?.sumdatacentral || "-" }}</td>
+                            <td>{{ sumreportlistAll3[0]?.sumdatacosts || "-" }}</td>
+                            <td>
+                              {{ sumreportlistAll3[0]?.sumCostdataCostCosts || "-" }}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>{{ "รวม" || "-" }}</td>
+                            <td>
+                              {{ centralAllcount }}
+                            </td>
+                            <td>
+                              {{ costsAllcount }}
+                            </td>
+                            <td>
+                              {{ CostCostsAllcount }}
+                            </td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
-                    <div
-                      v-if="reportType == 'ประกันทรัพย์สิน'"
-                      class="text-center pt-4 table-responsive"
-                    >
-                      <table class="table table-bordered" id="table16">
+                    <div class="text-center pt-4 table-responsive">
+                      <table class="table table-bordered">
                         <thead>
                           <tr>
-                            <td colspan="9" style="border: 0">
-                              บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง
+                            <td colspan="6" style="border: 0">
+                              ตารางสรุป ยอดรวมค่าบํารุงฯ ค่าประกัน ฯ ค่าธรรมเนียม
+                              ค่าสารณูปโภค และค่าลิฟต์
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="9" style="border: 0">
-                              ที่หักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="9" style="border: 0">
-                              ประจําเดือน {{ monthYear }} หน่วยงาน บช.ตชด.
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="col">ลำดับ</th>
-                            <th scope="col">เลขที่ห้อง</th>
-                            <th scope="col">ชื่อ-สกุล</th>
-                            <th scope="col">เลขก่อน</th>
-                            <th scope="col">เลขหลัง</th>
-                            <th scope="col">ยอดใช้</th>
-                            <th scope="col">ค่าธรรมเนียม</th>
-                            <th scope="col">ค่าน้ำ</th>
-                            <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
-                            <th scope="col">รวม</th>
-                            <th scope="col">หักได้</th>
-                            <th scope="col">หักไม่ได้</th>
-                            <th scope="col">สาเหตุที่หักไม่ได้</th>
+                            <th>บช.ตชด.</th>
+                            <th>ตร.ส่วนกลาง</th>
+                            <th>ตร.ส่วนกลาง(เพิ่มเติม)</th>
+                            <th>รวมเป็นเงิน</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(item, index) in reportlistTD" :key="index">
-                            <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item?.roomnumber || "-" }}</td>
+                          <tr>
+                            <td>{{ sumAllcount || "-" }}</td>
+                            <td>{{ Costdatawaterbillcount || "-" }}</td>
+                            <td>{{ CostCostsAllcount || "-" }}</td>
                             <td>
-                              {{ item?.rank }} {{ item?.firstName }}
-                              {{ item?.lastName }}
+                              {{
+                                sumAllcount +
+                                  Costdatawaterbillcount +
+                                  CostCostsAllcount || "-"
+                              }}
                             </td>
-                            <td>{{ item?.numberfirst }}</td>
-                            <td>{{ item?.lastnumber }}</td>
-                            <td>
-                              {{ item?.lastnumber - item?.numberfirst || "-" }}
-                            </td>
-                            <td>{{ item?.maintenancefee || "-" }}</td>
-                            <td>{{ item?.waterbill || "-" }}</td>
-                            <td>{{ item?.central || "-" }}</td>
-                            <td>{{ item?.sumCostCentral || "-" }}</td>
-                            <td>
-                              <span v-if="item?.typeContract == 'หักได้'">/</span>
-                            </td>
-                            <td>
-                              <span v-if="item?.typeContract == 'หักไม่ได้'">/</span>
-                            </td>
-                            <td>{{ item?.contractExpenses || "-" }}</td>
-                          </tr>
-
-                          <tr v-if="reportlistTD?.length > 0">
-                            <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>{{ reportlistTD[0]?.MaintenanceSum || 0}}</th>
-                            <th>{{ reportlistTD[0]?.waterbillSum || 0}}</th>
-                            <th>{{ reportlistTD[0]?.centralSum || 0}}</th>
-                            <th>{{ reportlistTD[0]?.SumCostSumCentral || 0}}</th>
                           </tr>
                         </tbody>
                       </table>
                     </div>
-                    <div
-                      v-if="reportType == 'หักไม่ได้'"
-                      class="text-center pt-4 table-responsive"
-                    >
-                      <table class="table table-bordered" id="table44">
-                        <thead>
-                          <tr>
-                            <td colspan="9" style="border: 0">
-                              บัญชีรายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือนเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง ตร.
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="9" style="border: 0">
-                              ประจําเดือน {{ monthYear }} 
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="col">ลำดับ</th>
-                            <th scope="col">เลขที่ห้อง</th>
-                            <th scope="col">ชื่อ-สกุล</th>
-                            <th scope="col">เลขก่อน</th>
-                            <th scope="col">เลขหลัง</th>
-                            <th scope="col">ยอดใช้</th>
-                            <th scope="col">ค่าธรรมเนียม</th>
-                            <th scope="col">ค่าน้ำ</th>
-                            <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
-                            <th scope="col">รวม</th>
-                            <th scope="col">หักได้</th>
-                            <th scope="col">หักไม่ได้</th>
-                            <th scope="col">สาเหตุที่หักไม่ได้</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="(item, index) in deductibleTD" :key="index">
-                            <th scope="row">{{ index + 1 }}</th>
-                            <td>{{ item?.roomnumber || "-" }}</td>
-                            <td>
-                              {{ item?.rank }} {{ item?.firstName }}
-                              {{ item?.lastName }}
-                            </td>
-                            <td>{{ item?.numberfirst }}</td>
-                            <td>{{ item?.lastnumber }}</td>
-                            <td>
-                              {{ item?.lastnumber - item?.numberfirst || "-" }}
-                            </td>
-                            <td>{{ item?.maintenancefee || "-" }}</td>
-                            <td>{{ item?.waterbill || "-" }}</td>
-                            <td>{{ item?.central || "-" }}</td>
-                            <td>{{ item?.sumCostCentral || "-" }}</td>
-                            <td>
-                              <span v-if="item?.typeContract == 'หักได้'">/</span>
-                            </td>
-                            <td>
-                              <span v-if="item?.typeContract == 'หักไม่ได้'">/</span>
-                            </td>
-                            <td>{{ item?.contractExpenses || "-" }}</td>
-                          </tr>
+                  </div>
+                </div>
 
-                          <tr v-if="deductibleTD?.length > 0">
-                            <th scope="row" colspan="6">รวมเงิน</th>
-                            <th>{{ deductibleTD[0]?.MaintenanceSum || 0}}</th>
-                            <th>{{ deductibleTD[0]?.waterbillSum || 0}}</th>
-                            <th>{{ deductibleTD[0]?.centralSum || 0}}</th>
-                            <th>{{ deductibleTD[0]?.SumCostSumCentral || 0}}</th>
-                          </tr>
-                        </tbody>
-                      </table>
+                <div v-if="submenus == 'submenu1'">
+                  <div class="text-center pt-4 table-responsive">
+                    <div>
+                      <div class="pt-4 text-start">
+                        <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                        <div class="mb-3">
+                          <div class="form-check form-check-inline">
+                            <label style="margin-right: 20px">ประเภท</label>
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="typeUser21"
+                              id="typeUser21"
+                              value="บัญชีหน้างบ"
+                              :checked="reportType == 'บัญชีหน้างบ'"
+                              @change="typeUserchange('บัญชีหน้างบ', 'table13')"
+                            />
+                            <label class="form-check-label" for="typeUser21"
+                              >บัญชีหน้างบ</label
+                            >
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="typeUser22"
+                              id="typeUser22"
+                              value="ประกันทรัพย์สิน"
+                              :checked="reportType == 'ประกันทรัพย์สิน'"
+                              @change="typeUserchange('ประกันทรัพย์สิน', 'table14')"
+                            />
+                            <label class="form-check-label" for="typeUser22">
+                              รายละเอียดการหักเงินค่าบํารุงสถานที่
+                              และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                            >
+                          </div>
+                        </div>
+                        <div class="d-flex justify-content-end align-items-center">
+                          <div class="mb-3 w-20" style="margin-right: 5px">
+                            <label>เดือน</label>
+                            <v-select
+                              :options="optionMonth"
+                              v-model="selectedMonth"
+                            ></v-select>
+                          </div>
+                          <div v-if="reportType == 'ประกันทรัพย์สิน'" class="mb-3 w-20">
+                            <label>สังกัด</label>
+                            <v-select
+                              :options="masterData?.AffiliationList"
+                              v-model="selectedAffiliation"
+                            ></v-select>
+                          </div>
+                          <div>
+                            <MaterialButton
+                              v-if="reportType == 'บัญชีหน้างบ'"
+                              size="lg"
+                              class="btn-icon"
+                              style="margin-right: -30px"
+                              @click="exportPdfinsurance()"
+                            >
+                              <div class="d-flex align-items-center">
+                                <span style="margin-right: 5px">บันทึก</span>
+                                <img
+                                  src="../../assets/img/pdf.png"
+                                  alt="title"
+                                  loading="lazy"
+                                  width="40"
+                                />
+                              </div>
+                            </MaterialButton>
+                            <MaterialButton
+                              v-if="reportType == 'ประกันทรัพย์สิน'"
+                              size="lg"
+                              class="btn-icon"
+                              style="margin-right: -30px"
+                              @click="exportPdfAccumulated()"
+                            >
+                              <div class="d-flex align-items-center">
+                                <span style="margin-right: 5px">บันทึก</span>
+                                <img
+                                  src="../../assets/img/pdf.png"
+                                  alt="title"
+                                  loading="lazy"
+                                  width="40"
+                                />
+                              </div>
+                            </MaterialButton>
+                            <MaterialButton
+                              v-if="reportType == 'บัญชีหน้างบ'"
+                              size="lg"
+                              class="btn-icon"
+                              @click="ExportExcel('xlsx', 'table13')"
+                            >
+                              <div class="d-flex align-items-center">
+                                <span style="margin-right: 5px">บันทึก</span>
+                                <img
+                                  src="../../assets/img/excel.png"
+                                  alt="title"
+                                  loading="lazy"
+                                  width="40"
+                                />
+                              </div>
+                            </MaterialButton>
+                            <MaterialButton
+                              v-if="reportType == 'ประกันทรัพย์สิน'"
+                              size="lg"
+                              class="btn-icon"
+                              @click="ExportExcel('xlsx', 'table14')"
+                            >
+                              <div class="d-flex align-items-center">
+                                <span style="margin-right: 5px">บันทึก</span>
+                                <img
+                                  src="../../assets/img/excel.png"
+                                  alt="title"
+                                  loading="lazy"
+                                  width="40"
+                                />
+                              </div>
+                            </MaterialButton>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        v-if="reportType == 'บัญชีหน้างบ'"
+                        class="text-center pt-4 table-responsive"
+                      >
+                        <table class="table table-bordered" id="table13">
+                          <thead>
+                            <tr>
+                              <td colspan="6" style="border: 0">
+                                สรุปยอดหักค่าบํารุงสถานที่
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="6" style="border: 0">
+                                และค่าประกันทรัพย์สินเสียหายประจําเดือน
+                              </td>
+                            </tr>
+                            <tr>
+                              <td colspan="6" style="border: 0">
+                                (เฉพาะอาคารบ้านพัก บช.ตชด. แยกตามสังกัด)
+                              </td>
+                            </tr>
+                            <tr>
+                              <th rowspan="2">ลำดับ</th>
+                              <th rowspan="2">หน่วยงาน</th>
+                              <th colspan="3">จำนวนเงิน (บาท)</th>
+                            </tr>
+                            <tr>
+                              <th>ค่าบำรุง</th>
+                              <th>ค่าประกัน</th>
+                              <th>รวม</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(item, index) in AffiliationListCTD" :key="index">
+                              <th scope="row">{{ index + 1 }}</th>
+                              <td>{{ item?.value || "-" }}</td>
+                              <td>{{ item?.sumdataMaintenance || "-" }}</td>
+                              <td>{{ item?.sumdataInsurance || "-" }}</td>
+                              <td>{{ item?.sumCostdataInsurance || "-" }}</td>
+                            </tr>
+                            <tr v-if="AffiliationListCTD.length > 0">
+                              <th scope="row" colspan="2">รวมยอดส่งหัก</th>
+                              <th>
+                                {{ AffiliationListCTD[0]?.countMaintenanceAll || 0 }}
+                              </th>
+                              <th>
+                                {{ AffiliationListCTD[0]?.countInsuranceAll || 0 }}
+                              </th>
+                              <th>
+                                {{ AffiliationListCTD[0]?.countCostSumAll || 0 }}
+                              </th>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div
+                        v-if="reportType == 'ประกันทรัพย์สิน'"
+                        class="text-center pt-4 table-responsive"
+                      >
+                        <div>
+                          <table class="table table-bordered" id="table14">
+                            <thead>
+                              <tr>
+                                <td colspan="7" style="border: 0">
+                                  บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด.
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="7" style="border: 0">
+                                  ที่หักเงินเดือนเป็นค่าบํารุงรักษาสถานที่และค่าประกันทรัพย์สินเสียหาย
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="7" style="border: 0">
+                                  ประจําเดือน {{ monthYearNow }} หน่วยงาน
+                                  ฝอ.๘.บก.อก.บช.ตชด.
+                                </td>
+                              </tr>
+                              <tr>
+                                <th rowspan="2">ลำดับ</th>
+                                <th rowspan="2">ชื่อ-สกุล</th>
+                                <th rowspan="2">อาคาร</th>
+                                <th rowspan="2">เลขที่ห้อง</th>
+                                <th rowspan="2">การหักเงินค่าบำรุงฯ</th>
+                                <th colspan="3">การหักเงินค่าประกันฯ</th>
+                              </tr>
+                              <tr>
+                                <th>ยอดหัก</th>
+                                <th>ยอดหักสะสม</th>
+                                <th>หมายเหตุ</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(item, index) in reportlistCTD" :key="index">
+                                <th scope="row">{{ index + 1 }}</th>
+                                <td>
+                                  {{ item?.rank }} {{ item?.firstName }}
+                                  {{ item?.lastName }}
+                                </td>
+                                <td>{{ item?.buildingName || "-" }}</td>
+                                <td>{{ item?.roomnumber || "-" }}</td>
+                                <td>{{ item?.maintenance || "-" }}</td>
+                                <td>
+                                  {{ item?.accumulated || "-" }}
+                                </td>
+                                <td>{{ item?.amountPaid || "-" }}</td>
+                                <td>{{ item?.Installmenttime || "-" }}</td>
+                              </tr>
+
+                              <tr v-if="reportlistCTD.length > 0">
+                                <th scope="row" colspan="4">รวมเงิน</th>
+                                <th>{{ reportlistCTD[0]?.MaintenanceSum || 0 }}</th>
+                                <th>{{ reportlistCTD[0]?.accumulatedSum || 0 }}</th>
+                                <th>{{ reportlistCTD[0]?.amountPaidSum || 0 }}</th>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                </div>
+
+                <div v-if="submenus == 'submenu2'">
+                  <div class="pt-4 text-start">
+                    <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
+                    <div class="mb-3">
+                      <div class="form-check form-check-inline">
+                        <label style="margin-right: 20px">ประเภท</label>
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="typeUser23"
+                          id="typeUser23"
+                          value="บัญชีหน้างบ"
+                          :checked="reportType == 'บัญชีหน้างบ'"
+                          @change="typeUserchange('บัญชีหน้างบ', 'table15')"
+                        />
+                        <label class="form-check-label" for="typeUser23"
+                          >บัญชีหน้างบ</label
+                        >
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="typeUser24"
+                          id="typeUser24"
+                          value="ประกันทรัพย์สิน"
+                          :checked="reportType == 'ประกันทรัพย์สิน'"
+                          @change="typeUserchange('ประกันทรัพย์สิน', 'table16')"
+                        />
+                        <label class="form-check-label" for="typeUser24">
+                          รายละเอียดการหักเงินค่าบํารุงสถานที่
+                          และค่าประกันทรัพย์สินเสียหายประจําเดือน</label
+                        >
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="typeUser44"
+                          id="typeUser44"
+                          value="หักไม่ได้"
+                          :checked="reportType == 'หักไม่ได้'"
+                          @change="typeUserchange('หักไม่ได้', 'table44')"
+                        />
+                        <label class="form-check-label" for="typeUser44">
+                          รายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือน</label
+                        >
+                      </div>
+                    </div>
+                    <div class="d-flex justify-content-end align-items-center">
+                      <div class="mb-3 w-20" style="margin-right: 5px">
+                        <label>เดือน</label>
+                        <v-select
+                          :options="optionMonth"
+                          v-model="selectedMonth"
+                        ></v-select>
+                      </div>
+                      <div v-if="reportType == 'ประกันทรัพย์สิน' || reportType == 'หักไม่ได้'" class="mb-3 w-20">
+                        <label>สังกัด</label>
+                        <v-select
+                          :options="masterData?.AffiliationList"
+                          v-model="selectedAffiliation"
+                        ></v-select>
+                      </div>
+
+                      <div>
+                        <MaterialButton
+                          v-if="reportType == 'บัญชีหน้างบ'"
+                          size="lg"
+                          class="btn-icon"
+                          style="margin-right: -30px"
+                          @click="exportPdfinsurance()"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/pdf.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'ประกันทรัพย์สิน'"
+                          size="lg"
+                          class="btn-icon"
+                          style="margin-right: -30px"
+                          @click="exportPdfCentralCTD()"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/pdf.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'หักไม่ได้'"
+                          size="lg"
+                          class="btn-icon"
+                          style="margin-right: -30px"
+                          @click="exportPdfCentralCTD()"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/pdf.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'บัญชีหน้างบ'"
+                          size="lg"
+                          class="btn-icon"
+                          @click="ExportExcel('xlsx', 'table15')"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/excel.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'ประกันทรัพย์สิน'"
+                          size="lg"
+                          class="btn-icon"
+                          @click="ExportExcel('xlsx', 'table16')"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/excel.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                        <MaterialButton
+                          v-if="reportType == 'หักไม่ได้'"
+                          size="lg"
+                          class="btn-icon"
+                          @click="ExportExcel('xlsx', 'table44')"
+                        >
+                          <div class="d-flex align-items-center">
+                            <span style="margin-right: 5px">บันทึก</span>
+                            <img
+                              src="../../assets/img/excel.png"
+                              alt="title"
+                              loading="lazy"
+                              width="40"
+                            />
+                          </div>
+                        </MaterialButton>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    v-if="reportType == 'บัญชีหน้างบ'"
+                    class="text-center pt-4 table-responsive"
+                  >
+                    <table class="table table-bordered" id="table15">
+                      <thead>
+                        <tr>
+                          <td colspan="6" style="border: 0">
+                            การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6" style="border: 0">
+                            ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="6" style="border: 0">
+                            ประจําเดือน {{ monthYear }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th rowspan="2">ลำดับ</th>
+                          <th rowspan="2">รายการ</th>
+                          <th colspan="3">จำนวนเงิน(บาท)</th>
+                        </tr>
+                        <tr>
+                          <th>ค่าธรรมเนียม</th>
+                          <th>ค่าน้ําประปา</th>
+                          <th>ค่าไฟฟ้าฯ</th>
+                          <th>รวม</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item, index) in AffiliationListTD" :key="index">
+                          <th scope="row">{{ index + 1 }}</th>
+                          <td>{{ item?.value || "-" }}</td>
+                          <td>{{ item?.sumdataMaintenancefee || "-" }}</td>
+                          <td>{{ item?.sumdatawaterbill || "-" }}</td>
+                          <td>{{ item?.sumdataelectricitybill || "-" }}</td>
+                          <td>{{ item?.sumCostdatawaterbill || "-" }}</td>
+                        </tr>
+                        <tr v-if="AffiliationListTD?.length > 0">
+                          <th scope="row" colspan="2">รวมเงิน</th>
+                          <th>
+                            {{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}
+                          </th>
+                          <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
+                          <th>
+                            {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
+                          </th>
+                          <th>
+                            {{ AffiliationListTD[0]?.countCostwaterbillAll || 0 }}
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div
+                    v-if="reportType == 'ประกันทรัพย์สิน'"
+                    class="text-center pt-4 table-responsive"
+                  >
+                    <table class="table table-bordered" id="table16">
+                      <thead>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพัก ตร.ส่วนกลาง
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            ที่หักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            ประจําเดือน {{ monthYear }} หน่วยงาน บช.ตชด.
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="col">ลำดับ</th>
+                          <th scope="col">เลขที่ห้อง</th>
+                          <th scope="col">ชื่อ-สกุล</th>
+                          <th scope="col">เลขก่อน</th>
+                          <th scope="col">เลขหลัง</th>
+                          <th scope="col">ยอดใช้</th>
+                          <th scope="col">ค่าธรรมเนียม</th>
+                          <th scope="col">ค่าน้ำ</th>
+                          <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                          <th scope="col">รวม</th>
+                          <th scope="col">หักได้</th>
+                          <th scope="col">หักไม่ได้</th>
+                          <th scope="col">สาเหตุที่หักไม่ได้</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item, index) in reportlistTD" :key="index">
+                          <th scope="row">{{ index + 1 }}</th>
+                          <td>{{ item?.roomnumber || "-" }}</td>
+                          <td>
+                            {{ item?.rank }} {{ item?.firstName }}
+                            {{ item?.lastName }}
+                          </td>
+                          <td>{{ item?.numberfirst }}</td>
+                          <td>{{ item?.lastnumber }}</td>
+                          <td>
+                            {{ item?.lastnumber - item?.numberfirst || "-" }}
+                          </td>
+                          <td>{{ item?.maintenancefee || "-" }}</td>
+                          <td>{{ item?.waterbill || "-" }}</td>
+                          <td>{{ item?.central || "-" }}</td>
+                          <td>{{ item?.sumCostCentral || "-" }}</td>
+                          <td>
+                            <span v-if="item?.typeContract == 'หักได้'">/</span>
+                          </td>
+                          <td>
+                            <span v-if="item?.typeContract == 'หักไม่ได้'">/</span>
+                          </td>
+                          <td>{{ item?.contractExpenses || "-" }}</td>
+                        </tr>
+
+                        <tr v-if="reportlistTD?.length > 0">
+                          <th scope="row" colspan="6">รวมเงิน</th>
+                          <th>{{ reportlistTD[0]?.MaintenanceSum || 0 }}</th>
+                          <th>{{ reportlistTD[0]?.waterbillSum || 0 }}</th>
+                          <th>{{ reportlistTD[0]?.centralSum || 0 }}</th>
+                          <th>{{ reportlistTD[0]?.SumCostSumCentral || 0 }}</th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div
+                    v-if="reportType == 'หักไม่ได้'"
+                    class="text-center pt-4 table-responsive"
+                  >
+                    <table class="table table-bordered" id="table44">
+                      <thead>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            บัญชีรายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือนเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง
+                            ตร.
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="9" style="border: 0">
+                            ประจําเดือน {{ monthYear }}
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="col">ลำดับ</th>
+                          <th scope="col">เลขที่ห้อง</th>
+                          <th scope="col">ชื่อ-สกุล</th>
+                          <th scope="col">เลขก่อน</th>
+                          <th scope="col">เลขหลัง</th>
+                          <th scope="col">ยอดใช้</th>
+                          <th scope="col">ค่าธรรมเนียม</th>
+                          <th scope="col">ค่าน้ำ</th>
+                          <th scope="col">ค่าไฟฟ้าส่วนกลาง</th>
+                          <th scope="col">รวม</th>
+                          <th scope="col">หักได้</th>
+                          <th scope="col">หักไม่ได้</th>
+                          <th scope="col">สาเหตุที่หักไม่ได้</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(item, index) in deductibleTD" :key="index">
+                          <th scope="row">{{ index + 1 }}</th>
+                          <td>{{ item?.roomnumber || "-" }}</td>
+                          <td>
+                            {{ item?.rank }} {{ item?.firstName }}
+                            {{ item?.lastName }}
+                          </td>
+                          <td>{{ item?.numberfirst }}</td>
+                          <td>{{ item?.lastnumber }}</td>
+                          <td>
+                            {{ item?.lastnumber - item?.numberfirst || "-" }}
+                          </td>
+                          <td>{{ item?.maintenancefee || "-" }}</td>
+                          <td>{{ item?.waterbill || "-" }}</td>
+                          <td>{{ item?.central || "-" }}</td>
+                          <td>{{ item?.sumCostCentral || "-" }}</td>
+                          <td>
+                            <span v-if="item?.typeContract == 'หักได้'">/</span>
+                          </td>
+                          <td>
+                            <span v-if="item?.typeContract == 'หักไม่ได้'">/</span>
+                          </td>
+                          <td>{{ item?.contractExpenses || "-" }}</td>
+                        </tr>
+
+                        <tr v-if="deductibleTD?.length > 0">
+                          <th scope="row" colspan="6">รวมเงิน</th>
+                          <th>{{ deductibleTD[0]?.MaintenanceSum || 0 }}</th>
+                          <th>{{ deductibleTD[0]?.waterbillSum || 0 }}</th>
+                          <th>{{ deductibleTD[0]?.centralSum || 0 }}</th>
+                          <th>{{ deductibleTD[0]?.SumCostSumCentral || 0 }}</th>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -6415,5 +6430,47 @@ input::-webkit-inner-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
+}
+
+nav {
+  --duration: 0.5s;
+  --easing: ease-in-out;
+  position: relative;
+  /* width: 220px; */
+  margin: 20px;
+}
+.textActive {
+  color: #4cbb17 !important;
+}
+nav ol {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+nav li {
+  margin: -4px 0 0 0;
+}
+nav a {
+  display: block;
+  text-decoration: none;
+  background: #fff;
+  transform-origin: 0 0;
+  transition: transform var(--duration) var(--easing), color var(--duration) var(--easing);
+  transition-delay: var(--delay-out);
+  border-radius: 4px;
+  padding: 1em 1.52em;
+}
+nav a:hover {
+  background: #efefef;
+}
+nav .sub-menu a {
+  font-size: 0.9em;
+  color: #666666;
+  border-left: 2em solid white;
+  padding: 0.75em;
+  background: linear-gradient(to right, #dddddd 2px, #ffffff 2px);
+}
+nav .sub-menu a:hover {
+  background: linear-gradient(to right, #dddddd 2px, #efefef 2px);
 }
 </style>
