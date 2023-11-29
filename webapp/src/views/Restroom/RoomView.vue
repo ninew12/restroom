@@ -218,11 +218,24 @@ export default {
       }
     },
 
-    async EdituserForm() {
+
+     getBuildingsByid(id) {
+      try {
+        axios.get(`http://localhost:3897/buildings/${id}`).then((res) => {
+          this.committee = res.data.committee || "-";
+          this.buildingType = res.data.buildingType;
+          this.buildingName = res.data.name;
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    },
+
+   async  EdituserForm() {
       let body = {
         committee: this.committee,
       };
-      axios
+     await axios
         .put(`http://localhost:3897/buildings/${this.buidingId}`, body, {
           headers: {
             // remove headers
@@ -235,7 +248,11 @@ export default {
             title: "แก้ไขข้อมูลสำเร็จ",
             type: "success",
           });
-          this.getBuildings();
+          setTimeout(() => {
+            this.getBuildings();
+            this.getBuildingsByid(this.buidingId)
+          }, 2000);
+          // this.getBuildings();
         })
         .catch((err) => {
           console.log(err);
@@ -301,7 +318,7 @@ export default {
         if (event.target.checked) {
           let tt = this.roomList.sort((a, b) => a.floor - b.floor);
           filldata = tt.map((ele, i) => {
-            return ele.data.filter((c) => c.roomconditions == "ชำรุด");
+            return ele.data.filter((c) => c.roomconditions == "ชำรุด" || c.roomconditions == "เสื่อมโทรม");
           });
           let t = Object.keys(filldata).map((ele) => {
             return {
@@ -512,12 +529,12 @@ export default {
               <template v-slot:pdf-content>
                 <div class="text-center pt-4">
                   <div class="d-flex justify-content-start align-items-baseline p-2">
-                    <h6 class="pt-1">อาคารบ้านพัก : {{ buildingType }}</h6>
-                    <h6 class="pt-1">ตึก : {{ buildingNamel }}</h6>
+                    <h6 class="pt-1">อาคารบ้านพัก : {{ buildingType || "-"}}</h6>
+                    <h6 class="pt-1" style="margin-left:10px">ตึก : {{ buildingName  || "-"}}</h6>
                   </div>
                   <div class="d-flex justify-content-start align-items-baseline p-2">
-                    <h6>ประเภทห้อง : {{ selectedtypeRoom?.label }}</h6>
-                    <h6>คณะกรรมการประจําตึก : {{ committee }}</h6>
+                    <h6>ประเภทห้อง : {{ selectedtypeRoom?.label  || "-"}}</h6>
+                    <h6 style="margin-left:10px">คณะกรรมการประจําตึก : {{ committee  || "-"}}</h6>
                   </div>
                   <div v-for="(item, index) in roomList" :key="index" id="printMe">
                     <div class="card mb-2">

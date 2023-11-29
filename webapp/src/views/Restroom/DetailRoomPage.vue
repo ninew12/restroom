@@ -540,7 +540,9 @@ export default {
         });
     },
 
-    updateUser() {
+  async  updateUser() {
+    if(this.numberPeople == "") this.numberPeople = " "
+    if(this.vehicleNumber == "") this.vehicleNumber = " "
       let body = {
         bookNumber: this.bookNumber,
         contract: this.contract,
@@ -548,7 +550,8 @@ export default {
         numberPeople: this.numberPeople,
         no: "",
       };
-      axios
+      console.log(body);
+     await axios
         .put(`http://localhost:3897/users/${this.userId}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -560,7 +563,10 @@ export default {
             title: "แก้ไขข้อมูลสำเร็จ",
             type: "success",
           });
-          this.getAllusersByid(this.userId);
+          setTimeout(() => {
+            this.getAllusersByid(this.userId);
+          }, 500);
+         
         })
         .catch((err) => {
           console.log(err);

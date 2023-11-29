@@ -142,7 +142,6 @@ app.put('/users/:id', (req, res) => {
     if (req.body.roomconditionsCause) parsedData.roomconditionsCause = req.body.roomconditionsCause
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
-    
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata), (err) => {
         if (err) {
@@ -187,7 +186,7 @@ app.put('/buildings/:id', (req, res) => {
     const parsedData = dataOld;
     if (req.body.committee) parsedData.committee = req.body.committee
     filterdata.push(parsedData)
-    fs.writeFileSync('./building.json', JSON.stringify(filterdata, null, 2), (err) => {
+    fs.writeFileSync('./building.json', JSON.stringify(filterdata), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
