@@ -197,6 +197,13 @@ export default {
       XLSX.writeFile(wb, "รายงานคืนเงินประกัน.xlsx");
     },
 
+    async summitloopData() {
+      this.ExportData();
+      await this.dataSummit.forEach((element) => {
+        this.summitdeposit(element);
+      });
+    },
+
     async summitdeposit(element) {
       let body = {
         houseRegistration: " ",
@@ -226,7 +233,6 @@ export default {
         })
         .then((res) => {
           this.updateRoom(element.roomId);
-          this.ExportData();
           this.getExpenses();
         })
         .catch((err) => {

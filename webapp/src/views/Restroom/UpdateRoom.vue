@@ -526,7 +526,7 @@ export default {
                           />
                           <label class="form-check-label" for="inlineRadio21">เสื่อมโทรม</label>
                         </div>
-                        <!-- <div style="width: 250px; margin-bottom: 10px; margin-left: 20px">
+                        <div style="width: 350px; margin-bottom: 10px; margin-left: 20px">
                           <MaterialInput
                             name="roomconditionsCause"
                             :value="roomconditionsCause"
@@ -535,7 +535,7 @@ export default {
                             type="text"
                             placeholder="สาเหตุ"
                           />
-                        </div> -->
+                        </div>
                       </div>
                     </div>
 

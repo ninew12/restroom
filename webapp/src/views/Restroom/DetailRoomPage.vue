@@ -686,7 +686,7 @@ export default {
                         <h5 class="card-title pt-2">รายละเอียดห้องพัก</h5>
                         <p class="card-text">ประเภทห้องพัก : {{ data?.typeRoom }}</p>
                         <p class="card-text">สภาพห้อง : {{ data?.roomconditions }}</p>
-                        <!-- <p class="card-text" v-if="roomconditions == 'ชำรุด'">สาเหตุ : {{roomconditionsCause}}</p> -->
+                        <p class="card-text" v-if="roomconditions == 'ชำรุด'|| roomconditions == 'เสื่อมโทรม'">สาเหตุ : {{roomconditionsCause}}</p>
                       </div>
                     </div>
                   </div>
