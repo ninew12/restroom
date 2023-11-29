@@ -545,11 +545,15 @@ export default {
                                 :class="{
                                   'bg-red':
                                     item2?.roomStatus == 'unavailable' &&
-                                    item2?.roomconditions !== 'ชำรุด',
+                                    item2?.roomconditions !== 'ชำรุด' &&
+                                    item2?.roomconditions !== 'เสื่อมโทรม',
                                   'bg-green':
                                     item2?.roomStatus == 'free' &&
-                                    item2?.roomconditions !== 'ชำรุด',
-                                  'bg-warning2': item2?.roomconditions == 'ชำรุด',
+                                    item2?.roomconditions !== 'ชำรุด' &&
+                                    item2?.roomconditions !== 'เสื่อมโทรม',
+                                  'bg-warning2':
+                                    item2?.roomconditions == 'ชำรุด' ||
+                                    item2?.roomconditions == 'เสื่อมโทรม',
                                   'bg-return': item2?.roomStatus == 'return',
                                   'bgg-red': item2?.roomStatus == 'special',
                                 }"
@@ -570,13 +574,16 @@ export default {
                                       "
                                     >
                                       <a style="font-size: medium"
-                                        >ห้อง {{ item2?.numberRoom }}</a
+                                        >{{ item2?.numberRoom }} ({{
+                                          item2?.typeRoom
+                                        }})</a
                                       >
                                     </p>
                                     <p
                                       v-if="
                                         item2?.roomStatus == 'free' &&
-                                        item2?.roomconditions !== 'ชำรุด'
+                                        item2?.roomconditions !== 'ชำรุด' &&
+                                        item2?.roomconditions !== 'เสื่อมโทรม'
                                       "
                                       class="card-title bgg-green"
                                       style="font-size: 18px"
@@ -586,7 +593,8 @@ export default {
                                     <p
                                       v-if="
                                         item2?.roomStatus == 'unavailable' &&
-                                        item2?.roomconditions !== 'ชำรุด'
+                                        item2?.roomconditions !== 'ชำรุด' &&
+                                        item2?.roomconditions !== 'เสื่อมโทรม'
                                       "
                                       class="card-title bgg-red"
                                       style="font-size: 18px"
@@ -594,11 +602,14 @@ export default {
                                       {{ "ไม่ว่าง" }}
                                     </p>
                                     <p
-                                      v-if="item2?.roomconditions == 'ชำรุด'"
+                                      v-if="
+                                        item2?.roomconditions == 'ชำรุด' ||
+                                        item2?.roomconditions == 'เสื่อมโทรม'
+                                      "
                                       class="card-title bgg-warning2"
                                       style="font-size: 18px"
                                     >
-                                      {{ "ชำรุด" }}
+                                      {{ item2?.roomconditions }}
                                     </p>
                                     <p
                                       v-if="item2?.roomStatus == 'return'"
@@ -783,11 +794,15 @@ export default {
                           :class="{
                             'bg-red':
                               item2?.roomStatus == 'unavailable' &&
-                              item2?.roomconditions !== 'ชำรุด',
+                              item2?.roomconditions !== 'ชำรุด' &&
+                              item2?.roomconditions !== 'เสื่อมโทรม',
                             'bg-green':
                               item2?.roomStatus == 'free' &&
-                              item2?.roomconditions !== 'ชำรุด',
-                            'bg-warning2': item2?.roomconditions == 'ชำรุด',
+                              item2?.roomconditions !== 'ชำรุด' &&
+                              item2?.roomconditions !== 'เสื่อมโทรม',
+                            'bg-warning2':
+                              item2?.roomconditions == 'ชำรุด' ||
+                              item2?.roomconditions == 'เสื่อมโทรม',
                             'bg-return': item2?.roomStatus == 'return',
                             'bgg-red': item2?.roomStatus == 'special',
                           }"
@@ -808,13 +823,14 @@ export default {
                                 "
                               >
                                 <a style="font-size: medium"
-                                  >ห้อง {{ item2?.numberRoom }}</a
+                                  >{{ item2?.numberRoom }} ({{ item2?.typeRoom }})</a
                                 >
                               </p>
                               <p
                                 v-if="
                                   item2?.roomStatus == 'free' &&
-                                  item2?.roomconditions !== 'ชำรุด'
+                                  item2?.roomconditions !== 'ชำรุด' &&
+                                  item2?.roomconditions !== 'เสื่อมโทรม'
                                 "
                                 class="card-title bgg-green"
                                 style="font-size: 18px"
@@ -824,7 +840,8 @@ export default {
                               <p
                                 v-if="
                                   item2?.roomStatus == 'unavailable' &&
-                                  item2?.roomconditions !== 'ชำรุด'
+                                  item2?.roomconditions !== 'ชำรุด' &&
+                                  item2?.roomconditions !== 'เสื่อมโทรม'
                                 "
                                 class="card-title bgg-red"
                                 style="font-size: 18px"
@@ -832,11 +849,14 @@ export default {
                                 {{ "ไม่ว่าง" }}
                               </p>
                               <p
-                                v-if="item2?.roomconditions == 'ชำรุด'"
+                                v-if="
+                                  item2?.roomconditions == 'ชำรุด' ||
+                                  item2?.roomconditions == 'เสื่อมโทรม'
+                                "
                                 class="card-title bgg-warning2"
                                 style="font-size: 18px"
                               >
-                                {{ "ชำรุด" }}
+                                {{ item2?.roomconditions }}
                               </p>
                               <p
                                 v-if="item2?.roomStatus == 'return'"

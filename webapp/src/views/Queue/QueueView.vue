@@ -522,7 +522,7 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions"
+                    name="inlineRadioOptions2"
                     id="inlineRadio5"
                     value="ช1"
                     @change="queuetypefilter($event)"
@@ -534,7 +534,7 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions"
+                    name="inlineRadioOptions2"
                     id="inlineRadio6"
                     value="ช2"
                     @change="queuetypefilter($event)"
@@ -545,7 +545,7 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions"
+                    name="inlineRadioOptions2"
                     id="inlineRadio7"
                     value="ช3"
                     @change="queuetypefilter($event)"
