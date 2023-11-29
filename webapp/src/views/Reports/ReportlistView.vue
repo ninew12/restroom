@@ -6429,7 +6429,7 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-nav {
+nav.menu {
   --duration: 0.5s;
   --easing: ease-in-out;
   position: relative;
@@ -6439,15 +6439,15 @@ nav {
 .textActive {
   color: #4cbb17 !important;
 }
-nav ol {
+nav.menu ol {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-nav li {
+nav.menu li {
   margin: -4px 0 0 0;
 }
-nav a {
+nav.menu a {
   display: block;
   text-decoration: none;
   background: #fff;
@@ -6457,17 +6457,17 @@ nav a {
   border-radius: 4px;
   padding: 1em 1.52em;
 }
-nav a:hover {
+nav.menu a:hover {
   background: #efefef;
 }
-nav .sub-menu a {
+nav.menu .sub-menu a {
   font-size: 0.9em;
   color: #666666;
   border-left: 2em solid white;
   padding: 0.75em;
   background: linear-gradient(to right, #dddddd 2px, #ffffff 2px);
 }
-nav .sub-menu a:hover {
+nav.menu .sub-menu a:hover {
   background: linear-gradient(to right, #dddddd 2px, #efefef 2px);
 }
 </style>
