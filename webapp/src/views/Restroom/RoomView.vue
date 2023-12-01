@@ -109,8 +109,9 @@ export default {
       if (newValue !== null) {
         arr = this.buildingList.find((e) => e.buildingId == newValue.value);
         this.buidingId = arr.listRoom[0].buildingId;
-        this.committee = arr.committee;
+        this.buildingName = newValue.label
         this.buildById(this.buidingId);
+        this.getBuildingsByid(this.buidingId);
       }
     },
   },
@@ -168,9 +169,7 @@ export default {
           let datalist = [];
           let arr = [];
           let buidingRoom = res.data;
-          // let buidingRoomOld = buidingRoom;
           broom = buidingRoom.filter((e) => e.buildingId == id);
-
           const groupByCategory = Object.groupBy(broom, (product) => {
             return product.floor;
           });
@@ -204,12 +203,12 @@ export default {
           });
           listData = this.listRoom.sort((a, b) => b.floor - a.floor);
           let roomValue = this.buildingList[0];
-          this.committee = roomValue.committee || "-";
           this.buildingType = roomValue.buildingType;
           this.buildingName = roomValue.name;
           // this.onChangeEventRoom("ทั้งหมด")
           // this.selectedlistRoom = { label: roomValue.buil, value: roomValue.buil };
           this.buidingId = roomValue.listRoom[0].buildingId;
+          this.committee  = roomValue.listRoom[0].committee;
           this.dataBuilding = roomValue;
           this.getRooms();
         });
@@ -222,9 +221,7 @@ export default {
      getBuildingsByid(id) {
       try {
         axios.get(`http://localhost:3897/buildings/${id}`).then((res) => {
-          this.committee = res.data.committee || "-";
-          this.buildingType = res.data.buildingType;
-          this.buildingName = res.data.name;
+          this.committee = res.data.committee ;
         });
       } catch (e) {
         console.error(e);
@@ -249,7 +246,7 @@ export default {
             type: "success",
           });
           setTimeout(() => {
-            this.getBuildings();
+            // this.getBuildings();
             this.getBuildingsByid(this.buidingId)
           }, 2000);
           // this.getBuildings();
@@ -529,7 +526,7 @@ export default {
               <template v-slot:pdf-content>
                 <div class="text-center pt-4">
                   <div class="d-flex justify-content-start align-items-baseline p-2">
-                    <h6 class="pt-1">อาคารบ้านพัก : {{ buildingType || "-"}}</h6>
+                    <h6 class="pt-1">อาคารบ้านพัก : {{ typeStatusroom || "-"}}</h6>
                     <h6 class="pt-1" style="margin-left:10px">ตึก : {{ buildingName  || "-"}}</h6>
                   </div>
                   <div class="d-flex justify-content-start align-items-baseline p-2">

@@ -407,6 +407,7 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.roomconditionsCause) parsedData.roomconditionsCause = req.body.roomconditionsCause
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
+    if (req.body.leniencyCase) parsedData.leniencyCase = req.body.leniencyCase
 
     filterdata.push(parsedData)
     fs.writeFileSync('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -560,6 +561,14 @@ app.put('/history/:id', (req, res) => {
     if (req.body.roomconditionsCause) parsedData.roomconditionsCause = req.body.roomconditionsCause
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
+    if (req.body.houseRegistration) parsedData.houseRegistration = req.body.houseRegistration
+    if (req.body.payMonth) parsedData.payMonth = req.body.payMonth
+    if (req.body.roomKey) parsedData.roomKey = req.body.roomKey
+    if (req.body.houseRegistrationcause) parsedData.houseRegistrationcause = req.body.houseRegistrationcause
+    if (req.body.payMonthcause) parsedData.payMonthcause = req.body.payMonthcause
+    if (req.body.payMonthcausetwo) parsedData.payMonthcausetwo = req.body.payMonthcausetwo
+    if (req.body.roomKeycause) parsedData.roomKeycause = req.body.roomKeycause
+    if (req.body.leniencyCase) parsedData.leniencyCase = req.body.leniencyCase
 
     filterdata.push(parsedData)
     fs.writeFileSync('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -709,6 +718,7 @@ app.put('/report/:id', (req, res) => {
     if (req.body.roomconditionsCause) parsedData.roomconditionsCause = req.body.roomconditionsCause
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
+    if (req.body.leniencyCase) parsedData.leniencyCase = req.body.leniencyCase
 
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -771,6 +781,7 @@ app.put('/reportUser/:id', (req, res) => {
     if (req.body.roomconditionsCause) parsedData.roomconditionsCause = req.body.roomconditionsCause
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
+    if (req.body.leniencyCase) parsedData.leniencyCase = req.body.leniencyCase
 
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {

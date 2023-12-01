@@ -478,7 +478,6 @@ export default {
             data = data3.filter(
               (el) =>
                 el.typeUser == "บช.ตชด." &&
-                el.typeContract == "หักได้" &&
                 el.monthly == this.dateNow &&
                 el.years == y
             );
@@ -501,7 +500,6 @@ export default {
             data9 = data3.filter(
               (el9) =>
                 el9.typeUser == "บช.ตชด." &&
-                el9.typeContract == "หักไม่ได้" &&
                 el9.monthly == this.mountCT &&
                 el9.years == y
             );
@@ -510,6 +508,9 @@ export default {
             this.reportlistok = data5;
             this.reportListssn = data6;
             this.reportlistlj = data7;
+            // console.log(data5);
+            // console.log(data6);
+            // console.log(data7);
             this.sumreportlistAll = data5.map((x) => {
               return {
                 ...x,

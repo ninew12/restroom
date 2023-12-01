@@ -158,13 +158,12 @@ export default {
 
     countinstallments(e) {
       try {
-      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = e.insurance - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+      let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+      let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
       let b = c / a; //จำนวนงวดคงเหลือ
-      let d = e.installments - b;
+      let d = parseInt(e.installments || 0) - b;
       return a * d || 0;
       } catch (error) {
-        console.log("error:::")
           console.log(error)
       }
 
@@ -176,12 +175,11 @@ export default {
 
     countinsamaintenance(e) {
       try {
-           let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = e.insurance - parseInt(e.amountPaid || 0) ; // จำนวนเงินคงเหลือ
+     let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+      let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
       let b = c / a; //จำนวนงวดคงเหลือ
       return b || 0;
       } catch (error) {
-        console.log("error:::")
         console.log(error)
       }
    

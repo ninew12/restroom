@@ -116,6 +116,7 @@ export default {
             data2 = data.map((el) => {
               return {
                 ...el,
+                numberfirst: el.numberfirst || 0,
                 sumCost: this.countSum(el),
               };
             });
@@ -130,7 +131,7 @@ export default {
     },
 
     countSum(e) {
-      return e.lastnumber - e.numberfirst || 0;
+      return parseInt(e.lastnumber || 0) - parseInt(e.numberfirst || 0) || 0;
     },
 
     Sumunit(lastnumber, numberfirst) {
@@ -281,7 +282,6 @@ export default {
         monthly: this.months,
         years: this.years,
       };
-      console.log(body);
       await axios.post(`http://localhost:3897/report/`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",

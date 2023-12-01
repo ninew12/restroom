@@ -85,7 +85,8 @@ export default {
       bankbookNumber: "",
       typeRoom: "",
       roomconditionsCause: "",
-      roomconditions: ""
+      roomconditions: "",
+      leniencyCase: ""
     };
   },
   created() {
@@ -218,6 +219,7 @@ export default {
     submitLeniency() {
       let body = {
         leniency: this.leniency,
+        leniencyCase: this.leniencyCase,
         roomStatus: "return",
       };
       axios
@@ -248,6 +250,10 @@ export default {
         Affiliation: " ",
         affiliation: " ",
         roomconditionsCause: "",
+        amountPaid: " ",
+        insurance: " ",
+        installments: " ",
+        contract: " ",
         queue: "none",
         roomKey: this.roomKey,
         houseRegistration: this.houseRegistration,
@@ -287,16 +293,15 @@ export default {
 
     updatedataUser() {
       let body = {
+        userId: " ",
+        buildingName: " ",
+        dateApproved: " ",
+        installments: " ",
+        contract: " ",
         queue: "none",
         deposit: "รอคืนเงินประกัน",
         roomKey: this.roomKey,
         typeRoom: this.typeRoom,
-        houseRegistration: this.houseRegistration,
-        payMonth: this.payMonth,
-        houseRegistrationcause: this.houseRegistrationcause,
-        roomconditionsCause: this.roomconditionsCause,
-        payMonthcause: this.payMonthcause,
-        payMonthcausetwo: this.payMonthcausetwo,
         roomId: this.roomId,
         dateReturn: this.dateApp.toISOString(),
         customerOld: "คืนห้องพักแล้ว",
@@ -584,23 +589,23 @@ export default {
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions4"
-                            id="inlineRadio11"
+                            name="inlineRadioOptions8"
+                            id="inlineRadio88"
                             value="มี"
-                            :checked="historyOld?.roomKey == 'ไม่มี'"
+                            :checked="historyOld?.roomKey == 'มี'"
                           />
-                          <label class="form-check-label" for="inlineRadio11">มี</label>
+                          <label class="form-check-label" for="inlineRadio88">มี</label>
                         </div>
                         <div class="form-check form-check-inline">
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions4"
-                            id="inlineRadio12"
+                            name="inlineRadioOptions8"
+                            id="inlineRadio89"
                             value="ไม่มี"
                             :checked="historyOld?.roomKey == 'ไม่มี'"
                           />
-                          <label class="form-check-label" for="inlineRadio12"
+                          <label class="form-check-label" for="inlineRadio89"
                             >ไม่มี</label
                           >
                         </div>
@@ -621,23 +626,23 @@ export default {
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions11"
-                            id="inlineRadio27"
+                            name="inlineRadioOptions18"
+                            id="inlineRadio77"
                             value="มี"
                             :checked="historyOld?.houseRegistration == 'มี'"
                           />
-                          <label class="form-check-label" for="inlineRadio27">มี</label>
+                          <label class="form-check-label" for="inlineRadio77">มี</label>
                         </div>
                         <div class="form-check form-check-inline">
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions11"
-                            id="inlineRadio28"
+                            name="inlineRadioOptions18"
+                            id="inlineRadio78"
                             value="ไม่มี"
                             :checked="historyOld?.houseRegistration == 'ไม่มี'"
                           />
-                          <label class="form-check-label" for="inlineRadio28"
+                          <label class="form-check-label" for="inlineRadio78"
                             >ไม่มี</label
                           >
                         </div>
@@ -663,12 +668,12 @@ export default {
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions2"
-                            id="inlineRadio22"
+                            name="inlineRadioOptions22"
+                            id="inlineRadio62"
                             value="มี"
                             :checked="historyOld?.payMonth == 'มี'"
                           />
-                          <label class="form-check-label" for="inlineRadio22">มี</label>
+                          <label class="form-check-label" for="inlineRadio62">มี</label>
                         </div>
                         <div style="width: 250px; margin-bottom: 10px">
                           <label>สาเหตุ : {{ historyOld?.payMonthcause || "-" }}</label>
@@ -678,12 +683,12 @@ export default {
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions2"
-                            id="inlineRadio23"
+                            name="inlineRadioOptions22"
+                            id="inlineRadio63"
                             value="ไม่มี"
                             :checked="historyOld?.payMonth == 'ไม่มี'"
                           />
-                          <label class="form-check-label" for="inlineRadio23"
+                          <label class="form-check-label" for="inlineRadio63"
                             >ไม่มี</label
                           >
                         </div>
@@ -941,6 +946,17 @@ export default {
                         id="exampleFormControlTextarea1"
                         rows="2"
                         placeholder="ผ่อนผันถึง"
+                      ></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <label style="margin-left: -5px">สาเหตุการผ่อนผัน</label>
+                      <textarea
+                        :value="leniencyCase"
+                        @input="(event) => (leniencyCase = event.target.value)"
+                        class="form-control"
+                        id="exampleFormControlTextarea1"
+                        rows="2"
+                        placeholder="สาเหตุการผ่อนผัน"
                       ></textarea>
                     </div>
                     <div class="pt-4 text-end">
