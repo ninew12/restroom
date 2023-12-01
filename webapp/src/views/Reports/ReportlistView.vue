@@ -300,6 +300,8 @@ export default {
       typeReport: "ตร.",
       monthYear: "",
       monthYearNow: "",
+      monthYearNowtable: "",
+      monthYearTable: "",
       datalistCTD: [],
       datalistTD: [],
       sumreportlistAll: [],
@@ -376,6 +378,8 @@ export default {
         let m = newValue.label;
         this.monthYear = this.mountCT + " " + this.thaiNumber(result, "year");
         this.monthYearNow = newValue.label + " " + this.thaiNumber(result, "year");
+        this.monthYearTable = m + " " + result;
+        this.monthYearNowtable = m + " " + result;
         this.getReport(m, this.yearNumber);
       }
     },
@@ -408,6 +412,8 @@ export default {
       });
       this.monthYear = m + " " + this.thaiNumber(result, "year");
       this.monthYearNow = this.dateNow + " " + this.thaiNumber(result, "year");
+      this.monthYearTable = m + " " + result;
+      this.monthYearNowtable = m + " " + result;
       await this.getReport(m, this.yearNumber);
     },
 
@@ -4191,7 +4197,7 @@ export default {
               alignment: "center",
             },
             {
-              text: ` ประจําเดือน ${this.monthYear} หน่วยงาน บช.ตชด.`,
+              text: ` ประจําเดือน ${this.monthYearNow} หน่วยงาน บช.ตชด.`,
               style: "subheader",
               alignment: "center",
             },
@@ -4669,7 +4675,7 @@ export default {
                           </tr>
                           <tr>
                             <td colspan="6" style="border: 0">
-                              ประจําเดือน {{ monthYear }}
+                              ประจําเดือน {{ monthYearTable }}
                             </td>
                           </tr>
                           <tr>
@@ -4723,7 +4729,7 @@ export default {
                           </tr>
                           <tr>
                             <td colspan="9" style="border: 0">
-                              ประจําเดือน {{ monthYear }}
+                              ประจําเดือน {{ monthYearTable }}
                             </td>
                           </tr>
                           <tr>
@@ -4913,7 +4919,7 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="6" style="border: 0">
-                            ประจําเดือน {{ monthYear }}
+                            ประจําเดือน {{ monthYearTable }}
                           </td>
                         </tr>
                         <tr>
@@ -4971,7 +4977,7 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="9" style="border: 0">
-                            ประจําเดือน {{ monthYear }} หน่วยงาน ฝอ.๘.บก.อก.บช.ตชด.
+                            ประจําเดือน {{ monthYearTable }} หน่วยงาน ฝอ.8.บก.อก.บช.ตชด.
                           </td>
                         </tr>
                         <tr>
@@ -5163,7 +5169,7 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="6" style="border: 0">
-                            ประจําเดือน {{ monthYear }}
+                            ประจําเดือน {{ monthYearTable }}
                           </td>
                         </tr>
                         <tr>
@@ -5210,7 +5216,7 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="9" style="border: 0">
-                            ประจําเดือน {{ monthYearNow }} หน่วยงาน บช.ตชด.
+                            ประจําเดือน {{ monthYearNowtable }} หน่วยงาน บช.ตชด.
                           </td>
                         </tr>
                         <tr>
@@ -5327,7 +5333,7 @@ export default {
                           </tr>
                           <tr>
                             <td colspan="6" style="border: 0">
-                              เดือน {{ monthYearNow }}
+                              เดือน {{ monthYearNowtable }}
                             </td>
                           </tr>
                           <tr>
@@ -5393,7 +5399,7 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
+                            <td colspan="6" style="border: 0">เดือน {{ monthYearTable }}</td>
                           </tr>
                           <tr>
                             <th>หน่วยงาน</th>
@@ -5469,7 +5475,7 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">เดือน {{ monthYear }}</td>
+                            <td colspan="6" style="border: 0">เดือน {{ monthYearTable }}</td>
                           </tr>
                           <tr>
                             <th>หน่วยงาน</th>
@@ -5749,8 +5755,8 @@ export default {
                               </tr>
                               <tr>
                                 <td colspan="7" style="border: 0">
-                                  ประจําเดือน {{ monthYearNow }} หน่วยงาน
-                                  ฝอ.๘.บก.อก.บช.ตชด.
+                                  ประจําเดือน {{ monthYearNowtable }} หน่วยงาน
+                                  ฝอ.8.บก.อก.บช.ตชด.
                                 </td>
                               </tr>
                               <tr>
@@ -5984,7 +5990,7 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="6" style="border: 0">
-                            ประจําเดือน {{ monthYear }}
+                            ประจําเดือน {{ monthYearTable }}
                           </td>
                         </tr>
                         <tr>
@@ -6042,7 +6048,7 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="9" style="border: 0">
-                            ประจําเดือน {{ monthYear }} หน่วยงาน บช.ตชด.
+                            ประจําเดือน {{ monthYearTable }} หน่วยงาน บช.ตชด.
                           </td>
                         </tr>
                         <tr>
@@ -6111,7 +6117,7 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="9" style="border: 0">
-                            ประจําเดือน {{ monthYear }}
+                            ประจําเดือน {{ monthYearTable }}
                           </td>
                         </tr>
                         <tr>
