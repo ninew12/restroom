@@ -50,6 +50,7 @@ export default {
       datatypeQueue: [],
       no: 0,
       userId: "",
+      id: "",
       picked: new Date(),
       buildingName: "",
       buildingType: "",
@@ -90,12 +91,12 @@ export default {
     },
 
     queuetypefilter(e) {
-      if (e.target) this.typeroomByqueue = e.target.value;
+      if (e.target) {this.typeroomByqueue = e.target.value;}
     },
 
     editTypeRoom(event) {
-      // console.log(event);
-      this.typeroomByqueue = event;
+      this.typeroomByqueue = event.typeRoom;
+      this.userId = event.id
     },
 
     queuefilter(e) {
@@ -131,13 +132,13 @@ export default {
     },
 
     getAllusersByid(id) {
-      this.userId = id;
       try {
         axios
           .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
             let data = res.data;
             this.userByid = data;
+            this.userId = this.userByid.id
           })
           .catch((err) => {
             console.log(err);
@@ -154,7 +155,7 @@ export default {
           .then((res) => {
             let arr = res.data;
             let arr2 = [];
-            arr2 = arr.filter((e) => e.typeUser == "บช.ตชด.");
+            arr2 = arr.filter((e) => e.typeUser == "บช.ตชด." && e.queue !== "inroom");
             this.userList = arr2.map((ele) => {
               return {
                 label: ele.rank + " " + ele.firstName + " " + ele.lastName,
@@ -215,7 +216,7 @@ export default {
       this.selectedBuildingName = "เลือกอาคาร2",
       this.bookNumber = "",
       this.picked = new Date(),
-      this.typeroomByqueue = ""
+      this.typeroomByqueue = "ช1"
     },
 
     submitForm() {
@@ -254,6 +255,7 @@ export default {
     },
 
     EditsubmitForm() {
+      console.log(this.userId);
       let body = {
         typeRoom: this.typeroomByqueue,
       };
@@ -267,7 +269,13 @@ export default {
           },
         })
         .then((res) => {
-          this.getAllqueue();
+          notify({
+            title: "แก้ไขรายการสำเร็จ",
+            type: "success",
+          });
+          setTimeout(() => {
+            this.getAllqueue();
+          }, 1000);
         })
         .catch((err) => {
           console.log(err);
@@ -448,7 +456,7 @@ export default {
                   <td>{{ item?.bookNumber }}</td>
                   <td>
                     <a
-                      @click="editTypeRoom(item?.typeRoom)"
+                      @click="editTypeRoom(item)"
                       data-bs-toggle="modal"
                       data-bs-target="#editTypeBackdrop"
                       ><i
@@ -614,37 +622,37 @@ export default {
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio52"
+                    name="inlineRadioOptions33"
+                    id="inlineRadio32"
                     value="ช1"
                     @change="queuetypefilter($event)"
                     :checked="typeroomByqueue == 'ช1'"
                   />
-                  <label class="form-check-label" for="inlineRadio52">ช1</label>
+                  <label class="form-check-label" for="inlineRadio32">ช1</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio53"
+                    name="inlineRadioOptions55"
+                    id="inlineRadio33"
                     value="ช2"
                     :checked="typeroomByqueue == 'ช2'"
                     @change="queuetypefilter($event)"
                   />
-                  <label class="form-check-label" for="inlineRadio53">ช2</label>
+                  <label class="form-check-label" for="inlineRadio33">ช2</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio54"
+                    name="inlineRadioOptions55"
+                    id="inlineRadio34"
                     value="ช3"
                     :checked="typeroomByqueue == 'ช3'"
                     @change="queuetypefilter($event)"
                   />
-                  <label class="form-check-label" for="inlineRadio54">ช3</label>
+                  <label class="form-check-label" for="inlineRadio34">ช3</label>
                 </div>
               </div>
             </div>

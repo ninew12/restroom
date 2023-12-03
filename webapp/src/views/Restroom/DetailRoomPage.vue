@@ -116,7 +116,7 @@ export default {
           .then((res) => {
             this.queueList = res.data;
             this.queuefilter = this.queueList.filter((e) => e.typeRoom === this.typeroom);
-            console.log( this.queueList);
+            // console.log( this.queueList);
           })
           .catch((err) => {
             console.log(err);
@@ -718,7 +718,8 @@ export default {
                           <th scope="col">ลำดับ</th>
                           <th scope="col">ชื่อ-สกุล</th>
                           <th scope="col">สังกัด</th>
-                          <th scope="col">ชื่ออาคาร</th>
+                          <th scope="col">อาคาร1</th>
+                          <th scope="col">อาคาร2</th>
                           <th scope="col">เลขบัตรประชาชน</th>
                           <th scope="col">เบอร์ติดต่อ</th>
                           <th scope="col">เลขลงรับหนังสือ</th>
@@ -732,7 +733,8 @@ export default {
                             {{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}
                           </td>
                           <td>{{ item?.affiliation }}</td>
-                          <td>{{ item?.buildingName || item?.name }}</td>
+                          <td>{{ item?.buildingType }}</td>
+                          <td>{{ item?.buildingType2 }}</td>
                           <td>{{ item?.idcard }}</td>
                           <td>{{ item?.phone }}</td>
                           <td>{{ item?.bookNumber || "-" }}</td>

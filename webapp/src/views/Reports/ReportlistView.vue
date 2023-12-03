@@ -378,7 +378,7 @@ export default {
         let m = newValue.label;
         this.monthYear = this.mountCT + " " + this.thaiNumber(result, "year");
         this.monthYearNow = newValue.label + " " + this.thaiNumber(result, "year");
-        this.monthYearTable = m + " " + result;
+        this.monthYearTable = this.mountCT + " " + result;
         this.monthYearNowtable = m + " " + result;
         this.getReport(m, this.yearNumber);
       }
@@ -401,7 +401,6 @@ export default {
       this.yearNumber = y;
       this.mountLable = m;
       this.selectedMonth = m;
-      this.mountCT = m;
       const today = new Date();
       const todaynew = new Date();
       const month = today.getMonth();
@@ -2500,7 +2499,7 @@ export default {
             alignment: "center",
           },
           {
-            text: `ประจําเดือน ${this.monthYear} `,
+            text: `ประจําเดือน ${this.monthYearNow} `,
             style: "header",
             alignment: "center",
           },
@@ -3573,7 +3572,7 @@ export default {
               alignment: "center",
             },
             {
-              text: ` ประจําเดือน ${this.monthYear} หน่วยงาน บช.ตชด.`,
+              text: ` ประจําเดือน ${this.monthYearNow} หน่วยงาน บช.ตชด.`,
               style: "subheader",
               alignment: "center",
             },
