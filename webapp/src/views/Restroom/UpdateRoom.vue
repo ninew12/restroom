@@ -1,16 +1,10 @@
 <script>
-import { onMounted } from "vue";
-
-//image
-import image from "@/assets/img/illustrations/illustration-signin.jpg";
 import vueMkHeader from "@/assets/img/bg.jpg";
 //material components
 import MaterialInput from "@/components/MaterialInput.vue";
 import Breadcrumbs from "@/examples/Breadcrumbs.vue";
 
 import MaterialButton from "@/components/MaterialButton.vue";
-// material-input
-import setMaterialInput from "@/assets/js/material-input";
 
 import axios from "axios";
 import { notify } from "@kyvg/vue3-notification";
@@ -86,7 +80,9 @@ export default {
       typeRoom: "",
       roomconditionsCause: "",
       roomconditions: "",
-      leniencyCase: ""
+      leniencyCase: "",
+      leniencyFilter: "ผ่อนผัน",
+      statusRoom: "return",
     };
   },
   created() {
@@ -112,7 +108,7 @@ export default {
     },
     queuetypefilter(e) {
       if (e.target) this.Roomconditions = e.target.value;
-      this.roomconditionsCause = ""
+      this.roomconditionsCause = "";
     },
     roomKeyfilter(e) {
       if (e.target) this.roomKey = e.target.value;
@@ -122,6 +118,16 @@ export default {
     },
     payMonthfilter(e) {
       if (e.target) this.payMonth = e.target.value;
+    },
+    leniencyCasefilter(e) {
+      if (e.target) {
+        this.leniencyFilter = e.target.value;
+        if (this.leniencyFilter == "ผ่อนผัน") {
+          this.statusRoom = "return";
+        } else if (this.leniencyFilter == "ยกเลิกผ่อนผัน") {
+          this.statusRoom = "unavailable";
+        }
+      }
     },
     async getRooms(id) {
       try {
@@ -134,11 +140,13 @@ export default {
             this.userId = this.roomData.userId;
             this.selectedRoomtype = this.roomData.typeRoom;
             this.firstName = this.roomData.firstName,
-            this.lastName = this.roomData.lastName
-            this.leniency = this.roomData.leniency
-            this.typeRoom = this.roomData.typeRoom
-            this.roomconditionsCause = this.roomData.roomconditionsCause
-            this.Roomconditions = this.roomData.roomconditions
+            this.lastName = this.roomData.lastName;
+            this.leniency = this.roomData.leniency;
+            this.leniencyCase = this.roomData.leniencyCase
+            this.leniencyFilter = this.roomData.leniencyFilter
+            this.typeRoom = this.roomData.typeRoom;
+            this.roomconditionsCause = this.roomData.roomconditionsCause;
+            this.Roomconditions = this.roomData.roomconditions;
             this.getHistoryRoom(this.roomData.id);
           })
           .catch((err) => {
@@ -174,7 +182,6 @@ export default {
       }
     },
 
-
     convertDateTolocal(index) {
       if (index !== undefined && index !== "") {
         const date = new Date(index);
@@ -194,7 +201,7 @@ export default {
         numberRoom: this.numberRoom,
         typeRoom: this.selectedRoomtype.label,
         roomconditions: this.Roomconditions,
-        roomconditionsCause: this.roomconditionsCause
+        roomconditionsCause: this.roomconditionsCause,
       };
       axios
         .put(`http://localhost:3897/rooms/${this.id}`, body, {
@@ -219,8 +226,9 @@ export default {
     submitLeniency() {
       let body = {
         leniency: this.leniency,
+        leniencyFilter: this.leniencyFilter,
         leniencyCase: this.leniencyCase,
-        roomStatus: "return",
+        roomStatus: this.statusRoom,
       };
       axios
         .put(`http://localhost:3897/rooms/${this.id}`, body, {
@@ -234,7 +242,10 @@ export default {
             title: "บันทึกการผ่อนผันสำเร็จ",
             type: "success",
           });
-          this.getRooms(this.id);
+          this.updateUserStatus();
+          setTimeout(() => {
+            this.getRooms(this.id);
+          }, 1000);
         })
         .catch((err) => {
           console.log(err);
@@ -255,8 +266,8 @@ export default {
         installments: " ",
         contract: " ",
         queue: "none",
-        vehicleNumber : " ",
-        numberPeople : " ",
+        vehicleNumber: " ",
+        numberPeople: " ",
         roomKey: this.roomKey,
         houseRegistration: this.houseRegistration,
         payMonth: this.payMonth,
@@ -284,13 +295,26 @@ export default {
             type: "success",
           });
           this.updatedataUser();
-          this.updatedataHistory()
+          this.updatedataHistory();
           this.getRooms(this.id);
           this.$router.push({ path: `/room/` });
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+
+    updateUserStatus() {
+      let body = {
+        roomStatus: this.statusRoom,
+      };
+      axios.put(`http://localhost:3897/users/${this.userId}`, body, {
+        headers: {
+          // remove headers
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
     },
 
     updatedataUser() {
@@ -300,8 +324,8 @@ export default {
         dateApproved: " ",
         installments: " ",
         contract: " ",
-        vehicleNumber : " ",
-        numberPeople : " ",
+        vehicleNumber: " ",
+        numberPeople: " ",
         queue: "none",
         deposit: "รอคืนเงินประกัน",
         roomKey: this.roomKey,
@@ -321,12 +345,11 @@ export default {
       });
     },
 
-
     updatedataHistory() {
       let body = {
         deposit: "รอคืนเงินประกัน",
-        firstName : this.firstName,
-        lastName :  this.lastName,
+        firstName: this.firstName,
+        lastName: this.lastName,
         roomKey: this.roomKey,
         typeRoom: this.typeRoom,
         houseRegistration: this.houseRegistration,
@@ -350,7 +373,6 @@ export default {
       });
     },
 
-    
     Previous() {
       window.history.back();
     },
@@ -497,9 +519,18 @@ export default {
                         ></v-select>
                       </div>
 
-                      <div class="mb-3" style="display: flex; justify-content: flex-start; align-items: center;">
+                      <div
+                        class="mb-3"
+                        style="
+                          display: flex;
+                          justify-content: flex-start;
+                          align-items: center;
+                        "
+                      >
                         <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px" class="starRed">สภาพห้อง</label>
+                          <label style="margin-right: 20px" class="starRed"
+                            >สภาพห้อง</label
+                          >
                           <input
                             class="form-check-input"
                             type="radio"
@@ -533,7 +564,9 @@ export default {
                             @change="queuetypefilter($event)"
                             :checked="Roomconditions == 'เสื่อมโทรม'"
                           />
-                          <label class="form-check-label" for="inlineRadio21">เสื่อมโทรม</label>
+                          <label class="form-check-label" for="inlineRadio21"
+                            >เสื่อมโทรม</label
+                          >
                         </div>
                         <div style="width: 350px; margin-bottom: 10px; margin-left: 20px">
                           <MaterialInput
@@ -580,148 +613,169 @@ export default {
                           วันที่คืนห้องพัก : {{ historyOld?.dateReturn || "-" }}
                         </p>
                         <div>
-                      <div
-                        class="mb-3"
-                        style="
-                          display: flex;
-                          justify-content: space-between;
-                          align-items: baseline;
-                        "
-                      >
-                        <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px" >กุญแจห้อง</label>
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions8"
-                            id="inlineRadio88"
-                            value="มี"
-                            :checked="historyOld?.roomKey == 'มี'"
-                          />
-                          <label class="form-check-label" for="inlineRadio88">มี</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions8"
-                            id="inlineRadio89"
-                            value="ไม่มี"
-                            :checked="historyOld?.roomKey == 'ไม่มี'"
-                          />
-                          <label class="form-check-label" for="inlineRadio89"
-                            >ไม่มี</label
+                          <div
+                            class="mb-3"
+                            style="
+                              display: flex;
+                              justify-content: space-between;
+                              align-items: baseline;
+                            "
                           >
-                        </div>
-                        <div style="width: 360px; margin-bottom: 10px">
-                          <label>สาเหตุ : {{ historyOld?.roomKeycause || "-" }}</label>
-                        </div>
-                      </div>
-                      <div
-                        class="mb-3"
-                        style="
-                          display: flex;
-                          justify-content: space-between;
-                          align-items: baseline;
-                        "
-                      >
-                        <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px" >ทะเบียนบ้าน</label>
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions18"
-                            id="inlineRadio77"
-                            value="มี"
-                            :checked="historyOld?.houseRegistration == 'มี'"
-                          />
-                          <label class="form-check-label" for="inlineRadio77">มี</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions18"
-                            id="inlineRadio78"
-                            value="ไม่มี"
-                            :checked="historyOld?.houseRegistration == 'ไม่มี'"
-                          />
-                          <label class="form-check-label" for="inlineRadio78"
-                            >ไม่มี</label
+                            <div class="form-check form-check-inline">
+                              <label style="margin-right: 20px">กุญแจห้อง</label>
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions8"
+                                id="inlineRadio88"
+                                value="มี"
+                                :checked="historyOld?.roomKey == 'มี'"
+                              />
+                              <label class="form-check-label" for="inlineRadio88"
+                                >มี</label
+                              >
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions8"
+                                id="inlineRadio89"
+                                value="ไม่มี"
+                                :checked="historyOld?.roomKey == 'ไม่มี'"
+                              />
+                              <label class="form-check-label" for="inlineRadio89"
+                                >ไม่มี</label
+                              >
+                            </div>
+                            <div style="width: 360px; margin-bottom: 10px">
+                              <label
+                                >สาเหตุ : {{ historyOld?.roomKeycause || "-" }}</label
+                              >
+                            </div>
+                          </div>
+                          <div
+                            class="mb-3"
+                            style="
+                              display: flex;
+                              justify-content: space-between;
+                              align-items: baseline;
+                            "
                           >
-                        </div>
-                        <div style="width: 360px; margin-bottom: 10px">
-                          <label>สาเหตุ : {{ historyOld?.houseRegistrationcause || "-" }}</label>
-                        </div>
-                      </div>
-                      <div>
-                        <label style="padding-left: 30px"
-                          >หลักฐานแสดงการชําระค่าไฟเดือนล่าสุด</label
-                        >
-                      </div>
-                      <div
-                        class="mb-3"
-                        style="
-                          margin-left: 10px;
-                          display: flex;
-                          justify-content: space-between;
-                          align-items: baseline;
-                        "
-                      >
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions22"
-                            id="inlineRadio62"
-                            value="มี"
-                            :checked="historyOld?.payMonth == 'มี'"
-                          />
-                          <label class="form-check-label" for="inlineRadio62">มี</label>
-                        </div>
-                        <div style="width: 250px; margin-bottom: 10px">
-                          <label>สาเหตุ : {{ historyOld?.payMonthcause || "-" }}</label>
-                        
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input
-                            class="form-check-input"
-                            type="radio"
-                            name="inlineRadioOptions22"
-                            id="inlineRadio63"
-                            value="ไม่มี"
-                            :checked="historyOld?.payMonth == 'ไม่มี'"
-                          />
-                          <label class="form-check-label" for="inlineRadio63"
-                            >ไม่มี</label
+                            <div class="form-check form-check-inline">
+                              <label style="margin-right: 20px">ทะเบียนบ้าน</label>
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions18"
+                                id="inlineRadio77"
+                                value="มี"
+                                :checked="historyOld?.houseRegistration == 'มี'"
+                              />
+                              <label class="form-check-label" for="inlineRadio77"
+                                >มี</label
+                              >
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions18"
+                                id="inlineRadio78"
+                                value="ไม่มี"
+                                :checked="historyOld?.houseRegistration == 'ไม่มี'"
+                              />
+                              <label class="form-check-label" for="inlineRadio78"
+                                >ไม่มี</label
+                              >
+                            </div>
+                            <div style="width: 360px; margin-bottom: 10px">
+                              <label
+                                >สาเหตุ :
+                                {{ historyOld?.houseRegistrationcause || "-" }}</label
+                              >
+                            </div>
+                          </div>
+                          <div>
+                            <label style="padding-left: 30px"
+                              >หลักฐานแสดงการชําระค่าไฟเดือนล่าสุด</label
+                            >
+                          </div>
+                          <div
+                            class="mb-3"
+                            style="
+                              margin-left: 10px;
+                              display: flex;
+                              justify-content: space-between;
+                              align-items: baseline;
+                            "
                           >
+                            <div class="form-check form-check-inline">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions22"
+                                id="inlineRadio62"
+                                value="มี"
+                                :checked="historyOld?.payMonth == 'มี'"
+                              />
+                              <label class="form-check-label" for="inlineRadio62"
+                                >มี</label
+                              >
+                            </div>
+                            <div style="width: 250px; margin-bottom: 10px">
+                              <label
+                                >สาเหตุ : {{ historyOld?.payMonthcause || "-" }}</label
+                              >
+                            </div>
+                            <div class="form-check form-check-inline">
+                              <input
+                                class="form-check-input"
+                                type="radio"
+                                name="inlineRadioOptions22"
+                                id="inlineRadio63"
+                                value="ไม่มี"
+                                :checked="historyOld?.payMonth == 'ไม่มี'"
+                              />
+                              <label class="form-check-label" for="inlineRadio63"
+                                >ไม่มี</label
+                              >
+                            </div>
+                            <div style="width: 250px; margin-bottom: 10px">
+                              <label
+                                >สาเหตุ : {{ historyOld?.payMonthcausetwo || "-" }}</label
+                              >
+                            </div>
+                          </div>
+                          <div
+                            class="mb-3"
+                            style="
+                              margin-left: 40px;
+                              display: flex;
+                              justify-content: flex-start;
+                              align-items: baseline;
+                            "
+                          >
+                            <label style="margin-right: 20px">ข้อมูลธนาคาร</label>
+                            <div
+                              style="
+                                width: 250px;
+                                margin-bottom: 10px;
+                                margin-right: 20px;
+                              "
+                            >
+                              <label
+                                >ชื่อธนาคาร : {{ historyOld?.bankbookName || "-" }}</label
+                              >
+                            </div>
+                            <div style="width: 250px; margin-bottom: 10px">
+                              <label
+                                >เลขบัญชีธนาคาร :
+                                {{ historyOld?.bankbookNumber || "-" }}</label
+                              >
+                            </div>
+                          </div>
                         </div>
-                        <div style="width: 250px; margin-bottom: 10px">
-                          <label>สาเหตุ : {{ historyOld?.payMonthcausetwo || "-" }}</label>
-                          
-                        </div>
-                      </div>
-                      <div
-                        class="mb-3"
-                        style="
-                          margin-left: 40px;
-                          display: flex;
-                          justify-content: flex-start;
-                          align-items: baseline;
-                        "
-                      >
-                      <label style="margin-right: 20px">ข้อมูลธนาคาร</label>
-                        <div
-                          style="width: 250px; margin-bottom: 10px; margin-right: 20px"
-                        >
-                        <label>ชื่อธนาคาร : {{ historyOld?.bankbookName || "-" }}</label>
-                        
-                        </div>
-                        <div style="width: 250px; margin-bottom: 10px">
-                          <label>เลขบัญชีธนาคาร : {{ historyOld?.bankbookNumber || "-" }}</label>
-                        </div>
-                      </div>
-                    </div>
                       </div>
                     </div>
                   </div>
@@ -733,6 +787,7 @@ export default {
                   aria-labelledby="v-pills-messages-tab"
                 >
                   <div>
+                    <h5>คืนห้องพัก</h5>
                     <div>
                       <div
                         class="mb-3"
@@ -743,7 +798,9 @@ export default {
                         "
                       >
                         <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px" class="starRed">กุญแจห้อง</label>
+                          <label style="margin-right: 20px" class="starRed"
+                            >กุญแจห้อง</label
+                          >
                           <input
                             class="form-check-input"
                             type="radio"
@@ -789,7 +846,9 @@ export default {
                         "
                       >
                         <div class="form-check form-check-inline">
-                          <label style="margin-right: 20px" class="starRed">ทะเบียนบ้าน</label>
+                          <label style="margin-right: 20px" class="starRed"
+                            >ทะเบียนบ้าน</label
+                          >
                           <input
                             class="form-check-input"
                             type="radio"
@@ -898,7 +957,9 @@ export default {
                           align-items: center;
                         "
                       >
-                      <label class="starRed" style="margin-right: 20px">ข้อมูลธนาคาร</label>
+                        <label class="starRed" style="margin-right: 20px"
+                          >ข้อมูลธนาคาร</label
+                        >
                         <div
                           style="width: 250px; margin-bottom: 10px; margin-right: 20px"
                         >
@@ -941,28 +1002,70 @@ export default {
                   aria-labelledby="v-pills-settings-tab"
                 >
                   <div>
-                    <div class="mb-3">
-                      <label style="margin-left: -5px">ผ่อนผันถึง</label>
-                      <textarea
-                        :value="leniency"
-                        @input="(event) => (leniency = event.target.value)"
-                        class="form-control"
-                        id="exampleFormControlTextarea1"
-                        rows="2"
-                        placeholder="ผ่อนผันถึง"
-                      ></textarea>
+                    <h5>ผ่อนผัน</h5>
+                    <div
+                      class="mb-3 pt-4"
+                      style="
+                        display: flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        margin-left: -5px;
+                      "
+                    >
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions56"
+                          id="inlineRadio96"
+                          value="ผ่อนผัน"
+                          @change="leniencyCasefilter($event)"
+                          :checked="leniencyFilter == 'ผ่อนผัน'"
+                        />
+                        <label class="form-check-label" for="inlineRadio96"
+                          >ผ่อนผัน</label
+                        >
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input
+                          class="form-check-input"
+                          type="radio"
+                          name="inlineRadioOptions56"
+                          id="inlineRadio97"
+                          value="ยกเลิกผ่อนผัน"
+                          @change="leniencyCasefilter($event)"
+                          :checked="leniencyFilter == 'ยกเลิกผ่อนผัน'"
+                        />
+                        <label class="form-check-label" for="inlineRadio97"
+                          >ยกเลิกผ่อนผัน</label
+                        >
+                      </div>
                     </div>
-                    <div class="mb-3">
-                      <label style="margin-left: -5px">สาเหตุการผ่อนผัน</label>
-                      <textarea
-                        :value="leniencyCase"
-                        @input="(event) => (leniencyCase = event.target.value)"
-                        class="form-control"
-                        id="exampleFormControlTextarea1"
-                        rows="2"
-                        placeholder="สาเหตุการผ่อนผัน"
-                      ></textarea>
+                    <div v-if="leniencyFilter == 'ผ่อนผัน'">
+                      <div class="mb-3">
+                        <label style="margin-left: -5px">ผ่อนผันถึง</label>
+                        <textarea
+                          :value="leniency"
+                          @input="(event) => (leniency = event.target.value)"
+                          class="form-control"
+                          id="exampleFormControlTextarea1"
+                          rows="2"
+                          placeholder="ผ่อนผันถึง"
+                        ></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label style="margin-left: -5px">สาเหตุการผ่อนผัน</label>
+                        <textarea
+                          :value="leniencyCase"
+                          @input="(event) => (leniencyCase = event.target.value)"
+                          class="form-control"
+                          id="exampleFormControlTextarea1"
+                          rows="2"
+                          placeholder="สาเหตุการผ่อนผัน"
+                        ></textarea>
+                      </div>
                     </div>
+
                     <div class="pt-4 text-end">
                       <MaterialButton
                         variant="gradient"

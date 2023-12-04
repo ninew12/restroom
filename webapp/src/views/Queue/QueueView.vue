@@ -255,7 +255,6 @@ export default {
     },
 
     EditsubmitForm() {
-      console.log(this.userId);
       let body = {
         typeRoom: this.typeroomByqueue,
       };

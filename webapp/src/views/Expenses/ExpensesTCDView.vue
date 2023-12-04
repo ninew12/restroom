@@ -111,7 +111,7 @@ export default {
             this.expensesListOld = res.data;
             this.expensesList = res.data;
             data = this.expensesList.filter(
-              (ele) => ele.typeUser == "บช.ตชด." && ele.queue == "inroom"
+              (ele) => ele.typeUser == "บช.ตชด." && ele.queue == "inroom" &&  ele.roomStatus !== "return"
             );
             data2 = data.map((el) => {
               return {
@@ -221,6 +221,7 @@ export default {
     async genInsurance() {
       let arr = [];
       let data = [];
+      let dataList = [];
       arr = this.expensesList;
       data = await arr.map((el) => {
         return {
@@ -228,7 +229,8 @@ export default {
           amountPaid: this.callInsurance(el),
         };
       });
-      this.expensesList = data;
+      dataList = data.filter(el => parseInt(el.amountPaidCost) !== 0)
+      this.expensesList = dataList;
       this.loopData();
     },
 

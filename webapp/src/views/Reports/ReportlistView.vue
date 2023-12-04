@@ -5003,9 +5003,9 @@ export default {
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
                           </td>
-                          <td>{{ item?.numberfirst || "-" }}</td>
-                          <td>{{ item?.lastnumber || "-" }}</td>
-                          <td>{{ item?.lastnumber - item?.numberfirst || "-" }}</td>
+                          <td>{{ item?.numberfirst || 0 }}</td>
+                          <td>{{ item?.lastnumber || 0 }}</td>
+                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.numberfirst || 0) || 0 }}</td>
                           <td>{{ item?.maintenancefee || "-" }}</td>
                           <td>{{ item?.waterbill || "-" }}</td>
                           <td>{{ item?.central || "-" }}</td>
@@ -6074,11 +6074,9 @@ export default {
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
                           </td>
-                          <td>{{ item?.numberfirst }}</td>
-                          <td>{{ item?.lastnumber }}</td>
-                          <td>
-                            {{ item?.lastnumber - item?.numberfirst || "-" }}
-                          </td>
+                          <td>{{ item?.numberfirst || 0 }}</td>
+                          <td>{{ item?.lastnumber || 0 }}</td>
+                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.numberfirst || 0) || 0 }}</td>
                           <td>{{ item?.maintenancefee || "-" }}</td>
                           <td>{{ item?.waterbill || "-" }}</td>
                           <td>{{ item?.central || "-" }}</td>
@@ -6143,11 +6141,9 @@ export default {
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
                           </td>
-                          <td>{{ item?.numberfirst }}</td>
-                          <td>{{ item?.lastnumber }}</td>
-                          <td>
-                            {{ item?.lastnumber - item?.numberfirst || "-" }}
-                          </td>
+                          <td>{{ item?.numberfirst || 0 }}</td>
+                          <td>{{ item?.lastnumber || 0 }}</td>
+                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.numberfirst || 0) || 0 }}</td>
                           <td>{{ item?.maintenancefee || "-" }}</td>
                           <td>{{ item?.waterbill || "-" }}</td>
                           <td>{{ item?.central || "-" }}</td>

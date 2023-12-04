@@ -38,7 +38,7 @@ export default {
           },
         })
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           if (res.data == "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง") {
             notify({
               title: "ชื่อผู้ใช้งานหรือรหัสผ่านไม่ถูกต้อง",

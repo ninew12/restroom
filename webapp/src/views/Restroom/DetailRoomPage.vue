@@ -280,6 +280,7 @@ export default {
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
         dateApproved: this.dateApp.toISOString(),
+        roomStatus: this.statusRoom,
       };
       await axios
         .post(`http://localhost:3897/history`, body, {
@@ -327,6 +328,7 @@ export default {
         contract: this.contract,
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
+        roomStatus: this.statusRoom,
         no: "",
       };
       await axios.put(`http://localhost:3897/users/${this.userId}`, body, {
@@ -368,6 +370,7 @@ export default {
         years: this.years,
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
+        roomStatus: this.statusRoom,
       };
 
       await axios.post(`http://localhost:3897/report`, body, {
@@ -541,8 +544,12 @@ export default {
     },
 
   async  updateUser() {
-    if(this.numberPeople == "") this.numberPeople = " "
-    if(this.vehicleNumber == "") this.vehicleNumber = " "
+    if(this.numberPeople == "") {
+      this.numberPeople = " "
+    }
+    if(this.vehicleNumber == ""){
+      this.vehicleNumber = " "
+    }
       let body = {
         bookNumber: this.bookNumber,
         contract: this.contract,
@@ -550,7 +557,7 @@ export default {
         numberPeople: this.numberPeople,
         no: "",
       };
-      console.log(body);
+      // console.log(body);
      await axios
         .put(`http://localhost:3897/users/${this.userId}`, body, {
           headers: {
@@ -1037,6 +1044,7 @@ export default {
               <v-select :options="userList" v-model="selectedUser"></v-select>
             </div>
             <div class="mb-3">
+              <label class="starRed">จำนวนคนที่เข้าพัก</label>
               <MaterialInput
                 name="numberPeople"
                 :value="numberPeople"
@@ -1047,6 +1055,7 @@ export default {
               />
             </div>
             <div class="mb-3">
+              <label class="starRed">เลขทะเบียนรถ</label>
               <MaterialInput
                 name="vehicleNumber"
                 :value="vehicleNumber"

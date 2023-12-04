@@ -189,18 +189,25 @@ export default {
       }
     },
     async getBuildings() {
+  
+      let data = []
+      let arr = []
       try {
         axios.get(`http://localhost:3897/buildings/`).then((res) => {
           let listData = [];
-          this.buildingList = res.data;
+          arr = res.data;
           this.typeRoomselect = res.data;
-          this.listRoom = this.buildingList.map((e) => {
+          this.buildingList = arr.sort((a, b) => a.position - b.position);
+          data = this.buildingList.map((e) => {
             // console.log(e);
             return {
               label: e.name,
               value: e.buildingId,
+              position: e.position
             };
           });
+          
+          this.listRoom = data.sort((a, b) => a.position - b.position);
           listData = this.listRoom.sort((a, b) => b.floor - a.floor);
           let roomValue = this.buildingList[0];
           this.buildingType = roomValue.buildingType;

@@ -132,7 +132,9 @@ export default {
         floor: this.Floors,
         roomnumber: "",
         type: "",
+        position: this.buildingList.length+1,
         listRoom: this.FloorsList,
+        
       };
       await axios
         .post(`http://localhost:3897/buildings`, body, {
@@ -181,7 +183,8 @@ export default {
         axios
           .get("http://localhost:3897/buildings")
           .then((res) => {
-            this.buildingList = res.data;
+            let data = res.data
+            this.buildingList = data.sort((a, b) => a.position - b.position);
           })
           .catch((err) => {
             console.log(err);

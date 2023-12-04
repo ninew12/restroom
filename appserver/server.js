@@ -142,6 +142,8 @@ app.put('/users/:id', (req, res) => {
     if (req.body.roomconditionsCause) parsedData.roomconditionsCause = req.body.roomconditionsCause
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
+    if (req.body.position) parsedData.position = req.body.position
+    if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata), (err) => {
         if (err) {
@@ -315,7 +317,8 @@ app.put('/expenses/:id', (req, res) => {
     if (req.body.roomconditionsCause) parsedData.roomconditionsCause = req.body.roomconditionsCause
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
-    
+    if (req.body.position) parsedData.position = req.body.position
+    if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
     filterdata.push(parsedData)
     fs.writeFileSync('./fixtest.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -408,6 +411,8 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
     if (req.body.leniencyCase) parsedData.leniencyCase = req.body.leniencyCase
+    if (req.body.position) parsedData.position = req.body.position
+    if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
 
     filterdata.push(parsedData)
     fs.writeFileSync('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -481,6 +486,8 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.roomconditionsCause) parsedData.roomconditionsCause = req.body.roomconditionsCause
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
+    if (req.body.position) parsedData.position = req.body.position
+    if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
     
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -569,6 +576,8 @@ app.put('/history/:id', (req, res) => {
     if (req.body.payMonthcausetwo) parsedData.payMonthcausetwo = req.body.payMonthcausetwo
     if (req.body.roomKeycause) parsedData.roomKeycause = req.body.roomKeycause
     if (req.body.leniencyCase) parsedData.leniencyCase = req.body.leniencyCase
+    if (req.body.position) parsedData.position = req.body.position
+    if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
 
     filterdata.push(parsedData)
     fs.writeFileSync('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -719,6 +728,8 @@ app.put('/report/:id', (req, res) => {
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
     if (req.body.leniencyCase) parsedData.leniencyCase = req.body.leniencyCase
+    if (req.body.position) parsedData.position = req.body.position
+    if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
 
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -782,7 +793,9 @@ app.put('/reportUser/:id', (req, res) => {
     if (req.body.vehicleNumber) parsedData.vehicleNumber = req.body.vehicleNumber
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
     if (req.body.leniencyCase) parsedData.leniencyCase = req.body.leniencyCase
-
+    if (req.body.position) parsedData.position = req.body.position
+    if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
+    
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
