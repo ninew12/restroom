@@ -308,6 +308,7 @@ export default {
       let body = {
         roomStatus: this.statusRoom,
       };
+      console.log(body);
       axios.put(`http://localhost:3897/users/${this.userId}`, body, {
         headers: {
           // remove headers

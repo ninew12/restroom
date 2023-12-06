@@ -595,9 +595,11 @@ export default {
                                       "
                                     >
                                       <a style="font-size: medium"
-                                        >{{ item2?.numberRoom }} ({{
+                                        >{{ item2?.numberRoom }} 
+                                        <span v-if="item2?.typeRoom !== '' && item2?.typeRoom !== undefined">({{
                                           item2?.typeRoom
-                                        }})</a
+                                        }})</span>
+                                        </a
                                       >
                                     </p>
                                     <p
@@ -843,9 +845,13 @@ export default {
                                   background: white;
                                 "
                               >
-                                <a style="font-size: medium"
-                                  >{{ item2?.numberRoom }} ({{ item2?.typeRoom }})</a
-                                >
+                              <a style="font-size: medium"
+                                        >{{ item2?.numberRoom }} 
+                                        <span v-if="item2?.typeRoom !== '' && item2?.typeRoom !== undefined">({{
+                                          item2?.typeRoom
+                                        }})</span>
+                                        </a
+                                      >
                               </p>
                               <p
                                 v-if="

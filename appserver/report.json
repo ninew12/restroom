@@ -1,16 +1,1 @@
-[
-  {
-    "id": "26f9ac83-4dfd-4a29-97f4-580dbb11158a",
-    "userId": "f6d22b21-54bc-4e2d-aa21-334ada692c67",
-    "firstName": "",
-    "queue": "inroom",
-    "installments": "",
-    "amountPaid": "2000",
-    "roomId": "38ae2ac7-f2c1-4e24-8d15-a7404139d98f",
-    "roomnumber": "1279/317",
-    "dateApproved": "2023-11-26T14:08:37.196Z",
-    "monthly": 10,
-    "maintenance": "60",
-    "years": 2023
-  }
-]
+[]

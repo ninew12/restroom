@@ -2279,8 +2279,7 @@ export default {
 
     countSuminstallments(item) {
       return (
-        parseInt(item.insurance) / parseInt(item.installments) +
-          parseInt(item.maintenance || 0) || 0
+       (parseInt(item.insurance || 0) / parseInt(item.installments || 0)) + parseInt(item.maintenance || 0) || 0
       );
     },
 
@@ -2301,7 +2300,7 @@ export default {
 
     OGCount(items) {
       return items.reduce((insuranceSum, ele) => {
-        let c = parseInt(ele.insurance) / parseInt(ele.installments);
+        let c = parseInt(ele.insurance || 0) / parseInt(ele.installments || 0);
         if (ele.insurance !== undefined) return insuranceSum + c;
         else return insuranceSum;
       }, 0);
@@ -5182,7 +5181,7 @@ export default {
                           <th>รวม</th>
                         </tr>
                       </thead>
-                      <tr v-for="(item, index) in AffiliationListCTD" :key="index">
+                      <tr v-for="(item, index) in AffiliationListTD" :key="index">
                         <th scope="row">{{ index + 1 }}</th>
                         <td>{{ item?.value || "-" }}</td>
                         <td>{{ item?.sumdatacentral || "-" }}</td>
@@ -5233,7 +5232,7 @@ export default {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(item, index) in reportlistCTD" :key="index">
+                        <tr v-for="(item, index) in reportlistTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.buildingType || "-" }}</td>
                           <td>{{ item?.roomnumber || "-" }}</td>

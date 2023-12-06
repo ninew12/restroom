@@ -100,8 +100,6 @@ export default {
     async getExpenses() {
       try {
         await axios
-          // .get("http://localhost:3897/expensesMock")
-          // .get("http://localhost:3897/users")
           .get("http://localhost:3897/expenses")
           .then((res) => {
             let data = [];
@@ -110,9 +108,11 @@ export default {
             let data2 = [];
             this.expensesListOld = res.data;
             this.expensesList = res.data;
+           
             data = this.expensesList.filter(
               (ele) => ele.typeUser == "บช.ตชด." && ele.queue == "inroom" &&  ele.roomStatus !== "return"
             );
+            console.log(data);
             data2 = data.map((el) => {
               return {
                 ...el,
@@ -221,7 +221,9 @@ export default {
     async genInsurance() {
       let arr = [];
       let data = [];
+      let data2 = [];
       let dataList = [];
+      let dataList2 = [];
       arr = this.expensesList;
       data = await arr.map((el) => {
         return {
@@ -229,14 +231,23 @@ export default {
           amountPaid: this.callInsurance(el),
         };
       });
+      data2 = data
       dataList = data.filter(el => parseInt(el.amountPaidCost) !== 0)
+      dataList2 = data2.filter(el => parseInt(el.amountPaidCost) == 0)
       this.expensesList = dataList;
+      this.loopSavereport(dataList2)
       this.loopData();
     },
 
     async loopData() {
       await this.expensesList.forEach((element) => {
         this.submitForm(element);
+      });
+    },
+
+    async loopSavereport(data){
+      await data.forEach((element) => {
+        this.saveToreportNobill(element);
       });
     },
 
@@ -292,7 +303,7 @@ export default {
     async saveToreport(index) {
       let id = index.id;
       let body = {
-        amountPaid: index.amountPaid || 0,
+        amountPaid: parseInt(index.amountPaid) || 0,
         monthly: this.months,
         years: this.years,
         rankNumber : this.rankNumber 
@@ -304,6 +315,23 @@ export default {
         },
       });
     },
+
+    async saveToreportNobill(index) {
+      let id = index.id;
+      let body = {
+        amountPaid: parseInt(index.amountPaid) || 0,
+        monthly: this.months,
+        years: this.years,
+        rankNumber : this.rankNumber 
+      };
+      await axios.put(`http://localhost:3897/reportUser/${id}`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
+    },
+
     Previous() {
       window.history.back();
     },

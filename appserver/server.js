@@ -144,6 +144,7 @@ app.put('/users/:id', (req, res) => {
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
     if (req.body.position) parsedData.position = req.body.position
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
+    if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata), (err) => {
         if (err) {
@@ -319,6 +320,7 @@ app.put('/expenses/:id', (req, res) => {
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
     if (req.body.position) parsedData.position = req.body.position
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
+    if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus
     filterdata.push(parsedData)
     fs.writeFileSync('./fixtest.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -578,6 +580,7 @@ app.put('/history/:id', (req, res) => {
     if (req.body.leniencyCase) parsedData.leniencyCase = req.body.leniencyCase
     if (req.body.position) parsedData.position = req.body.position
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
+    if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus
 
     filterdata.push(parsedData)
     fs.writeFileSync('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -730,6 +733,7 @@ app.put('/report/:id', (req, res) => {
     if (req.body.leniencyCase) parsedData.leniencyCase = req.body.leniencyCase
     if (req.body.position) parsedData.position = req.body.position
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
+    if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus
 
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {

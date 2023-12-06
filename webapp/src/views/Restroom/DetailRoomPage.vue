@@ -579,6 +579,10 @@ export default {
           console.log(err);
         });
     },
+    clearData(){
+      this.vehicleNumber ="",
+      this.numberPeople = ""
+    },
     Previous() {
       window.history.back();
     },
@@ -714,6 +718,7 @@ export default {
                       color="success"
                       data-bs-toggle="modal"
                       data-bs-target="#addSpaciaBackdrop"
+                      @click="clearData"
                       >เพิ่มผู้พักอาศัยนอกคิวเข้าห้องพัก</MaterialButton
                     >
                   </div>
