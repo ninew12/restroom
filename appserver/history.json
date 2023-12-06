@@ -280,23 +280,6 @@
     "customerOld": "คืนห้องพักแล้ว"
   },
   {
-    "id": "be22f716-a581-4e33-b52d-cdb352c13e3c",
-    "queue": "inroom",
-    "contract": "23/11/2563",
-    "checkintime": "24",
-    "insurance": "1000",
-    "installments": "10",
-    "amountPaid": "500",
-    "roomId": "38ae2ac7-f2c1-4e24-8d15-a7404139d98f",
-    "roomnumber": " 1279/124",
-    "dateApproved": "2023-11-23T10:45:49.977Z",
-    "firstName": "ทดสอบ3",
-    "lastName": "ทดสอบ3",
-    "deposit": "คืนเงินประกันแล้ว",
-    "dateReturn": "2023-11-23T16:05:17.521Z",
-    "customerOld": "คืนห้องพักแล้ว"
-  },
-  {
     "id": "4b796516-7fe0-4542-9e6e-16a6b9e74f03",
     "queue": "inroom",
     "affiliation": "",
