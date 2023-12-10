@@ -1052,6 +1052,7 @@ export default {
         e["countcentraAll"] = this.countcentralAll(this.AffiliationListTD);
         e["countcostsAll"] = this.countcostsAll(this.AffiliationListTD);
         e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListTD);
+        e["countdataCostCentralAllSum"] = this.countsumdataCostCentralAllSum(this.AffiliationListTD)
         return e;
       });
     },
@@ -1169,6 +1170,16 @@ export default {
         else return countCostCostsSumAll;
       }, 0);
     },
+
+    countsumdataCostCentralAllSum(items) {
+      return items.reduce((dataCostCentralAllSum, ele) => {
+        if (ele.sumdataCostCentralAllSum !== undefined)
+          return dataCostCentralAllSum + parseInt(ele.sumdataCostCentralAllSum);
+        else return dataCostCentralAllSum;
+      }, 0);
+    },
+
+    
 
     async filterAffiliation2(listdata) {
       let listCTD = [];
@@ -1599,6 +1610,7 @@ export default {
         e["countcentraAll"] = this.countcentralAll(this.AffiliationListCTD);
         e["countcostsAll"] = this.countcostsAll(this.AffiliationListCTD);
         e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListCTD);
+        e["countdataCostCentralAllSum"] = this.countsumdataCostCentralAllSum(this.AffiliationListCTD)
         return e;
       });
     },
@@ -1680,6 +1692,7 @@ export default {
       let arr3 = [];
       let arr4 = [];
       arr = await data.map((el, i) => {
+  
         return {
           ...el,
           numberNo: i + 1,
@@ -1692,7 +1705,7 @@ export default {
           buildingName: el.buildingName || "-",
           maintenance: el.maintenance || 0,
           insurance: el.insurance || 0,
-          accumulated: parseInt(el.insurance || 0) / parseInt(el.installments || 0) || 0,
+          accumulated:  this.countSumAccumulated(el),
           roomnumber: el.roomnumber,
           amountPaid: el.amountPaid || 0,
           maintenancefee: el.maintenancefee || 0,
@@ -1725,8 +1738,7 @@ export default {
           numberfirst: el2.numberfirst || 0,
           central: el2.central || 0,
           typeAffiliation: el2.typeAffiliation || "-",
-          accumulated:
-            parseInt(el2.insurance || 0) / parseInt(el2.installments || 0) || 0,
+          accumulated: this.countSumAccumulated(el2),
           typeContract: el2.typeContract || "-",
           contractExpenses: el2.contractExpenses || "-",
           buildingName: el2.buildingName || "-",
@@ -1764,8 +1776,7 @@ export default {
           numberfirst: el3.numberfirst || 0,
           central: el3.central || 0,
           typeAffiliation: el3.typeAffiliation || "-",
-          accumulated:
-            parseInt(el3.insurance || 0) / parseInt(el3.installments || 0) || 0,
+          accumulated: this.countSumAccumulated(el3),
           typeContract: el3.typeContract || "-",
           contractExpenses: el3.contractExpenses || "-",
           buildingName: el3.buildingName || "-",
@@ -1803,8 +1814,7 @@ export default {
           numberfirst: el4.numberfirst || 0,
           central: el4.central || 0,
           typeAffiliation: el4.typeAffiliation || "-",
-          accumulated:
-            parseInt(el4.insurance || 0) / parseInt(el4.installments || 0) || 0,
+          accumulated: this.countSumAccumulated(el4),
           typeContract: el4.typeContract || "-",
           contractExpenses: el4.contractExpenses || "-",
           buildingName: el4.buildingName || "-",
@@ -1833,6 +1843,7 @@ export default {
           ),
         };
       });
+      console.log(arr);
       await this.mapdataSum(arr, arr2, arr3, arr4);
     },
 
@@ -2312,6 +2323,7 @@ export default {
     //     else return insuranceSum;
     //   }, 0);
     // },
+    
 
     CentralSumallCount(items) {
       return items.reduce((CentralSumallCount, ele) => {
@@ -2344,17 +2356,35 @@ export default {
         else return amountPaidSum;
       }, 0);
     },
+  
+    countSumAccumulated(item) {
+      if(parseInt(item.installments) != 0){
+            return (
+              (parseInt(item.insurance) / parseInt(item.installments)) || 0
+          );
+          }else{
+            return parseInt(item.insurance) || 0 
+          }
+    },
+
 
     AccumulatedSum(items) {
       return items.reduce((accumulatedSum, ele) => {
         if (ele.insurance !== undefined && ele.installments !== undefined)
-          return (
-            accumulatedSum +
-            parseInt(ele.insurance || 0) / parseInt(ele.installments || 0)
+          if(parseInt(ele.installments) !== 0){
+            return (
+            accumulatedSum + parseInt(ele.insurance || 0) / parseInt(ele.installments || 0)
           );
+          }else{
+            return (
+            accumulatedSum + parseInt(ele.insurance) || 0
+          );
+          }
+          
         else return accumulatedSum;
       }, 0);
     },
+
 
     WaterbillSum(items) {
       return items.reduce((waterbillSum, ele) => {
@@ -2426,6 +2456,7 @@ export default {
         else return InsuranceSum;
       }, 0);
     },
+
     MaintenanceSum(items) {
       return items.reduce((MaintenanceSum, ele) => {
         if (ele.maintenance !== undefined)
@@ -2441,6 +2472,29 @@ export default {
       } else {
         convertNumber = num;
       }
+      var array = {
+        1: "๑",
+        2: "๒",
+        3: "๓",
+        4: "๔",
+        5: "๕",
+        6: "๖",
+        7: "๗",
+        8: "๘",
+        9: "๙",
+        0: "๐",
+      };
+      var str = convertNumber.toString();
+      for (var val in array) {
+        str = str.split(val).join(array[val]);
+      }
+
+      return str;
+    },
+
+    thaiNumberNew(num) {
+      let convertNumber;
+      convertNumber = num;
       var array = {
         1: "๑",
         2: "๒",
@@ -3295,7 +3349,9 @@ export default {
           MaintenanceSum: this.thaiNumber(e.MaintenanceSum),
           maintenancefeeSum: this.thaiNumber(e.maintenancefeeSum),
           maintenancefee: this.thaiNumber(e.maintenancefee),
-          roomnumber: e.roomnumber || "-",
+          roomnumber: this.thaiNumberNew(e.roomnumber) || "-",
+          lastnumber: this.thaiNumberNew(e.lastnumber) || "-",
+          numberfirst: this.thaiNumberNew(e.numberfirst) || "-",
           waterbillSum: this.thaiNumber(e.waterbillSum),
           electricitybillSum: this.thaiNumber(e.electricitybillSum),
           SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
@@ -3307,6 +3363,7 @@ export default {
           sumCostCentral: this.thaiNumber(e.sumCostCentral),
           centralSum: this.thaiNumber(e.centralSum),
           SumCostSumCentral: this.thaiNumber(e.SumCostSumCentral),
+          unitWater: this.thaiNumber(e.unitWater)
         };
       });
       var footer = [
@@ -3446,7 +3503,7 @@ export default {
       }
     },
 
-    buildTableBodyCentralCTD(data, columns) {
+    buildTableBodyCentralTD(data, columns) {
       var body = [];
       let arr = [];
       var thaiNum = data.map((e) => {
@@ -3456,7 +3513,9 @@ export default {
           MaintenanceSum: this.thaiNumber(e.MaintenanceSum),
           maintenancefeeSum: this.thaiNumber(e.maintenancefeeSum),
           maintenancefee: this.thaiNumber(e.maintenancefee),
-          roomnumber: e.roomnumber || "-",
+          roomnumber: this.thaiNumberNew(e.roomnumber) || "-",
+          lastnumber: this.thaiNumberNew(e.lastnumber) || "-",
+          numberfirst: this.thaiNumberNew(e.numberfirst) || "-",
           waterbillSum: this.thaiNumber(e.waterbillSum),
           electricitybillSum: this.thaiNumber(e.electricitybillSum),
           SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
@@ -3468,6 +3527,7 @@ export default {
           sumCostCentral: this.thaiNumber(e.sumCostCentral),
           centralSum: this.thaiNumber(e.centralSum),
           SumCostSumCentral: this.thaiNumber(e.SumCostSumCentral),
+          unitWater: this.thaiNumber(e.unitWater)
         };
       });
       var footer = [
@@ -3516,22 +3576,22 @@ export default {
       return arr;
     },
 
-    tableCentralCTD(data, columns) {
+    tableCentralTD(data, columns) {
       return {
         style: "tableExample",
         table: {
           widths: [20, 20, "*", 27, 27, 25, 27, 25, 32, 20, 20, 20, 55],
           headerRows: 2,
-          body: this.buildTableBodyCentralCTD(data, columns),
+          body: this.buildTableBodyCentralTD(data, columns),
         },
       };
     },
 
-    exportPdfCentralCTD() {
+    exportPdfCentralTD() {
       let listData = [];
       let mss = "";
       let mss2 = ""
-      listData = this.reportlistCTD;
+      listData = this.reportlistTD;
       if (listData.length > 0) {
         if(this.reportType == 'หักไม่ได้'){
           mss = "บัญชีรายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือนเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง ตร."
@@ -3575,7 +3635,7 @@ export default {
               style: "subheader",
               alignment: "center",
             },
-            this.tableCentralCTD(listData, [
+            this.tableCentralTD(listData, [
               "numberNo",
               "roomnumber",
               "fullname",
@@ -3771,9 +3831,10 @@ export default {
           value: e.value,
           sumdataelectricitybill: this.thaiNumber(e.sumdataelectricitybill),
           sumdatacosts: this.thaiNumber(e.sumdatacosts),
-          sumCostdataCostCosts: this.thaiNumber(e.sumCostdataCostCosts),
+          sumdataCostCentralAllSum: this.thaiNumber(e.sumdataCostCentralAllSum),
         };
       });
+  
       var footer = [
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
@@ -3789,7 +3850,7 @@ export default {
             alignment: "center",
           },
           {
-            text: this.thaiNumber(thaiNum[0].countCostCostsSumAll),
+            text: this.thaiNumber(thaiNum[0].countdataCostCentralAllSum),
             style: "header",
             alignment: "center",
           },
@@ -3882,7 +3943,7 @@ export default {
               "value",
               "sumdataelectricitybill",
               "sumdatacosts",
-              "sumCostdataCostCosts",
+              "sumdataCostCentralAllSum",
             ]),
           ],
           styles: {
@@ -3931,8 +3992,8 @@ export default {
           accumulatedSum: this.thaiNumber(e.accumulatedSum),
           accumulated: this.thaiNumber(e.accumulated),
           amountPaid: this.thaiNumber(e.amountPaid),
-          roomnumber: this.thaiNumber(e.roomnumber),
-          Installmenttime: this.thaiNumber(e.Installmenttime),
+          roomnumber: this.thaiNumberNew(e.roomnumber),
+          Installmenttime: this.thaiNumberNew(e.Installmenttime),
           InsuranceSum: this.thaiNumber(e.InsuranceSum),
         };
       });
@@ -3942,10 +4003,10 @@ export default {
           "",
           "",
           "",
-          { text: thaiNum[0].InsuranceSum, style: "header", alignment: "center" },
           { text: thaiNum[0].MaintenanceSum, style: "header", alignment: "center" },
           { text: thaiNum[0].accumulatedSum, style: "header", alignment: "center" },
           { text: thaiNum[0].amountPaidSum, style: "header", alignment: "center" },
+          ""
         ],
       ];
       var body = [
@@ -4091,6 +4152,7 @@ export default {
           numberNo: this.thaiNumber(e.numberNo),
           MaintenanceSum: this.thaiNumber(e.MaintenanceSum),
           waterbillSum: this.thaiNumber(e.waterbillSum),
+          roomnumber: this.thaiNumberNew(e.roomnumber) || "-",
           electricitybillSum: this.thaiNumber(e.electricitybillSum),
           SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
           sumCostwaterbill: this.thaiNumber(e.sumCostwaterbill),
@@ -4101,6 +4163,13 @@ export default {
           sumCostCentral: this.thaiNumber(e.sumCostCentral),
           centralSum: this.thaiNumber(e.centralSum),
           SumCostSumCentral: this.thaiNumber(e.SumCostSumCentral),
+          unitWater: this.thaiNumber(e.unitWater),
+          costsSum: this.thaiNumber(e.costsSum),
+          central: this.thaiNumber(e.central),
+          costs: this.thaiNumber(e.costs),
+          sumCostCosts: this.thaiNumber(e.sumCostCosts),
+          SumCostSumCosts: this.thaiNumber(e.SumCostSumCosts)
+          
         };
       });
       var footer = [
@@ -4247,6 +4316,7 @@ export default {
           electricitybillSum: this.thaiNumber(e.electricitybillSum),
           SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
           sumCostwaterbill: this.thaiNumber(e.sumCostwaterbill),
+          roomnumber: this.thaiNumberNew(e.roomnumber) || "-",
           maintenance: this.thaiNumber(e.maintenance),
           waterbill: this.thaiNumber(e.waterbill),
           electricitybill: this.thaiNumber(e.electricitybill),
@@ -4254,9 +4324,13 @@ export default {
           sumCostCentral: this.thaiNumber(e.sumCostCentral),
           centralSum: this.thaiNumber(e.centralSum),
           SumCostSumCentral: this.thaiNumber(e.SumCostSumCentral),
+          sumCostCosts: this.thaiNumber(e.sumCostCosts),
+          SumCostSumCosts: this.thaiNumber(e.SumCostSumCosts),
           subill: this.thaiNumber(e.subill),
           costs: this.thaiNumber(e.costs),
           costsSum: this.thaiNumber(e.costsSum),
+          unitWater: this.thaiNumber(e.unitWater)
+          
         };
       });
       var footer = [
@@ -4268,7 +4342,7 @@ export default {
           "",
           { text: thaiNum[0].electricitybillSum, style: "header", alignment: "center" },
           { text: thaiNum[0].costsSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].subill, style: "header", alignment: "center" },
+          { text: thaiNum[0].SumCostSumCosts, style: "header", alignment: "center" },
           "",
           "",
           "",
@@ -4316,8 +4390,9 @@ export default {
       listData = this.reportlistTD.map((el, i) => {
         return {
           ...el,
-          subill: parseInt(el.electricitybill) + parseInt(el.costs) || 0,
           numberNo: i + 1,
+          subill: parseInt(el.electricitybill) + parseInt(el.costs) || 0,
+          
         };
       });
       if (listData.length > 0) {
@@ -4364,7 +4439,7 @@ export default {
               "unitWater",
               "electricitybill",
               "costs",
-              "subill",
+              "sumCostCosts",
               "typeContractYes",
               "typeContractNo",
               "contractExpenses",
@@ -4392,6 +4467,8 @@ export default {
         pdfMake.createPdf(docDefinition).open();
       }
     },
+
+    
   },
 };
 </script>
@@ -4702,8 +4779,7 @@ export default {
                           <th>{{ AffiliationListTD[0]?.countcostsAll || 0 }}</th>
                           <th>
                             {{
-                              AffiliationListTD[0]?.countelectricitybillAll +
-                                AffiliationListTD[0]?.countcostsAll || 0
+                              AffiliationListTD[0]?.countdataCostCentralAllSum || 0
                             }}
                           </th>
                         </tr>
@@ -4771,7 +4847,7 @@ export default {
                             <th scope="row" colspan="5">รวมเงิน</th>
                             <th>{{ reportlistTD[0]?.electricitybillSum }}</th>
                             <th>{{ reportlistTD[0]?.costsSum }}</th>
-                            <th>{{ reportlistTD[0]?.contelectricitybillSum }}</th>
+                            <th>{{ reportlistTD[0]?.SumCostSumCosts }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -5873,7 +5949,7 @@ export default {
                           size="lg"
                           class="btn-icon"
                           style="margin-right: -30px"
-                          @click="exportPdfinsurance()"
+                          @click="exportPdfWaterBill()"
                         >
                           <div class="d-flex align-items-center">
                             <span style="margin-right: 5px">บันทึก</span>
@@ -5890,7 +5966,7 @@ export default {
                           size="lg"
                           class="btn-icon"
                           style="margin-right: -30px"
-                          @click="exportPdfCentralCTD()"
+                          @click="exportPdfCentralTD()"
                         >
                           <div class="d-flex align-items-center">
                             <span style="margin-right: 5px">บันทึก</span>
@@ -5907,7 +5983,7 @@ export default {
                           size="lg"
                           class="btn-icon"
                           style="margin-right: -30px"
-                          @click="exportPdfCentralCTD()"
+                          @click="exportPdfCentralTD()"
                         >
                           <div class="d-flex align-items-center">
                             <span style="margin-right: 5px">บันทึก</span>

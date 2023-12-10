@@ -158,11 +158,21 @@ export default {
 
     countinstallments(e) {
       try {
-      let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
-      let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
-      let b = c / a; //จำนวนงวดคงเหลือ
-      let d = parseInt(e.installments || 0) - b;
-      return a * d || 0;
+        // let a = ''
+      if(parseInt(e.installments) !== 0){
+        let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+        let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+        let b = c / a; //จำนวนงวดคงเหลือ
+        let d = parseInt(e.installments || 0) - b;
+        return a * d || 0;
+      }else{
+        return parseInt(e.insurance || 0)
+      }
+       
+      // let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+      // let b = c / a; //จำนวนงวดคงเหลือ
+      // let d = parseInt(e.installments || 0) - b;
+      // return a * d || 0;
       } catch (error) {
           console.log(error)
       }
@@ -417,12 +427,12 @@ export default {
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.maintenance || "-" }}</td>
                   <td>{{ item?.insurance || "-" }}</td>
-                  <td>{{ item?.installmentsCost || "-" }}</td>
+                  <td>{{ item?.installmentsCost || 0 }}</td>
                   <td>
                     <span v-if="item?.installments > 0">
                       {{ item?.maintenanceCost }}/{{ item?.installments }}
                     </span>
-                    <span v-if="item?.installments == 0"> - </span>
+                    <span v-if="item?.installments == 0"> 0 </span>
                   </td>
                   <td>{{ item?.amountPaidCost || 0 }}</td>
                 </tr>
