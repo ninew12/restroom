@@ -65,7 +65,8 @@ export default {
       typeRoomselect: [],
       buildingType: "",
       buildingName: "",
-      dateNow: ""
+      dateNow: "",
+      roomtype:"ทั้งหมด",
     };
   },
   created() {
@@ -88,6 +89,7 @@ export default {
       let filldata = [];
       let filldata2 = [];
       if (newValue !== null) {
+        this.roomtype = newValue.label
         if (newValue.value !== "ทั้งหมด") {
           let tt = this.roomList.sort((a, b) => a.floor - b.floor);
           filldata = tt.map((ele, i) => {
@@ -533,7 +535,7 @@ export default {
                     <h6 class="pt-1" style="margin-left: 10px">
                       ตึก : {{ buildingName || "-" }}
                     </h6>
-                    <h6>ประเภทห้อง : {{ selectedtypeRoom?.label || "-" }}</h6>
+                    <h6>ประเภทห้อง : {{ roomtype || "-" }}</h6>
                     <h6 style="margin-left: 10px">
                       คณะกรรมการประจําตึก : {{ committee || "-" }}
                     </h6>
