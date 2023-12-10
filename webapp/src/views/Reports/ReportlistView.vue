@@ -2429,7 +2429,7 @@ export default {
     MaintenanceSum(items) {
       return items.reduce((MaintenanceSum, ele) => {
         if (ele.maintenance !== undefined)
-          return MaintenanceSum + parseInt(ele.maintenance);
+          return MaintenanceSum + parseInt(ele.maintenance || 0);
         else return MaintenanceSum;
       }, 0);
     },
@@ -3688,7 +3688,7 @@ export default {
 
     exportPdfCosts() {
       let listData = [];
-      listData = this.AffiliationListCTD.map((el, i) => {
+      listData = this.AffiliationListTD.map((el, i) => {
         return {
           ...el,
           numberNo: i + 1,
@@ -4157,7 +4157,7 @@ export default {
 
     exportPdfCostCentral() {
       let listData = [];
-      listData = this.reportlistCTD.map((el, i) => {
+      listData = this.reportlistTD.map((el, i) => {
         return {
           ...el,
           numberNo: i + 1,
@@ -5188,11 +5188,11 @@ export default {
                         <td>{{ item?.sumdatacosts || "-" }}</td>
                         <td>{{ item?.sumCostdataCostCosts || "-" }}</td>
                       </tr>
-                      <tr v-if="AffiliationListCTD?.length > 0">
+                      <tr v-if="AffiliationListTD?.length > 0">
                         <th scope="row" colspan="2">รวมเงิน</th>
-                        <th>{{ AffiliationListCTD[0]?.countcentraAll || 0 }}</th>
-                        <th>{{ AffiliationListCTD[0]?.countcostsAll || 0 }}</th>
-                        <th>{{ AffiliationListCTD[0]?.countCostCostsSumAll || 0 }}</th>
+                        <th>{{ AffiliationListTD[0]?.countcentraAll || 0 }}</th>
+                        <th>{{ AffiliationListTD[0]?.countcostsAll || 0 }}</th>
+                        <th>{{ AffiliationListTD[0]?.countCostCostsSumAll || 0 }}</th>
                       </tr>
                     </table>
                   </div>
@@ -5254,11 +5254,11 @@ export default {
                           </td>
                           <td>{{ item?.contractExpenses || "-" }}</td>
                         </tr>
-                        <tr v-if="reportlistCTD?.length > 0">
+                        <tr v-if="reportlistTD?.length > 0">
                           <th scope="row" colspan="5">รวมเงิน</th>
-                          <th>{{ reportlistCTD[0]?.centralSum }}</th>
-                          <th>{{ reportlistCTD[0]?.costsSum }}</th>
-                          <th>{{ reportlistCTD[0]?.SumCostSumCosts }}</th>
+                          <th>{{ reportlistTD[0]?.centralSum }}</th>
+                          <th>{{ reportlistTD[0]?.costsSum }}</th>
+                          <th>{{ reportlistTD[0]?.SumCostSumCosts }}</th>
                         </tr>
                       </tbody>
                     </table>

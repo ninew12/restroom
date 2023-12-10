@@ -321,7 +321,6 @@ export default {
     updatedataUser() {
       let body = {
         userId: " ",
-        buildingName: " ",
         dateApproved: " ",
         installments: " ",
         contract: " ",
