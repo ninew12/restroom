@@ -566,7 +566,7 @@ export default {
                     id="inlinetypeUser1"
                     value="ตร."
                     @change="typeUserchange($event)"
-                    checked
+                    :checked="typeUser == 'ตร.'"
                   />
                   <label class="form-check-label" for="inlinetypeUser1">ตร.</label>
                 </div>
@@ -578,6 +578,7 @@ export default {
                     id="inlinetypeUser"
                     value="บช.ตชด."
                     @change="typeUserchange($event)"
+                    :checked="typeUser == 'บช.ตชด.'"
                   />
                   <label class="form-check-label" for="inlinetypeUser">บช.ตชด.</label>
                 </div>
