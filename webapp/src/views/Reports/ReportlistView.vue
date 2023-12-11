@@ -643,7 +643,7 @@ export default {
         data15,
         data16,
         data17 = [];
-      data = listTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
+      data = listTD.filter((el) => el.affiliation == "บช.ตชด.");
       let sumCostdataInsuranceAll = this.SumCostSummaintenanceAll(data);
       let sumdataInsuranceAll = this.InsuranceSumAll(data);
       let sumdatamaintenancefeeSumAll = this.maintenancefeeCount(data);
@@ -654,7 +654,7 @@ export default {
       let sumdatacostsSumAll = this.CostsSum(data);
       let sumdataCostCostsSumAll = this.SumCostSumCentral(data);
       let sumdataCostCentralSumAll = this.CentralSumallCount(data);
-      data2 = listTD.filter((el) => el.typeAffiliation == "บก.อก.");
+      data2 = listTD.filter((el) => el.affiliation == "บก.อก.");
       let sumCostdata2InsuranceAll = this.SumCostSummaintenanceAll(data2);
       let sumdata2InsuranceAll = this.InsuranceSumAll(data2);
       let sumdata2maintenancefeeSumAll = this.maintenancefeeCount(data2);
@@ -665,7 +665,7 @@ export default {
       let sumdata2costsSumAll = this.CostsSum(data2);
       let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
       let sumdata2CostCentralSumAll = this.CentralSumallCount(data2);
-      data3 = listTD.filter((el) => el.typeAffiliation == "บก.สนน.");
+      data3 = listTD.filter((el) => el.affiliation == "บก.สนน.");
       let sumCostdata3InsuranceAll = this.SumCostSummaintenanceAll(data3);
       let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
       let sumdata3maintenancefeeSumAll = this.maintenancefeeCount(data3);
@@ -676,7 +676,7 @@ export default {
       let sumdata3costsSumAll = this.CostsSum(data3);
       let sumdata3CostCostsSumAll = this.SumCostSumCentral(data3);
       let sumdata3CostCentralSumAll = this.CentralSumallCount(data3);
-      data4 = listTD.filter((el) => el.typeAffiliation == "ฝอ.1");
+      data4 = listTD.filter((el) => el.affiliation == "ฝอ.1");
       let sumCostdata4InsuranceAll = this.SumCostSummaintenanceAll(data4);
       let sumdata4InsuranceAll = this.InsuranceSumAll(data4);
       let sumdata4maintenancefeeSumAll = this.maintenancefeeCount(data4);
@@ -687,7 +687,7 @@ export default {
       let sumdata4costsSumAll = this.CostsSum(data4);
       let sumdata4CostCostsSumAll = this.SumCostSumCentral(data4);
       let sumdata4CostCentralSumAll = this.CentralSumallCount(data4);
-      data5 = listTD.filter((el) => el.typeAffiliation == "ฝอ.2");
+      data5 = listTD.filter((el) => el.affiliation == "ฝอ.2");
       let sumCostdata5InsuranceAll = this.SumCostSummaintenanceAll(data5);
       let sumdata5InsuranceAll = this.InsuranceSumAll(data5);
       let sumdata5maintenancefeeSumAll = this.maintenancefeeCount(data5);
@@ -698,7 +698,7 @@ export default {
       let sumdata5costsSumAll = this.CostsSum(data5);
       let sumdata5CostCostsSumAll = this.SumCostSumCentral(data5);
       let sumdata5CostCentralSumAll = this.CentralSumallCount(data5);
-      data6 = listTD.filter((el) => el.typeAffiliation == "ฝอ.3");
+      data6 = listTD.filter((el) => el.affiliation == "ฝอ.3");
       let sumCostdata6InsuranceAll = this.SumCostSummaintenanceAll(data6);
       let sumdata6InsuranceAll = this.InsuranceSumAll(data6);
       let sumdata6maintenancefeeSumAll = this.maintenancefeeCount(data6);
@@ -709,7 +709,7 @@ export default {
       let sumdata6costsSumAll = this.CostsSum(data6);
       let sumdata6CostCostsSumAll = this.SumCostSumCentral(data6);
       let sumdata6CostCentralSumAll = this.CentralSumallCount(data6);
-      data7 = listTD.filter((el) => el.typeAffiliation == "ฝอ.4");
+      data7 = listTD.filter((el) => el.affiliation == "ฝอ.4");
       let sumCostdata7InsuranceAll = this.SumCostSummaintenanceAll(data7);
       let sumdata7InsuranceAll = this.InsuranceSumAll(data7);
       let sumdata7maintenancefeeSumAll = this.maintenancefeeCount(data7);
@@ -720,7 +720,7 @@ export default {
       let sumdata7costsSumAll = this.CostsSum(data7);
       let sumdata7CostCostsSumAll = this.SumCostSumCentral(data7);
       let sumdata7CostCentralSumAll = this.CentralSumallCount(data7);
-      data8 = listTD.filter((el) => el.typeAffiliation == "ฝอ.5");
+      data8 = listTD.filter((el) => el.affiliation == "ฝอ.5");
       let sumCostdata8InsuranceAll = this.SumCostSummaintenanceAll(data8);
       let sumdata8InsuranceAll = this.InsuranceSumAll(data8);
       let sumdata8maintenancefeeSumAll = this.maintenancefeeCount(data8);
@@ -731,7 +731,7 @@ export default {
       let sumdata8costsSumAll = this.CostsSum(data8);
       let sumdata8CostCostsSumAll = this.SumCostSumCentral(data8);
       let sumdata8CostCentralSumAll = this.CentralSumallCount(data8);
-      data9 = listTD.filter((el) => el.typeAffiliation == "ฝอ.6");
+      data9 = listTD.filter((el) => el.affiliation == "ฝอ.6");
       let sumCostdata9InsuranceAll = this.SumCostSummaintenanceAll(data9);
       let sumdata9InsuranceAll = this.InsuranceSumAll(data9);
       let sumdata9maintenancefeeSumAll = this.maintenancefeeCount(data9);
@@ -742,7 +742,7 @@ export default {
       let sumdata9costsSumAll = this.CostsSum(data9);
       let sumdata9CostCostsSumAll = this.SumCostSumCentral(data9);
       let sumdata9CostCentralSumAll = this.CentralSumallCount(data9);
-      data10 = listTD.filter((el) => el.typeAffiliation == "ฝอ.7");
+      data10 = listTD.filter((el) => el.affiliation == "ฝอ.7");
       let sumCostdata10InsuranceAll = this.SumCostSummaintenanceAll(data10);
       let sumdata10InsuranceAll = this.InsuranceSumAll(data10);
       let sumdata10maintenancefeeSumAll = this.maintenancefeeCount(data10);
@@ -753,7 +753,7 @@ export default {
       let sumdata10costsSumAll = this.CostsSum(data10);
       let sumdata10CostCostsSumAll = this.SumCostSumCentral(data10);
       let sumdata10CostCentralSumAll = this.CentralSumallCount(data10);
-      data11 = listTD.filter((el) => el.typeAffiliation == "ฝอ.8");
+      data11 = listTD.filter((el) => el.affiliation == "ฝอ.8");
       let sumCostdata11InsuranceAll = this.SumCostSummaintenanceAll(data11);
       let sumdata11InsuranceAll = this.InsuranceSumAll(data11);
       let sumdata11maintenancefeeSumAll = this.maintenancefeeCount(data11);
@@ -764,7 +764,7 @@ export default {
       let sumdata11costsSumAll = this.CostsSum(data11);
       let sumdata11CostCostsSumAll = this.SumCostSumCentral(data11);
       let sumdata11CostCentralSumAll = this.CentralSumallCount(data11);
-      data12 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.1");
+      data12 = listTD.filter((el) => el.affiliation == "ฝสสน.1");
       let sumCostdata12InsuranceAll = this.SumCostSummaintenanceAll(data12);
       let sumdata12InsuranceAll = this.InsuranceSumAll(data12);
       let sumdata12maintenancefeeSumAll = this.maintenancefeeCount(data12);
@@ -775,7 +775,7 @@ export default {
       let sumdata12costsSumAll = this.CostsSum(data12);
       let sumdata12CostCostsSumAll = this.SumCostSumCentral(data12);
       let sumdata12CostCentralSumAll = this.CentralSumallCount(data12);
-      data13 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.2");
+      data13 = listTD.filter((el) => el.affiliation == "ฝสสน.2");
       let sumCostdata13InsuranceAll = this.SumCostSummaintenanceAll(data13);
       let sumdata13InsuranceAll = this.InsuranceSumAll(data13);
       let sumdata13maintenancefeeSumAll = this.maintenancefeeCount(data13);
@@ -786,7 +786,7 @@ export default {
       let sumdata13costsSumAll = this.CostsSum(data13);
       let sumdata13CostCostsSumAll = this.SumCostSumCentral(data13);
       let sumdata13CostCentralSumAll = this.CentralSumallCount(data13);
-      data14 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.3");
+      data14 = listTD.filter((el) => el.affiliation == "ฝสสน.3");
       let sumCostdata14InsuranceAll = this.SumCostSummaintenanceAll(data14);
       let sumdata14InsuranceAll = this.InsuranceSumAll(data14);
       let sumdata14maintenancefeeSumAll = this.maintenancefeeCount(data14);
@@ -797,7 +797,7 @@ export default {
       let sumdata14costsSumAll = this.CostsSum(data14);
       let sumdata14CostCostsSumAll = this.SumCostSumCentral(data14);
       let sumdata14CostCentralSumAll = this.CentralSumallCount(data14);
-      data15 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.4");
+      data15 = listTD.filter((el) => el.affiliation == "ฝสสน.4");
       let sumCostdata15InsuranceAll = this.SumCostSummaintenanceAll(data15);
       let sumdata15InsuranceAll = this.InsuranceSumAll(data15);
       let sumdata15maintenancefeeSumAll = this.maintenancefeeCount(data15);
@@ -808,7 +808,7 @@ export default {
       let sumdata15costsSumAll = this.CostsSum(data15);
       let sumdata15CostCostsSumAll = this.SumCostSumCentral(data15);
       let sumdata15CostCentralSumAll = this.CentralSumallCount(data15);
-      data16 = listTD.filter((el) => el.typeAffiliation == "ฝสสน.5");
+      data16 = listTD.filter((el) => el.affiliation == "ฝสสน.5");
       let sumCostdata16InsuranceAll = this.SumCostSummaintenanceAll(data16);
       let sumdata16InsuranceAll = this.InsuranceSumAll(data16);
       let sumdata16maintenancefeeSumAll = this.maintenancefeeCount(data16);
@@ -819,7 +819,7 @@ export default {
       let sumdata16costsSumAll = this.CostsSum(data16);
       let sumdata16CostCostsSumAll = this.SumCostSumCentral(data16);
       let sumdata16CostCentralSumAll = this.CentralSumallCount(data16);
-      data17 = listTD.filter((el) => el.typeAffiliation == "ลูกจ้าง");
+      data17 = listTD.filter((el) => el.affiliation == "ลูกจ้าง");
       let sumCostdata17InsuranceAll = this.SumCostSummaintenanceAll(data17);
       let sumdata17InsuranceAll = this.InsuranceSumAll(data17);
       let sumdata17maintenancefeeSumAll = this.maintenancefeeCount(data17);
@@ -1201,7 +1201,7 @@ export default {
         data15,
         data16,
         data17 = [];
-      data = listCTD.filter((el) => el.typeAffiliation == "บช.ตชด.");
+      data = listCTD.filter((el) => el.affiliation == "บช.ตชด.");
       let sumCostdataInsuranceAll = this.SumCostSumInsuranceAll(data);
       let sumdataInsuranceAll = this.InsuranceSumAll(data);
       let sumdataMaintenanceSumAll = this.MaintenanceSumAll(data);
@@ -1212,7 +1212,7 @@ export default {
       let sumdatacostsSumAll = this.CostsSum(data);
       let sumdataCostCostsSumAll = this.SumCostSumCentral(data);
       let sumdataCostCentralSumAll = this.CentralSumallCount(data);
-      data2 = listCTD.filter((el) => el.typeAffiliation == "บก.อก.");
+      data2 = listCTD.filter((el) => el.affiliation == "บก.อก.");
       let sumCostdata2InsuranceAll = this.SumCostSumInsuranceAll(data2);
       let sumdata2InsuranceAll = this.InsuranceSumAll(data2);
       let sumdata2MaintenanceSumAll = this.MaintenanceSumAll(data2);
@@ -1223,7 +1223,7 @@ export default {
       let sumdata2costsSumAll = this.CostsSum(data2);
       let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
       let sumdata2CostCentralSumAll = this.CentralSumallCount(data2);
-      data3 = listCTD.filter((el) => el.typeAffiliation == "บก.สนน.");
+      data3 = listCTD.filter((el) => el.affiliation == "บก.สนน.");
       let sumCostdata3InsuranceAll = this.SumCostSumInsuranceAll(data3);
       let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
       let sumdata3MaintenanceSumAll = this.MaintenanceSumAll(data3);
@@ -1234,7 +1234,7 @@ export default {
       let sumdata3costsSumAll = this.CostsSum(data3);
       let sumdata3CostCostsSumAll = this.SumCostSumCentral(data3);
       let sumdata3CostCentralSumAll = this.CentralSumallCount(data3);
-      data4 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.1");
+      data4 = listCTD.filter((el) => el.affiliation == "ฝอ.1");
       let sumCostdata4InsuranceAll = this.SumCostSumInsuranceAll(data4);
       let sumdata4InsuranceAll = this.InsuranceSumAll(data4);
       let sumdata4MaintenanceSumAll = this.MaintenanceSumAll(data4);
@@ -1245,7 +1245,7 @@ export default {
       let sumdata4costsSumAll = this.CostsSum(data4);
       let sumdata4CostCostsSumAll = this.SumCostSumCentral(data4);
       let sumdata4CostCentralSumAll = this.CentralSumallCount(data4);
-      data5 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.2");
+      data5 = listCTD.filter((el) => el.affiliation == "ฝอ.2");
       let sumCostdata5InsuranceAll = this.SumCostSumInsuranceAll(data5);
       let sumdata5InsuranceAll = this.InsuranceSumAll(data5);
       let sumdata5MaintenanceSumAll = this.MaintenanceSumAll(data5);
@@ -1256,7 +1256,7 @@ export default {
       let sumdata5costsSumAll = this.CostsSum(data5);
       let sumdata5CostCostsSumAll = this.SumCostSumCentral(data5);
       let sumdata5CostCentralSumAll = this.CentralSumallCount(data5);
-      data6 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.3");
+      data6 = listCTD.filter((el) => el.affiliation == "ฝอ.3");
       let sumCostdata6InsuranceAll = this.SumCostSumInsuranceAll(data6);
       let sumdata6InsuranceAll = this.InsuranceSumAll(data6);
       let sumdata6MaintenanceSumAll = this.MaintenanceSumAll(data6);
@@ -1267,7 +1267,7 @@ export default {
       let sumdata6costsSumAll = this.CostsSum(data6);
       let sumdata6CostCostsSumAll = this.SumCostSumCentral(data6);
       let sumdata6CostCentralSumAll = this.CentralSumallCount(data6);
-      data7 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.4");
+      data7 = listCTD.filter((el) => el.affiliation == "ฝอ.4");
       let sumCostdata7InsuranceAll = this.SumCostSumInsuranceAll(data7);
       let sumdata7InsuranceAll = this.InsuranceSumAll(data7);
       let sumdata7MaintenanceSumAll = this.MaintenanceSumAll(data7);
@@ -1278,7 +1278,7 @@ export default {
       let sumdata7costsSumAll = this.CostsSum(data7);
       let sumdata7CostCostsSumAll = this.SumCostSumCentral(data7);
       let sumdata7CostCentralSumAll = this.CentralSumallCount(data7);
-      data8 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.5");
+      data8 = listCTD.filter((el) => el.affiliation == "ฝอ.5");
       let sumCostdata8InsuranceAll = this.SumCostSumInsuranceAll(data8);
       let sumdata8InsuranceAll = this.InsuranceSumAll(data8);
       let sumdata8MaintenanceSumAll = this.MaintenanceSumAll(data8);
@@ -1289,7 +1289,7 @@ export default {
       let sumdata8costsSumAll = this.CostsSum(data8);
       let sumdata8CostCostsSumAll = this.SumCostSumCentral(data8);
       let sumdata8CostCentralSumAll = this.CentralSumallCount(data8);
-      data9 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.6");
+      data9 = listCTD.filter((el) => el.affiliation == "ฝอ.6");
       let sumCostdata9InsuranceAll = this.SumCostSumInsuranceAll(data9);
       let sumdata9InsuranceAll = this.InsuranceSumAll(data9);
       let sumdata9MaintenanceSumAll = this.MaintenanceSumAll(data9);
@@ -1300,7 +1300,7 @@ export default {
       let sumdata9costsSumAll = this.CostsSum(data9);
       let sumdata9CostCostsSumAll = this.SumCostSumCentral(data9);
       let sumdata9CostCentralSumAll = this.CentralSumallCount(data9);
-      data10 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.7");
+      data10 = listCTD.filter((el) => el.affiliation == "ฝอ.7");
       let sumCostdata10InsuranceAll = this.SumCostSumInsuranceAll(data10);
       let sumdata10InsuranceAll = this.InsuranceSumAll(data10);
       let sumdata10MaintenanceSumAll = this.MaintenanceSumAll(data10);
@@ -1311,7 +1311,7 @@ export default {
       let sumdata10costsSumAll = this.CostsSum(data10);
       let sumdata10CostCostsSumAll = this.SumCostSumCentral(data10);
       let sumdata10CostCentralSumAll = this.CentralSumallCount(data10);
-      data11 = listCTD.filter((el) => el.typeAffiliation == "ฝอ.8");
+      data11 = listCTD.filter((el) => el.affiliation == "ฝอ.8");
       let sumCostdata11InsuranceAll = this.SumCostSumInsuranceAll(data11);
       let sumdata11InsuranceAll = this.InsuranceSumAll(data11);
       let sumdata11MaintenanceSumAll = this.MaintenanceSumAll(data11);
@@ -1322,7 +1322,7 @@ export default {
       let sumdata11costsSumAll = this.CostsSum(data11);
       let sumdata11CostCostsSumAll = this.SumCostSumCentral(data11);
       let sumdata11CostCentralSumAll = this.CentralSumallCount(data11);
-      data12 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.1");
+      data12 = listCTD.filter((el) => el.affiliation == "ฝสสน.1");
       let sumCostdata12InsuranceAll = this.SumCostSumInsuranceAll(data12);
       let sumdata12InsuranceAll = this.InsuranceSumAll(data12);
       let sumdata12MaintenanceSumAll = this.MaintenanceSumAll(data12);
@@ -1333,7 +1333,7 @@ export default {
       let sumdata12costsSumAll = this.CostsSum(data12);
       let sumdata12CostCostsSumAll = this.SumCostSumCentral(data12);
       let sumdata12CostCentralSumAll = this.CentralSumallCount(data12);
-      data13 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.2");
+      data13 = listCTD.filter((el) => el.affiliation == "ฝสสน.2");
       let sumCostdata13InsuranceAll = this.SumCostSumInsuranceAll(data13);
       let sumdata13InsuranceAll = this.InsuranceSumAll(data13);
       let sumdata13MaintenanceSumAll = this.MaintenanceSumAll(data13);
@@ -1344,7 +1344,7 @@ export default {
       let sumdata13costsSumAll = this.CostsSum(data13);
       let sumdata13CostCostsSumAll = this.SumCostSumCentral(data13);
       let sumdata13CostCentralSumAll = this.CentralSumallCount(data13);
-      data14 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.3");
+      data14 = listCTD.filter((el) => el.affiliation == "ฝสสน.3");
       let sumCostdata14InsuranceAll = this.SumCostSumInsuranceAll(data14);
       let sumdata14InsuranceAll = this.InsuranceSumAll(data14);
       let sumdata14MaintenanceSumAll = this.MaintenanceSumAll(data14);
@@ -1355,7 +1355,7 @@ export default {
       let sumdata14costsSumAll = this.CostsSum(data14);
       let sumdata14CostCostsSumAll = this.SumCostSumCentral(data14);
       let sumdata14CostCentralSumAll = this.CentralSumallCount(data14);
-      data15 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.4");
+      data15 = listCTD.filter((el) => el.affiliation == "ฝสสน.4");
       let sumCostdata15InsuranceAll = this.SumCostSumInsuranceAll(data15);
       let sumdata15InsuranceAll = this.InsuranceSumAll(data15);
       let sumdata15MaintenanceSumAll = this.MaintenanceSumAll(data15);
@@ -1366,7 +1366,7 @@ export default {
       let sumdata15costsSumAll = this.CostsSum(data15);
       let sumdata15CostCostsSumAll = this.SumCostSumCentral(data15);
       let sumdata15CostCentralSumAll = this.CentralSumallCount(data15);
-      data16 = listCTD.filter((el) => el.typeAffiliation == "ฝสสน.5");
+      data16 = listCTD.filter((el) => el.affiliation == "ฝสสน.5");
       let sumCostdata16InsuranceAll = this.SumCostSumInsuranceAll(data16);
       let sumdata16InsuranceAll = this.InsuranceSumAll(data16);
       let sumdata16MaintenanceSumAll = this.MaintenanceSumAll(data16);
@@ -1377,7 +1377,7 @@ export default {
       let sumdata16costsSumAll = this.CostsSum(data16);
       let sumdata16CostCostsSumAll = this.SumCostSumCentral(data16);
       let sumdata16CostCentralSumAll = this.CentralSumallCount(data16);
-      data17 = listCTD.filter((el) => el.typeAffiliation == "ลูกจ้าง");
+      data17 = listCTD.filter((el) => el.affiliation == "ลูกจ้าง");
       let sumCostdata17InsuranceAll = this.SumCostSumInsuranceAll(data17);
       let sumdata17InsuranceAll = this.InsuranceSumAll(data17);
       let sumdata17MaintenanceSumAll = this.MaintenanceSumAll(data17);
@@ -1843,7 +1843,7 @@ export default {
           ),
         };
       });
-      console.log(arr);
+  
       await this.mapdataSum(arr, arr2, arr3, arr4);
     },
 
@@ -2289,9 +2289,16 @@ export default {
     },
 
     countSuminstallments(item) {
-      return (
+      if( parseInt(item.installments) !== 0){
+        return (
        (parseInt(item.insurance || 0) / parseInt(item.installments || 0)) + parseInt(item.maintenance || 0) || 0
       );
+      }else{
+        return (
+       (parseInt(item.insurance || 0)) + parseInt(item.maintenance || 0) || 0
+      );
+      }
+     
     },
 
     countSumcentral(item) {
@@ -3426,7 +3433,12 @@ export default {
     exportPdfCentral() {
       let listData = [];
       let mss = "";
-      listData = this.reportlistTD;
+      listData = this.reportlistTD.map((el, i) => {
+        return {
+          ...el,
+          numberNo: i + 1,
+        };
+      });
       if (listData.length > 0) {
         mss = "การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบำรุงลิฟต์เพิ่มเติม";
         pdfMake.fonts = {
@@ -4270,7 +4282,7 @@ export default {
             },
             this.tableCostCentral(listData, [
               "numberNo",
-              "buildingName",
+              "buildingType",
               "roomnumber",
               "fullname",
               "unitWater",
@@ -4433,7 +4445,7 @@ export default {
             },
             this.tableCostCentralTD(listData, [
               "numberNo",
-              "buildingName",
+              "buildingType",
               "roomnumber",
               "fullname",
               "unitWater",
@@ -5260,7 +5272,7 @@ export default {
                       <tr v-for="(item, index) in AffiliationListTD" :key="index">
                         <th scope="row">{{ index + 1 }}</th>
                         <td>{{ item?.value || "-" }}</td>
-                        <td>{{ item?.sumdatacentral || "-" }}</td>
+                        <td>{{ item?.sumdatacentral || "-" }}</td> 
                         <td>{{ item?.sumdatacosts || "-" }}</td>
                         <td>{{ item?.sumCostdataCostCosts || "-" }}</td>
                       </tr>
