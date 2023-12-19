@@ -199,9 +199,18 @@ export default {
 
     async summitloopData() {
       this.ExportData();
+      this.lodingData()
+      if(this.dataSummit.length > 200){this.setTimes = 60000}
       await this.dataSummit.forEach((element) => {
         this.summitdeposit(element);
       });
+    },
+
+    lodingData() {
+      this.loader = true;
+      setTimeout(() => {
+        this.loader = false;
+      }, this.setTimes);
     },
 
     async summitdeposit(element) {
@@ -385,6 +394,12 @@ export default {
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div v-if="loader">
+            <div class="spanner show">
+              <div class="loader"></div>
+              <p>กำลังทำรายการ กรุณารอสักครู่</p>
+            </div>
           </div>
         </div>
       </div>

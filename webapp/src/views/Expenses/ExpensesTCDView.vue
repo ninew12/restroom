@@ -63,7 +63,8 @@ export default {
       months: "",
       openBtn: false,
       expensesListFix: [],
-  
+      loader: false,
+      setTimes : 30000
     };
   },
   created() {
@@ -108,11 +109,13 @@ export default {
             let data2 = [];
             this.expensesListOld = res.data;
             this.expensesList = res.data;
-           
+
             data = this.expensesList.filter(
-              (ele) => ele.typeUser == "บช.ตชด." && ele.queue == "inroom" &&  ele.roomStatus !== "return"
+              (ele) =>
+                ele.typeUser == "บช.ตชด." &&
+                ele.queue == "inroom" &&
+                ele.roomStatus !== "return"
             );
-            console.log(data);
             data2 = data.map((el) => {
               return {
                 ...el,
@@ -136,6 +139,7 @@ export default {
 
             // this.expensesList = data2;
             this.expensesList = data2;
+            if(this.expensesList.length > 200){this.setTimes = 60000}
             // console.log(this.expensesListFix);
           })
           .catch((err) => {
@@ -148,35 +152,33 @@ export default {
 
     countSum(e) {
       try {
-      return e.lastnumber - e.numberfirst || 0;
-        
+        return e.lastnumber - e.numberfirst || 0;
       } catch (error) {
-        console.log("error:::")
-        console.lgo(error)
+        console.log("error:::");
+        console.lgo(error);
       }
     },
 
     countinstallments(e) {
       try {
         // let a = ''
-      if(parseInt(e.installments) !== 0){
-        let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
-        let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
-        let b = c / a; //จำนวนงวดคงเหลือ
-        let d = parseInt(e.installments || 0) - b;
-        return a * d || 0;
-      }else{
-        return parseInt(e.insurance || 0)
-      }
-       
-      // let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
-      // let b = c / a; //จำนวนงวดคงเหลือ
-      // let d = parseInt(e.installments || 0) - b;
-      // return a * d || 0;
-      } catch (error) {
-          console.log(error)
-      }
+        if (parseInt(e.installments) !== 0) {
+          let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+          let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+          let b = c / a; //จำนวนงวดคงเหลือ
+          let d = parseInt(e.installments || 0) - b;
+          return a * d || 0;
+        } else {
+          return parseInt(e.insurance || 0);
+        }
 
+        // let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+        // let b = c / a; //จำนวนงวดคงเหลือ
+        // let d = parseInt(e.installments || 0) - b;
+        // return a * d || 0;
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     countinsamountPaid(e) {
@@ -185,14 +187,13 @@ export default {
 
     countinsamaintenance(e) {
       try {
-     let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
-      let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
-      let b = c / a; //จำนวนงวดคงเหลือ
-      return b || 0;
+        let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+        let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+        let b = c / a; //จำนวนงวดคงเหลือ
+        return b || 0;
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-   
     },
 
     async getRoomsByid(id) {
@@ -202,21 +203,21 @@ export default {
           .get(`http://localhost:3897/users/${id}`)
           .then((res) => {
             this.userByid = res.data;
-              this.rank = this.userByid.rank;
-              this.firstName = this.userByid.firstName,
-              this.lastName = this.userByid.firstName;
-              this.Insurancecost = this.userByid.insurancecost,
-              this.installmentsRooom = this.userByid.installmentsRooom,
-              this.numberfirst = this.userByid.numberfirst,
-              this.lastnumber = this.userByid.lastnumber,
-              this.Waterbill = this.userByid.Waterbill,
-              this.Electricitybill = this.userByid.Electricitybill,
-              this.Central = this.userByid.Central,
-              this.Costs = this.userByid.Costs,
-              this.typeContract = this.userByid.typeContract,
-              this.contractExpenses = this.userByid.contractExpenses,
-              this.sumCost = this.userByid.sumCost;
-              this.rankNumber = this.userByid.rankNumber
+            this.rank = this.userByid.rank;
+            (this.firstName = this.userByid.firstName),
+              (this.lastName = this.userByid.firstName);
+            (this.Insurancecost = this.userByid.insurancecost),
+              (this.installmentsRooom = this.userByid.installmentsRooom),
+              (this.numberfirst = this.userByid.numberfirst),
+              (this.lastnumber = this.userByid.lastnumber),
+              (this.Waterbill = this.userByid.Waterbill),
+              (this.Electricitybill = this.userByid.Electricitybill),
+              (this.Central = this.userByid.Central),
+              (this.Costs = this.userByid.Costs),
+              (this.typeContract = this.userByid.typeContract),
+              (this.contractExpenses = this.userByid.contractExpenses),
+              (this.sumCost = this.userByid.sumCost);
+            this.rankNumber = this.userByid.rankNumber;
           })
           .catch((err) => {
             console.log(err);
@@ -225,8 +226,6 @@ export default {
         console.error(error);
       }
     },
-   
-  
 
     async genInsurance() {
       let arr = [];
@@ -241,12 +240,20 @@ export default {
           amountPaid: this.callInsurance(el),
         };
       });
-      data2 = data
-      dataList = data.filter(el => parseInt(el.amountPaidCost) !== 0)
-      dataList2 = data2.filter(el => parseInt(el.amountPaidCost) == 0)
+      data2 = data;
+      dataList = data.filter((el) => parseInt(el.amountPaidCost) !== 0);
+      dataList2 = data2.filter((el) => parseInt(el.amountPaidCost) == 0);
       this.expensesList = dataList;
-      this.loopSavereport(dataList2)
+      this.loopSavereport(dataList2);
       this.loopData();
+      this.lodingData();
+    },
+
+    lodingData() {
+      this.loader = true;
+      setTimeout(() => {
+        this.loader = false;
+      }, this.setTimes);
     },
 
     async loopData() {
@@ -255,7 +262,7 @@ export default {
       });
     },
 
-    async loopSavereport(data){
+    async loopSavereport(data) {
       await data.forEach((element) => {
         this.saveToreportNobill(element);
       });
@@ -316,7 +323,7 @@ export default {
         amountPaid: parseInt(index.amountPaid) || 0,
         monthly: this.months,
         years: this.years,
-        rankNumber : this.rankNumber 
+        rankNumber: this.rankNumber,
       };
       await axios.put(`http://localhost:3897/reportUser/${id}`, body, {
         headers: {
@@ -332,7 +339,7 @@ export default {
         amountPaid: parseInt(index.amountPaid) || 0,
         monthly: this.months,
         years: this.years,
-        rankNumber : this.rankNumber 
+        rankNumber: this.rankNumber,
       };
       await axios.put(`http://localhost:3897/reportUser/${id}`, body, {
         headers: {
@@ -395,6 +402,7 @@ export default {
               <span>ย้อนกลับ</span>
             </a>
           </div>
+
           <h4>บันทึกค่าใช้จ่ายรายเดือน บช.ตชด. &nbsp; ประจำเดือน {{ months }}</h4>
           <notifications class="pt-6" position="top center" width="400px" />
           <div class="d-flex justify-content-end align-items-baseline pt-1">
@@ -407,7 +415,10 @@ export default {
               :disabled="openBtn"
               >คำนวณค่าใช้จ่าย</MaterialButton
             >
-            <!-- :disabled="openBtn" -->
+            <!-- 
+              data-bs-toggle="modal"
+              data-bs-target="#costBackdrop"
+              :disabled="openBtn" -->
           </div>
 
           <div class="text-center pt-4 table-responsive">
@@ -438,6 +449,12 @@ export default {
                 </tr>
               </tbody>
             </table>
+          </div>
+          <div v-if="loader">
+            <div class="spanner show">
+              <div class="loader"></div>
+              <p>กำลังทำรายการ กรุณารอสักครู่</p>
+            </div>
           </div>
         </div>
       </div>
@@ -513,5 +530,103 @@ input[type="number"] {
 }
 .breadcrumb-item a:hover {
   color: #4caf50 !important;
+}
+
+.spanner {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  background: rgba(238, 242, 237, 0.5);
+  width: 100%;
+  height: 100%;
+  display: block;
+  text-align: center;
+  color: #4caf50;
+  transform: translateY(-50%);
+  z-index: 1000;
+  visibility: hidden;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+}
+
+.loader,
+.loader:before,
+.loader:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
+}
+.loader {
+  color: #4caf50;
+  font-size: 10px;
+  margin: 80px auto;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  top: 0;
+}
+.loader:before {
+  left: -3.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 3.5em;
+}
+@-webkit-keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+@keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
+}
+
+.show {
+  visibility: visible;
+}
+
+.spanner,
+.overlay {
+  opacity: 0;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.spanner.show,
+.overlay.show {
+  opacity: 1;
 }
 </style>

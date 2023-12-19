@@ -68,7 +68,9 @@ export default {
       userId: "",
       reportId: "",
       maintenancefee:"",
-      Roomnumber: ''
+      Roomnumber: '',
+      loader: false,
+      setTimes : 30000
     };
   },
   created() {

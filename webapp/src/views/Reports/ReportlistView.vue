@@ -2377,14 +2377,14 @@ export default {
 
     AccumulatedSum(items) {
       return items.reduce((accumulatedSum, ele) => {
-        if (ele.insurance !== undefined && ele.installments !== undefined)
-          if(parseInt(ele.installments) !== 0){
+        if (ele.insurance !== undefined && (ele.installments !== undefined && ele.installments !== " " && ele.installments !== "" ))
+          if(parseInt(ele.installments) !== 0 ){
             return (
-            accumulatedSum + parseInt(ele.insurance || 0) / parseInt(ele.installments || 0)
+            accumulatedSum + (parseInt(ele.insurance)|| 0) / (parseInt(ele.installments)|| 0)
           );
           }else{
             return (
-            accumulatedSum + parseInt(ele.insurance) || 0
+            accumulatedSum + parseInt(ele.insurance)|| 0 
           );
           }
           
