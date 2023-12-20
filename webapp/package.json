@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "scripts": {
     "db:serve": " json-server --watch db.json --port=3002",
+    "start": "vite --port 3889",
     "dev": "vite --port 3889",
     "build": "vite build",
     "preview": "vite preview --port 4173",
@@ -20,6 +21,7 @@
     "html-to-pdfmake": "^2.5.1",
     "html2pdf.js": "^0.10.1",
     "jspdf": "^2.5.1",
+    "node-cmd": "^5.0.0",
     "pdfmake": "^0.2.8",
     "pinia": "2.0.14",
     "prismjs": "1.28.0",
