@@ -78,14 +78,19 @@ export default {
       if (e.target) this.typeUserBytype = e.target.value;
       else this.typeUserBytype = e;
       this.dataUser = this.olddata;
-      if (this.typeUserBytype !== "ทั้งหมด") {
+      if (this.typeUserBytype !== "ทั้งหมด" && this.typeUserBytype !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว") {
         let dataFind = this.dataUser.filter((e) => e.typeUser === this.typeUserBytype);
         this.datatypeUser = dataFind;
         this.olddatatypeUser = dataFind;
         this.dataUser = dataFind;
         if (this.typeUserByrankr !== "") this.rankrfilter(this.typeUserByrankr);
-      } else if (this.typeUserBytype == "ทั้งหมด") {
+      } else if (this.typeUserBytype == "ทั้งหมด" && this.typeUserBytype !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว") {
         this.dataUser = this.olddata;
+      }else if(this.typeUserBytype == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" && this.typeUserBytype !== "ทั้งหมด"){
+        let dataFind = this.dataUser.filter((e) => e.queue === "inroom");
+        this.datatypeUser = dataFind;
+        this.olddatatypeUser = dataFind;
+        this.dataUser = dataFind;
       }
     },
 
@@ -383,7 +388,7 @@ export default {
               <input
                 class="form-check-input"
                 type="radio"
-                name="inlineRadioOptions"
+                name="inlineRadioOptions123"
                 id="inlineRadio33"
                 value="ทั้งหมด"
                 @change="typeUserfilter($event)"
@@ -391,6 +396,17 @@ export default {
               />
               <label class="form-check-label" for="inlineRadio33">ทั้งหมด</label>
             </div>
+            <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions123"
+                  id="inlineRadio37"
+                  value="รายชื่อผู้พักอาศัยที่เข้าพักแล้ว"
+                  @change="typeUserfilter($event)"
+                />
+                <label class="form-check-label" for="inlineRadio37">รายชื่อผู้พักอาศัยที่เข้าพักแล้ว</label>
+              </div>
           </div>
           <div class="d-flex justify-content-between align-items-baseline">
             <div class="mb-3">
@@ -486,6 +502,8 @@ export default {
                   <th scope="col">สังกัด</th>
                   <th scope="col">สถานภาพ</th>
                   <!-- <th scope="col">เลขบัตรประชาชน</th> -->
+                  <th v-if="typeUserBytype == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'" scope="col">อาคาร</th>
+                  <th v-if="typeUserBytype == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'" scope="col">เลขที่ห้อง</th>
                   <th scope="col">เบอร์ติดต่อ</th>
                   <th scope="col"></th>
                 </tr>
@@ -493,12 +511,13 @@ export default {
               <tbody>
                 <tr v-for="(item, index) in dataUser" :key="index">
                   <th scope="row">{{ index + 1 }}</th>
-                  <td>{{ item?.rank }}</td>
+                  <td>{{ item?.rank || "-"}}</td>
                   <td>{{ item?.firstName }} {{ item?.lastName }}</td>
-                  <td>{{ item?.affiliation }}</td>
-                  <td>{{ item?.status }}</td>
-                  <!-- <td>{{ item.idcard }}</td> -->
-                  <td>{{ item?.phone }}</td>
+                  <td>{{ item?.affiliation || "-"}}</td>
+                  <td>{{ item?.status || "-"}}</td>
+                  <td v-if="typeUserBytype == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'">{{ item?.buildingName || "-" }}</td>
+                  <td v-if="typeUserBytype == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'">{{ item?.roomnumber || "-" }}</td>
+                  <td>{{ item?.phone || "-"}}</td>
                   <td>
                     <a
                       @click="editUser(item?.id)"

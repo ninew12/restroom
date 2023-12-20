@@ -66,7 +66,8 @@ export default {
       buildingType: "",
       buildingName: "",
       dateNow: "",
-      roomtype:"ทั้งหมด",
+      roomtype: "ทั้งหมด",
+      searchByName: "",
     };
   },
   created() {
@@ -78,7 +79,7 @@ export default {
     } catch (e) {
       console.error(e);
     }
-    this.dateNow = (new Intl.DateTimeFormat(['ban', 'id']).format(new Date()));
+    this.dateNow = new Intl.DateTimeFormat(["ban", "id"]).format(new Date());
 
     // this.getRooms();
     this.getBuildings();
@@ -89,7 +90,7 @@ export default {
       let filldata = [];
       let filldata2 = [];
       if (newValue !== null) {
-        this.roomtype = newValue.label
+        this.roomtype = newValue.label;
         if (newValue.value !== "ทั้งหมด") {
           let tt = this.roomList.sort((a, b) => a.floor - b.floor);
           filldata = tt.map((ele, i) => {
@@ -119,7 +120,30 @@ export default {
         this.getBuildingsByid(this.buidingId);
       }
     },
+    searchByName: async function (newValue) {
+      let arr = [];
+      let filldata = [];
+      let filldata2 = [];
+      this.roomList = this.roomListOld;
+      if (newValue !== null && newValue != "") {
+        let tt = this.roomList.sort((a, b) => a.floor - b.floor);
+        filldata = tt.map((ele, i) => {
+          return ele.data.filter((c) => c.firstName == newValue);
+        });
+
+        filldata2 = Object.keys(filldata).map((ele) => {
+          return {
+            floor: parseInt(ele) + 1,
+            data: filldata[ele] || [],
+          };
+        });
+        this.roomList = filldata2.sort((a, b) => b.floor - a.floor);
+      } else {
+        this.roomList = this.roomListOld.reverse();
+      }
+    },
   },
+
   methods: {
     gotodetail(id, index) {
       let action;
@@ -511,7 +535,6 @@ export default {
                     </div>
                   </MaterialButton>
                 </div>
- 
               </div>
             </div>
           </div>
@@ -528,7 +551,11 @@ export default {
               ref="html2Pdf"
             >
               <template v-slot:pdf-content>
-                <label class="d-flex justify-content-end align-items-baseline" style="margin-bottom: 5px">วันที่: {{ dateNow }}</label>
+                <label
+                  class="d-flex justify-content-end align-items-baseline"
+                  style="margin-bottom: 5px"
+                  >วันที่: {{ dateNow }}</label
+                >
                 <div class="text-center">
                   <div class="d-flex justify-content-between align-items-baseline">
                     <h6 class="pt-1">อาคารบ้านพัก : {{ typeStatusroom || "-" }}</h6>
@@ -541,8 +568,8 @@ export default {
                     </h6>
                   </div>
                   <div v-for="(item, index) in roomList" :key="index" id="printMe">
-                    <div class="d-flex justify-content-start align-items-baseline ">
-                      <label style="color:#000;">ชั้น {{ item?.floor }}</label>
+                    <div class="d-flex justify-content-start align-items-baseline">
+                      <label style="color: #000">ชั้น {{ item?.floor }}</label>
                     </div>
                     <div class="flex-container-fluid">
                       <div v-for="(item2, index) in item.data" :key="index">
@@ -666,15 +693,27 @@ export default {
             </vue3-html2pdf>
           </div>
           <div class="text-center pt-4">
-            <div class="d-flex justify-content-start align-items-baseline pt-1 w-35">
-              <label class="w-30" style="margin-right: 5px; margin-left: -20px">
-                เลือกประเภทห้อง</label
-              >
-              <v-select
-                class="w-50"
-                :options="typeRoom"
-                v-model="selectedtypeRoom"
-              ></v-select>
+            <div class="d-flex justify-content-between align-items-baseline pt-1">
+              <div class="d-flex align-items-baseline">
+                <label style="margin-right: 20px"> เลือกประเภทห้อง</label>
+                <v-select
+                  style="width: 200px"
+                  :options="typeRoom"
+                  v-model="selectedtypeRoom"
+                ></v-select>
+              </div>
+              <div class="d-flex align-items-baseline">
+                <label style="margin-right: 10px">ค้นหาชื่อ </label>
+                <MaterialInput
+                  style="width: 300px"
+                  class="input-group-dynamic"
+                  icon="search"
+                  type="text"
+                  placeholder="Search"
+                  :value="searchByName"
+                  @input="(event) => (searchByName = event.target.value)"
+                />
+              </div>
             </div>
             <div class="d-flex justify-content-between align-items-baseline p-2">
               <div class="text-start">
