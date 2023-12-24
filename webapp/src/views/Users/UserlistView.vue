@@ -49,6 +49,7 @@ export default {
       searchName: "",
       typeUser: "ตร.",
       typeUserBytype: "",
+      typeUserAll: "",
       typeUserByrankr: "",
       queue: "",
       roomId: "",
@@ -78,19 +79,14 @@ export default {
       if (e.target) this.typeUserBytype = e.target.value;
       else this.typeUserBytype = e;
       this.dataUser = this.olddata;
-      if (this.typeUserBytype !== "ทั้งหมด" && this.typeUserBytype !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว") {
+      if (this.typeUserBytype !== "" ) {
         let dataFind = this.dataUser.filter((e) => e.typeUser === this.typeUserBytype);
         this.datatypeUser = dataFind;
         this.olddatatypeUser = dataFind;
         this.dataUser = dataFind;
         if (this.typeUserByrankr !== "") this.rankrfilter(this.typeUserByrankr);
-      } else if (this.typeUserBytype == "ทั้งหมด" && this.typeUserBytype !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว") {
+      } else {
         this.dataUser = this.olddata;
-      }else if(this.typeUserBytype == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" && this.typeUserBytype !== "ทั้งหมด"){
-        let dataFind = this.dataUser.filter((e) => e.queue === "inroom");
-        this.datatypeUser = dataFind;
-        this.olddatatypeUser = dataFind;
-        this.dataUser = dataFind;
       }
     },
 
@@ -104,6 +100,21 @@ export default {
 
     typeUserchange(e) {
       this.typeUser = e.target.value;
+    },
+
+
+    typeUserchangeFilter(e) {
+    if (e.target) this.typeUserAll = e.target.value;
+      else this.typeUserAll = e;
+      this.dataUser = this.olddata;
+     if(this.typeUserAll == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว"){
+        let dataFind = this.dataUser.filter((e) => e.queue === "inroom");
+        this.datatypeUser = dataFind;
+        this.olddatatypeUser = dataFind;
+        this.dataUser = dataFind;
+      }else{
+        this.dataUser = this.olddata;
+      }
     },
 
     async editUser(id) {
@@ -135,11 +146,16 @@ export default {
         axios
           .get("http://localhost:3897/users")
           .then((res) => {
-            console.log(res);
-            this.dataUser = res.data;
+            let arr = res.data
+            let dataFind = []
+            if(this.typeUserBytype !== "ทั้งหมด" && this.typeUserBytype !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" && this.typeUserBytype !== ""){
+              dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype);
+            }else{
+              dataFind = res.data;
+              this.typeUserfilter("ทั้งหมด");
+            }
+            this.dataUser = dataFind;
             this.olddata = res.data;
-            this.typeUserfilter("ทั้งหมด");
-            // this.rankrfilter("ประทวน");
             this.searchName = "";
             this.firstName = "";
             this.lastName = "";
@@ -212,6 +228,7 @@ export default {
             type: "success",
           });
           this.getAlluser();
+          if(this.roomId !== undefined)
           this.updateRoom();
         })
         .catch((err) => {
@@ -320,7 +337,15 @@ export default {
         axios
           .get("http://localhost:3897/users")
           .then((res) => {
-            this.dataUser = res.data;
+            let arr = res.data
+            let dataFind = []
+            if(this.typeUserBytype !== "ทั้งหมด" && this.typeUserBytype !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว"){
+              dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype);
+            }else{
+              dataFind = res.data;
+              this.typeUserfilter("ทั้งหมด");
+            }
+            this.dataUser = dataFind;
             this.olddata = res.data;
           })
           .catch((err) => {
@@ -391,7 +416,7 @@ export default {
                 name="inlineRadioOptions123"
                 id="inlineRadio33"
                 value="ทั้งหมด"
-                @change="typeUserfilter($event)"
+                @change="typeUserchangeFilter($event)"
                 checked
               />
               <label class="form-check-label" for="inlineRadio33">ทั้งหมด</label>
@@ -403,7 +428,7 @@ export default {
                   name="inlineRadioOptions123"
                   id="inlineRadio37"
                   value="รายชื่อผู้พักอาศัยที่เข้าพักแล้ว"
-                  @change="typeUserfilter($event)"
+                  @change="typeUserchangeFilter($event)"
                 />
                 <label class="form-check-label" for="inlineRadio37">รายชื่อผู้พักอาศัยที่เข้าพักแล้ว</label>
               </div>
@@ -502,8 +527,8 @@ export default {
                   <th scope="col">สังกัด</th>
                   <th scope="col">สถานภาพ</th>
                   <!-- <th scope="col">เลขบัตรประชาชน</th> -->
-                  <th v-if="typeUserBytype == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'" scope="col">อาคาร</th>
-                  <th v-if="typeUserBytype == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'" scope="col">เลขที่ห้อง</th>
+                  <th v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'" scope="col">อาคาร</th>
+                  <th v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'" scope="col">เลขที่ห้อง</th>
                   <th scope="col">เบอร์ติดต่อ</th>
                   <th scope="col"></th>
                 </tr>
@@ -515,8 +540,8 @@ export default {
                   <td>{{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.affiliation || "-"}}</td>
                   <td>{{ item?.status || "-"}}</td>
-                  <td v-if="typeUserBytype == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'">{{ item?.buildingName || "-" }}</td>
-                  <td v-if="typeUserBytype == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'">{{ item?.roomnumber || "-" }}</td>
+                  <td v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'">{{ item?.buildingName || "-" }}</td>
+                  <td v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'">{{ item?.roomnumber || "-" }}</td>
                   <td>{{ item?.phone || "-"}}</td>
                   <td>
                     <a
