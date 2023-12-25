@@ -53,7 +53,7 @@ export default {
       typeUserByrankr: "",
       queue: "",
       roomId: "",
-      migratdata : []
+      migratdata: [],
     };
   },
   created() {
@@ -79,19 +79,21 @@ export default {
       if (e.target) this.typeUserBytype = e.target.value;
       else this.typeUserBytype = e;
       this.dataUser = this.olddata;
-      if (this.typeUserBytype !== "" ) {
-        if(this.typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'){
-          let dataFind = this.dataUser.filter((e) => e.queue === "inroom"  && e.typeUser === this.typeUserBytype);
-        this.datatypeUser = dataFind;
-        this.olddatatypeUser = dataFind;
-        this.dataUser = dataFind;
-        if (this.typeUserByrankr !== "") this.rankrfilter(this.typeUserByrankr);
-        }else{
+      if (this.typeUserBytype !== "") {
+        if (this.typeUserAll == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว") {
+          let dataFind = this.dataUser.filter(
+            (e) => e.queue === "inroom" && e.typeUser === this.typeUserBytype
+          );
+          this.datatypeUser = dataFind;
+          this.olddatatypeUser = dataFind;
+          this.dataUser = dataFind;
+          if (this.typeUserByrankr !== "") this.rankrfilter(this.typeUserByrankr);
+        } else {
           let dataFind = this.dataUser.filter((e) => e.typeUser === this.typeUserBytype);
-        this.datatypeUser = dataFind;
-        this.olddatatypeUser = dataFind;
-        this.dataUser = dataFind;
-        if (this.typeUserByrankr !== "") this.rankrfilter(this.typeUserByrankr);
+          this.datatypeUser = dataFind;
+          this.olddatatypeUser = dataFind;
+          this.dataUser = dataFind;
+          if (this.typeUserByrankr !== "") this.rankrfilter(this.typeUserByrankr);
         }
       } else {
         this.dataUser = this.olddata;
@@ -101,8 +103,20 @@ export default {
     rankrfilter(e) {
       if (e.target) this.typeUserByrankr = e.target.value;
       else this.typeUserByrankr = e;
-      this.datatypeUser = this.olddatatypeUser;
-      let dataRank = this.datatypeUser.filter((e) => e.typeRanks == this.typeUserByrankr);
+      this.dataUser = this.olddata;
+      let dataRank = []
+      if((this.typeUserAll == "ทั้งหมด" || this.typeUserAll == "" ) && this.typeUserBytype !== "ทั้งหมด"){
+        dataRank = this.dataUser.filter((e) => e.typeUser === this.typeUserBytype && e.typeRanks == this.typeUserByrankr);
+      }else if(this.typeUserAll == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&
+        this.typeUserBytype !== "ทั้งหมด") {
+          dataRank = this.dataUser.filter((e) => e.queue === "inroom" && e.typeUser === this.typeUserBytype && e.typeRanks == this.typeUserByrankr);
+      }
+      else{
+        dataRank = this.dataUser.filter((e) => e.typeRanks == this.typeUserByrankr);
+      }
+      
+      this.datatypeUser = dataRank;
+      this.olddatatypeUser = dataRank;
       this.dataUser = dataRank;
     },
 
@@ -110,28 +124,34 @@ export default {
       this.typeUser = e.target.value;
     },
 
-
     typeUserchangeFilter(e) {
-    if (e.target) this.typeUserAll = e.target.value;
+      if (e.target) this.typeUserAll = e.target.value;
       else this.typeUserAll = e;
       this.dataUser = this.olddata;
-     if(this.typeUserAll == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype == "ทั้งหมด"){
-        let dataFind = this.dataUser.filter((e) => e.queue === "inroom" );
+      if (
+        this.typeUserAll == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&
+        this.typeUserBytype == "ทั้งหมด"
+      ) {
+        let dataFind = this.dataUser.filter((e) => e.queue === "inroom");
         this.datatypeUser = dataFind;
         this.olddatatypeUser = dataFind;
         this.dataUser = dataFind;
-      }else if(this.typeUserAll == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype !== "ทั้งหมด"){
-        let dataFind = this.dataUser.filter((e) => e.queue === "inroom" && e.typeUser == this.typeUserBytype);
+      } else if (
+        this.typeUserAll == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&
+        this.typeUserBytype !== "ทั้งหมด"
+      ) {
+        let dataFind = this.dataUser.filter(
+          (e) => e.queue === "inroom" && e.typeUser == this.typeUserBytype
+        );
         this.datatypeUser = dataFind;
         this.olddatatypeUser = dataFind;
         this.dataUser = dataFind;
-      }else if(this.typeUserAll == "ทั้งหมด" &&  this.typeUserBytype !== "ทั้งหมด"){
+      } else if (this.typeUserAll == "ทั้งหมด" && this.typeUserBytype !== "ทั้งหมด") {
         let dataFind = this.dataUser.filter((e) => e.typeUser == this.typeUserBytype);
         this.datatypeUser = dataFind;
         this.olddatatypeUser = dataFind;
         this.dataUser = dataFind;
-      }
-      else{
+      } else {
         this.dataUser = this.olddata;
       }
     },
@@ -165,22 +185,39 @@ export default {
         axios
           .get("http://localhost:3897/users")
           .then((res) => {
-            let arr = res.data
-            let dataFind = []
-            if(this.typeUserAll !== "ทั้งหมด" && this.typeUserAll !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" && this.typeUserAll !== ""){
+            let arr = res.data;
+            let dataFind = [];
+
+            if (
+              this.typeUserAll !== "ทั้งหมด" &&
+              this.typeUserAll !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&
+              this.typeUserAll !== ""
+            ) {
               dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype);
-            }else if(this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype !== "ทั้งหมด"){
-              dataFind = arr.filter((e) => e.queue === "inroom" && e.typeUser === this.typeUserBytype)
-            }else if(this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype == "ทั้งหมด"){
-              dataFind = arr.filter((e) => e.queue === "inroom" )
-            }else if(this.typeUserAll == "ทั้งหมด" &&  this.typeUserBytype !== "ทั้งหมด"){
-              dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype)
-            }
-            else{
+            } else if (
+              this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&
+              this.typeUserBytype !== "ทั้งหมด"
+            ) {
+              dataFind = arr.filter(
+                (e) => e.queue === "inroom" && e.typeUser === this.typeUserBytype
+              );
+            } else if (
+              this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&
+              this.typeUserBytype == "ทั้งหมด"
+            ) {
+              dataFind = arr.filter((e) => e.queue === "inroom");
+            } else if (
+              this.typeUserAll == "ทั้งหมด" &&
+              this.typeUserBytype !== "ทั้งหมด"
+            ) {
+              dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype);
+            } else {
               dataFind = res.data;
-              this.typeUserfilter("ทั้งหมด");
+              let typeR  =""
+              this.typeUserBytype !== "" ? typeR = this.typeUserBytype : typeR = "ทั้งหมด"
+              this.typeUserfilter(typeR);
             }
-            this.dataUser = dataFind;
+            this.dataUser = dataFind.reverse();;
             this.olddata = res.data;
             this.searchName = "";
             this.firstName = "";
@@ -193,6 +230,7 @@ export default {
             this.typeAffiliation = "";
             this.typeRanks = "";
             this.typeUser = "ตร.";
+            if (this.typeUserByrankr !== "") this.rankrfilter(this.typeUserByrankr);
           })
           .catch((err) => {
             console.log(err);
@@ -202,22 +240,22 @@ export default {
       }
     },
 
-  // async  submitsync(){
-  //     await this.migratdata.forEach((element) => {
-  //       this.syncDataUser(element);
-  //     });
-  //   },
+    // async  submitsync(){
+    //     await this.migratdata.forEach((element) => {
+    //       this.syncDataUser(element);
+    //     });
+    //   },
 
-  //   syncDataUser(data){
-  //     axios
-  //       .put(`http://localhost:3897/users/${data.id}`, data, {
-  //         headers: {
-  //           // remove headers
-  //           "Access-Control-Allow-Origin": "*",
-  //           "Content-Type": "application/json",
-  //         },
-  //       })
-  //   },
+    //   syncDataUser(data){
+    //     axios
+    //       .put(`http://localhost:3897/users/${data.id}`, data, {
+    //         headers: {
+    //           // remove headers
+    //           "Access-Control-Allow-Origin": "*",
+    //           "Content-Type": "application/json",
+    //         },
+    //       })
+    //   },
 
     async editForm() {
       let typeA;
@@ -253,8 +291,7 @@ export default {
             title: "แก้ไขข้อมูลสำเร็จ",
             type: "success",
           });
-          if(this.roomId !== undefined)
-          this.updateRoom();
+          if (this.roomId !== undefined) this.updateRoom();
 
           setTimeout(() => {
             this.getAlluser();
@@ -366,23 +403,40 @@ export default {
         axios
           .get("http://localhost:3897/users")
           .then((res) => {
-            let arr = res.data
-            let dataFind = []
-            if(this.typeUserAll !== "ทั้งหมด" && this.typeUserAll !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" && this.typeUserAll !== ""){
+            let arr = res.data;
+            let dataFind = [];
+            if (
+              this.typeUserAll !== "ทั้งหมด" &&
+              this.typeUserAll !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&
+              this.typeUserAll !== ""
+            ) {
               dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype);
-            }else if(this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype !== "ทั้งหมด"){
-              dataFind = arr.filter((e) => e.queue === "inroom" && e.typeUser === this.typeUserBytype)
-            }else if(this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype == "ทั้งหมด"){
-              dataFind = arr.filter((e) => e.queue === "inroom" )
-            }else if(this.typeUserAll == "ทั้งหมด" &&  this.typeUserBytype !== "ทั้งหมด"){
-              dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype)
-            }
-            else{
+            } else if (
+              this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&
+              this.typeUserBytype !== "ทั้งหมด"
+            ) {
+              dataFind = arr.filter(
+                (e) => e.queue === "inroom" && e.typeUser === this.typeUserBytype
+              );
+            } else if (
+              this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&
+              this.typeUserBytype == "ทั้งหมด"
+            ) {
+              dataFind = arr.filter((e) => e.queue === "inroom");
+            } else if (
+              this.typeUserAll == "ทั้งหมด" &&
+              this.typeUserBytype !== "ทั้งหมด"
+            ) {
+              dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype);
+            } else {
               dataFind = res.data;
-              this.typeUserfilter("ทั้งหมด");
+              let typeR  =""
+              this.typeUserBytype !== "" ? typeR = this.typeUserBytype : typeR = "ทั้งหมด"
+              this.typeUserfilter(typeR);
             }
-            this.dataUser = dataFind;
+            this.dataUser = dataFind.reverse();;
             this.olddata = res.data;
+            if (this.typeUserByrankr !== "") this.rankrfilter(this.typeUserByrankr);
           })
           .catch((err) => {
             console.log(err);
@@ -458,16 +512,18 @@ export default {
               <label class="form-check-label" for="inlineRadio33">ทั้งหมด</label>
             </div>
             <div class="form-check form-check-inline">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="inlineRadioOptions123"
-                  id="inlineRadio37"
-                  value="รายชื่อผู้พักอาศัยที่เข้าพักแล้ว"
-                  @change="typeUserchangeFilter($event)"
-                />
-                <label class="form-check-label" for="inlineRadio37">รายชื่อผู้พักอาศัยที่เข้าพักแล้ว</label>
-              </div>
+              <input
+                class="form-check-input"
+                type="radio"
+                name="inlineRadioOptions123"
+                id="inlineRadio37"
+                value="รายชื่อผู้พักอาศัยที่เข้าพักแล้ว"
+                @change="typeUserchangeFilter($event)"
+              />
+              <label class="form-check-label" for="inlineRadio37"
+                >รายชื่อผู้พักอาศัยที่เข้าพักแล้ว</label
+              >
+            </div>
           </div>
           <div class="d-flex justify-content-between align-items-baseline">
             <div class="mb-3">
@@ -563,8 +619,18 @@ export default {
                   <th scope="col">สังกัด</th>
                   <th scope="col">สถานภาพ</th>
                   <!-- <th scope="col">เลขบัตรประชาชน</th> -->
-                  <th v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'" scope="col">อาคาร</th>
-                  <th v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'" scope="col">เลขที่ห้อง</th>
+                  <th
+                    v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'"
+                    scope="col"
+                  >
+                    อาคาร
+                  </th>
+                  <th
+                    v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'"
+                    scope="col"
+                  >
+                    เลขที่ห้อง
+                  </th>
                   <th scope="col">เบอร์ติดต่อ</th>
                   <th scope="col"></th>
                 </tr>
@@ -572,13 +638,17 @@ export default {
               <tbody>
                 <tr v-for="(item, index) in dataUser" :key="index">
                   <th scope="row">{{ index + 1 }}</th>
-                  <td>{{ item?.rank || "-"}}</td>
+                  <td>{{ item?.rank || "-" }}</td>
                   <td>{{ item?.firstName }} {{ item?.lastName }}</td>
-                  <td>{{ item?.affiliation || "-"}}</td>
-                  <td>{{ item?.status || "-"}}</td>
-                  <td v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'">{{ item?.buildingName || "-" }}</td>
-                  <td v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'">{{ item?.roomnumber || "-" }}</td>
-                  <td>{{ item?.phone || "-"}}</td>
+                  <td>{{ item?.affiliation || "-" }}</td>
+                  <td>{{ item?.status || "-" }}</td>
+                  <td v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'">
+                    {{ item?.buildingName || "-" }}
+                  </td>
+                  <td v-if="typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'">
+                    {{ item?.roomnumber || "-" }}
+                  </td>
+                  <td>{{ item?.phone || "-" }}</td>
                   <td>
                     <a
                       @click="editUser(item?.id)"
