@@ -118,7 +118,7 @@ export default {
             data2 = data.map((el) => {
               return {
                 ...el,
-                numberfirst: el.numberfirst || 0,
+                firstnumber: el.firstnumber || 0,
                 sumCost: this.countSum(el),
               };
             });
@@ -133,12 +133,12 @@ export default {
     },
 
     countSum(e) {
-      return parseInt(e.lastnumber || 0) - parseInt(e.numberfirst || 0) || 0;
+      return parseInt(e.lastnumber) - parseInt(e.firstnumber) || 0;
     },
 
-    Sumunit(lastnumber, numberfirst) {
-      let sum = parseInt(lastnumber)  - parseInt(numberfirst);
-      return parseInt(numberfirst) + sum || 0;
+    Sumunit(lastnumber, firstnumber) {
+      let sum = parseInt(lastnumber)  - parseInt(firstnumber);
+      return (parseInt(firstnumber) + sum) || 0;
     },
 
     async getRoomsByid(id) {
@@ -168,12 +168,12 @@ export default {
             this.sumCost = this.userByid.sumCost;
             this.maintenancefee = this.userByid.maintenancefee
             this.Roomnumber = this.userByid.roomnumber
-            if(this.userByid.numberfirst == undefined){
-              this.numberfirst =  0
+            if(this.userByid.firstnumber == undefined){
+              this.firstnumber =  "0"
             }else{
-              this.numberfirst = this.Sumunit(
+              this.firstnumber = this.Sumunit(
                 this.userByid.lastnumber,
-                this.userByid.numberfirst
+                this.userByid.firstnumber
               );
             }
            
@@ -214,7 +214,7 @@ export default {
         buildingType: this.buildingType,
         firstName: this.firstName,
         lastName: this.lastName,
-        numberfirst: this.numberfirst,
+        firstnumber: this.firstnumber,
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
         electricitybill: this.Electricitybill,
@@ -246,6 +246,7 @@ export default {
           } else if (this.reportType == "none") {
             this.postToreport();
           }
+          this.updateUser()
           this.getExpenses();
         })
         .catch((err) => {
@@ -271,7 +272,7 @@ export default {
         buildingType: this.buildingType,
         firstName: this.userByid.firstName,
         lastName: this.userByid.lastName,
-        numberfirst: this.numberfirst,
+        firstnumber: this.firstnumber,
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
         electricitybill: this.Electricitybill,
@@ -299,7 +300,7 @@ export default {
         rankNumber: this.userByid.rankNumber,
         pickedBook: this.dateData.toISOString(),
         buildingType: this.buildingType,
-        numberfirst: this.numberfirst,
+        firstnumber: this.firstnumber,
         lastnumber: this.lastnumber,
         waterbill: this.Waterbill,
         roomnumber: this.Roomnumber,
@@ -320,6 +321,24 @@ export default {
           "Content-Type": "application/json",
         },
       });
+    },
+
+    async updateUser() {
+      let typeroom = ""
+      this.Roomnumber !== undefined ? typeroom =  "inroom" : typeroom =  "none"
+      let body = {
+        roomnumber: this.Roomnumber,
+        buildingName: this.buildingType,
+        queue: typeroom
+      };
+      axios
+        .put(`http://localhost:3897/users/${this.userId}`, body, {
+          headers: {
+            // remove headers
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        }).then()
     },
 
     Previous() {
@@ -431,7 +450,7 @@ export default {
                   <td>{{ item?.rank }} {{ item?.firstName }} {{ item?.lastName }}</td>
                   <td>{{ item?.buildingType }}</td>
                   <td>{{ item?.roomnumber }}</td>
-                  <td>{{ item?.numberfirst }}</td>
+                  <td>{{ item?.firstnumber }}</td>
                   <td>{{ item?.lastnumber }}</td>
                   <td>{{ item?.sumCost }}</td>
                   <td>{{ item?.maintenancefee }}</td>
@@ -520,8 +539,8 @@ export default {
               </div>
               <div class="mb-3">
                 <MaterialInput
-                  :value="numberfirst"
-                  @input="(event) => (numberfirst = event.target.value)"
+                  :value="firstnumber"
+                  @input="(event) => (firstnumber = event.target.value)"
                   class="input-group-static"
                   label="เลขก่อน"
                   type="number"

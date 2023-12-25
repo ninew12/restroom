@@ -258,11 +258,21 @@ export default {
       this.years = y;
     },
 
+
     countinsamaintenance(e) {
-      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
-      let b = c / a; //จำนวนงวดคงเหลือ
-      return b || 0;
+      try {
+        if (parseInt(e.installments) !== 0) {
+          let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+          let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+          let b = c / a; //จำนวนงวดคงเหลือ
+          return b || 0;
+        }else{
+          return parseInt(e.insurance || 0);
+        }
+      
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     async submitForm(index) {
@@ -664,7 +674,7 @@ export default {
                 color="success"
                 data-bs-toggle="modal"
                 data-bs-target="#updateUserSpaciaBackdrop"
-                >แก้ไขรายละเอียกผู้พักอาศัย</MaterialButton
+                >แก้ไขรายละเอียดผู้พักอาศัย</MaterialButton
               >
             </div>
           </div>
@@ -1280,7 +1290,7 @@ export default {
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">
-              แก้ไขรายละเอียกผู้พักอาศัย
+              แก้ไขรายละเอียดผู้พักอาศัย
             </h5>
             <button
               type="button"

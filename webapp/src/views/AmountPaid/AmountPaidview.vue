@@ -133,26 +133,44 @@ export default {
     },
 
     countSum(e) {
-      return e.lastnumber - e.numberfirst || 0;
+      return parseInt(e.lastnumber) - parseInt(e.firstnumber) || 0;
     },
 
     countinstallments(e) {
-      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
-      let b = c / a; //จำนวนงวดคงเหลือ
-      let d = e.installments - b;
-      return a * d || 0;
+      try {
+        // let a = ''
+        if (parseInt(e.installments) !== 0) {
+          let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+          let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+          let b = c / a; //จำนวนงวดคงเหลือ
+          let d = parseInt(e.installments || 0) - b;
+          return a * d || 0;
+        } else {
+          return parseInt(e.insurance || 0);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    countinsamaintenance(e) {
+      try {
+        if (parseInt(e.installments) !== 0) {
+          let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+          let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+          let b = c / a; //จำนวนงวดคงเหลือ
+          return b || 0;
+        }else{
+          return parseInt(e.insurance || 0);
+        }
+      
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     countinsamountPaid(e) {
       return e.insurance - e.amountPaid || 0;
-    },
-
-    countinsamaintenance(e) {
-      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = e.insurance - e.amountPaid; // จำนวนเงินคงเหลือ
-      let b = c / a; //จำนวนงวดคงเหลือ
-      return b || 0;
     },
 
     async ExportData() {

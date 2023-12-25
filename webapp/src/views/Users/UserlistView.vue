@@ -80,11 +80,19 @@ export default {
       else this.typeUserBytype = e;
       this.dataUser = this.olddata;
       if (this.typeUserBytype !== "" ) {
-        let dataFind = this.dataUser.filter((e) => e.typeUser === this.typeUserBytype);
+        if(this.typeUserAll == 'รายชื่อผู้พักอาศัยที่เข้าพักแล้ว'){
+          let dataFind = this.dataUser.filter((e) => e.queue === "inroom"  && e.typeUser === this.typeUserBytype);
         this.datatypeUser = dataFind;
         this.olddatatypeUser = dataFind;
         this.dataUser = dataFind;
         if (this.typeUserByrankr !== "") this.rankrfilter(this.typeUserByrankr);
+        }else{
+          let dataFind = this.dataUser.filter((e) => e.typeUser === this.typeUserBytype);
+        this.datatypeUser = dataFind;
+        this.olddatatypeUser = dataFind;
+        this.dataUser = dataFind;
+        if (this.typeUserByrankr !== "") this.rankrfilter(this.typeUserByrankr);
+        }
       } else {
         this.dataUser = this.olddata;
       }
@@ -107,12 +115,23 @@ export default {
     if (e.target) this.typeUserAll = e.target.value;
       else this.typeUserAll = e;
       this.dataUser = this.olddata;
-     if(this.typeUserAll == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว"){
-        let dataFind = this.dataUser.filter((e) => e.queue === "inroom");
+     if(this.typeUserAll == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype == "ทั้งหมด"){
+        let dataFind = this.dataUser.filter((e) => e.queue === "inroom" );
         this.datatypeUser = dataFind;
         this.olddatatypeUser = dataFind;
         this.dataUser = dataFind;
-      }else{
+      }else if(this.typeUserAll == "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype !== "ทั้งหมด"){
+        let dataFind = this.dataUser.filter((e) => e.queue === "inroom" && e.typeUser == this.typeUserBytype);
+        this.datatypeUser = dataFind;
+        this.olddatatypeUser = dataFind;
+        this.dataUser = dataFind;
+      }else if(this.typeUserAll == "ทั้งหมด" &&  this.typeUserBytype !== "ทั้งหมด"){
+        let dataFind = this.dataUser.filter((e) => e.typeUser == this.typeUserBytype);
+        this.datatypeUser = dataFind;
+        this.olddatatypeUser = dataFind;
+        this.dataUser = dataFind;
+      }
+      else{
         this.dataUser = this.olddata;
       }
     },
@@ -148,9 +167,16 @@ export default {
           .then((res) => {
             let arr = res.data
             let dataFind = []
-            if(this.typeUserBytype !== "ทั้งหมด" && this.typeUserBytype !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" && this.typeUserBytype !== ""){
+            if(this.typeUserAll !== "ทั้งหมด" && this.typeUserAll !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" && this.typeUserAll !== ""){
               dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype);
-            }else{
+            }else if(this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype !== "ทั้งหมด"){
+              dataFind = arr.filter((e) => e.queue === "inroom" && e.typeUser === this.typeUserBytype)
+            }else if(this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype == "ทั้งหมด"){
+              dataFind = arr.filter((e) => e.queue === "inroom" )
+            }else if(this.typeUserAll == "ทั้งหมด" &&  this.typeUserBytype !== "ทั้งหมด"){
+              dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype)
+            }
+            else{
               dataFind = res.data;
               this.typeUserfilter("ทั้งหมด");
             }
@@ -204,7 +230,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: typeA,
-        rank: this.selectedRanks.label,
+        ranks: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
@@ -227,9 +253,12 @@ export default {
             title: "แก้ไขข้อมูลสำเร็จ",
             type: "success",
           });
-          this.getAlluser();
           if(this.roomId !== undefined)
           this.updateRoom();
+
+          setTimeout(() => {
+            this.getAlluser();
+          }, 1000);
         })
         .catch((err) => {
           console.log(err);
@@ -247,7 +276,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: typeA,
-        rank: this.selectedRanks.label,
+        ranks: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
@@ -280,7 +309,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: typeA,
-        rank: this.selectedRanks.label,
+        ranks: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
@@ -339,9 +368,16 @@ export default {
           .then((res) => {
             let arr = res.data
             let dataFind = []
-            if(this.typeUserBytype !== "ทั้งหมด" && this.typeUserBytype !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว"){
+            if(this.typeUserAll !== "ทั้งหมด" && this.typeUserAll !== "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" && this.typeUserAll !== ""){
               dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype);
-            }else{
+            }else if(this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype !== "ทั้งหมด"){
+              dataFind = arr.filter((e) => e.queue === "inroom" && e.typeUser === this.typeUserBytype)
+            }else if(this.typeUserAll === "รายชื่อผู้พักอาศัยที่เข้าพักแล้ว" &&  this.typeUserBytype == "ทั้งหมด"){
+              dataFind = arr.filter((e) => e.queue === "inroom" )
+            }else if(this.typeUserAll == "ทั้งหมด" &&  this.typeUserBytype !== "ทั้งหมด"){
+              dataFind = arr.filter((e) => e.typeUser === this.typeUserBytype)
+            }
+            else{
               dataFind = res.data;
               this.typeUserfilter("ทั้งหมด");
             }

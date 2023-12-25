@@ -409,10 +409,17 @@ export default {
       const result = today.toLocaleDateString("th-TH", {
         year: "numeric",
       });
+      if (this.optionMonth[x - 1] !== undefined) {
+          this.mountCT = this.optionMonth[x - 1].label;
+        } else {
+          this.mountCT = "ธันวาคม";
+          this.yearNumber = this.dateData.getFullYear() - 1;
+        }
       this.monthYear = m + " " + this.thaiNumber(result, "year");
       this.monthYearNow = this.dateNow + " " + this.thaiNumber(result, "year");
       this.monthYearTable = m + " " + result;
       this.monthYearNowtable = m + " " + result;
+      
       await this.getReport(m, this.yearNumber);
     },
 
@@ -508,7 +515,7 @@ export default {
                 el9.monthly == this.mountCT &&
                 el9.years == y
             );
-            // console.log(data); typeContract: el.typeContract || "-",
+            // console.log(data); typeContract: el.typeContract || "-",;
             this.mapData(data, data2, data8, data9);
             this.reportlistok = data5;
             this.reportListssn = data6;
@@ -643,7 +650,7 @@ export default {
         data15,
         data16,
         data17 = [];
-      data = listTD.filter((el) => el.affiliation == "บช.ตชด.");
+      data = listTD.filter((el) => el.affiliation == "บช.ตชด.")
       let sumCostdataInsuranceAll = this.SumCostSummaintenanceAll(data);
       let sumdataInsuranceAll = this.InsuranceSumAll(data);
       let sumdatamaintenancefeeSumAll = this.maintenancefeeCount(data);
@@ -1697,7 +1704,7 @@ export default {
           ...el,
           numberNo: i + 1,
           lastnumber: el.lastnumber || 0,
-          numberfirst: el.numberfirst || 0,
+          firstnumber: el.firstnumber || 0,
           central: el.central || 0,
           typeAffiliation: el.typeAffiliation || "-",
           typeContract: el.typeContract || "-",
@@ -1713,7 +1720,7 @@ export default {
           waterbillSum: this.WaterbillSum(data),
           electricitybillSum: this.ElectricitybillSum(data),
           fullname: (el.rank || "") + " " + el?.firstName + " " + el?.lastName,
-          unitWater: el.lastnumber - el.numberfirst || 0,
+          unitWater: el.lastnumber - el.firstnumber || 0,
           costs: el.costs || 0,
           centralSum: this.CentralSum(data),
           costsSum: this.CostsSum(data),
@@ -1735,7 +1742,7 @@ export default {
           ...el2,
           numberNo: i + 1,
           lastnumber: el2.lastnumber || 0,
-          numberfirst: el2.numberfirst || 0,
+          firstnumber: el2.firstnumber || 0,
           central: el2.central || 0,
           typeAffiliation: el2.typeAffiliation || "-",
           accumulated: this.countSumAccumulated(el2),
@@ -1752,7 +1759,7 @@ export default {
           maintenancefeeSum: this.maintenancefeeCount(data2),
           electricitybillSum: this.ElectricitybillSum(data2),
           fullname: (el2.rank || "") + " " + el2?.firstName + " " + el2?.lastName,
-          unitWater: el2.lastnumber - el2.numberfirst || 0,
+          unitWater: el2.lastnumber - el2.firstnumber || 0,
           maintenance: el2.maintenance || 0,
           centralSum: this.CentralSum(data2),
           costsSum: this.CostsSum(data2),
@@ -1773,7 +1780,7 @@ export default {
           ...el3,
           numberNo: i + 1,
           lastnumber: el3.lastnumber || 0,
-          numberfirst: el3.numberfirst || 0,
+          firstnumber: el3.firstnumber || 0,
           central: el3.central || 0,
           typeAffiliation: el3.typeAffiliation || "-",
           accumulated: this.countSumAccumulated(el3),
@@ -1790,7 +1797,7 @@ export default {
           maintenancefeeSum: this.maintenancefeeCount(data3),
           electricitybillSum: this.ElectricitybillSum(data3),
           fullname: (el3.rank || "") + " " + el3?.firstName + " " + el3?.lastName,
-          unitWater: el3.lastnumber - el3.numberfirst || 0,
+          unitWater: el3.lastnumber - el3.firstnumber || 0,
           maintenance: el3.maintenance || 0,
           centralSum: this.CentralSum(data3),
           costsSum: this.CostsSum(data3),
@@ -1811,7 +1818,7 @@ export default {
           ...el4,
           numberNo: i + 1,
           lastnumber: el4.lastnumber || 0,
-          numberfirst: el4.numberfirst || 0,
+          firstnumber: el4.firstnumber || 0,
           central: el4.central || 0,
           typeAffiliation: el4.typeAffiliation || "-",
           accumulated: this.countSumAccumulated(el4),
@@ -1828,7 +1835,7 @@ export default {
           maintenancefeeSum: this.maintenancefeeCount(data4),
           electricitybillSum: this.ElectricitybillSum(data4),
           fullname: (el4.rank || "") + " " + el4?.firstName + " " + el4?.lastName,
-          unitWater: el4.lastnumber - el4.numberfirst || 0,
+          unitWater: el4.lastnumber - el4.firstnumber || 0,
           maintenance: el4.maintenance || 0,
           centralSum: this.CentralSum(data4),
           costsSum: this.CostsSum(data4),
@@ -1843,7 +1850,6 @@ export default {
           ),
         };
       });
-  
       await this.mapdataSum(arr, arr2, arr3, arr4);
     },
 
@@ -2303,7 +2309,7 @@ export default {
 
     countSumcentral(item) {
       return (
-        parseInt(item.maintenance) + parseInt(item.waterbill) + parseInt(item.central) ||
+        parseInt(item.maintenancefee) + parseInt(item.waterbill) + parseInt(item.central) ||
         0
       );
     },
@@ -2344,8 +2350,7 @@ export default {
 
     maintenancefeeCount(items) {
       return items.reduce((maintenancefeeSum, ele) => {
-        if (ele.maintenancefee !== undefined)
-          return maintenancefeeSum + parseInt(ele.maintenancefee);
+        if (ele.maintenancefee !== undefined) return maintenancefeeSum + parseInt(ele.maintenancefee);
         else return maintenancefeeSum;
       }, 0);
     },
@@ -3358,7 +3363,7 @@ export default {
           maintenancefee: this.thaiNumber(e.maintenancefee),
           roomnumber: this.thaiNumberNew(e.roomnumber) || "-",
           lastnumber: this.thaiNumberNew(e.lastnumber) || "-",
-          numberfirst: this.thaiNumberNew(e.numberfirst) || "-",
+          firstnumber: this.thaiNumberNew(e.firstnumber) || "-",
           waterbillSum: this.thaiNumber(e.waterbillSum),
           electricitybillSum: this.thaiNumber(e.electricitybillSum),
           SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
@@ -3480,7 +3485,7 @@ export default {
               "numberNo",
               "roomnumber",
               "fullname",
-              "numberfirst",
+              "firstnumber",
               "lastnumber",
               "unitWater",
               "maintenancefee",
@@ -3527,7 +3532,7 @@ export default {
           maintenancefee: this.thaiNumber(e.maintenancefee),
           roomnumber: this.thaiNumberNew(e.roomnumber) || "-",
           lastnumber: this.thaiNumberNew(e.lastnumber) || "-",
-          numberfirst: this.thaiNumberNew(e.numberfirst) || "-",
+          firstnumber: this.thaiNumberNew(e.firstnumber) || "-",
           waterbillSum: this.thaiNumber(e.waterbillSum),
           electricitybillSum: this.thaiNumber(e.electricitybillSum),
           SumCostSumwater: this.thaiNumber(e.SumCostSumwater),
@@ -3651,7 +3656,7 @@ export default {
               "numberNo",
               "roomnumber",
               "fullname",
-              "numberfirst",
+              "firstnumber",
               "lastnumber",
               "unitWater",
               "maintenancefee",
@@ -5090,10 +5095,10 @@ export default {
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
                           </td>
-                          <td>{{ item?.numberfirst || 0 }}</td>
+                          <td>{{ item?.firstnumber || 0 }}</td>
                           <td>{{ item?.lastnumber || 0 }}</td>
-                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.numberfirst || 0) || 0 }}</td>
-                          <td>{{ item?.maintenancefee || "-" }}</td>
+                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.firstnumber || 0) || 0 }}</td>
+                          <td>{{ parseInt(item?.maintenancefee) || 0 }}</td>
                           <td>{{ item?.waterbill || "-" }}</td>
                           <td>{{ item?.central || "-" }}</td>
                           <td>{{ item?.sumCostCentral || "-" }}</td>
@@ -6161,10 +6166,10 @@ export default {
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
                           </td>
-                          <td>{{ item?.numberfirst || 0 }}</td>
+                          <td>{{ item?.firstnumber || 0 }}</td>
                           <td>{{ item?.lastnumber || 0 }}</td>
-                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.numberfirst || 0) || 0 }}</td>
-                          <td>{{ item?.maintenancefee || "-" }}</td>
+                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.firstnumber || 0) || 0 }}</td>
+                          <td>{{ parseInt(item?.maintenancefee )|| 0 }}</td>
                           <td>{{ item?.waterbill || "-" }}</td>
                           <td>{{ item?.central || "-" }}</td>
                           <td>{{ item?.sumCostCentral || "-" }}</td>
@@ -6179,7 +6184,7 @@ export default {
 
                         <tr v-if="reportlistTD?.length > 0">
                           <th scope="row" colspan="6">รวมเงิน</th>
-                          <th>{{ reportlistTD[0]?.MaintenanceSum || 0 }}</th>
+                          <th>{{ reportlistTD[0]?.maintenancefeeSum || 0 }}</th>
                           <th>{{ reportlistTD[0]?.waterbillSum || 0 }}</th>
                           <th>{{ reportlistTD[0]?.centralSum || 0 }}</th>
                           <th>{{ reportlistTD[0]?.SumCostSumCentral || 0 }}</th>
@@ -6228,10 +6233,10 @@ export default {
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
                           </td>
-                          <td>{{ item?.numberfirst || 0 }}</td>
+                          <td>{{ item?.firstnumber || 0 }}</td>
                           <td>{{ item?.lastnumber || 0 }}</td>
-                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.numberfirst || 0) || 0 }}</td>
-                          <td>{{ item?.maintenancefee || "-" }}</td>
+                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.firstnumber || 0) || 0 }}</td>
+                          <td>{{ parseInt(item?.maintenancefee )|| 0  }}</td>
                           <td>{{ item?.waterbill || "-" }}</td>
                           <td>{{ item?.central || "-" }}</td>
                           <td>{{ item?.sumCostCentral || "-" }}</td>
@@ -6246,7 +6251,7 @@ export default {
 
                         <tr v-if="deductibleTD?.length > 0">
                           <th scope="row" colspan="6">รวมเงิน</th>
-                          <th>{{ deductibleTD[0]?.MaintenanceSum || 0 }}</th>
+                          <th>{{ deductibleTD[0]?.maintenancefeeSum || 0 }}</th>
                           <th>{{ deductibleTD[0]?.waterbillSum || 0 }}</th>
                           <th>{{ deductibleTD[0]?.centralSum || 0 }}</th>
                           <th>{{ deductibleTD[0]?.SumCostSumCentral || 0 }}</th>

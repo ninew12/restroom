@@ -152,7 +152,7 @@ export default {
 
     countSum(e) {
       try {
-        return e.lastnumber - e.numberfirst || 0;
+        return e.lastnumber - e.firstnumber || 0;
       } catch (error) {
         console.log("error:::");
         console.lgo(error);
@@ -171,11 +171,22 @@ export default {
         } else {
           return parseInt(e.insurance || 0);
         }
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
-        // let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
-        // let b = c / a; //จำนวนงวดคงเหลือ
-        // let d = parseInt(e.installments || 0) - b;
-        // return a * d || 0;
+    countinsamaintenance(e) {
+      try {
+        if (parseInt(e.installments) !== 0) {
+          let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+          let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+          let b = c / a; //จำนวนงวดคงเหลือ
+          return b || 0;
+        }else{
+          return parseInt(e.insurance || 0);
+        }
+      
       } catch (error) {
         console.log(error);
       }
@@ -185,16 +196,7 @@ export default {
       return e.insurance - parseInt(e.amountPaid || 0) || 0;
     },
 
-    countinsamaintenance(e) {
-      try {
-        let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
-        let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
-        let b = c / a; //จำนวนงวดคงเหลือ
-        return b || 0;
-      } catch (error) {
-        console.log(error);
-      }
-    },
+
 
     async getRoomsByid(id) {
       this.id = id;
@@ -208,7 +210,7 @@ export default {
               (this.lastName = this.userByid.firstName);
             (this.Insurancecost = this.userByid.insurancecost),
               (this.installmentsRooom = this.userByid.installmentsRooom),
-              (this.numberfirst = this.userByid.numberfirst),
+              (this.firstnumber = this.userByid.firstnumber),
               (this.lastnumber = this.userByid.lastnumber),
               (this.Waterbill = this.userByid.Waterbill),
               (this.Electricitybill = this.userByid.Electricitybill),
