@@ -1,6 +1,6 @@
 @echo off
 echo Starting Node.js server...
-cd /d C:\Users\newyear\Documents\restroom\appserver
+cd /d C:\Users\PC\Application\V2.0\restroom\appserver
 pm2 start index.js --name "server"
 
 
