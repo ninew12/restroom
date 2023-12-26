@@ -257,7 +257,7 @@ export default {
         roomStatus: "free",
         firstName: " ",
         laststName: " ",
-        ranks: " ",
+        rank: " ",
         Affiliation: " ",
         affiliation: " ",
         roomconditionsCause: "",

@@ -268,7 +268,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: typeA,
-        ranks: this.selectedRanks.label,
+        rank: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
@@ -292,10 +292,9 @@ export default {
             type: "success",
           });
           if (this.roomId !== undefined) this.updateRoom();
-
           setTimeout(() => {
             this.getAlluser();
-          }, 1000);
+          }, 500);
         })
         .catch((err) => {
           console.log(err);
@@ -313,7 +312,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: typeA,
-        ranks: this.selectedRanks.label,
+        rank: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
@@ -346,7 +345,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: typeA,
-        ranks: this.selectedRanks.label,
+        rank: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
