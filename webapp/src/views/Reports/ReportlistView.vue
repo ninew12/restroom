@@ -323,6 +323,7 @@ export default {
       deductibleCTD: [],
       deductibleTD: [],
       submenus: "submenu1",
+      AffiliationLable: "",
     };
   },
   created() {
@@ -342,8 +343,11 @@ export default {
       if (newValue !== null && newValue.label !== undefined) {
         if (newValue.label != "ทั้งหมด") {
           this.Affiliation = newValue.value;
+          let x = this.AffiliationListOld.findIndex((el) => el.label == newValue.label);
+          this.AffiliationLable = this.AffiliationListOld[x].value;
           this.getReportAffiliation(this.mountLable, this.yearNumber, this.Affiliation);
         } else {
+          this.AffiliationLable = "";
           this.getReport(this.mountLable, this.yearNumber);
         }
       }
@@ -410,16 +414,16 @@ export default {
         year: "numeric",
       });
       if (this.optionMonth[x - 1] !== undefined) {
-          this.mountCT = this.optionMonth[x - 1].label;
-        } else {
-          this.mountCT = "ธันวาคม";
-          this.yearNumber = this.dateData.getFullYear() - 1;
-        }
+        this.mountCT = this.optionMonth[x - 1].label;
+      } else {
+        this.mountCT = "ธันวาคม";
+        this.yearNumber = this.dateData.getFullYear() - 1;
+      }
       this.monthYear = m + " " + this.thaiNumber(result, "year");
       this.monthYearNow = this.dateNow + " " + this.thaiNumber(result, "year");
       this.monthYearTable = m + " " + result;
       this.monthYearNowtable = m + " " + result;
-      
+
       await this.getReport(m, this.yearNumber);
     },
 
@@ -489,9 +493,7 @@ export default {
             );
             data = data3.filter(
               (el) =>
-                el.typeUser == "บช.ตชด." &&
-                el.monthly == this.dateNow &&
-                el.years == y
+                el.typeUser == "บช.ตชด." && el.monthly == this.dateNow && el.years == y
             );
             data2 = data4.filter(
               (el2) =>
@@ -511,18 +513,14 @@ export default {
 
             data9 = data3.filter(
               (el9) =>
-                el9.typeUser == "บช.ตชด." &&
-                el9.monthly == this.mountCT &&
-                el9.years == y
+                el9.typeUser == "บช.ตชด." && el9.monthly == this.mountCT && el9.years == y
             );
             // console.log(data); typeContract: el.typeContract || "-",;
             this.mapData(data, data2, data8, data9);
             this.reportlistok = data5;
             this.reportListssn = data6;
             this.reportlistlj = data7;
-            // console.log(data5);
-            // console.log(data6);
-            // console.log(data7);
+         
             this.sumreportlistAll = data5.map((x) => {
               return {
                 ...x,
@@ -531,14 +529,15 @@ export default {
                 sumdataMaintenancefree: this.maintenancefeeCount(data5),
                 sumdataInsurance: this.InsuranceSumAll(data5),
                 sumCostdataInsurance: this.SumCostSumInsuranceAll(data5),
-                sumdatawaterbill: this.WaterbillSum(data5),
+                sumdatawaterbill: this.waterbillSummary(data5),
                 sumdataelectricitybill: this.ElectricitybillSum(data5),
-                sumCostdatawaterbill: this.SumCostSumwater(data5),
+                sumCostdatawaterbill: this.WaterbillSumCount(data5),
                 sumdatacentral: this.CentralSum(data5),
                 sumdatacosts: this.CostsSum(data5),
-                sumCostdataCostCosts: this.SumCostSumCentral(data5),
+                sumCostdataCostCosts: this.centralSumCount(data5),
               };
             });
+            
             this.sumreportlistAll2 = data6.map((x) => {
               return {
                 ...x,
@@ -547,12 +546,12 @@ export default {
                 sumdataInsurance: this.InsuranceSumAll(data6),
                 sumdataMaintenancefree: this.maintenancefeeCount(data6),
                 sumCostdataInsurance: this.SumCostSumInsuranceAll(data6),
-                sumdatawaterbill: this.WaterbillSum(data6),
+                sumdatawaterbill: this.waterbillSummary(data6),
                 sumdataelectricitybill: this.ElectricitybillSum(data6),
-                sumCostdatawaterbill: this.SumCostSumwater(data6),
+                sumCostdatawaterbill: this.WaterbillSumCount(data6),
                 sumdatacentral: this.CentralSum(data6),
                 sumdatacosts: this.CostsSum(data6),
-                sumCostdataCostCosts: this.SumCostSumCentral(data6),
+                sumCostdataCostCosts: this.centralSumCount(data6),
               };
             });
             this.sumreportlistAll3 = data7.map((x) => {
@@ -563,64 +562,35 @@ export default {
                 sumdataMaintenancefree: this.maintenancefeeCount(data7),
                 sumdataInsurance: this.InsuranceSumAll(data7),
                 sumCostdataInsurance: this.SumCostSumInsuranceAll(data7),
-                sumdatawaterbill: this.WaterbillSum(data7),
+                sumdatawaterbill: this.waterbillSummary(data7),
                 sumdataelectricitybill: this.ElectricitybillSum(data7),
-                sumCostdatawaterbill: this.SumCostSumwater(data7),
+                sumCostdatawaterbill: this.WaterbillSumCount(data7),
                 sumdatacentral: this.CentralSum(data7),
                 sumdatacosts: this.CostsSum(data7),
-                sumCostdataCostCosts: this.SumCostSumCentral(data7),
+                sumCostdataCostCosts: this.centralSumCount(data7),
               };
             });
-            (this.maintenanceAllcount =
-              this.sumreportlistAll[0]?.sumdataMaintenance ||
-              0 + this.sumreportlistAll2[0]?.sumdataMaintenance ||
-              0 + this.sumreportlistAll3[0]?.sumdataMaintenance ||
-              0),
-              (this.maintenancefeeAllcount =
-                this.sumreportlistAll[0]?.sumdataMaintenancefree ||
-                0 + this.sumreportlistAll2[0]?.sumdataMaintenancefree ||
-                0 + this.sumreportlistAll3[0]?.sumdataMaintenancefree ||
-                0),
-              (this.insuranceAllcount =
-                this.sumreportlistAll[0]?.sumdataInsurance ||
-                0 + this.sumreportlistAll2[0]?.sumdataInsurance ||
-                0 + this.sumreportlistAll3[0]?.sumdataInsurance ||
-                0),
-              (this.sumAllcount =
-                this.sumreportlistAll[0]?.sumCostdataInsurance ||
-                0 + this.sumreportlistAll2[0]?.sumCostdataInsurance ||
-                0 + this.sumreportlistAll3[0]?.sumCostdataInsurance ||
-                0);
-            (this.waterbillAllcount =
-              this.sumreportlistAll[0]?.sumdatawaterbill ||
-              0 + this.sumreportlistAll2[0]?.sumdatawaterbill ||
-              0 + this.sumreportlistAll3[0]?.sumdatawaterbill ||
-              0),
-              (this.electricitybillAllcount =
-                this.sumreportlistAll[0]?.sumdataelectricitybill ||
-                0 + this.sumreportlistAll2[0]?.sumdataelectricitybill ||
-                0 + this.sumreportlistAll3[0]?.sumdataelectricitybill ||
-                0),
-              (this.Costdatawaterbillcount =
-                this.sumreportlistAll[0]?.sumCostdatawaterbill ||
-                0 + this.sumreportlistAll2[0]?.sumCostdatawaterbill ||
-                0 + this.sumreportlistAll3[0]?.sumCostdatawaterbill ||
-                0);
-            (this.centralAllcount =
-              this.sumreportlistAll[0]?.sumdatacentral ||
-              0 + this.sumreportlistAll2[0]?.sumdatacentral ||
-              0 + this.sumreportlistAll3[0]?.sumdatacentral ||
-              0),
-              (this.costsAllcount =
-                this.sumreportlistAll[0]?.sumdatacosts ||
-                0 + this.sumreportlistAll2[0]?.sumdatacosts ||
-                0 + this.sumreportlistAll3[0]?.sumdatacosts ||
-                0),
-              (this.CostCostsAllcount =
-                this.sumreportlistAll[0]?.sumCostdataCostCosts ||
-                0 + this.sumreportlistAll2[0]?.sumCostdataCostCosts ||
-                0 + this.sumreportlistAll3[0]?.sumCostdataCostCosts ||
-                0);
+
+              this.maintenanceAllcount =
+                this.sumreportlistAll[0]?.sumdataMaintenance + this.sumreportlistAll2[0]?.sumdataMaintenance + this.sumreportlistAll3[0]?.sumdataMaintenance ,
+              this.maintenancefeeAllcount =
+                this.sumreportlistAll[0]?.sumdataMaintenancefree + this.sumreportlistAll2[0]?.sumdataMaintenancefree+ this.sumreportlistAll3[0]?.sumdataMaintenancefree,
+              this.insuranceAllcount =
+                this.sumreportlistAll[0]?.sumdataInsurance+ this.sumreportlistAll2[0]?.sumdataInsurance+ this.sumreportlistAll3[0]?.sumdataInsurance,
+              this.sumAllcount =
+                this.sumreportlistAll[0]?.sumCostdataInsurance + this.sumreportlistAll2[0]?.sumCostdataInsurance+ this.sumreportlistAll3[0]?.sumCostdataInsurance;
+              this.waterbillAllcount =
+                this.sumreportlistAll[0]?.sumdatawaterbill + this.sumreportlistAll2[0]?.sumdatawaterbill + this.sumreportlistAll3[0]?.sumdatawaterbill ,
+              this.electricitybillAllcount =
+                this.sumreportlistAll[0]?.sumdataelectricitybill + this.sumreportlistAll2[0]?.sumdataelectricitybill + this.sumreportlistAll3[0]?.sumdataelectricitybill,
+              this.Costdatawaterbillcount =
+                this.sumreportlistAll[0]?.sumCostdatawaterbill  + this.sumreportlistAll2[0]?.sumCostdatawaterbill  + this.sumreportlistAll3[0]?.sumCostdatawaterbill ;
+              this.centralAllcount =
+                this.sumreportlistAll[0]?.sumdatacentral  + this.sumreportlistAll2[0]?.sumdatacentral + this.sumreportlistAll3[0]?.sumdatacentral ,
+              this.costsAllcount =
+                this.sumreportlistAll[0]?.sumdatacosts + this.sumreportlistAll2[0]?.sumdatacosts  + this.sumreportlistAll3[0]?.sumdatacosts ,
+              this.CostCostsAllcount =
+                this.sumreportlistAll[0]?.sumCostdataCostCosts + this.sumreportlistAll2[0]?.sumCostdataCostCosts  + this.sumreportlistAll3[0]?.sumCostdataCostCosts;
           })
           .catch((err) => {
             console.log(err);
@@ -650,7 +620,7 @@ export default {
         data15,
         data16,
         data17 = [];
-      data = listTD.filter((el) => el.affiliation == "บช.ตชด.")
+      data = listTD.filter((el) => el.affiliation == "บช.ตชด.");
       let sumCostdataInsuranceAll = this.SumCostSummaintenanceAll(data);
       let sumdataInsuranceAll = this.InsuranceSumAll(data);
       let sumdatamaintenancefeeSumAll = this.maintenancefeeCount(data);
@@ -1059,7 +1029,9 @@ export default {
         e["countcentraAll"] = this.countcentralAll(this.AffiliationListTD);
         e["countcostsAll"] = this.countcostsAll(this.AffiliationListTD);
         e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListTD);
-        e["countdataCostCentralAllSum"] = this.countsumdataCostCentralAllSum(this.AffiliationListTD)
+        e["countdataCostCentralAllSum"] = this.countsumdataCostCentralAllSum(
+          this.AffiliationListTD
+        );
         return e;
       });
     },
@@ -1185,8 +1157,6 @@ export default {
         else return dataCostCentralAllSum;
       }, 0);
     },
-
-    
 
     async filterAffiliation2(listdata) {
       let listCTD = [];
@@ -1617,7 +1587,9 @@ export default {
         e["countcentraAll"] = this.countcentralAll(this.AffiliationListCTD);
         e["countcostsAll"] = this.countcostsAll(this.AffiliationListCTD);
         e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListCTD);
-        e["countdataCostCentralAllSum"] = this.countsumdataCostCentralAllSum(this.AffiliationListCTD)
+        e["countdataCostCentralAllSum"] = this.countsumdataCostCentralAllSum(
+          this.AffiliationListCTD
+        );
         return e;
       });
     },
@@ -1629,8 +1601,12 @@ export default {
           .then((res) => {
             let data = [];
             let data2 = [];
+            let data8 = [];
+            let data9 = [];
             let arr = [];
             let arr2 = [];
+            let arr3 = [];
+            let arr4 = [];
             let data3 = res.data;
             let data4 = res.data;
             this.reportList = res.data;
@@ -1640,13 +1616,28 @@ export default {
                 el.typeUser == "บช.ตชด." && el.monthly == this.dateNow && el.years == y
             );
             data2 = data4.filter(
-              (ele2) => ele2.typeUser == "ตร." && ele2.monthly == m && ele2.years == y
+              (ele2) =>
+                ele2.typeUser == "ตร." && ele2.monthly == this.mountCT && ele2.years == y
+            );
+
+            data8 = data4.filter(
+              (el8) =>
+                el8.typeUser == "ตร." &&
+                el8.typeContract == "หักไม่ได้" &&
+                el8.monthly == this.mountCT &&
+                el8.years == y
+            );
+
+            data9 = data3.filter(
+              (el9) =>
+                el9.typeUser == "บช.ตชด." && el9.monthly == this.mountCT && el9.years == y
             );
 
             arr = data.filter((ele) => ele.typeAffiliation === Affiliation);
-            arr2 = data2.filter((el3) => el3.typeAffiliation === Affiliation);
-
-            this.mapData(arr, arr2);
+            arr2 = data2.filter((el2) => el2.typeAffiliation === Affiliation);
+            arr3 = data8.filter((ele3) => ele3.typeAffiliation == Affiliation);
+            arr4 = data9.filter((el4) => el4.typeAffiliation == Affiliation);
+            this.mapData(arr, arr2, arr3, arr4);
             // this.reportlistTD = data2;
             // console.log(this.reportlistCTD);
           })
@@ -1699,7 +1690,6 @@ export default {
       let arr3 = [];
       let arr4 = [];
       arr = await data.map((el, i) => {
-  
         return {
           ...el,
           numberNo: i + 1,
@@ -1712,7 +1702,7 @@ export default {
           buildingName: el.buildingName || "-",
           maintenance: el.maintenance || 0,
           insurance: el.insurance || 0,
-          accumulated:  this.countSumAccumulated(el),
+          accumulated: this.countSumAccumulated(el),
           roomnumber: el.roomnumber,
           amountPaid: el.amountPaid || 0,
           maintenancefee: el.maintenancefee || 0,
@@ -1850,6 +1840,7 @@ export default {
           ),
         };
       });
+  
       await this.mapdataSum(arr, arr2, arr3, arr4);
     },
 
@@ -1922,6 +1913,7 @@ export default {
           sumCostnsurance: this.countSumInsurance(el4),
         };
       });
+     
       this.mapdataSumTable(arr, arr2, arr3, arr4);
     },
 
@@ -2287,35 +2279,54 @@ export default {
     },
 
     countSumWaterbill(item) {
-      return (
-        parseInt(item.maintenancefee) +
-          parseInt(item.waterbill) +
-          parseInt(item.electricitybill) || 0
-      );
+      return (parseInt(item.maintenancefee || 0) + parseInt(item.waterbill || 0) ) + parseInt(item.electricitybill || 0) || 0
     },
 
     countSuminstallments(item) {
-      if( parseInt(item.installments) !== 0){
+      if (parseInt(item.installments) !== 0) {
         return (
-       (parseInt(item.insurance || 0) / parseInt(item.installments || 0)) + parseInt(item.maintenance || 0) || 0
-      );
-      }else{
-        return (
-       (parseInt(item.insurance || 0)) + parseInt(item.maintenance || 0) || 0
-      );
+          parseInt(item.insurance || 0) / parseInt(item.installments || 0) +
+            parseInt(item.maintenance || 0) || 0
+        );
+      } else {
+        return parseInt(item.insurance || 0) + parseInt(item.maintenance || 0) || 0;
       }
-     
     },
 
     countSumcentral(item) {
       return (
-        parseInt(item.maintenancefee) + parseInt(item.waterbill) + parseInt(item.central) ||
-        0
+        parseInt(item.maintenancefee) +
+          parseInt(item.waterbill) +
+          parseInt(item.central) || 0
       );
     },
 
     countSumcosts(item) {
       return parseInt(item.central) + parseInt(item.costs) || 0;
+    },
+
+    WaterbillSum(items) {
+      return items.reduce((waterbillSum, ele) => {
+        if (ele.waterbill !== undefined) return waterbillSum + parseInt(ele.waterbill);
+        else return waterbillSum;
+      }, 0);
+    },
+
+    WaterbillSumCount(items) {
+      return items.reduce((WaterbillSumCount, ele) => {
+        if (ele.maintenancefee !== undefined && ele.waterbill !== undefined && ele.electricitybill !== undefined)
+          return WaterbillSumCount + (parseInt(ele.maintenancefee)+parseInt(ele.electricitybill)+parseInt(ele.waterbill));
+        else return WaterbillSumCount;
+      }, 0);
+    },
+    
+
+    centralSumCount(items) {
+      return items.reduce((centralSumCount, ele) => {
+        if (ele.central !== undefined && ele.costs !== undefined )
+          return centralSumCount + (parseInt(ele.central)+parseInt(ele.costs));
+        else return centralSumCount;
+      }, 0);
     },
 
     countSumInsurance(item) {
@@ -2336,13 +2347,12 @@ export default {
     //     else return insuranceSum;
     //   }, 0);
     // },
-    
 
     CentralSumallCount(items) {
       return items.reduce((CentralSumallCount, ele) => {
         if (ele.insurance !== undefined)
           return (
-            CentralSumallCount + (parseInt(ele.electricitybill) + parseInt(ele.costs))
+            CentralSumallCount + (parseInt(ele.central) + parseInt(ele.costs))
           );
         else return CentralSumallCount;
       }, 0);
@@ -2350,7 +2360,8 @@ export default {
 
     maintenancefeeCount(items) {
       return items.reduce((maintenancefeeSum, ele) => {
-        if (ele.maintenancefee !== undefined) return maintenancefeeSum + parseInt(ele.maintenancefee);
+        if (ele.maintenancefee !== undefined)
+          return maintenancefeeSum + parseInt(ele.maintenancefee || 0);
         else return maintenancefeeSum;
       }, 0);
     },
@@ -2368,47 +2379,49 @@ export default {
         else return amountPaidSum;
       }, 0);
     },
-  
-    countSumAccumulated(item) {
-      if(parseInt(item.installments) != 0){
-            return (
-              (parseInt(item.insurance) / parseInt(item.installments)) || 0
-          );
-          }else{
-            return parseInt(item.insurance) || 0 
-          }
-    },
 
+    countSumAccumulated(item) {
+      if (parseInt(item.installments) != 0) {
+        return parseInt(item.insurance) / parseInt(item.installments) || 0;
+      } else {
+        return parseInt(item.insurance) || 0;
+      }
+    },
 
     AccumulatedSum(items) {
       return items.reduce((accumulatedSum, ele) => {
-        if (ele.insurance !== undefined && (ele.installments !== undefined && ele.installments !== " " && ele.installments !== "" ))
-          if(parseInt(ele.installments) !== 0 ){
+        if (
+          ele.insurance !== undefined &&
+          ele.installments !== undefined &&
+          ele.installments !== " " &&
+          ele.installments !== ""
+        )
+          if (parseInt(ele.installments) !== 0) {
             return (
-            accumulatedSum + (parseInt(ele.insurance)|| 0) / (parseInt(ele.installments)|| 0)
-          );
-          }else{
-            return (
-            accumulatedSum + parseInt(ele.insurance)|| 0 
-          );
+              accumulatedSum +
+              (parseInt(ele.insurance) || 0) / (parseInt(ele.installments) || 0)
+            );
+          } else {
+            return accumulatedSum + parseInt(ele.insurance) || 0;
           }
-          
         else return accumulatedSum;
       }, 0);
     },
 
-
-    WaterbillSum(items) {
-      return items.reduce((waterbillSum, ele) => {
-        if (ele.waterbill !== undefined) return waterbillSum + parseInt(ele.waterbill);
-        else return waterbillSum;
-      }, 0);
-    },
+ 
     ElectricitybillSum(items) {
       return items.reduce((electricitybillSum, ele) => {
         if (ele.electricitybill !== undefined)
           return electricitybillSum + parseInt(ele.electricitybill);
         else return electricitybillSum;
+      }, 0);
+    },
+
+    waterbillSummary(items){
+      return items.reduce((waterbillSummary, ele) => {
+        if (ele.waterbill !== undefined)
+          return waterbillSummary + parseInt(ele.waterbill);
+        else return waterbillSummary;
       }, 0);
     },
 
@@ -2434,6 +2447,7 @@ export default {
         else return SumCostSumwater;
       }, 0);
     },
+
     SumCostSumCentral(items) {
       return items.reduce((SumCostSumCentral, ele) => {
         if (ele.sumCostCentral !== undefined)
@@ -2447,6 +2461,13 @@ export default {
         if (ele.sumCostnsurance !== undefined)
           return SumCostSumInsurance + parseInt(ele.sumCostnsurance);
         else return SumCostSumInsurance;
+      }, 0);
+    },
+
+    waterCostSum(items) {
+      return items.reduce((waterCostSum, ele) => {
+        if (ele.central !== undefined) return waterCostSum + parseInt(ele.maintenancefeeAllcount);
+        else return waterCostSum;
       }, 0);
     },
 
@@ -2535,6 +2556,14 @@ export default {
       window.history.back();
     },
 
+    mapnumberZero(e) {
+      if (e == 0) {
+        return "-";
+      } else {
+        return e;
+      }
+    },
+
     async exportPdfsummary() {
       let sum = this.sumAllcount + this.Costdatawaterbillcount + this.CostCostsAllcount;
       pdfMake.fonts = {
@@ -2586,21 +2615,21 @@ export default {
                       this.sumreportlistAll[0]?.sumdataMaintenance || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll[0]?.sumdataInsurance || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll[0]?.sumCostdataInsurance || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
@@ -2610,21 +2639,21 @@ export default {
                       this.sumreportlistAll2[0]?.sumdataMaintenance || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll2[0]?.sumdataInsurance || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll2[0]?.sumCostdataInsurance || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
@@ -2634,21 +2663,21 @@ export default {
                       this.sumreportlistAll3[0]?.sumdataMaintenance || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll3[0]?.sumdataInsurance || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll3[0]?.sumCostdataInsurance || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
@@ -2656,17 +2685,17 @@ export default {
                   {
                     text: this.thaiNumber(this.maintenanceAllcount || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(this.insuranceAllcount || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(this.sumAllcount || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
@@ -2712,93 +2741,93 @@ export default {
                   { text: "อำนวยการ", style: "header", alignment: "center" },
                   {
                     text: this.thaiNumber(
-                      this.sumreportlistAll[0]?.sumdataMaintenancefee || 0
+                      this.sumreportlistAll[0]?.sumdataMaintenancefree || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll[0]?.sumdatawaterbill || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll[0]?.sumdataelectricitybill || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll[0]?.sumCostdatawaterbill || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
                   { text: "สนับสนุน", style: "header", alignment: "center" },
                   {
                     text: this.thaiNumber(
-                      this.sumreportlistAll2[0]?.sumdataMaintenancefee || 0
+                      this.sumreportlistAll2[0]?.sumdataMaintenancefree || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll2[0]?.sumdatawaterbill || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll2[0]?.sumdataelectricitybill || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll2[0]?.sumCostdatawaterbill || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
                   { text: "ลูกจ้าง", style: "header", alignment: "center" },
                   {
                     text: this.thaiNumber(
-                      this.sumreportlistAll3[0]?.sumdataMaintenancefee || 0
+                      this.sumreportlistAll3[0]?.sumdataMaintenancefree || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
-                  },
-                  {
-                    text: this.thaiNumber(
-                      this.sumreportlistAll3[0]?.sumdatawaterbill || 0
-                    ),
-                    style: "subheader",
-                    alignment: "center",
-                  },
-                  {
-                    text: this.thaiNumber(
-                      this.sumreportlistAll3[0]?.sumdataelectricitybill || 0
-                    ),
-                    style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll3[0]?.sumCostdatawaterbill || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll3[0]?.sumdataelectricitybill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "right",
+                  },
+                  {
+                    text: this.thaiNumber(
+                      this.sumreportlistAll3[0]?.sumCostdatawaterbill || 0
+                    ),
+                    style: "subheader",
+                    alignment: "right",
                   },
                 ],
                 [
@@ -2806,22 +2835,22 @@ export default {
                   {
                     text: this.thaiNumber(this.maintenancefeeAllcount || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(this.waterbillAllcount || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(this.electricitybillAllcount || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(this.Costdatawaterbillcount || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
@@ -2877,19 +2906,19 @@ export default {
                   {
                     text: this.thaiNumber(this.sumreportlistAll[0]?.sumdatacentral || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(this.sumreportlistAll[0]?.sumdatacosts || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll[0]?.sumCostdataCostCosts || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
@@ -2897,19 +2926,19 @@ export default {
                   {
                     text: this.thaiNumber(this.sumreportlistAll2[0]?.sumdatacentral || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(this.sumreportlistAll2[0]?.sumdatacosts || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll2[0]?.sumCostdataCostCosts || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
@@ -2917,19 +2946,19 @@ export default {
                   {
                     text: this.thaiNumber(this.sumreportlistAll3[0]?.sumdatacentral || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(this.sumreportlistAll3[0]?.sumdatacosts || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(
                       this.sumreportlistAll3[0]?.sumCostdataCostCosts || 0
                     ),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
@@ -2937,17 +2966,17 @@ export default {
                   {
                     text: this.thaiNumber(this.centralAllcount || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(this.costsAllcount || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                   {
                     text: this.thaiNumber(this.CostCostsAllcount || 0),
                     style: "subheader",
-                    alignment: "center",
+                    alignment: "right",
                   },
                 ],
                 [
@@ -3039,6 +3068,7 @@ export default {
 
     buildTableBodyinsurance(data, columns) {
       var body = [];
+      var body2 = [];
       let arr = [];
       var thaiNum = data.map((e) => {
         return {
@@ -3048,6 +3078,9 @@ export default {
           sumdataMaintenance: this.thaiNumber(e.sumdataMaintenance),
           sumdataInsurance: this.thaiNumber(e.sumdataInsurance),
           sumCostdataInsurance: this.thaiNumber(e.sumCostdataInsurance),
+          countMaintenanceAll: this.mapnumberZero(e.countMaintenanceAll),
+          countInsuranceAll: this.mapnumberZero(e.countInsuranceAll),
+          countCostSumAll: this.mapnumberZero(e.countCostSumAll),
         };
       });
 
@@ -3058,17 +3091,17 @@ export default {
           {
             text: this.thaiNumber(thaiNum[0].countMaintenanceAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
           {
             text: this.thaiNumber(thaiNum[0].countInsuranceAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
           {
             text: this.thaiNumber(thaiNum[0].countCostSumAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
         ],
       ];
@@ -3080,6 +3113,9 @@ export default {
           "",
           "",
         ],
+      ];
+
+      var body3 = [
         [
           "",
           "",
@@ -3088,16 +3124,28 @@ export default {
           { text: "รวม", style: "header", alignment: "center" },
         ],
       ];
+
       thaiNum.forEach(function (row) {
         var dataRow = [];
         columns.forEach(function (column) {
           dataRow.push(row[column].toString());
         });
-        body.push(dataRow);
+        body2.push(dataRow);
       });
       // this.jsonFiled = body,
-
-      arr = body.concat(footer);
+      let data2 = body2.map((ee, i) => {
+        return [
+          { text: ee[0], alignment: "center" },
+          { text: ee[1], alignment: "center" },
+          { text: ee[2], alignment: "right" },
+          { text: ee[3], alignment: "right" },
+          { text: ee[4], alignment: "right" },
+        ];
+      });
+      // body.splice(1, 0, body2);
+      data2.unshift(body3[0]);
+      data2.unshift(body[0]);
+      arr = data2.concat(footer);
       return arr;
     },
 
@@ -3117,7 +3165,11 @@ export default {
       listData = this.AffiliationListCTD.map((el, i) => {
         return {
           ...el,
+          value: this.thaiNumberNew(el.value),
           numberNo: i + 1,
+          sumdataMaintenance: this.mapnumberZero(el.sumdataMaintenance),
+          sumdataInsurance: this.mapnumberZero(el.sumdataInsurance),
+          sumCostdataInsurance: this.mapnumberZero(el.sumCostdataInsurance),
         };
       });
       if (listData.length > 0) {
@@ -3141,6 +3193,11 @@ export default {
         };
         const docDefinition = {
           content: [
+            {
+              text: `บัญชีหน้างบ`,
+              style: "header",
+              alignment: "center",
+            },
             {
               text: "สรุปยอดหักค่าบํารุงสถานที่",
               style: "header",
@@ -3190,6 +3247,7 @@ export default {
 
     buildTableBodywaterBill(data, columns) {
       var body = [];
+      let body2 = [];
       let arr = [];
       var thaiNum = data.map((e) => {
         return {
@@ -3200,6 +3258,10 @@ export default {
           sumdatawaterbill: this.thaiNumber(e.sumdatawaterbill),
           sumdataelectricitybill: this.thaiNumber(e.sumdataelectricitybill),
           sumCostdatawaterbill: this.thaiNumber(e.sumCostdatawaterbill),
+          countMaintenancefeeAll: this.mapnumberZero(e.countMaintenancefeeAll),
+          countwaterbilAll: this.mapnumberZero(e.countwaterbilAll),
+          countelectricitybillAll: this.mapnumberZero(e.countelectricitybillAll),
+          countCostwaterbillAll: this.mapnumberZero(e.countCostwaterbillAll),
         };
       });
       var footer = [
@@ -3209,22 +3271,22 @@ export default {
           {
             text: this.thaiNumber(thaiNum[0].countMaintenancefeeAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
           {
             text: this.thaiNumber(thaiNum[0].countwaterbilAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
           {
             text: this.thaiNumber(thaiNum[0].countelectricitybillAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
           {
             text: this.thaiNumber(thaiNum[0].countCostwaterbillAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
         ],
       ];
@@ -3251,9 +3313,23 @@ export default {
         columns.forEach(function (column) {
           dataRow.push(row[column].toString());
         });
-        body.push(dataRow);
+        body2.push(dataRow);
       });
-      arr = body.concat(footer);
+
+      let data2 = body2.map((ee, i) => {
+        return [
+          { text: ee[0], alignment: "center" },
+          { text: ee[1], alignment: "center" },
+          { text: ee[2], alignment: "right" },
+          { text: ee[3], alignment: "right" },
+          { text: ee[4], alignment: "right" },
+          { text: ee[5], alignment: "right" },
+        ];
+      });
+      // body.splice(1, 0, body2);
+      data2.unshift(body[1]);
+      data2.unshift(body[0]);
+      arr = data2.concat(footer);
       return arr;
     },
 
@@ -3275,6 +3351,11 @@ export default {
         return {
           ...e,
           numberNo: i + 1,
+          value: this.thaiNumberNew(e.value),
+          sumdataMaintenancefee: this.mapnumberZero(e.sumdataMaintenancefee),
+          sumdatawaterbill: this.mapnumberZero(e.sumdatawaterbill),
+          sumdataelectricitybill: this.mapnumberZero(e.sumdataelectricitybill),
+          sumCostdatawaterbill: this.mapnumberZero(e.sumCostdatawaterbill),
         };
       });
       if (listData.length > 0) {
@@ -3302,6 +3383,11 @@ export default {
         };
         const docDefinition = {
           content: [
+            {
+              text: `บัญชีหน้างบ`,
+              style: "header",
+              alignment: "center",
+            },
             {
               text: `${mss}`,
               style: "header",
@@ -3375,7 +3461,7 @@ export default {
           sumCostCentral: this.thaiNumber(e.sumCostCentral),
           centralSum: this.thaiNumber(e.centralSum),
           SumCostSumCentral: this.thaiNumber(e.SumCostSumCentral),
-          unitWater: this.thaiNumber(e.unitWater)
+          unitWater: this.thaiNumber(e.unitWater),
         };
       });
       var footer = [
@@ -3441,7 +3527,7 @@ export default {
       listData = this.reportlistTD.map((el, i) => {
         return {
           ...el,
-          numberNo: i + 1,
+          numberNo: i + 1
         };
       });
       if (listData.length > 0) {
@@ -3544,7 +3630,7 @@ export default {
           sumCostCentral: this.thaiNumber(e.sumCostCentral),
           centralSum: this.thaiNumber(e.centralSum),
           SumCostSumCentral: this.thaiNumber(e.SumCostSumCentral),
-          unitWater: this.thaiNumber(e.unitWater)
+          unitWater: this.thaiNumber(e.unitWater),
         };
       });
       var footer = [
@@ -3607,15 +3693,20 @@ export default {
     exportPdfCentralTD() {
       let listData = [];
       let mss = "";
-      let mss2 = ""
+      let mss2 = "";
+      let mss3 = "";
+      AffiliationLable !== ""
+        ? (mss3 = "หน่วยงาน" + " " + this.AffiliationLable)
+        : (mss3 = "");
       listData = this.reportlistTD;
       if (listData.length > 0) {
-        if(this.reportType == 'หักไม่ได้'){
-          mss = "บัญชีรายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือนเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง ตร."
-          mss2 = ""
-        }else{
+        if (this.reportType == "หักไม่ได้") {
+          mss =
+            "บัญชีรายชื่อผู้พักอาศัยที่ไม่สามารถหักเงินเดือนเป็นค่าธรรมเนียมและค่าสาธารณูปโภคในอาคารบ้านพักส่วนกลาง ตร.";
+          mss2 = "";
+        } else {
           mss = "การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค";
-          mss2 = "ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร."
+          mss2 = "ผู้ได้สิทธิพักอาศัยในอาคารบ้านพักส่วนกลาง ตร.";
         }
         pdfMake.fonts = {
           Roboto: {
@@ -3648,7 +3739,7 @@ export default {
               alignment: "center",
             },
             {
-              text: ` ประจําเดือน ${this.monthYearNow} หน่วยงาน บช.ตชด.`,
+              text: ` ประจําเดือน ${this.monthYearNow} ${mss3 || " "}`,
               style: "subheader",
               alignment: "center",
             },
@@ -3693,6 +3784,7 @@ export default {
 
     buildTableBodyCosts(data, columns) {
       var body = [];
+      var body2 = [];
       let arr = [];
       var thaiNum = data.map((e) => {
         return {
@@ -3701,7 +3793,11 @@ export default {
           value: e.value,
           sumdatacentral: this.thaiNumber(e.sumdatacentral),
           sumdatacosts: this.thaiNumber(e.sumdatacosts),
-          sumCostdataCostCosts: this.thaiNumber(e.sumCostdataCostCosts),
+          sumdataCostCentralAllSum: this.thaiNumber(e.sumdataCostCentralAllSum),
+          countcentraAll: this.mapnumberZero(e.countcentraAll),
+          countcostsAll: this.mapnumberZero(e.countcostsAll),
+          countdataCostCentralAllSum: this.mapnumberZero(e.countdataCostCentralAllSum),
+          
         };
       });
       var footer = [
@@ -3711,17 +3807,17 @@ export default {
           {
             text: this.thaiNumber(thaiNum[0].countcentraAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
           {
             text: this.thaiNumber(thaiNum[0].countcostsAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
           {
-            text: this.thaiNumber(thaiNum[0].countCostCostsSumAll),
+            text: this.thaiNumber(thaiNum[0].countdataCostCentralAllSum),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
         ],
       ];
@@ -3746,9 +3842,21 @@ export default {
         columns.forEach(function (column) {
           dataRow.push(row[column].toString());
         });
-        body.push(dataRow);
+        body2.push(dataRow);
       });
-      arr = body.concat(footer);
+      let data2 = body2.map((ee, i) => {
+        return [
+          { text: ee[0], alignment: "center" },
+          { text: ee[1], alignment: "center" },
+          { text: ee[2], alignment: "right" },
+          { text: ee[3], alignment: "right" },
+          { text: ee[4], alignment: "right" }
+        ];
+      });
+      // body.splice(1, 0, body2);
+      data2.unshift(body[1]);
+      data2.unshift(body[0]);
+      arr = data2.concat(footer);
       return arr;
     },
 
@@ -3769,6 +3877,10 @@ export default {
         return {
           ...el,
           numberNo: i + 1,
+          value: this.thaiNumberNew(el.value),
+          sumdatacentral: this.mapnumberZero(el.sumdatacentral),
+          sumdatacosts: this.mapnumberZero(el.sumdatacosts),
+          sumdataCostCentralAllSum: this.mapnumberZero(el.sumdataCostCentralAllSum),
         };
       });
       if (listData.length > 0) {
@@ -3793,7 +3905,12 @@ export default {
         const docDefinition = {
           content: [
             {
-              text: `  การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติม`,
+              text: `บัญชีหน้างบ`,
+              style: "header",
+              alignment: "center",
+            },
+            {
+              text: `การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติม`,
               style: "header",
               alignment: "center",
             },
@@ -3812,7 +3929,7 @@ export default {
               "value",
               "sumdatacentral",
               "sumdatacosts",
-              "sumCostdataCostCosts",
+              "sumdataCostCentralAllSum",
             ]),
           ],
           styles: {
@@ -3840,36 +3957,40 @@ export default {
 
     buildTableBodyCostselectricity(data, columns) {
       var body = [];
+      var body2 = [];
       let arr = [];
       var thaiNum = data.map((e) => {
         return {
           ...e,
           numberNo: this.thaiNumber(e.numberNo),
           value: e.value,
-          sumdataelectricitybill: this.thaiNumber(e.sumdataelectricitybill),
+          sumdatacentral: this.thaiNumber(e.sumdatacentral),
           sumdatacosts: this.thaiNumber(e.sumdatacosts),
           sumdataCostCentralAllSum: this.thaiNumber(e.sumdataCostCentralAllSum),
+          countcentraAll: this.mapnumberZero(e.countcentraAll),
+          countcostsAll: this.mapnumberZero(e.countcostsAll),
+          countdataCostCentralAllSum: this.mapnumberZero(e.countdataCostCentralAllSum),
         };
       });
-  
+
       var footer = [
         [
           { text: "รวมเงิน", colSpan: 2, style: "header", alignment: "center" },
           "",
           {
-            text: this.thaiNumber(thaiNum[0].countelectricitybillAll),
+            text: this.thaiNumber(thaiNum[0].countcentraAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
           {
             text: this.thaiNumber(thaiNum[0].countcostsAll),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
           {
             text: this.thaiNumber(thaiNum[0].countdataCostCentralAllSum),
             style: "header",
-            alignment: "center",
+            alignment: "right",
           },
         ],
       ];
@@ -3894,9 +4015,21 @@ export default {
         columns.forEach(function (column) {
           dataRow.push(row[column].toString());
         });
-        body.push(dataRow);
+        body2.push(dataRow);
       });
-      arr = body.concat(footer);
+      let data2 = body2.map((ee, i) => {
+        return [
+          { text: ee[0], alignment: "center" },
+          { text: ee[1], alignment: "center" },
+          { text: ee[2], alignment: "right" },
+          { text: ee[3], alignment: "right" },
+          { text: ee[4], alignment: "right" }
+        ];
+      });
+      // body.splice(1, 0, body2);
+      data2.unshift(body[1]);
+      data2.unshift(body[0]);
+      arr = data2.concat(footer);
       return arr;
     },
 
@@ -3917,6 +4050,10 @@ export default {
         return {
           ...el,
           numberNo: i + 1,
+          value: this.thaiNumberNew(el.value),
+          sumdatacentral: this.mapnumberZero(el.sumdatacentral),
+          sumdatacosts: this.mapnumberZero(el.sumdatacosts),
+          sumdataCostCentralAllSum: this.mapnumberZero(el.sumdataCostCentralAllSum),
         };
       });
       if (listData.length > 0) {
@@ -3941,6 +4078,11 @@ export default {
         const docDefinition = {
           content: [
             {
+              text: `บัญชีหน้างบ`,
+              style: "header",
+              alignment: "center",
+            },
+            {
               text: `  การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์`,
               style: "header",
               alignment: "center",
@@ -3958,7 +4100,7 @@ export default {
             this.tableCostselectricity(listData, [
               "numberNo",
               "value",
-              "sumdataelectricitybill",
+              "sumdatacentral",
               "sumdatacosts",
               "sumdataCostCentralAllSum",
             ]),
@@ -4023,7 +4165,7 @@ export default {
           { text: thaiNum[0].MaintenanceSum, style: "header", alignment: "center" },
           { text: thaiNum[0].accumulatedSum, style: "header", alignment: "center" },
           { text: thaiNum[0].amountPaidSum, style: "header", alignment: "center" },
-          ""
+          "",
         ],
       ];
       var body = [
@@ -4185,8 +4327,7 @@ export default {
           central: this.thaiNumber(e.central),
           costs: this.thaiNumber(e.costs),
           sumCostCosts: this.thaiNumber(e.sumCostCosts),
-          SumCostSumCosts: this.thaiNumber(e.SumCostSumCosts)
-          
+          SumCostSumCosts: this.thaiNumber(e.SumCostSumCosts),
         };
       });
       var footer = [
@@ -4243,6 +4384,10 @@ export default {
 
     exportPdfCostCentral() {
       let listData = [];
+      let mss3 = "";
+      AffiliationLable !== ""
+        ? (mss3 = "หน่วยงาน" + " " + this.AffiliationLable)
+        : (mss3 = "");
       listData = this.reportlistTD.map((el, i) => {
         return {
           ...el,
@@ -4281,7 +4426,7 @@ export default {
               alignment: "center",
             },
             {
-              text: ` ประจําเดือน ${this.monthYearNow} หน่วยงาน บช.ตชด.`,
+              text: ` ประจําเดือน ${this.monthYearNow} ${mss3 || " "}`,
               style: "subheader",
               alignment: "center",
             },
@@ -4346,8 +4491,7 @@ export default {
           subill: this.thaiNumber(e.subill),
           costs: this.thaiNumber(e.costs),
           costsSum: this.thaiNumber(e.costsSum),
-          unitWater: this.thaiNumber(e.unitWater)
-          
+          unitWater: this.thaiNumber(e.unitWater),
         };
       });
       var footer = [
@@ -4357,7 +4501,7 @@ export default {
           "",
           "",
           "",
-          { text: thaiNum[0].electricitybillSum, style: "header", alignment: "center" },
+          { text: thaiNum[0].centralSum, style: "header", alignment: "center" },
           { text: thaiNum[0].costsSum, style: "header", alignment: "center" },
           { text: thaiNum[0].SumCostSumCosts, style: "header", alignment: "center" },
           "",
@@ -4409,7 +4553,6 @@ export default {
           ...el,
           numberNo: i + 1,
           subill: parseInt(el.electricitybill) + parseInt(el.costs) || 0,
-          
         };
       });
       if (listData.length > 0) {
@@ -4454,7 +4597,7 @@ export default {
               "roomnumber",
               "fullname",
               "unitWater",
-              "electricitybill",
+              "central",
               "costs",
               "sumCostCosts",
               "typeContractYes",
@@ -4484,8 +4627,6 @@ export default {
         pdfMake.createPdf(docDefinition).open();
       }
     },
-
-    
   },
 };
 </script>
@@ -4756,6 +4897,9 @@ export default {
                       <table class="table table-bordered" id="table55">
                         <thead>
                           <tr>
+                            <td colspan="6" style="border: 0">บัญชีหน้างบ</td>
+                          </tr>
+                          <tr>
                             <td colspan="6" style="border: 0">
                               การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์
                             </td>
@@ -4784,20 +4928,18 @@ export default {
                         <tr v-for="(item, index) in AffiliationListTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.value || "-" }}</td>
-                          <td>{{ item?.sumdataelectricitybill || "-" }}</td>
-                          <td>{{ item?.sumdatacosts || "-" }}</td>
-                          <td>{{ item?.sumdataCostCentralAllSum || "-" }}</td>
+                          <td>{{ numberWithCommas(item?.sumdatacentral || "-")  }}</td>
+                          <td>{{ numberWithCommas(item?.sumdatacosts || "-" ) }}</td>
+                          <td>{{ numberWithCommas(item?.sumdataCostCentralAllSum || "-" )  }}</td>
                         </tr>
                         <tr v-if="AffiliationListTD?.length > 0">
                           <th scope="row" colspan="2">รวมเงิน</th>
                           <th>
-                            {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
+                            {{ numberWithCommas(AffiliationListTD[0]?.countcentraAll || "-" )  }}
                           </th>
-                          <th>{{ AffiliationListTD[0]?.countcostsAll || 0 }}</th>
+                          <th>{{ numberWithCommas(AffiliationListTD[0]?.countcostsAll || "-" )  }}</th>
                           <th>
-                            {{
-                              AffiliationListTD[0]?.countdataCostCentralAllSum || 0
-                            }}
+                            {{ numberWithCommas(AffiliationListTD[0]?.countdataCostCentralAllSum || "-" )  }}
                           </th>
                         </tr>
                       </table>
@@ -4849,9 +4991,9 @@ export default {
                             <td>
                               {{ item?.affiliation || "-" }}
                             </td>
-                            <td>{{ item?.electricitybill || "-" }}</td>
-                            <td>{{ item?.costs || "-" }}</td>
-                            <td>{{ item?.sumCostCosts || "-" }}</td>
+                            <td>{{ numberWithCommas(item?.central || "-" )   }}</td>
+                            <td>{{ numberWithCommas(item?.costs || "-" )  }}</td>
+                            <td>{{ numberWithCommas(item?.sumCostCosts || "-" )  }}</td>
                             <td>
                               <span v-if="item?.typeContract == 'หักได้'">/</span>
                             </td>
@@ -4862,9 +5004,9 @@ export default {
                           </tr>
                           <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="5">รวมเงิน</th>
-                            <th>{{ reportlistTD[0]?.electricitybillSum }}</th>
-                            <th>{{ reportlistTD[0]?.costsSum }}</th>
-                            <th>{{ reportlistTD[0]?.SumCostSumCosts }}</th>
+                            <th>{{ numberWithCommas(reportlistTD[0]?.centralSum || "-" )  }}</th>
+                            <th>{{ numberWithCommas(reportlistTD[0]?.costsSum || "-" )  }}</th>
+                            <th>{{ numberWithCommas(reportlistTD[0]?.SumCostSumCosts || "-" )  }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -4999,6 +5141,9 @@ export default {
                     <table class="table table-bordered" id="table3">
                       <thead>
                         <tr>
+                          <td colspan="6" style="border: 0">บัญชีหน้างบ</td>
+                        </tr>
+                        <tr>
                           <td colspan="6" style="border: 0">
                             การหักเงินเดือนเป็นค่าไฟฟ้าส่วนกลาง และค่าบำรุงลิฟต์เพิ่มเติม
                           </td>
@@ -5029,22 +5174,22 @@ export default {
                         <tr v-for="(item, index) in AffiliationListTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.value || "-" }}</td>
-                          <td>{{ item?.sumdataMaintenancefee || "-" }}</td>
-                          <td>{{ item?.sumdatawaterbill || "-" }}</td>
-                          <td>{{ item?.sumdataelectricitybill || "-" }}</td>
-                          <td>{{ item?.sumCostdatawaterbill || "-" }}</td>
+                          <td>{{ numberWithCommas(item?.sumdataMaintenancefee || "-" ) }}</td>
+                          <td>{{ numberWithCommas(item?.sumdatawaterbill || "-" ) }}</td>
+                          <td>{{ numberWithCommas(item?.sumdataelectricitybill || "-" ) }}</td>
+                          <td>{{ numberWithCommas(item?.sumCostdatawaterbill || "-" ) }}</td>
                         </tr>
                         <tr v-if="AffiliationListTD?.length > 0">
                           <th scope="row" colspan="2">รวมเงิน</th>
                           <th>
-                            {{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}
+                            {{ numberWithCommas(AffiliationListTD[0]?.countMaintenancefeeAll || "-" )  }}
                           </th>
-                          <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
+                          <th>{{ numberWithCommas(AffiliationListTD[0]?.countwaterbilAll || "-" )  }}</th>
                           <th>
-                            {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
+                            {{ numberWithCommas(AffiliationListTD[0]?.countelectricitybillAll || "-" )  }}
                           </th>
                           <th>
-                            {{ AffiliationListTD[0]?.countCostwaterbillAll || 0 }}
+                            {{ numberWithCommas(AffiliationListTD[0]?.countCostwaterbillAll || "-" )  }}
                           </th>
                         </tr>
                       </tbody>
@@ -5068,7 +5213,9 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="9" style="border: 0">
-                            ประจําเดือน {{ monthYearTable }} หน่วยงาน ฝอ.8.บก.อก.บช.ตชด.
+                            ประจําเดือน {{ monthYearTable }}
+                            <span v-if="AffiliationLable !== ''">หน่วยงาน</span>
+                            {{ AffiliationLable || " " }}
                           </td>
                         </tr>
                         <tr>
@@ -5097,11 +5244,16 @@ export default {
                           </td>
                           <td>{{ item?.firstnumber || 0 }}</td>
                           <td>{{ item?.lastnumber || 0 }}</td>
-                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.firstnumber || 0) || 0 }}</td>
-                          <td>{{ parseInt(item?.maintenancefee) || 0 }}</td>
-                          <td>{{ item?.waterbill || "-" }}</td>
-                          <td>{{ item?.central || "-" }}</td>
-                          <td>{{ item?.sumCostCentral || "-" }}</td>
+                          <td>
+                            {{
+                              parseInt(item?.lastnumber || 0) -
+                                parseInt(item?.firstnumber || 0) || 0
+                            }}
+                          </td>
+                          <td>{{ numberWithCommas(parseInt(item?.maintenancefee || 0) || "-" )   }}</td>
+                          <td>{{ numberWithCommas(item?.waterbill || "-" )  }}</td>
+                          <td>{{ numberWithCommas(item?.central || "-" )  }}</td>
+                          <td>{{ numberWithCommas(item?.sumCostCentral || "-" )  }}</td>
                           <td>
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
                           </td>
@@ -5112,10 +5264,10 @@ export default {
                         </tr>
                         <tr v-if="reportlistTD?.length > 0">
                           <th scope="row" colspan="6">รวมเงิน</th>
-                          <th>{{ reportlistTD[0]?.maintenancefeeSum }}</th>
-                          <th>{{ reportlistTD[0]?.waterbillSum }}</th>
-                          <th>{{ reportlistTD[0]?.centralSum }}</th>
-                          <th>{{ reportlistTD[0]?.SumCostSumCentral }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.maintenancefeeSum || "-" )  }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.waterbillSum || "-" )  }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.centralSum || "-" )  }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.SumCostSumCentral || "-" )  }}</th>
                         </tr>
                       </tbody>
                     </table>
@@ -5249,6 +5401,9 @@ export default {
                     <table class="table table-bordered" id="table5">
                       <thead>
                         <tr>
+                          <td colspan="6" style="border: 0">บัญชีหน้างบ</td>
+                        </tr>
+                        <tr>
                           <td colspan="6" style="border: 0">
                             ถอนเงินค่าไฟฟ้าส่วนกลาง และค่าบํารุงลิฟต์เพิ่มเติม
                           </td>
@@ -5275,17 +5430,18 @@ export default {
                         </tr>
                       </thead>
                       <tr v-for="(item, index) in AffiliationListTD" :key="index">
+                        
                         <th scope="row">{{ index + 1 }}</th>
                         <td>{{ item?.value || "-" }}</td>
-                        <td>{{ item?.sumdatacentral || "-" }}</td> 
-                        <td>{{ item?.sumdatacosts || "-" }}</td>
-                        <td>{{ item?.sumCostdataCostCosts || "-" }}</td>
+                        <td>{{ numberWithCommas(item?.sumdatacentral  || "-" )  }}</td>
+                        <td>{{ numberWithCommas(item?.sumdatacosts  || "-" )  }}</td>
+                        <td>{{ numberWithCommas(item?.sumdataCostCentralAllSum  || "-" )  }}</td>
                       </tr>
                       <tr v-if="AffiliationListTD?.length > 0">
                         <th scope="row" colspan="2">รวมเงิน</th>
-                        <th>{{ AffiliationListTD[0]?.countcentraAll || 0 }}</th>
-                        <th>{{ AffiliationListTD[0]?.countcostsAll || 0 }}</th>
-                        <th>{{ AffiliationListTD[0]?.countCostCostsSumAll || 0 }}</th>
+                        <th>{{ numberWithCommas(AffiliationListTD[0]?.countcentraAll  || "-" )  }}</th>
+                        <th>{{ numberWithCommas(AffiliationListTD[0]?.countcostsAll  || "-" )  }}</th>
+                        <th>{{ numberWithCommas(AffiliationListTD[0]?.countdataCostCentralAllSum  || "-" )  }}</th>
                       </tr>
                     </table>
                   </div>
@@ -5307,7 +5463,9 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="9" style="border: 0">
-                            ประจําเดือน {{ monthYearNowtable }} หน่วยงาน บช.ตชด.
+                            ประจําเดือน {{ monthYearNowtable }}
+                            <span v-if="AffiliationLable !== ''">หน่วยงาน</span>
+                            {{ AffiliationLable || " " }}
                           </td>
                         </tr>
                         <tr>
@@ -5336,9 +5494,9 @@ export default {
                           <td>
                             {{ item?.affiliation || "-" }}
                           </td>
-                          <td>{{ item?.central || "-" }}</td>
-                          <td>{{ item?.costs || "-" }}</td>
-                          <td>{{ item?.sumCostCosts || "-" }}</td>
+                          <td>{{ numberWithCommas(item?.central  || "-" )  }}</td>
+                          <td>{{ numberWithCommas(item?.costs  || "-" )  }}</td>
+                          <td>{{ numberWithCommas(item?.sumCostCosts  || "-" )  }}</td>
                           <td>
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
                           </td>
@@ -5349,9 +5507,9 @@ export default {
                         </tr>
                         <tr v-if="reportlistTD?.length > 0">
                           <th scope="row" colspan="5">รวมเงิน</th>
-                          <th>{{ reportlistTD[0]?.centralSum }}</th>
-                          <th>{{ reportlistTD[0]?.costsSum }}</th>
-                          <th>{{ reportlistTD[0]?.SumCostSumCosts }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.centralSum  || "-" )  }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.costsSum  || "-" )  }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.SumCostSumCosts  || "-" )  }}</th>
                         </tr>
                       </tbody>
                     </table>
@@ -5438,43 +5596,43 @@ export default {
                           <tr>
                             <td>{{ "อำนวยการ" || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll[0]?.sumdataMaintenance || "-" }}
+                              {{ numberWithCommas(sumreportlistAll[0]?.sumdataMaintenance || "-" )  }}
                             </td>
-                            <td>{{ sumreportlistAll[0]?.sumdataInsurance || "-" }}</td>
+                            <td>{{ numberWithCommas(sumreportlistAll[0]?.sumdataInsurance || "-" )  }}</td>
                             <td>
-                              {{ sumreportlistAll[0]?.sumCostdataInsurance || "-" }}
+                              {{ numberWithCommas(sumreportlistAll[0]?.sumCostdataInsurance || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "สนับสนุน" || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll2[0]?.sumdataMaintenance || "-" }}
+                              {{ numberWithCommas(sumreportlistAll2[0]?.sumdataMaintenance  || "-" )  }}
                             </td>
-                            <td>{{ sumreportlistAll2[0]?.sumdataInsurance || "-" }}</td>
+                            <td>{{ numberWithCommas(sumreportlistAll2[0]?.sumdataInsurance  || "-" )  }}</td>
                             <td>
-                              {{ sumreportlistAll2[0]?.sumCostdataInsurance || "-" }}
+                              {{ numberWithCommas(sumreportlistAll2[0]?.sumCostdataInsurance  || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "ลูกจ้าง" || "-" }}</td>
                             <td>
-                              {{ sumreportlistAll3[0]?.sumdataMaintenance || "-" }}
+                              {{ numberWithCommas(sumreportlistAll3[0]?.sumdataMaintenance  || "-" )  }}
                             </td>
-                            <td>{{ sumreportlistAll3[0]?.sumdataInsurance || "-" }}</td>
+                            <td>{{ numberWithCommas(sumreportlistAll3[0]?.sumdataInsurance  || "-" )  }}</td>
                             <td>
-                              {{ sumreportlistAll3[0]?.sumCostdataInsurance || "-" }}
+                              {{ numberWithCommas(sumreportlistAll3[0]?.sumCostdataInsurance  || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "รวม" || "-" }}</td>
                             <td>
-                              {{ maintenanceAllcount }}
+                              {{ numberWithCommas(maintenanceAllcount  || "-" )  }}
                             </td>
                             <td>
-                              {{ insuranceAllcount }}
+                              {{ numberWithCommas(insuranceAllcount  || "-" )  }}
                             </td>
                             <td>
-                              {{ sumAllcount }}
+                              {{ numberWithCommas(sumAllcount  || "-" )  }}
                             </td>
                           </tr>
                         </tbody>
@@ -5490,7 +5648,9 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">เดือน {{ monthYearTable }}</td>
+                            <td colspan="6" style="border: 0">
+                              เดือน {{ monthYearTable }}
+                            </td>
                           </tr>
                           <tr>
                             <th>หน่วยงาน</th>
@@ -5503,55 +5663,55 @@ export default {
                         <tr>
                           <td>{{ "อำนวยการ" || "-" }}</td>
                           <td>
-                            {{ sumreportlistAll[0]?.sumdataMaintenancefee || "-" }}
+                            {{ numberWithCommas(sumreportlistAll[0]?.sumdataMaintenancefree || "-" )  }}
                           </td>
-                          <td>{{ sumreportlistAll[0]?.sumdatawaterbill || "-" }}</td>
+                          <td>{{ numberWithCommas(sumreportlistAll[0]?.sumdatawaterbill || "-" )  }}</td>
                           <td>
-                            {{ sumreportlistAll[0]?.sumdataelectricitybill || "-" }}
+                            {{ numberWithCommas(sumreportlistAll[0]?.sumdataelectricitybill || "-" )  }}
                           </td>
                           <td>
-                            {{ sumreportlistAll[0]?.sumCostdatawaterbill || "-" }}
+                            {{ numberWithCommas(sumreportlistAll[0]?.sumCostdatawaterbill || "-" )  }}
                           </td>
                         </tr>
                         <tr>
                           <td>{{ "สนับสนุน" || "-" }}</td>
                           <td>
-                            {{ sumreportlistAll2[0]?.sumdataMaintenancefee || "-" }}
+                            {{ numberWithCommas(sumreportlistAll2[0]?.sumdataMaintenancefree || "-" )  }}
                           </td>
-                          <td>{{ sumreportlistAll2[0]?.sumdatawaterbill || "-" }}</td>
+                          <td>{{ numberWithCommas(sumreportlistAll2[0]?.sumdatawaterbill || "-" )  }}</td>
                           <td>
-                            {{ sumreportlistAll2[0]?.sumdataelectricitybill || "-" }}
+                            {{ numberWithCommas(sumreportlistAll2[0]?.sumdataelectricitybill || "-" )  }}
                           </td>
                           <td>
-                            {{ sumreportlistAll2[0]?.sumCostdatawaterbill || "-" }}
+                            {{ numberWithCommas(sumreportlistAll2[0]?.sumCostdatawaterbill || "-" )  }}
                           </td>
                         </tr>
                         <tr>
                           <td>{{ "ลูกจ้าง" || "-" }}</td>
                           <td>
-                            {{ sumreportlistAll3[0]?.sumdataMaintenancefee || "-" }}
+                            {{ numberWithCommas(sumreportlistAll3[0]?.sumdataMaintenancefree  || "-" )  }}
                           </td>
-                          <td>{{ sumreportlistAll3[0]?.sumdatawaterbill || "-" }}</td>
+                          <td>{{ numberWithCommas(sumreportlistAll3[0]?.sumdatawaterbill  || "-" )  }}</td>
                           <td>
-                            {{ sumreportlistAll3[0]?.sumdataelectricitybill || "-" }}
+                            {{ numberWithCommas(sumreportlistAll3[0]?.sumdataelectricitybill  || "-" )  }}
                           </td>
                           <td>
-                            {{ sumreportlistAll3[0]?.sumCostdatawaterbill || "-" }}
+                            {{ numberWithCommas(sumreportlistAll3[0]?.sumCostdatawaterbill  || "-" )  }}
                           </td>
                         </tr>
                         <tr>
                           <td>{{ "รวม" || "-" }}</td>
                           <td>
-                            {{ maintenancefeeAllcount }}
+                            {{ numberWithCommas(maintenancefeeAllcount  || "-" ) }}
                           </td>
                           <td>
-                            {{ waterbillAllcount }}
+                            {{ numberWithCommas(waterbillAllcount  || "-" ) }}
                           </td>
                           <td>
-                            {{ Costdatawaterbillcount }}
+                            {{ numberWithCommas(electricitybillAllcount  || "-" ) }}
                           </td>
                           <td>
-                            {{ Costdatawaterbillcount }}
+                            {{ numberWithCommas(Costdatawaterbillcount  || "-" ) }}
                           </td>
                         </tr>
                       </table>
@@ -5566,7 +5726,9 @@ export default {
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="6" style="border: 0">เดือน {{ monthYearTable }}</td>
+                            <td colspan="6" style="border: 0">
+                              เดือน {{ monthYearTable }}
+                            </td>
                           </tr>
                           <tr>
                             <th>หน่วยงาน</th>
@@ -5578,38 +5740,38 @@ export default {
                         <tbody>
                           <tr>
                             <td>{{ "อำนวยการ" || "-" }}</td>
-                            <td>{{ sumreportlistAll[0]?.sumdatacentral || "-" }}</td>
-                            <td>{{ sumreportlistAll[0]?.sumdatacosts || "-" }}</td>
+                            <td>{{ numberWithCommas(sumreportlistAll[0]?.sumdatacentral || "-" )  }}</td>
+                            <td>{{ numberWithCommas(sumreportlistAll[0]?.sumdatacosts || "-" )  }}</td>
                             <td>
-                              {{ sumreportlistAll[0]?.sumCostdataCostCosts || "-" }}
+                              {{ numberWithCommas(sumreportlistAll[0]?.sumCostdataCostCosts || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "สนับสนุน" || "-" }}</td>
-                            <td>{{ sumreportlistAll2[0]?.sumdatacentral || "-" }}</td>
-                            <td>{{ sumreportlistAll2[0]?.sumdatacosts || "-" }}</td>
+                            <td>{{ numberWithCommas(sumreportlistAll2[0]?.sumdatacentral || "-" )  }}</td>
+                            <td>{{ numberWithCommas(sumreportlistAll2[0]?.sumdatacosts || "-" )  }}</td>
                             <td>
-                              {{ sumreportlistAll2[0]?.sumCostdataCostCosts || "-" }}
+                              {{ numberWithCommas(sumreportlistAll2[0]?.sumCostdataCostCosts || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "ลูกจ้าง" || "-" }}</td>
-                            <td>{{ sumreportlistAll3[0]?.sumdatacentral || "-" }}</td>
-                            <td>{{ sumreportlistAll3[0]?.sumdatacosts || "-" }}</td>
+                            <td>{{ numberWithCommas(sumreportlistAll3[0]?.sumdatacentral  || "-" )  }}</td>
+                            <td>{{ numberWithCommas(sumreportlistAll3[0]?.sumdatacosts  || "-" )  }}</td>
                             <td>
-                              {{ sumreportlistAll3[0]?.sumCostdataCostCosts || "-" }}
+                              {{ numberWithCommas(sumreportlistAll3[0]?.sumCostdataCostCosts  || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "รวม" || "-" }}</td>
                             <td>
-                              {{ centralAllcount }}
+                              {{ numberWithCommas(centralAllcount || "-" )  }}
                             </td>
                             <td>
-                              {{ costsAllcount }}
+                              {{ numberWithCommas(costsAllcount || "-" )  }}
                             </td>
                             <td>
-                              {{ CostCostsAllcount }}
+                              {{ numberWithCommas(CostCostsAllcount || "-" )  }}
                             </td>
                           </tr>
                         </tbody>
@@ -5633,14 +5795,14 @@ export default {
                         </thead>
                         <tbody>
                           <tr>
-                            <td>{{ sumAllcount || "-" }}</td>
-                            <td>{{ Costdatawaterbillcount || "-" }}</td>
-                            <td>{{ CostCostsAllcount || "-" }}</td>
+                            <td>{{ numberWithCommas(sumAllcount  || "-" )  }}</td>
+                            <td>{{ numberWithCommas(Costdatawaterbillcount  || "-" )  }}</td>
+                            <td>{{ numberWithCommas(CostCostsAllcount  || "-" )  }}</td>
                             <td>
                               {{
-                                sumAllcount +
+                                numberWithCommas(sumAllcount +
                                   Costdatawaterbillcount +
-                                  CostCostsAllcount || "-"
+                                  CostCostsAllcount  || "-" ) 
                               }}
                             </td>
                           </tr>
@@ -5779,6 +5941,9 @@ export default {
                         <table class="table table-bordered" id="table13">
                           <thead>
                             <tr>
+                              <td colspan="6" style="border: 0">บัญชีหน้างบ</td>
+                            </tr>
+                            <tr>
                               <td colspan="6" style="border: 0">
                                 สรุปยอดหักค่าบํารุงสถานที่
                               </td>
@@ -5808,20 +5973,20 @@ export default {
                             <tr v-for="(item, index) in AffiliationListCTD" :key="index">
                               <th scope="row">{{ index + 1 }}</th>
                               <td>{{ item?.value || "-" }}</td>
-                              <td>{{ item?.sumdataMaintenance || "-" }}</td>
-                              <td>{{ item?.sumdataInsurance || "-" }}</td>
-                              <td>{{ item?.sumCostdataInsurance || "-" }}</td>
+                              <td>{{ numberWithCommas(item?.sumdataMaintenance  || "-" )  }}</td>
+                              <td>{{ numberWithCommas(item?.sumdataInsurance  || "-" )  }}</td>
+                              <td>{{ numberWithCommas(item?.sumCostdataInsurance  || "-" )  }}</td>
                             </tr>
                             <tr v-if="AffiliationListCTD.length > 0">
                               <th scope="row" colspan="2">รวมยอดส่งหัก</th>
                               <th>
-                                {{ AffiliationListCTD[0]?.countMaintenanceAll || 0 }}
+                                {{ numberWithCommas(AffiliationListCTD[0]?.countMaintenanceAll  || "-" )  }}
                               </th>
                               <th>
-                                {{ AffiliationListCTD[0]?.countInsuranceAll || 0 }}
+                                {{ numberWithCommas(AffiliationListCTD[0]?.countInsuranceAll  || "-" )  }}
                               </th>
                               <th>
-                                {{ AffiliationListCTD[0]?.countCostSumAll || 0 }}
+                                {{ numberWithCommas(AffiliationListCTD[0]?.countCostSumAll  || "-" )  }}
                               </th>
                             </tr>
                           </tbody>
@@ -5846,8 +6011,9 @@ export default {
                               </tr>
                               <tr>
                                 <td colspan="7" style="border: 0">
-                                  ประจําเดือน {{ monthYearNowtable }} หน่วยงาน
-                                  ฝอ.8.บก.อก.บช.ตชด.
+                                  ประจําเดือน {{ monthYearNowtable }}
+                                  <span v-if="AffiliationLable !== ''">หน่วยงาน</span>
+                                  {{ AffiliationLable || " " }}
                                 </td>
                               </tr>
                               <tr>
@@ -5873,19 +6039,19 @@ export default {
                                 </td>
                                 <td>{{ item?.buildingName || "-" }}</td>
                                 <td>{{ item?.roomnumber || "-" }}</td>
-                                <td>{{ item?.maintenance || "-" }}</td>
+                                <td>{{ numberWithCommas(item?.maintenance  || "-" )  }}</td>
                                 <td>
-                                  {{ item?.accumulated || "-" }}
+                                  {{ numberWithCommas(item?.accumulated  || "-" )  }}
                                 </td>
-                                <td>{{ item?.amountPaid || "-" }}</td>
-                                <td>{{ item?.Installmenttime || "-" }}</td>
+                                <td>{{ numberWithCommas(item?.amountPaid  || "-" )  }}</td>
+                                <td>{{ numberWithCommas(item?.Installmenttime  || "-" )  }}</td>
                               </tr>
 
                               <tr v-if="reportlistCTD.length > 0">
                                 <th scope="row" colspan="4">รวมเงิน</th>
-                                <th>{{ reportlistCTD[0]?.MaintenanceSum || 0 }}</th>
-                                <th>{{ reportlistCTD[0]?.accumulatedSum || 0 }}</th>
-                                <th>{{ reportlistCTD[0]?.amountPaidSum || 0 }}</th>
+                                <th>{{ numberWithCommas(reportlistCTD[0]?.MaintenanceSum  || "-" )  }}</th>
+                                <th>{{ numberWithCommas(reportlistCTD[0]?.accumulatedSum  || "-" )  }}</th>
+                                <th>{{ numberWithCommas(reportlistCTD[0]?.amountPaidSum  || "-" )  }}</th>
                               </tr>
                             </tbody>
                           </table>
@@ -5952,7 +6118,12 @@ export default {
                           v-model="selectedMonth"
                         ></v-select>
                       </div>
-                      <div v-if="reportType == 'ประกันทรัพย์สิน' || reportType == 'หักไม่ได้'" class="mb-3 w-20">
+                      <div
+                        v-if="
+                          reportType == 'ประกันทรัพย์สิน' || reportType == 'หักไม่ได้'
+                        "
+                        class="mb-3 w-20"
+                      >
                         <label>สังกัด</label>
                         <v-select
                           :options="masterData?.AffiliationList"
@@ -6070,6 +6241,9 @@ export default {
                     <table class="table table-bordered" id="table15">
                       <thead>
                         <tr>
+                          <td colspan="6" style="border: 0">บัญชีหน้างบ</td>
+                        </tr>
+                        <tr>
                           <td colspan="6" style="border: 0">
                             การหักเงินเดือนเป็นค่าธรรมเนียม และค่าสาธารณูปโภค
                           </td>
@@ -6100,22 +6274,22 @@ export default {
                         <tr v-for="(item, index) in AffiliationListTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.value || "-" }}</td>
-                          <td>{{ item?.sumdataMaintenancefee || "-" }}</td>
-                          <td>{{ item?.sumdatawaterbill || "-" }}</td>
-                          <td>{{ item?.sumdataelectricitybill || "-" }}</td>
-                          <td>{{ item?.sumCostdatawaterbill || "-" }}</td>
+                          <td>{{ numberWithCommas(item?.sumdataMaintenancefee  || "-" ) }}</td>
+                          <td>{{ numberWithCommas(item?.sumdatawaterbill  || "-" ) }}</td>
+                          <td>{{ numberWithCommas(item?.sumdataelectricitybill  || "-" ) }}</td>
+                          <td>{{ numberWithCommas(item?.sumCostdatawaterbill  || "-" ) }}</td>
                         </tr>
                         <tr v-if="AffiliationListTD?.length > 0">
                           <th scope="row" colspan="2">รวมเงิน</th>
                           <th>
-                            {{ AffiliationListTD[0]?.countMaintenancefeeAll || 0 }}
+                            {{ numberWithCommas(AffiliationListTD[0]?.countMaintenancefeeAll  || "-" ) }}
                           </th>
-                          <th>{{ AffiliationListTD[0]?.countwaterbilAll || 0 }}</th>
+                          <th>{{ numberWithCommas(AffiliationListTD[0]?.countwaterbilAll  || "-" ) }}</th>
                           <th>
-                            {{ AffiliationListTD[0]?.countelectricitybillAll || 0 }}
+                            {{ numberWithCommas(AffiliationListTD[0]?.countelectricitybillAll  || "-" ) }}
                           </th>
                           <th>
-                            {{ AffiliationListTD[0]?.countCostwaterbillAll || 0 }}
+                            {{ numberWithCommas(AffiliationListTD[0]?.countCostwaterbillAll)  || "-"   }}
                           </th>
                         </tr>
                       </tbody>
@@ -6139,7 +6313,9 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="9" style="border: 0">
-                            ประจําเดือน {{ monthYearTable }} หน่วยงาน บช.ตชด.
+                            ประจําเดือน {{ monthYearTable }}
+                            <span v-if="AffiliationLable !== ''">หน่วยงาน</span>
+                            {{ AffiliationLable || " " }}
                           </td>
                         </tr>
                         <tr>
@@ -6166,13 +6342,18 @@ export default {
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
                           </td>
-                          <td>{{ item?.firstnumber || 0 }}</td>
-                          <td>{{ item?.lastnumber || 0 }}</td>
-                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.firstnumber || 0) || 0 }}</td>
-                          <td>{{ parseInt(item?.maintenancefee )|| 0 }}</td>
-                          <td>{{ item?.waterbill || "-" }}</td>
-                          <td>{{ item?.central || "-" }}</td>
-                          <td>{{ item?.sumCostCentral || "-" }}</td>
+                          <td>{{ item?.firstnumber || "-" }}</td>
+                          <td>{{ item?.lastnumber || "-" }}</td>
+                          <td>
+                            {{
+                              parseInt(item?.lastnumber || 0) -
+                                parseInt(item?.firstnumber || 0) || "-"
+                            }}
+                          </td>
+                          <td>{{ parseInt(item?.maintenancefee  || "-" )  }}</td>
+                          <td>{{ numberWithCommas(item?.waterbill  || "-" )  }}</td>
+                          <td>{{ numberWithCommas(item?.central  || "-" )  }}</td>
+                          <td>{{ numberWithCommas(item?.sumCostCentral  || "-" )  }}</td>
                           <td>
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
                           </td>
@@ -6184,10 +6365,10 @@ export default {
 
                         <tr v-if="reportlistTD?.length > 0">
                           <th scope="row" colspan="6">รวมเงิน</th>
-                          <th>{{ reportlistTD[0]?.maintenancefeeSum || 0 }}</th>
-                          <th>{{ reportlistTD[0]?.waterbillSum || 0 }}</th>
-                          <th>{{ reportlistTD[0]?.centralSum || 0 }}</th>
-                          <th>{{ reportlistTD[0]?.SumCostSumCentral || 0 }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.maintenancefeeSum   || "-" )  }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.waterbillSum  || "-" )  }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.centralSum  || "-" )  }}</th>
+                          <th>{{ numberWithCommas(reportlistTD[0]?.SumCostSumCentral  || "-" )  }}</th>
                         </tr>
                       </tbody>
                     </table>
@@ -6233,13 +6414,18 @@ export default {
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
                           </td>
-                          <td>{{ item?.firstnumber || 0 }}</td>
-                          <td>{{ item?.lastnumber || 0 }}</td>
-                          <td>{{ parseInt(item?.lastnumber || 0) - parseInt(item?.firstnumber || 0) || 0 }}</td>
-                          <td>{{ parseInt(item?.maintenancefee )|| 0  }}</td>
-                          <td>{{ item?.waterbill || "-" }}</td>
-                          <td>{{ item?.central || "-" }}</td>
-                          <td>{{ item?.sumCostCentral || "-" }}</td>
+                          <td>{{ item?.firstnumber || "-" }}</td>
+                          <td>{{ item?.lastnumber || "-" }}</td>
+                          <td>
+                            {{
+                              parseInt(item?.lastnumber || 0) -
+                                parseInt(item?.firstnumber || 0) || "-"
+                            }}
+                          </td>
+                          <td>{{ numberWithCommas(parseInt(item?.maintenancefee || 0)  || "-" )  }}</td>
+                          <td>{{ numberWithCommas(item?.waterbill  || "-" )  }}</td>
+                          <td>{{ numberWithCommas(item?.central  || "-" )  }}</td>
+                          <td>{{ numberWithCommas(item?.sumCostCentral  || "-" )  }}</td>
                           <td>
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
                           </td>
@@ -6251,10 +6437,10 @@ export default {
 
                         <tr v-if="deductibleTD?.length > 0">
                           <th scope="row" colspan="6">รวมเงิน</th>
-                          <th>{{ deductibleTD[0]?.maintenancefeeSum || 0 }}</th>
-                          <th>{{ deductibleTD[0]?.waterbillSum || 0 }}</th>
-                          <th>{{ deductibleTD[0]?.centralSum || 0 }}</th>
-                          <th>{{ deductibleTD[0]?.SumCostSumCentral || 0 }}</th>
+                          <th>{{numberWithCommas(deductibleTD[0]?.maintenancefeeSum || "-" )  }}</th>
+                          <th>{{ numberWithCommas(deductibleTD[0]?.waterbillSum  || "-" )  }}</th>
+                          <th>{{ numberWithCommas(deductibleTD[0]?.centralSum  || "-" )  }}</th>
+                          <th>{{ numberWithCommas(deductibleTD[0]?.SumCostSumCentral  || "-" )  }}</th>
                         </tr>
                       </tbody>
                     </table>
