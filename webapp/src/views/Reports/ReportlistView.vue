@@ -2173,7 +2173,7 @@ export default {
 
     ExportExcel(type, tableId, fn, dl) {
       var elt = document.getElementById(tableId);
-      var wb = XLSX.utils.table_to_book(elt, { sheet: "Sheet" });
+      var wb = XLSX.utils.table_to_book(elt, { sheet: "DRE" });
       return dl
         ? XLSX.write(wb, { bookType: type, bookSST: true, type: "base64" })
         : XLSX.writeFile(wb, fn || "ExportFile." + (type || "xlsx"));
@@ -2203,7 +2203,7 @@ export default {
           this.countSuminstallments(e),
         ]);
       });
-      aa = [" ", " ", "รวม อก.", count];
+      aa = [" ", " ", "รวม อก.",this.numberWithCommas(count) ];
       aa2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
       aa3 = [" ร.ต.อ.หญิง", " ", "", " "];
       aa4 = [" ", " ", " (  ศุภลักษณ์  ฤทธิสอน )", " "];
@@ -2233,7 +2233,7 @@ export default {
           this.countSuminstallments(el),
         ]);
       });
-      bb = [" ", " ", "รวม อก.", count2];
+      bb = [" ", " ", "รวม อก.", this.numberWithCommas(count2)];
       bb2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
       bb3 = [" ร.ต.อ.หญิง", " ", "", " "];
       bb4 = [" ", " ", " (  ศุภลักษณ์  ฤทธิสอน )", " "];
@@ -2264,7 +2264,7 @@ export default {
           this.countSuminstallments(el2),
         ]);
       });
-      cc = [" ", " ", "รวม อก.", count3];
+      cc = [" ", " ", "รวม อก.", this.numberWithCommas(count3)];
       cc2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
       cc3 = [" ร.ต.อ.หญิง", " ", "", " "];
       cc4 = [" ", " ", " (  ศุภลักษณ์  ฤทธิสอน )", " "];
@@ -2284,12 +2284,11 @@ export default {
 
     countSuminstallments(item) {
       if (parseInt(item.installments) !== 0) {
-        return (
-          parseInt(item.insurance || 0) / parseInt(item.installments || 0) +
-            parseInt(item.maintenance || 0) || 0
-        );
+        let summery =   parseInt(item.insurance || 0) / parseInt(item.installments || 0) + parseInt(item.maintenance || 0) || 0
+        return this.numberWithCommas(summery)
       } else {
-        return parseInt(item.insurance || 0) + parseInt(item.maintenance || 0) || 0;
+        let summery = parseInt(item.insurance || 0) + parseInt(item.maintenance || 0) || 0;
+        return this.numberWithCommas(summery)
       }
     },
 
@@ -4928,17 +4927,18 @@ export default {
                         <tr v-for="(item, index) in AffiliationListTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.value || "-" }}</td>
-                          <td>{{ numberWithCommas(item?.sumdatacentral || "-")  }}</td>
-                          <td>{{ numberWithCommas(item?.sumdatacosts || "-" ) }}</td>
-                          <td>{{ numberWithCommas(item?.sumdataCostCentralAllSum || "-" )  }}</td>
+                          <!-- :data-v="item?.sumdatacentral"  -->
+                          <td  data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdatacentral || "-")  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdatacosts || "-" ) }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdataCostCentralAllSum || "-" )  }}</td>
                         </tr>
                         <tr v-if="AffiliationListTD?.length > 0">
                           <th scope="row" colspan="2">รวมเงิน</th>
-                          <th>
+                          <th data-t="n" data-z="#,##">
                             {{ numberWithCommas(AffiliationListTD[0]?.countcentraAll || "-" )  }}
                           </th>
-                          <th>{{ numberWithCommas(AffiliationListTD[0]?.countcostsAll || "-" )  }}</th>
-                          <th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(AffiliationListTD[0]?.countcostsAll || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">
                             {{ numberWithCommas(AffiliationListTD[0]?.countdataCostCentralAllSum || "-" )  }}
                           </th>
                         </tr>
@@ -4991,9 +4991,9 @@ export default {
                             <td>
                               {{ item?.affiliation || "-" }}
                             </td>
-                            <td>{{ numberWithCommas(item?.central || "-" )   }}</td>
-                            <td>{{ numberWithCommas(item?.costs || "-" )  }}</td>
-                            <td>{{ numberWithCommas(item?.sumCostCosts || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.central || "-" )   }}</td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.costs || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumCostCosts || "-" )  }}</td>
                             <td>
                               <span v-if="item?.typeContract == 'หักได้'">/</span>
                             </td>
@@ -5004,9 +5004,9 @@ export default {
                           </tr>
                           <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="5">รวมเงิน</th>
-                            <th>{{ numberWithCommas(reportlistTD[0]?.centralSum || "-" )  }}</th>
-                            <th>{{ numberWithCommas(reportlistTD[0]?.costsSum || "-" )  }}</th>
-                            <th>{{ numberWithCommas(reportlistTD[0]?.SumCostSumCosts || "-" )  }}</th>
+                            <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.centralSum || "-" )  }}</th>
+                            <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.costsSum || "-" )  }}</th>
+                            <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.SumCostSumCosts || "-" )  }}</th>
                           </tr>
                         </tbody>
                       </table>
@@ -5174,21 +5174,21 @@ export default {
                         <tr v-for="(item, index) in AffiliationListTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.value || "-" }}</td>
-                          <td>{{ numberWithCommas(item?.sumdataMaintenancefee || "-" ) }}</td>
-                          <td>{{ numberWithCommas(item?.sumdatawaterbill || "-" ) }}</td>
-                          <td>{{ numberWithCommas(item?.sumdataelectricitybill || "-" ) }}</td>
-                          <td>{{ numberWithCommas(item?.sumCostdatawaterbill || "-" ) }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdataMaintenancefee || "-" ) }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdatawaterbill || "-" ) }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdataelectricitybill || "-" ) }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumCostdatawaterbill || "-" ) }}</td>
                         </tr>
                         <tr v-if="AffiliationListTD?.length > 0">
                           <th scope="row" colspan="2">รวมเงิน</th>
-                          <th>
+                          <th data-t="n" data-z="#,##">
                             {{ numberWithCommas(AffiliationListTD[0]?.countMaintenancefeeAll || "-" )  }}
                           </th>
-                          <th>{{ numberWithCommas(AffiliationListTD[0]?.countwaterbilAll || "-" )  }}</th>
-                          <th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(AffiliationListTD[0]?.countwaterbilAll || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">
                             {{ numberWithCommas(AffiliationListTD[0]?.countelectricitybillAll || "-" )  }}
                           </th>
-                          <th>
+                          <th data-t="n" data-z="#,##">
                             {{ numberWithCommas(AffiliationListTD[0]?.countCostwaterbillAll || "-" )  }}
                           </th>
                         </tr>
@@ -5250,11 +5250,11 @@ export default {
                                 parseInt(item?.firstnumber || 0) || 0
                             }}
                           </td>
-                          <td>{{ numberWithCommas(parseInt(item?.maintenancefee || 0) || "-" )   }}</td>
-                          <td>{{ numberWithCommas(item?.waterbill || "-" )  }}</td>
-                          <td>{{ numberWithCommas(item?.central || "-" )  }}</td>
-                          <td>{{ numberWithCommas(item?.sumCostCentral || "-" )  }}</td>
-                          <td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(parseInt(item?.maintenancefee || 0) || "-" )   }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.waterbill || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.central || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumCostCentral || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
                           </td>
                           <td>
@@ -5264,10 +5264,10 @@ export default {
                         </tr>
                         <tr v-if="reportlistTD?.length > 0">
                           <th scope="row" colspan="6">รวมเงิน</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.maintenancefeeSum || "-" )  }}</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.waterbillSum || "-" )  }}</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.centralSum || "-" )  }}</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.SumCostSumCentral || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.maintenancefeeSum || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.waterbillSum || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.centralSum || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.SumCostSumCentral || "-" )  }}</th>
                         </tr>
                       </tbody>
                     </table>
@@ -5433,15 +5433,15 @@ export default {
                         
                         <th scope="row">{{ index + 1 }}</th>
                         <td>{{ item?.value || "-" }}</td>
-                        <td>{{ numberWithCommas(item?.sumdatacentral  || "-" )  }}</td>
-                        <td>{{ numberWithCommas(item?.sumdatacosts  || "-" )  }}</td>
-                        <td>{{ numberWithCommas(item?.sumdataCostCentralAllSum  || "-" )  }}</td>
+                        <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdatacentral  || "-" )  }}</td>
+                        <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdatacosts  || "-" )  }}</td>
+                        <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdataCostCentralAllSum  || "-" )  }}</td>
                       </tr>
                       <tr v-if="AffiliationListTD?.length > 0">
                         <th scope="row" colspan="2">รวมเงิน</th>
-                        <th>{{ numberWithCommas(AffiliationListTD[0]?.countcentraAll  || "-" )  }}</th>
-                        <th>{{ numberWithCommas(AffiliationListTD[0]?.countcostsAll  || "-" )  }}</th>
-                        <th>{{ numberWithCommas(AffiliationListTD[0]?.countdataCostCentralAllSum  || "-" )  }}</th>
+                        <th data-t="n" data-z="#,##">{{ numberWithCommas(AffiliationListTD[0]?.countcentraAll  || "-" )  }}</th>
+                        <th data-t="n" data-z="#,##">{{ numberWithCommas(AffiliationListTD[0]?.countcostsAll  || "-" )  }}</th>
+                        <th data-t="n" data-z="#,##">{{ numberWithCommas(AffiliationListTD[0]?.countdataCostCentralAllSum  || "-" )  }}</th>
                       </tr>
                     </table>
                   </div>
@@ -5494,9 +5494,9 @@ export default {
                           <td>
                             {{ item?.affiliation || "-" }}
                           </td>
-                          <td>{{ numberWithCommas(item?.central  || "-" )  }}</td>
-                          <td>{{ numberWithCommas(item?.costs  || "-" )  }}</td>
-                          <td>{{ numberWithCommas(item?.sumCostCosts  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.central  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.costs  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumCostCosts  || "-" )  }}</td>
                           <td>
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
                           </td>
@@ -5507,9 +5507,9 @@ export default {
                         </tr>
                         <tr v-if="reportlistTD?.length > 0">
                           <th scope="row" colspan="5">รวมเงิน</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.centralSum  || "-" )  }}</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.costsSum  || "-" )  }}</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.SumCostSumCosts  || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.centralSum  || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.costsSum  || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.SumCostSumCosts  || "-" )  }}</th>
                         </tr>
                       </tbody>
                     </table>
@@ -5595,43 +5595,43 @@ export default {
                         <tbody>
                           <tr>
                             <td>{{ "อำนวยการ" || "-" }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(sumreportlistAll[0]?.sumdataMaintenance || "-" )  }}
                             </td>
-                            <td>{{ numberWithCommas(sumreportlistAll[0]?.sumdataInsurance || "-" )  }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll[0]?.sumdataInsurance || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(sumreportlistAll[0]?.sumCostdataInsurance || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "สนับสนุน" || "-" }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(sumreportlistAll2[0]?.sumdataMaintenance  || "-" )  }}
                             </td>
-                            <td>{{ numberWithCommas(sumreportlistAll2[0]?.sumdataInsurance  || "-" )  }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll2[0]?.sumdataInsurance  || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(sumreportlistAll2[0]?.sumCostdataInsurance  || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "ลูกจ้าง" || "-" }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(sumreportlistAll3[0]?.sumdataMaintenance  || "-" )  }}
                             </td>
-                            <td>{{ numberWithCommas(sumreportlistAll3[0]?.sumdataInsurance  || "-" )  }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll3[0]?.sumdataInsurance  || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(sumreportlistAll3[0]?.sumCostdataInsurance  || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "รวม" || "-" }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(maintenanceAllcount  || "-" )  }}
                             </td>
-                            <td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(insuranceAllcount  || "-" )  }}
                             </td>
-                            <td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(sumAllcount  || "-" )  }}
                             </td>
                           </tr>
@@ -5662,55 +5662,55 @@ export default {
                         </thead>
                         <tr>
                           <td>{{ "อำนวยการ" || "-" }}</td>
-                          <td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(sumreportlistAll[0]?.sumdataMaintenancefree || "-" )  }}
                           </td>
-                          <td>{{ numberWithCommas(sumreportlistAll[0]?.sumdatawaterbill || "-" )  }}</td>
-                          <td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll[0]?.sumdatawaterbill || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(sumreportlistAll[0]?.sumdataelectricitybill || "-" )  }}
                           </td>
-                          <td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(sumreportlistAll[0]?.sumCostdatawaterbill || "-" )  }}
                           </td>
                         </tr>
                         <tr>
                           <td>{{ "สนับสนุน" || "-" }}</td>
-                          <td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(sumreportlistAll2[0]?.sumdataMaintenancefree || "-" )  }}
                           </td>
-                          <td>{{ numberWithCommas(sumreportlistAll2[0]?.sumdatawaterbill || "-" )  }}</td>
-                          <td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll2[0]?.sumdatawaterbill || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(sumreportlistAll2[0]?.sumdataelectricitybill || "-" )  }}
                           </td>
-                          <td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(sumreportlistAll2[0]?.sumCostdatawaterbill || "-" )  }}
                           </td>
                         </tr>
                         <tr>
                           <td>{{ "ลูกจ้าง" || "-" }}</td>
-                          <td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(sumreportlistAll3[0]?.sumdataMaintenancefree  || "-" )  }}
                           </td>
-                          <td>{{ numberWithCommas(sumreportlistAll3[0]?.sumdatawaterbill  || "-" )  }}</td>
-                          <td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll3[0]?.sumdatawaterbill  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(sumreportlistAll3[0]?.sumdataelectricitybill  || "-" )  }}
                           </td>
-                          <td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(sumreportlistAll3[0]?.sumCostdatawaterbill  || "-" )  }}
                           </td>
                         </tr>
                         <tr>
                           <td>{{ "รวม" || "-" }}</td>
-                          <td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(maintenancefeeAllcount  || "-" ) }}
                           </td>
-                          <td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(waterbillAllcount  || "-" ) }}
                           </td>
-                          <td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(electricitybillAllcount  || "-" ) }}
                           </td>
-                          <td>
+                          <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(Costdatawaterbillcount  || "-" ) }}
                           </td>
                         </tr>
@@ -5740,37 +5740,37 @@ export default {
                         <tbody>
                           <tr>
                             <td>{{ "อำนวยการ" || "-" }}</td>
-                            <td>{{ numberWithCommas(sumreportlistAll[0]?.sumdatacentral || "-" )  }}</td>
-                            <td>{{ numberWithCommas(sumreportlistAll[0]?.sumdatacosts || "-" )  }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll[0]?.sumdatacentral || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll[0]?.sumdatacosts || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(sumreportlistAll[0]?.sumCostdataCostCosts || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "สนับสนุน" || "-" }}</td>
-                            <td>{{ numberWithCommas(sumreportlistAll2[0]?.sumdatacentral || "-" )  }}</td>
-                            <td>{{ numberWithCommas(sumreportlistAll2[0]?.sumdatacosts || "-" )  }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll2[0]?.sumdatacentral || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll2[0]?.sumdatacosts || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(sumreportlistAll2[0]?.sumCostdataCostCosts || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "ลูกจ้าง" || "-" }}</td>
-                            <td>{{ numberWithCommas(sumreportlistAll3[0]?.sumdatacentral  || "-" )  }}</td>
-                            <td>{{ numberWithCommas(sumreportlistAll3[0]?.sumdatacosts  || "-" )  }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll3[0]?.sumdatacentral  || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(sumreportlistAll3[0]?.sumdatacosts  || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(sumreportlistAll3[0]?.sumCostdataCostCosts  || "-" )  }}
                             </td>
                           </tr>
                           <tr>
                             <td>{{ "รวม" || "-" }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(centralAllcount || "-" )  }}
                             </td>
-                            <td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(costsAllcount || "-" )  }}
                             </td>
-                            <td>
+                            <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(CostCostsAllcount || "-" )  }}
                             </td>
                           </tr>
@@ -5795,10 +5795,10 @@ export default {
                         </thead>
                         <tbody>
                           <tr>
-                            <td>{{ numberWithCommas(sumAllcount  || "-" )  }}</td>
-                            <td>{{ numberWithCommas(Costdatawaterbillcount  || "-" )  }}</td>
-                            <td>{{ numberWithCommas(CostCostsAllcount  || "-" )  }}</td>
-                            <td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(sumAllcount  || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(Costdatawaterbillcount  || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">{{ numberWithCommas(CostCostsAllcount  || "-" )  }}</td>
+                            <td data-t="n" data-z="#,##">
                               {{
                                 numberWithCommas(sumAllcount +
                                   Costdatawaterbillcount +
@@ -5973,19 +5973,19 @@ export default {
                             <tr v-for="(item, index) in AffiliationListCTD" :key="index">
                               <th scope="row">{{ index + 1 }}</th>
                               <td>{{ item?.value || "-" }}</td>
-                              <td>{{ numberWithCommas(item?.sumdataMaintenance  || "-" )  }}</td>
-                              <td>{{ numberWithCommas(item?.sumdataInsurance  || "-" )  }}</td>
-                              <td>{{ numberWithCommas(item?.sumCostdataInsurance  || "-" )  }}</td>
+                              <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdataMaintenance  || "-" )  }}</td>
+                              <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdataInsurance  || "-" )  }}</td>
+                              <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumCostdataInsurance  || "-" )  }}</td>
                             </tr>
                             <tr v-if="AffiliationListCTD.length > 0">
                               <th scope="row" colspan="2">รวมยอดส่งหัก</th>
-                              <th>
+                              <th data-t="n" data-z="#,##">
                                 {{ numberWithCommas(AffiliationListCTD[0]?.countMaintenanceAll  || "-" )  }}
                               </th>
-                              <th>
+                              <th data-t="n" data-z="#,##">
                                 {{ numberWithCommas(AffiliationListCTD[0]?.countInsuranceAll  || "-" )  }}
                               </th>
-                              <th>
+                              <th data-t="n" data-z="#,##">
                                 {{ numberWithCommas(AffiliationListCTD[0]?.countCostSumAll  || "-" )  }}
                               </th>
                             </tr>
@@ -6039,19 +6039,19 @@ export default {
                                 </td>
                                 <td>{{ item?.buildingName || "-" }}</td>
                                 <td>{{ item?.roomnumber || "-" }}</td>
-                                <td>{{ numberWithCommas(item?.maintenance  || "-" )  }}</td>
-                                <td>
+                                <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.maintenance  || "-" )  }}</td>
+                                <td data-t="n" data-z="#,##">
                                   {{ numberWithCommas(item?.accumulated  || "-" )  }}
                                 </td>
-                                <td>{{ numberWithCommas(item?.amountPaid  || "-" )  }}</td>
-                                <td>{{ numberWithCommas(item?.Installmenttime  || "-" )  }}</td>
+                                <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.amountPaid  || "-" )  }}</td>
+                                <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.Installmenttime  || "-" )  }}</td>
                               </tr>
 
                               <tr v-if="reportlistCTD.length > 0">
                                 <th scope="row" colspan="4">รวมเงิน</th>
-                                <th>{{ numberWithCommas(reportlistCTD[0]?.MaintenanceSum  || "-" )  }}</th>
-                                <th>{{ numberWithCommas(reportlistCTD[0]?.accumulatedSum  || "-" )  }}</th>
-                                <th>{{ numberWithCommas(reportlistCTD[0]?.amountPaidSum  || "-" )  }}</th>
+                                <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistCTD[0]?.MaintenanceSum  || "-" )  }}</th>
+                                <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistCTD[0]?.accumulatedSum  || "-" )  }}</th>
+                                <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistCTD[0]?.amountPaidSum  || "-" )  }}</th>
                               </tr>
                             </tbody>
                           </table>
@@ -6274,21 +6274,21 @@ export default {
                         <tr v-for="(item, index) in AffiliationListTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.value || "-" }}</td>
-                          <td>{{ numberWithCommas(item?.sumdataMaintenancefee  || "-" ) }}</td>
-                          <td>{{ numberWithCommas(item?.sumdatawaterbill  || "-" ) }}</td>
-                          <td>{{ numberWithCommas(item?.sumdataelectricitybill  || "-" ) }}</td>
-                          <td>{{ numberWithCommas(item?.sumCostdatawaterbill  || "-" ) }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdataMaintenancefee  || "-" ) }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdatawaterbill  || "-" ) }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumdataelectricitybill  || "-" ) }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumCostdatawaterbill  || "-" ) }}</td>
                         </tr>
                         <tr v-if="AffiliationListTD?.length > 0">
                           <th scope="row" colspan="2">รวมเงิน</th>
-                          <th>
+                          <th data-t="n" data-z="#,##">
                             {{ numberWithCommas(AffiliationListTD[0]?.countMaintenancefeeAll  || "-" ) }}
                           </th>
-                          <th>{{ numberWithCommas(AffiliationListTD[0]?.countwaterbilAll  || "-" ) }}</th>
-                          <th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(AffiliationListTD[0]?.countwaterbilAll  || "-" ) }}</th>
+                          <th data-t="n" data-z="#,##">
                             {{ numberWithCommas(AffiliationListTD[0]?.countelectricitybillAll  || "-" ) }}
                           </th>
-                          <th>
+                          <th data-t="n" data-z="#,##">
                             {{ numberWithCommas(AffiliationListTD[0]?.countCostwaterbillAll)  || "-"   }}
                           </th>
                         </tr>
@@ -6350,10 +6350,10 @@ export default {
                                 parseInt(item?.firstnumber || 0) || "-"
                             }}
                           </td>
-                          <td>{{ parseInt(item?.maintenancefee  || "-" )  }}</td>
-                          <td>{{ numberWithCommas(item?.waterbill  || "-" )  }}</td>
-                          <td>{{ numberWithCommas(item?.central  || "-" )  }}</td>
-                          <td>{{ numberWithCommas(item?.sumCostCentral  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ parseInt(item?.maintenancefee  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.waterbill  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.central  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumCostCentral  || "-" )  }}</td>
                           <td>
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
                           </td>
@@ -6365,10 +6365,10 @@ export default {
 
                         <tr v-if="reportlistTD?.length > 0">
                           <th scope="row" colspan="6">รวมเงิน</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.maintenancefeeSum   || "-" )  }}</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.waterbillSum  || "-" )  }}</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.centralSum  || "-" )  }}</th>
-                          <th>{{ numberWithCommas(reportlistTD[0]?.SumCostSumCentral  || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.maintenancefeeSum   || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.waterbillSum  || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.centralSum  || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(reportlistTD[0]?.SumCostSumCentral  || "-" )  }}</th>
                         </tr>
                       </tbody>
                     </table>
@@ -6422,10 +6422,10 @@ export default {
                                 parseInt(item?.firstnumber || 0) || "-"
                             }}
                           </td>
-                          <td>{{ numberWithCommas(parseInt(item?.maintenancefee || 0)  || "-" )  }}</td>
-                          <td>{{ numberWithCommas(item?.waterbill  || "-" )  }}</td>
-                          <td>{{ numberWithCommas(item?.central  || "-" )  }}</td>
-                          <td>{{ numberWithCommas(item?.sumCostCentral  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(parseInt(item?.maintenancefee || 0)  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.waterbill  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.central  || "-" )  }}</td>
+                          <td data-t="n" data-z="#,##">{{ numberWithCommas(item?.sumCostCentral  || "-" )  }}</td>
                           <td>
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
                           </td>
@@ -6437,10 +6437,10 @@ export default {
 
                         <tr v-if="deductibleTD?.length > 0">
                           <th scope="row" colspan="6">รวมเงิน</th>
-                          <th>{{numberWithCommas(deductibleTD[0]?.maintenancefeeSum || "-" )  }}</th>
-                          <th>{{ numberWithCommas(deductibleTD[0]?.waterbillSum  || "-" )  }}</th>
-                          <th>{{ numberWithCommas(deductibleTD[0]?.centralSum  || "-" )  }}</th>
-                          <th>{{ numberWithCommas(deductibleTD[0]?.SumCostSumCentral  || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{numberWithCommas(deductibleTD[0]?.maintenancefeeSum || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(deductibleTD[0]?.waterbillSum  || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(deductibleTD[0]?.centralSum  || "-" )  }}</th>
+                          <th data-t="n" data-z="#,##">{{ numberWithCommas(deductibleTD[0]?.SumCostSumCentral  || "-" )  }}</th>
                         </tr>
                       </tbody>
                     </table>
