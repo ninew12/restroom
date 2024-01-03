@@ -341,7 +341,7 @@ export default {
     },
     selectedAffiliation: function (newValue) {
       if (newValue !== null) {
-        if( newValue.label !== undefined){
+        if( newValue?.label !== undefined){
           if (newValue.label != "ทั้งหมด") {
           this.Affiliation = newValue.value;
           let x = this.AffiliationListOld.findIndex((el) => el.label == newValue.label);
@@ -357,7 +357,7 @@ export default {
     },
     selectedranksAll: function (newValue) {
       if (newValue !== null) {
-        if(newValue.label !== undefined){
+        if(newValue?.label !== undefined){
           if (newValue.label != "ทั้งหมด") {
           this.ranksAll = newValue.value;
           this.getReportRanksAll(this.mountLable, this.yearNumber, this.ranksAll);
@@ -370,7 +370,7 @@ export default {
     },
     selectedMonth: function (newValue) {
       if (newValue !== null) {
-         if(newValue.label !== undefined){
+         if(newValue?.label !== undefined){
           let x = this.optionMonth.findIndex((el) => el.label == newValue.label);
         let y = this.dateData.getFullYear();
         this.mountNumber = x + 1;
