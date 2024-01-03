@@ -408,9 +408,17 @@ export default {
 
     async getM() {
       const d = new Date();
-      let m = this.dataMonth[d.getMonth() - 1];
+      let m 
+      if(this.dataMonth[d.getMonth()] == 'มกราคม'){
+        m = "มกราคม"
+      }else{
+        m = this.dataMonth[d.getMonth() - 1];
+      }
+      
       let y = this.dateData.getFullYear();
       let x = this.optionMonth.findIndex((el) => el.label == m);
+      console.log(m);
+
       this.mountNumber = x + 1;
       this.yearNumber = y;
       this.mountLable = m;

@@ -98,7 +98,12 @@ export default {
     },
     getMonths() {
       const d = new Date();
-      let m = this.optionMonth[d.getMonth() - 1];
+      let m
+      if(this.optionMonth[d.getMonth()] == 'มกราคม'){
+        m = "มกราคม"
+      }else{
+        m = this.optionMonth[d.getMonth() - 1];
+      }
       let y = d.getFullYear();
       let x = this.optionMonth.findIndex((el) => el.label == m);
       this.mountNumber = x + 1;
