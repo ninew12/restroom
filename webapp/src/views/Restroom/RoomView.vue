@@ -657,7 +657,7 @@ export default {
                                 {{ "ผ่อนผัน" }}
                               </p>
                               <p class="card-title" style="font-size: 14px">
-                                {{ item2?.ranks }} {{ item2?.firstName }}
+                                {{ item2?.rank }} {{ item2?.firstName }}
                                 {{ item2?.laststName }}
                               </p>
                               <p>
