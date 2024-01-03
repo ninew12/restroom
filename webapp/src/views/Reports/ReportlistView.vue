@@ -407,7 +407,8 @@ export default {
     },
 
     async getM() {
-      let m = this.dataMonth[this.dateData.getMonth() - 1];
+      const d = new Date();
+      let m = this.optionMonth[d.getMonth() - 1];
       let y = this.dateData.getFullYear();
       let x = this.optionMonth.findIndex((el) => el.label == m);
       this.mountNumber = x + 1;
