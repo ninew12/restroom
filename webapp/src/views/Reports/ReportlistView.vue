@@ -340,8 +340,9 @@ export default {
       console.log(newValue);
     },
     selectedAffiliation: function (newValue) {
-      if (newValue !== null && newValue.label !== undefined) {
-        if (newValue.label != "ทั้งหมด") {
+      if (newValue !== null) {
+        if( newValue.label !== undefined){
+          if (newValue.label != "ทั้งหมด") {
           this.Affiliation = newValue.value;
           let x = this.AffiliationListOld.findIndex((el) => el.label == newValue.label);
           this.AffiliationLable = this.AffiliationListOld[x].value;
@@ -350,21 +351,27 @@ export default {
           this.AffiliationLable = "";
           this.getReport(this.mountLable, this.yearNumber);
         }
+        }
+       
       }
     },
     selectedranksAll: function (newValue) {
-      if (newValue !== null && newValue.label !== undefined) {
-        if (newValue.label != "ทั้งหมด") {
+      if (newValue !== null) {
+        if(newValue.label !== undefined){
+          if (newValue.label != "ทั้งหมด") {
           this.ranksAll = newValue.value;
           this.getReportRanksAll(this.mountLable, this.yearNumber, this.ranksAll);
         } else {
           this.getReport(this.mountLable, this.yearNumber);
         }
+        }
+       
       }
     },
     selectedMonth: function (newValue) {
-      if (newValue !== null && newValue.label !== undefined) {
-        let x = this.optionMonth.findIndex((el) => el.label == newValue.label);
+      if (newValue !== null) {
+         if(newValue.label !== undefined){
+          let x = this.optionMonth.findIndex((el) => el.label == newValue.label);
         let y = this.dateData.getFullYear();
         this.mountNumber = x + 1;
         this.yearNumber = y;
@@ -385,6 +392,8 @@ export default {
         this.monthYearTable = this.mountCT + " " + result;
         this.monthYearNowtable = m + " " + result;
         this.getReport(m, this.yearNumber);
+         }
+        
       }
     },
   },
