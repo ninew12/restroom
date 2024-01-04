@@ -252,7 +252,6 @@ export default {
 
     getMonths() {
       const d = new Date();
-      let m = this.optionMonth[d.getMonth()];
       let y = d.getFullYear();
       this.months = d.getMonth();
       this.years = y;

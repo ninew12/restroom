@@ -91,8 +91,13 @@ export default {
       this.typeContract = e.target.value;
     },
     getMonths() {
+      let m
+      if(this.optionMonth[d.getMonth()] == 'มกราคม'){
+        m = "มกราคม"
+      }else{
+        m = this.optionMonth[d.getMonth() - 1];
+      }
       const d = new Date();
-      let m = this.optionMonth[d.getMonth()];
       let y = d.getFullYear();
       this.months = m;
       this.years = y;
