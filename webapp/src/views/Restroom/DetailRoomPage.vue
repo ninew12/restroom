@@ -1111,7 +1111,7 @@ export default {
               />
             </div>
             <div class="mb-3">
-              <label class="starRed">จำนวนงวดเงินประกัน</label>
+              <label class="starRed">จำนวนงวดเงินประกัน (1-10 งวด)</label>
               <MaterialInput
                 :value="installments"
                 @input="(event) => (installments = event.target.value)"
