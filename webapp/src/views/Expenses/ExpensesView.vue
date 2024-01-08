@@ -99,16 +99,20 @@ export default {
     getMonths() {
       const d = new Date();
       let m
-      if(this.optionMonth[d.getMonth()] == 'มกราคม'){
-        m = "มกราคม"
+      let y 
+      if(this.optionMonth[d.getMonth() - 1] == undefined){
+        m = "ธันวาคม"
+        y = d.getFullYear()-1
       }else{
         m = this.optionMonth[d.getMonth() - 1];
+        y = d.getFullYear();
       }
-      let y = d.getFullYear();
+ 
       let x = this.optionMonth.findIndex((el) => el.label == m);
       this.mountNumber = x + 1;
-      this.months = m;
       this.years = y;
+      this.months = m;
+     
     },
     async getExpenses() {
       try {
@@ -233,6 +237,7 @@ export default {
         monthly: this.months,
         years: this.years,
       };
+
       await axios
         .put(`http://localhost:3897/users/${this.id}`, body, {
           headers: {
