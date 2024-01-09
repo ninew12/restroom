@@ -264,7 +264,8 @@ export default {
           let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
           let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
           let b = c / a; //จำนวนงวดคงเหลือ
-          return b || 0;
+          let d = parseInt(e.installments || 0) - b;
+          return d || 0;
         }else{
           return parseInt(e.insurance || 0);
         }
