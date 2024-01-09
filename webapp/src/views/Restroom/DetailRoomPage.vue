@@ -841,7 +841,7 @@ export default {
                   @input="(event) => (installments = event.target.value)"
                   class="input-group-static"
                   type="text"
-                  placeholder="จำนวนงวดเงินค่าประกัน"
+                  placeholder="จำนวนงวดเงินค่าประกัน(กรอก 0 กรณีชำระครบแล้ว)"
                 />
               </div>
             </div>
@@ -1117,7 +1117,7 @@ export default {
                 @input="(event) => (installments = event.target.value)"
                 class="input-group-static"
                 type="text"
-                placeholder="จำนวนงวดเงินค่าประกัน"
+                placeholder="จำนวนงวดเงินค่าประกัน(กรอก 0 กรณีชำระครบแล้ว)"
               />
             </div>
           </div>
