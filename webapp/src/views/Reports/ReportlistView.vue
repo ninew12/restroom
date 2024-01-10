@@ -820,6 +820,113 @@ export default {
       }
     },
 
+    getReportAffiliation(m, y, Affiliation) {
+      try {
+        axios
+          .get("http://localhost:3897/report")
+          .then((res) => {
+            let data = [];
+            let data2 = [];
+            let data8 = [];
+            let data9 = [];
+            let dataTR = []
+            let arr = [];
+            let arr2 = [];
+            let arr3 = [];
+            let arr4 = [];
+            let arr5 = [];
+            let data3 = res.data;
+            let data4 = res.data;
+            this.reportList = res.data;
+
+            data = data3.filter(
+              (el) =>
+                el.typeUser == "บช.ตชด." &&
+                el.monthly == this.dateNow &&
+                el.years == this.yearNow
+            );
+            data2 = data4.filter(
+              (ele2) =>
+                ele2.typeUser == "ตร." && ele2.monthly == this.mountCT && ele2.years == y
+            );
+
+            data8 = data4.filter(
+              (el8) =>
+                el8.typeUser == "ตร." &&
+                el8.typeContract == "หักไม่ได้" &&
+                el8.monthly == this.mountCT &&
+                el8.years == y
+            );
+
+            dataTR = data4.filter(
+              (el2) =>
+                el2.typeUser == "ตร." &&
+                el2.typeContract == "หักได้" &&
+                el2.monthly == this.mountTR &&
+                el2.years == this.yearNumberTR
+            );
+
+            data9 = data3.filter(
+              (el9) =>
+                el9.typeUser == "บช.ตชด." &&
+                el9.monthly == this.mountCT &&
+                el9.years == this.yearNow
+            );
+
+            arr = data.filter((ele) => ele.affiliation === Affiliation);
+            arr2 = data2.filter((el2) => el2.affiliation === Affiliation);
+            arr3 = data8.filter((ele3) => ele3.affiliation == Affiliation);
+            arr4 = data9.filter((el4) => el4.affiliation == Affiliation);
+            arr5 = dataTR.filter((el5) => el5.affiliation == Affiliation);
+            this.mapData(arr, arr2, arr3, arr4,arr5);
+            // this.reportlistTD = data2;
+            // console.log(this.reportlistCTD);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    getReportRanksAll(m, y, ranksType) {
+      try {
+        axios
+          .get("http://localhost:3897/report")
+          .then((res) => {
+            let data = [];
+            let data2 = [];
+            let arr = [];
+            let arr2 = [];
+            let data3 = res.data;
+            let data4 = res.data;
+            this.reportList = res.data;
+
+            data = data3.filter(
+              (el) =>
+                el.typeUser == "บช.ตชด." &&
+                el.monthly == this.dateNow &&
+                el.years == this.yearNow
+            );
+            data2 = data4.filter(
+              (ele2) => ele2.typeUser == "ตร." && ele2.monthly == m && ele2.years == y
+            );
+
+            arr = data.filter((ele) => ele.rank == ranksType);
+            arr2 = data2.filter((el3) => el3.rank == ranksType);
+            this.mapData(arr, arr2);
+            // this.reportlistTD = data2;
+            // console.log(this.reportlistCTD);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     async filterAffiliation(listdata) {
       let listTD = [];
       listTD = listdata;
@@ -2250,101 +2357,7 @@ export default {
       });
     },
 
-    getReportAffiliation(m, y, Affiliation) {
-      try {
-        axios
-          .get("http://localhost:3897/report")
-          .then((res) => {
-            let data = [];
-            let data2 = [];
-            let data8 = [];
-            let data9 = [];
-            let arr = [];
-            let arr2 = [];
-            let arr3 = [];
-            let arr4 = [];
-            let data3 = res.data;
-            let data4 = res.data;
-            this.reportList = res.data;
-
-            data = data3.filter(
-              (el) =>
-                el.typeUser == "บช.ตชด." &&
-                el.monthly == this.dateNow &&
-                el.years == this.yearNow
-            );
-            data2 = data4.filter(
-              (ele2) =>
-                ele2.typeUser == "ตร." && ele2.monthly == this.mountCT && ele2.years == y
-            );
-
-            data8 = data4.filter(
-              (el8) =>
-                el8.typeUser == "ตร." &&
-                el8.typeContract == "หักไม่ได้" &&
-                el8.monthly == this.mountCT &&
-                el8.years == y
-            );
-
-            data9 = data3.filter(
-              (el9) =>
-                el9.typeUser == "บช.ตชด." &&
-                el9.monthly == this.mountCT &&
-                el9.years == this.yearNow
-            );
-
-            arr = data.filter((ele) => ele.typeAffiliation === Affiliation);
-            arr2 = data2.filter((el2) => el2.typeAffiliation === Affiliation);
-            arr3 = data8.filter((ele3) => ele3.typeAffiliation == Affiliation);
-            arr4 = data9.filter((el4) => el4.typeAffiliation == Affiliation);
-            this.mapData(arr, arr2, arr3, arr4);
-            // this.reportlistTD = data2;
-            // console.log(this.reportlistCTD);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    getReportRanksAll(m, y, ranksType) {
-      try {
-        axios
-          .get("http://localhost:3897/report")
-          .then((res) => {
-            let data = [];
-            let data2 = [];
-            let arr = [];
-            let arr2 = [];
-            let data3 = res.data;
-            let data4 = res.data;
-            this.reportList = res.data;
-
-            data = data3.filter(
-              (el) =>
-                el.typeUser == "บช.ตชด." &&
-                el.monthly == this.dateNow &&
-                el.years == this.yearNow
-            );
-            data2 = data4.filter(
-              (ele2) => ele2.typeUser == "ตร." && ele2.monthly == m && ele2.years == y
-            );
-
-            arr = data.filter((ele) => ele.rank == ranksType);
-            arr2 = data2.filter((el3) => el3.rank == ranksType);
-            this.mapData(arr, arr2);
-            // this.reportlistTD = data2;
-            // console.log(this.reportlistCTD);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } catch (error) {
-        console.error(error);
-      }
-    },
+ 
 
     async mapData(data, data2, data3, data4, dataTR) {
       let arr = [];
@@ -3083,7 +3096,7 @@ export default {
 
     WaterbillSum(items) {
       return items.reduce((waterbillSum, ele) => {
-        if (ele.waterbill !== undefined) return waterbillSum + parseInt(ele.waterbill);
+        if (ele.waterbill !== undefined) return waterbillSum + parseInt(ele.waterbill || 0);
         else return waterbillSum;
       }, 0);
     },
@@ -3255,7 +3268,7 @@ export default {
 
     CentralSum(items) {
       return items.reduce((centralSum, ele) => {
-        if (ele.central !== undefined) return centralSum + parseInt(ele.central);
+        if (ele.central !== undefined) return centralSum + parseInt(ele.central || 0);
         else return centralSum;
       }, 0);
     },
