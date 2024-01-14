@@ -492,7 +492,7 @@ export default {
             let m = tday.getMonth();
             this.mountCT = "ธันวาคม";
             this.mountTR = "พฤศจิกายน";
-            this.yearNow = (this.dateData.getFullYear() - 1);
+            this.yearNow = y;
             this.yearNumber = (this.dateData.getFullYear() - 1);
             this.yearNumberTR = (this.dateData.getFullYear() - 1);
             result = tday.toLocaleDateString("th-TH", {
@@ -591,7 +591,7 @@ export default {
             let m = tday.getMonth();
             this.mountCT = "ธันวาคม";
             this.mountTR = "พฤศจิกายน";
-            this.yearNow = (this.dateData.getFullYear() - 1);
+            this.yearNow = y;
             this.yearNumber = (this.dateData.getFullYear() - 1);
             this.yearNumberTR = (this.dateData.getFullYear() - 1);
             result = tday.toLocaleDateString("th-TH", {
@@ -657,7 +657,6 @@ export default {
             let data3 = res.data;
             let data4 = res.data;
             this.reportList = res.data;
-
             data5 = data3.filter(
               (el6) =>
                 el6.typeAffiliation == "บช.ตชด." &&

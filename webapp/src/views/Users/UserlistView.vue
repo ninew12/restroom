@@ -54,6 +54,7 @@ export default {
       queue: "",
       roomId: "",
       migratdata: [],
+      loader : false,
     };
   },
   created() {
@@ -383,9 +384,11 @@ export default {
       axios
         .delete(`http://localhost:3897/users/${this.userId}`)
         .then((res) => {
+          this.loader = true
           setTimeout(() => {
             this.getAlluser2();
-          }, 1000);
+            this.loader = false
+          }, 3000);
 
           notify({
             title: "ลบข้อมูลสำเร็จ",
@@ -607,7 +610,13 @@ export default {
               <label class="form-check-label" for="inlineRadio5">ลูกจ้าง</label>
             </div>
           </div>
-          <div class="text-center pt-4 table-responsive">
+          <div v-if="loader">
+            <div class="spanner show">
+              <div class="loader"></div>
+              <p>กำลังทำรายการ กรุณารอสักครู่</p>
+            </div>
+          </div>
+          <div  v-if="!loader" class="text-center pt-4 table-responsive">
             <table class="table border border-2 border-success">
               <thead class="border border-2 border-success border-bottom">
                 <tr>
