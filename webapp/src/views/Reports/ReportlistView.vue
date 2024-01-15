@@ -2381,18 +2381,9 @@ export default {
           roomnumber: el.roomnumber,
           amountPaid: el.amountPaid || 0,
           maintenancefee: el.maintenancefee || 0,
-          amountPaidSum: this.AmountPaidSum(data),
-          waterbillSum: this.WaterbillSum(data),
-          electricitybillSum: this.ElectricitybillSum(data),
           fullname: (el.rank || "") + " " + el?.firstName + " " + el?.lastName,
           unitWater: el.lastnumber - el.firstnumber || 0,
           costs: el.costs || 0,
-          centralSum: this.CentralSum(data),
-          costsSum: this.CostsSum(data),
-          InsuranceSum: this.InsuranceSum(data),
-          MaintenanceSum: this.MaintenanceSum(data),
-          accumulatedSum: this.AccumulatedSum(data),
-          maintenancefeeSum: this.maintenancefeeCount(data),
           waterbill: el.waterbill || 0,
           electricitybill: el.electricitybill || 0,
           Installmenttime: this.checkMonth(
@@ -2419,18 +2410,9 @@ export default {
           maintenancefee: el2.maintenancefee || 0,
           roomnumber: el2.roomnumber,
           amountPaid: el2.amountPaid || 0,
-          amountPaidSum: this.AmountPaidSum(data2),
-          waterbillSum: this.WaterbillSum(data2),
-          maintenancefeeSum: this.maintenancefeeCount(data2),
-          electricitybillSum: this.ElectricitybillSum(data2),
           fullname: (el2.rank || "") + " " + el2?.firstName + " " + el2?.lastName,
           unitWater: el2.lastnumber - el2.firstnumber || 0,
           maintenance: el2.maintenance || 0,
-          centralSum: this.CentralSum(data2),
-          costsSum: this.CostsSum(data2),
-          InsuranceSum: this.InsuranceSum(data2),
-          MaintenanceSum: this.MaintenanceSum(data2),
-          accumulatedSum: this.AccumulatedSum(data2),
           waterbill: el2.waterbill || 0,
           electricitybill: el2.electricitybill || 0,
           Installmenttime: this.checkMonth(
@@ -2457,18 +2439,9 @@ export default {
           maintenancefee: el3.maintenancefee || 0,
           roomnumber: el3.roomnumber,
           amountPaid: el3.amountPaid || 0,
-          amountPaidSum: this.AmountPaidSum(data3),
-          waterbillSum: this.WaterbillSum(data3),
-          maintenancefeeSum: this.maintenancefeeCount(data3),
-          electricitybillSum: this.ElectricitybillSum(data3),
           fullname: (el3.rank || "") + " " + el3?.firstName + " " + el3?.lastName,
           unitWater: el3.lastnumber - el3.firstnumber || 0,
           maintenance: el3.maintenance || 0,
-          centralSum: this.CentralSum(data3),
-          costsSum: this.CostsSum(data3),
-          InsuranceSum: this.InsuranceSum(data3),
-          MaintenanceSum: this.MaintenanceSum(data3),
-          accumulatedSum: this.AccumulatedSum(data3),
           waterbill: el3.waterbill || 0,
           electricitybill: el3.electricitybill || 0,
           Installmenttime: this.checkMonth(
@@ -2495,18 +2468,9 @@ export default {
           maintenancefee: el4.maintenancefee || 0,
           roomnumber: el4.roomnumber,
           amountPaid: el4.amountPaid || 0,
-          amountPaidSum: this.AmountPaidSum(data4),
-          waterbillSum: this.WaterbillSum(data4),
-          maintenancefeeSum: this.maintenancefeeCount(data4),
-          electricitybillSum: this.ElectricitybillSum(data4),
           fullname: (el4.rank || "") + " " + el4?.firstName + " " + el4?.lastName,
           unitWater: el4.lastnumber - el4.firstnumber || 0,
           maintenance: el4.maintenance || 0,
-          centralSum: this.CentralSum(data4),
-          costsSum: this.CostsSum(data4),
-          InsuranceSum: this.InsuranceSum(data4),
-          MaintenanceSum: this.MaintenanceSum(data4),
-          accumulatedSum: this.AccumulatedSum(data4),
           waterbill: el4.waterbill || 0,
           electricitybill: el4.electricitybill || 0,
           Installmenttime: this.checkMonth(
@@ -2533,18 +2497,9 @@ export default {
           maintenancefee: el5.maintenancefee || 0,
           roomnumber: el5.roomnumber,
           amountPaid: el5.amountPaid || 0,
-          amountPaidSum: this.AmountPaidSum(dataTR),
-          waterbillSum: this.WaterbillSum(dataTR),
-          maintenancefeeSum: this.maintenancefeeCount(dataTR),
-          electricitybillSum: this.ElectricitybillSum(dataTR),
           fullname: (el5.rank || "") + " " + el5?.firstName + " " + el5?.lastName,
           unitWater: el5.lastnumber - el5.firstnumber || 0,
           maintenance: el5.maintenance || 0,
-          centralSum: this.CentralSum(dataTR),
-          costsSum: this.CostsSum(dataTR),
-          InsuranceSum: this.InsuranceSum(dataTR),
-          MaintenanceSum: this.MaintenanceSum(dataTR),
-          accumulatedSum: this.AccumulatedSum(dataTR),
           waterbill: el5.waterbill || 0,
           electricitybill: el5.electricitybill || 0,
           Installmenttime: this.checkMonth(
@@ -2553,7 +2508,107 @@ export default {
           ),
         };
       });
+      let arr6 = arr.filter(ee=> ee.accumulated != ee.amountPaid )
+      let arr7 = arr4.filter(ee=> ee.accumulated != ee.amountPaid )
+      // let arr6 = arr.map(eel => {
+      //   if(eel.accumulated == eel.amountPaid )  {
+      //     eel.accumulated = "-"
+      //   }
+      //   return {...eel}
+      
+      // })
+      // console.log(arr6);
+      await this.mapsumAll(arr6, arr2, arr3, arr7,arr5);
+    },
 
+    async mapsumAll(data, data2, data3, data4, dataTR){
+      let arr = [];
+      let arr2 = [];
+      let arr3 = [];
+      let arr4 = [];
+      let arr5 = []
+      arr = await data.map((el, i) => {
+        return {
+          ...el,
+          amountPaidSum: this.AmountPaidSum(data),
+          waterbillSum: this.WaterbillSum(data),
+          electricitybillSum: this.ElectricitybillSum(data),
+          centralSum: this.CentralSum(data),
+          costsSum: this.CostsSum(data),
+          InsuranceSum: this.InsuranceSum(data),
+          MaintenanceSum: this.MaintenanceSum(data),
+          accumulatedSum: this.AccumulatedSum(data),
+          maintenancefeeSum: this.maintenancefeeCount(data),
+          
+        };
+      });
+
+      arr2 = await data2.map((el2, i) => {
+        return {
+          ...el2,
+          accumulated: this.countSumAccumulated(el2),
+          amountPaidSum: this.AmountPaidSum(data2),
+          waterbillSum: this.WaterbillSum(data2),
+          maintenancefeeSum: this.maintenancefeeCount(data2),
+          electricitybillSum: this.ElectricitybillSum(data2),
+          centralSum: this.CentralSum(data2),
+          costsSum: this.CostsSum(data2),
+          InsuranceSum: this.InsuranceSum(data2),
+          MaintenanceSum: this.MaintenanceSum(data2),
+          accumulatedSum: this.AccumulatedSum(data2),
+        
+        };
+      });
+
+      arr3 = await data3.map((el3, i) => {
+        return {
+          ...el3,
+          amountPaidSum: this.AmountPaidSum(data3),
+          waterbillSum: this.WaterbillSum(data3),
+          maintenancefeeSum: this.maintenancefeeCount(data3),
+          electricitybillSum: this.ElectricitybillSum(data3),
+          centralSum: this.CentralSum(data3),
+          costsSum: this.CostsSum(data3),
+          InsuranceSum: this.InsuranceSum(data3),
+          MaintenanceSum: this.MaintenanceSum(data3),
+          accumulatedSum: this.AccumulatedSum(data3),
+          
+        };
+      });
+
+      arr4 = await data4.map((el4, i) => {
+        return {
+          ...el4,
+          amountPaidSum: this.AmountPaidSum(data4),
+          waterbillSum: this.WaterbillSum(data4),
+          maintenancefeeSum: this.maintenancefeeCount(data4),
+          electricitybillSum: this.ElectricitybillSum(data4),
+          centralSum: this.CentralSum(data4),
+          costsSum: this.CostsSum(data4),
+          InsuranceSum: this.InsuranceSum(data4),
+          MaintenanceSum: this.MaintenanceSum(data4),
+          accumulatedSum: this.AccumulatedSum(data4),
+        
+        };
+      });
+
+      arr5 = await dataTR.map((el5, i) => {
+        return {
+          ...el5,
+          accumulated: this.countSumAccumulated(el5),
+          amountPaidSum: this.AmountPaidSum(dataTR),
+          waterbillSum: this.WaterbillSum(dataTR),
+          maintenancefeeSum: this.maintenancefeeCount(dataTR),
+          electricitybillSum: this.ElectricitybillSum(dataTR),
+          centralSum: this.CentralSum(dataTR),
+          costsSum: this.CostsSum(dataTR),
+          InsuranceSum: this.InsuranceSum(dataTR),
+          MaintenanceSum: this.MaintenanceSum(dataTR),
+          accumulatedSum: this.AccumulatedSum(dataTR),
+       
+        };
+      });
+     
       await this.mapdataSum(arr, arr2, arr3, arr4,arr5);
     },
 
@@ -4935,6 +4990,7 @@ export default {
 
     buildTableBodyAccumulated(data, columns) {
       var body = [];
+      var body2 = []
       let arr = [];
       var thaiNum = data.map((e) => {
         return {
@@ -4957,7 +5013,7 @@ export default {
           accumulated: this.thaiNumber(e.accumulated),
           amountPaid: this.thaiNumber(e.amountPaid),
           roomnumber: this.thaiNumberNew(e.roomnumber),
-          Installmenttime: this.thaiNumberNew(e.Installmenttime),
+          Installmenttime: e.Installmenttime,
           InsuranceSum: this.thaiNumber(e.InsuranceSum),
         };
       });
@@ -4967,9 +5023,9 @@ export default {
           "",
           "",
           "",
-          { text: thaiNum[0].MaintenanceSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].accumulatedSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].amountPaidSum, style: "header", alignment: "center" },
+          { text: thaiNum[0].MaintenanceSum, style: "header", alignment: "right" },
+          { text: thaiNum[0].accumulatedSum, style: "header", alignment: "right" },
+          { text: thaiNum[0].amountPaidSum, style: "header", alignment: "right" },
           "",
         ],
       ];
@@ -5005,14 +5061,30 @@ export default {
           { text: "หมายเหตุ", style: "header", alignment: "center" },
         ],
       ];
+
       thaiNum.forEach(function (row) {
         var dataRow = [];
         columns.forEach(function (column) {
           dataRow.push(row[column].toString());
         });
-        body.push(dataRow);
+        body2.push(dataRow);
       });
-      arr = body.concat(footer);
+      let data2 = body2.map((ee, i) => {
+        return [
+          { text: ee[0], alignment: "center" },
+          { text: ee[1], alignment: "center" },
+          { text: ee[2], alignment: "right" },
+          { text: ee[3], alignment: "right" },
+          { text: ee[4], alignment: "right" },
+          { text: ee[5], alignment: "right" },
+          { text: ee[6], alignment: "right" },
+          { text: ee[7], alignment: "right" },
+        ];
+      });
+      // body.splice(1, 0, body2);
+      data2.unshift(body[1]);
+      data2.unshift(body[0]);
+      arr = data2.concat(footer);
       return arr;
     },
 
@@ -5058,7 +5130,7 @@ export default {
         const docDefinition = {
           content: [
             {
-              text: ` บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ ${this.typeReport} `,
+              text: ` บัญชีรายชื่อผู้พักอาศัยในอาคารบ้านพักอิสระ บช.ตชด. `,
               style: "header",
               alignment: "center",
             },
@@ -5069,7 +5141,7 @@ export default {
               alignment: "center",
             },
             {
-              text: ` ประจําเดือน ${this.monthYear} `,
+              text: ` ประจําเดือน ${this.monthYearNowtable} `,
               style: "subheader",
               alignment: "center",
             },
@@ -7136,7 +7208,7 @@ export default {
                                   {{ numberWithCommas(item?.amountPaid || "-") }}
                                 </td>
                                 <td data-t="n" data-z="#,##">
-                                  {{ numberWithCommas(item?.Installmenttime || "-") }}
+                                  {{ (item?.Installmenttime || "-") }}
                                 </td>
                               </tr>
 
