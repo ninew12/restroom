@@ -55,7 +55,7 @@ export default {
           value: "บก.อก.บช.ตชด.",
         },
         {
-          label: "บก.สนน.",
+          label: "บก.สสน.",
           value: "บก.สสน.บช.ตชด.",
         },
         {
@@ -125,7 +125,7 @@ export default {
           value: "บก.อก.บช.ตชด.",
         },
         {
-          label: "บก.สนน.",
+          label: "บก.สสน.",
           value: "บก.สสน.บช.ตชด.",
         },
         {
@@ -195,7 +195,7 @@ export default {
           value: "บก.อก.บช.ตชด.",
         },
         {
-          label: "บก.สนน.",
+          label: "บก.สสน.",
           value: "บก.สสน.บช.ตชด.",
         },
         {
@@ -265,7 +265,7 @@ export default {
           value: "บก.อก.บช.ตชด.",
         },
         {
-          label: "บก.สนน.",
+          label: "บก.สสน.",
           value: "บก.สสน.บช.ตชด.",
         },
         {
@@ -417,8 +417,11 @@ export default {
         if (newValue?.label !== undefined) {
           if (newValue.label != "ทั้งหมด") {
             this.Affiliation = newValue.value;
+            console.log(this.AffiliationListOld);
             let x = this.AffiliationListOld.findIndex((el) => el.label == newValue.label);
+            console.log(x);
             this.AffiliationLable = this.AffiliationListOld[x].value;
+            console.log(this.Affiliation);
             this.getReportAffiliation(this.mountLable, this.yearNumber, this.Affiliation);
           } else {
             this.AffiliationLable = "";
@@ -968,7 +971,7 @@ export default {
       let sumdata2costsSumAll = this.CostsSum(data2);
       let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
       let sumdata2CostCentralSumAll = this.CentralSumallCount(data2);
-      data3 = listTD.filter((el) => el.affiliation == "บก.สนน.");
+      data3 = listTD.filter((el) => el.affiliation == "บก.สสน.");
       let sumCostdata3InsuranceAll = this.SumCostSummaintenanceAll(data3);
       let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
       let sumdata3maintenancefeeSumAll = this.maintenancefeeCount(data3);
@@ -1158,7 +1161,7 @@ export default {
           el["sumCostdataCostCosts"] = sumdata2CostCostsSumAll;
           el["sumdataCostCentralAllSum"] = sumdata2CostCentralSumAll;
         }
-        if (el.label == "บก.สนน.") {
+        if (el.label == "บก.สสน.") {
           el["sumdataMaintenancefee"] = sumdata3maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata3InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
@@ -1404,7 +1407,7 @@ export default {
       let sumdata2costsSumAll = this.CostsSum(data2);
       let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
       let sumdata2CostCentralSumAll = this.CentralSumallCount(data2);
-      data3 = listTD.filter((el) => el.affiliation == "บก.สนน.");
+      data3 = listTD.filter((el) => el.affiliation == "บก.สสน.");
       let sumCostdata3InsuranceAll = this.SumCostSummaintenanceAll(data3);
       let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
       let sumdata3maintenancefeeSumAll = this.maintenancefeeCount(data3);
@@ -1594,7 +1597,7 @@ export default {
           el["sumCostdataCostCosts"] = sumdata2CostCostsSumAll;
           el["sumdataCostCentralAllSum"] = sumdata2CostCentralSumAll;
         }
-        if (el.label == "บก.สนน.") {
+        if (el.label == "บก.สสน.") {
           el["sumdataMaintenancefee"] = sumdata3maintenancefeeSumAll;
           el["sumdataInsurance"] = sumdata3InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
@@ -1962,7 +1965,7 @@ export default {
       let sumdata2costsSumAll = this.CostsSum(data2);
       let sumdata2CostCostsSumAll = this.SumCostSumCentral(data2);
       let sumdata2CostCentralSumAll = this.CentralSumallCount(data2);
-      data3 = listCTD.filter((el) => el.affiliation == "บก.สนน.");
+      data3 = listCTD.filter((el) => el.affiliation == "บก.สสน.");
       let sumCostdata3InsuranceAll = this.SumCostSumInsuranceAll(data3);
       let sumdata3InsuranceAll = this.InsuranceSumAll(data3);
       let sumdata3MaintenanceSumAll = this.MaintenanceSumAll(data3);
@@ -2152,7 +2155,7 @@ export default {
           el["sumCostdataCostCosts"] = sumdata2CostCostsSumAll;
           el["sumdataCostCentralAllSum"] = sumdata2CostCentralSumAll;
         }
-        if (el.label == "บก.สนน.") {
+        if (el.label == "บก.สสน.") {
           el["sumdataMaintenance"] = sumdata3MaintenanceSumAll;
           el["sumdataInsurance"] = sumdata3InsuranceAll;
           el["sumCostdataInsurance"] = sumCostdata3InsuranceAll;
@@ -4733,7 +4736,7 @@ export default {
 
     exportPdfCosts() {
       let listData = [];
-      listData = this.AffiliationListTD.map((el, i) => {
+      listData = this.AffiliationListTR.map((el, i) => {
         return {
           ...el,
           numberNo: i + 1,
@@ -4780,7 +4783,7 @@ export default {
               alignment: "center",
             },
             {
-              text: ` ประจําเดือน ${this.monthYear} `,
+              text: ` ประจําเดือน ${this.monthYearTableTR} `,
               style: "subheader",
               alignment: "center",
             },
@@ -5265,7 +5268,7 @@ export default {
       AffiliationLable !== ""
         ? (mss3 = "หน่วยงาน" + " " + this.AffiliationLable)
         : (mss3 = "");
-      listData = this.reportlistTD.map((el, i) => {
+      listData = this.reportlistTR.map((el, i) => {
         return {
           ...el,
           numberNo: i + 1,
@@ -5303,7 +5306,7 @@ export default {
               alignment: "center",
             },
             {
-              text: ` ประจําเดือน ${this.monthYearNow} ${mss3 || " "}`,
+              text: ` ประจําเดือน ${this.monthYearTableTR} ${mss3 || " "}`,
               style: "subheader",
               alignment: "center",
             },
@@ -6373,7 +6376,7 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="6" style="border: 0">
-                            ประจําเดือน {{ monthYearTable }}
+                            ประจําเดือน {{ monthYearTableTR }}
                           </td>
                         </tr>
                         <tr>
@@ -6387,7 +6390,7 @@ export default {
                           <th>รวม</th>
                         </tr>
                       </thead>
-                      <tr v-for="(item, index) in AffiliationListTD" :key="index">
+                      <tr v-for="(item, index) in AffiliationListTR" :key="index">
                         <th scope="row">{{ index + 1 }}</th>
                         <td>{{ item?.value || "-" }}</td>
                         <td data-t="n" data-z="#,##">
@@ -6400,22 +6403,22 @@ export default {
                           {{ numberWithCommas(item?.sumdataCostCentralAllSum || "-") }}
                         </td>
                       </tr>
-                      <tr v-if="AffiliationListTD?.length > 0">
+                      <tr v-if="AffiliationListTR?.length > 0">
                         <th scope="row" colspan="2">รวมเงิน</th>
                         <th data-t="n" data-z="#,##">
                           {{
-                            numberWithCommas(AffiliationListTD[0]?.countcentraAll || "-")
+                            numberWithCommas(AffiliationListTR[0]?.countcentraAll || "-")
                           }}
                         </th>
                         <th data-t="n" data-z="#,##">
                           {{
-                            numberWithCommas(AffiliationListTD[0]?.countcostsAll || "-")
+                            numberWithCommas(AffiliationListTR[0]?.countcostsAll || "-")
                           }}
                         </th>
                         <th data-t="n" data-z="#,##">
                           {{
                             numberWithCommas(
-                              AffiliationListTD[0]?.countdataCostCentralAllSum || "-"
+                              AffiliationListTR[0]?.countdataCostCentralAllSum || "-"
                             )
                           }}
                         </th>
@@ -6440,7 +6443,7 @@ export default {
                         </tr>
                         <tr>
                           <td colspan="9" style="border: 0">
-                            ประจําเดือน {{ monthYearNowtable }}
+                            ประจําเดือน {{ monthYearTableTR }}
                             <span v-if="AffiliationLable !== ''">หน่วยงาน</span>
                             {{ AffiliationLable || " " }}
                           </td>
@@ -6460,7 +6463,7 @@ export default {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="(item, index) in reportlistTD" :key="index">
+                        <tr v-for="(item, index) in reportlistTR" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.buildingType || "-" }}</td>
                           <td>{{ item?.roomnumber || "-" }}</td>
@@ -6488,17 +6491,17 @@ export default {
                           </td>
                           <td>{{ item?.contractExpenses || "-" }}</td>
                         </tr>
-                        <tr v-if="reportlistTD?.length > 0">
+                        <tr v-if="reportlistTR?.length > 0">
                           <th scope="row" colspan="5">รวมเงิน</th>
                           <th data-t="n" data-z="#,##">
-                            {{ numberWithCommas(reportlistTD[0]?.centralSum || "-") }}
+                            {{ numberWithCommas(reportlistTR[0]?.centralSum || "-") }}
                           </th>
                           <th data-t="n" data-z="#,##">
-                            {{ numberWithCommas(reportlistTD[0]?.costsSum || "-") }}
+                            {{ numberWithCommas(reportlistTR[0]?.costsSum || "-") }}
                           </th>
                           <th data-t="n" data-z="#,##">
                             {{
-                              numberWithCommas(reportlistTD[0]?.SumCostSumCosts || "-")
+                              numberWithCommas(reportlistTR[0]?.SumCostSumCosts || "-")
                             }}
                           </th>
                         </tr>

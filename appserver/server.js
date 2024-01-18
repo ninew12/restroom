@@ -159,16 +159,19 @@ app.put('/users/:id', (req, res) => {
 
 app.delete('/users/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    const deletedIndex = users.filter(user => user.id !== (req.params.id))
-    const parsedData = deletedIndex;
-    fs.writeFileSync('./users.json', JSON.stringify(parsedData, null, 2), (err) => {
+    let deletedIndex = users.findIndex(user => user.id === (req.params.id))
+    if (deletedIndex > -1) { // only splice array when item is found
+        users.splice(deletedIndex, 1); // 2nd parameter means remove one item only
+      }
+    let parsedData = users;
+    fs.writeFile('./users.json', JSON.stringify(parsedData, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
         }
         console.log("Updated file successfully");
     });
-    res.json(users)
+    res.json("delete user successfully")
 })
 
 app.get('/buildings', (req, res) => {
@@ -215,8 +218,11 @@ app.post('/buildings', (req, res) => {
 
 app.delete('/buildings/:builId', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    const deletedIndex = building.filter(buil => buil.buildingId !== (req.params.builId))
-    const parsedData = deletedIndex;
+    let deletedIndex = building.findIndex(buil => buil.buildingId === (req.params.builId))
+    if (deletedIndex > -1) { // only splice array when item is found
+        building.splice(deletedIndex, 1); // 2nd parameter means remove one item only
+      }
+    let parsedData = building;
     fs.writeFileSync('./building.json', JSON.stringify(parsedData), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
@@ -224,7 +230,7 @@ app.delete('/buildings/:builId', (req, res) => {
         }
         console.log("Updated file successfully");
     });
-    res.json(building)
+    res.json("Updated building successfully")
 })
 
 app.get('/expenses', (req, res) => {
@@ -775,9 +781,11 @@ app.put('/report/:id', (req, res) => {
 
 app.put('/reportUser/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
+    // console.log(req.params.id);
     const updateIndex = reports.findIndex(user => user.userId === (req.params.id))
     let dataOld = reports[updateIndex]
     let filterdata = reports.filter(user => user.userId !== (req.params.id))
+    console.log("filterdata",filterdata);
     const parsedData = dataOld;
     if (req.body.firstName) parsedData.firstName = req.body.firstName
     if (req.body.lastName) parsedData.lastName = req.body.lastName
