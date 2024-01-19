@@ -1177,7 +1177,7 @@ export default {
                   v-model="selectedAffiliation"
                 ></v-select>
               </div>
-              <div class="mb-3" v-if="typeAffiliation?.label == 'บก.สนน.'">
+              <div class="mb-3" v-if="typeAffiliation?.label == 'บก.สสน.'">
                 <label>สังกัด {{ typeAffiliation?.label }}</label>
                 <v-select
                   :options="masterData?.Affiliation2"

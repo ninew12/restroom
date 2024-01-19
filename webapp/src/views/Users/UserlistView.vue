@@ -293,6 +293,7 @@ export default {
             type: "success",
           });
           if (this.roomId !== undefined) this.updateRoom();
+          this.saveToreport()
           setTimeout(() => {
             this.getAlluser();
           }, 500);
@@ -300,6 +301,35 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+
+    async saveToreport() {
+      let typeA;
+      this.typeAffiliation.label == "ลูกจ้าง"
+        ? (typeA = "ลูกจ้าง")
+        : this.typeAffiliation.label == "บช.ตชด."
+        ? (typeA = "บช.ตชด.")
+        : (typeA = this.selectedAffiliation.label);
+      let body = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        affiliation: typeA,
+        rank: this.selectedRanks.label,
+        rankNumber: this.selectedRanks.value,
+        idcard: this.idcard,
+        phone: this.phone,
+        status: this.selectedDataObtion.value || "โสด",
+        typeAffiliation: this.typeAffiliation.value,
+        typeRanks: this.typeRanks.value,
+        queue: this.queue,
+      };
+      console.log(body);
+      await axios.put(`http://localhost:3897/reportUser/${this.id}`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
     },
 
     async updateRoom() {
@@ -388,7 +418,7 @@ export default {
           setTimeout(() => {
             this.getAlluser2();
             this.loader = false
-          }, 3000);
+          }, 6000);
 
           notify({
             title: "ลบข้อมูลสำเร็จ",
@@ -617,7 +647,7 @@ export default {
             </div>
           </div>
           <div  v-if="!loader" class="text-center pt-4 table-responsive">
-            <table class="table border border-2 border-success">
+             <table class="table border border-2 border-success">
               <thead class="border border-2 border-success border-bottom">
                 <tr>
                   <th scope="col">ลำดับ</th>
@@ -755,7 +785,7 @@ export default {
                   v-model="selectedAffiliation"
                 ></v-select>
               </div>
-              <div class="mb-3" v-if="typeAffiliation.label == 'บก.สนน.'">
+              <div class="mb-3" v-if="typeAffiliation.label == 'บก.สสน.'">
                 <label>สังกัด {{ typeAffiliation.label }}</label>
                 <v-select
                   :options="masterData?.Affiliation2"
@@ -895,7 +925,7 @@ export default {
               <div
                 class="mb-3"
                 v-if="
-                  typeAffiliation.label == 'บก.สนน.' || this.typeAffiliation == 'บก.สนน.'
+                  typeAffiliation.label == 'บก.สสน.' || this.typeAffiliation == 'บก.สสน.'
                 "
               >
                 <label>สังกัด {{ typeAffiliation.label }}</label>

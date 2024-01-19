@@ -213,7 +213,7 @@ export default {
         })
         .then((res) => {
           notify({
-            title: "แก้ไข้รายละเอียดห้องพักสำเร็จ",
+            title: "แก้ไขรายละเอียดห้องพักสำเร็จ",
             type: "success",
           });
           this.getRooms(this.id);
