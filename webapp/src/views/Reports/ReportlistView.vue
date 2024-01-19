@@ -657,26 +657,29 @@ export default {
             let data8 = [];
             let data9 = [];
             let dataTR = [];
+            let data10 = [];
+            let data11 = [];
+            let data12 = [];
             let data3 = res.data;
             let data4 = res.data;
             this.reportList = res.data;
             data5 = data3.filter(
               (el6) =>
-                el6.typeAffiliation == "บช.ตชด." &&
+                el6.typeAffiliation == "บช.ตชด." ||
                 el6.typeAffiliation == "บก.อก." &&
                 el6.monthly == this.dateNow &&
                 el6.years == this.yearNow
             );
             data6 = data3.filter(
               (el5) =>
-                el5.typeAffiliation == "ลูกจ้าง" &&
+                el5.typeAffiliation == "บก.สสน." &&
                 el5.monthly == this.mountCT &&
                 el5.years == y
             );
             data7 = data3.filter(
               (el4) =>
-                el4.typeAffiliation !== "ลูกจ้าง" &&
-                el4.typeAffiliation !== "บช.ตชด." &&
+                el4.typeAffiliation !== "ลูกจ้าง" ||
+                el4.typeAffiliation !== "บช.ตชด." ||
                 el4.typeAffiliation !== "บก.อก." &&
                 el4.monthly == this.mountCT &&
                 el4.years == y
@@ -718,101 +721,108 @@ export default {
                 el9.years == this.yearNow
             );
             // console.log(data); typeContract: el.typeContract || "-",;
+         
+            data10 = data5.filter(ee => ee.amountPaid != ee.insurance);
+            data11 = data6.filter(ee2 => ee2.amountPaid != ee2.insurance);
+            data12 = data7.filter(ee3 => ee3.amountPaid != ee3.insurance);
+
             this.mapData(data, data2, data8, data9 , dataTR);
-            this.reportlistok = data5;
-            this.reportListssn = data6;
-            this.reportlistlj = data7;
+            this.reportlistok = data10
+            this.reportListssn = data11
+            this.reportlistlj = data12
 
-            this.sumreportlistAll = data5.map((x) => {
+
+            this.sumreportlistAll = data10.map((x1) => {
               return {
-                ...x,
+                ...x1,
                 type: "อำนวยการ",
-                sumdataMaintenance: this.MaintenanceSumAll(data5),
-                sumdataMaintenancefree: this.maintenancefeeCount(data5),
-                sumdataInsurance: this.InsuranceSumAll(data5),
-                sumCostdataInsurance: this.SumCostSumInsuranceAll(data5),
-                sumdatawaterbill: this.waterbillSummary(data5),
-                sumdataelectricitybill: this.ElectricitybillSum(data5),
-                sumCostdatawaterbill: this.WaterbillSumCount(data5),
-                sumdatacentral: this.CentralSum(data5),
-                sumdatacosts: this.CostsSum(data5),
-                sumCostdataCostCosts: this.centralSumCount(data5),
+                sumdataMaintenance: this.MaintenanceSumAll(data10),
+                sumdataMaintenancefree: this.maintenancefeeCount(data10),
+                sumdataInsurance: this.InsuranceSumAll(data10),
+                sumCostdataInsurance: this.SumCostSumInsuranceAll(data10),
+                sumdatawaterbill: this.waterbillSummary(data10),
+                sumdataelectricitybill: this.ElectricitybillSum(data10),
+                sumCostdatawaterbill: this.WaterbillSumCount(data10),
+                sumdatacentral: this.CentralSum(data10),
+                sumdatacosts: this.CostsSum(data10),
+                sumCostdataCostCosts: this.centralSumCount(data10),
               };
             });
 
-            this.sumreportlistAll2 = data6.map((x) => {
+            this.sumreportlistAll2 = data11.map((x2) => {
               return {
-                ...x,
+                ...x2,
                 type: "สนับสนุน",
-                sumdataMaintenance: this.MaintenanceSumAll(data6),
-                sumdataInsurance: this.InsuranceSumAll(data6),
-                sumdataMaintenancefree: this.maintenancefeeCount(data6),
-                sumCostdataInsurance: this.SumCostSumInsuranceAll(data6),
-                sumdatawaterbill: this.waterbillSummary(data6),
-                sumdataelectricitybill: this.ElectricitybillSum(data6),
-                sumCostdatawaterbill: this.WaterbillSumCount(data6),
-                sumdatacentral: this.CentralSum(data6),
-                sumdatacosts: this.CostsSum(data6),
-                sumCostdataCostCosts: this.centralSumCount(data6),
+                sumdataMaintenance: this.MaintenanceSumAll(data11),
+                sumdataInsurance: this.InsuranceSumAll(data11),
+                sumdataMaintenancefree: this.maintenancefeeCount(data11),
+                sumCostdataInsurance: this.SumCostSumInsuranceAll(data11),
+                sumdatawaterbill: this.waterbillSummary(data11),
+                sumdataelectricitybill: this.ElectricitybillSum(data11),
+                sumCostdatawaterbill: this.WaterbillSumCount(data11),
+                sumdatacentral: this.CentralSum(data11),
+                sumdatacosts: this.CostsSum(data11),
+                sumCostdataCostCosts: this.centralSumCount(data11),
               };
             });
-            this.sumreportlistAll3 = data7.map((x) => {
+            this.sumreportlistAll3 = data12.map((x3) => {
               return {
-                ...x,
+                ...x3,
                 type: "ลูกจ้าง",
-                sumdataMaintenance: this.MaintenanceSumAll(data7),
-                sumdataMaintenancefree: this.maintenancefeeCount(data7),
-                sumdataInsurance: this.InsuranceSumAll(data7),
-                sumCostdataInsurance: this.SumCostSumInsuranceAll(data7),
-                sumdatawaterbill: this.waterbillSummary(data7),
-                sumdataelectricitybill: this.ElectricitybillSum(data7),
-                sumCostdatawaterbill: this.WaterbillSumCount(data7),
-                sumdatacentral: this.CentralSum(data7),
-                sumdatacosts: this.CostsSum(data7),
-                sumCostdataCostCosts: this.centralSumCount(data7),
+                sumdataMaintenance: this.MaintenanceSumAll(data12),
+                sumdataMaintenancefree: this.maintenancefeeCount(data12),
+                sumdataInsurance: this.InsuranceSumAll(data12),
+                sumCostdataInsurance: this.SumCostSumInsuranceAll(data12),
+                sumdatawaterbill: this.waterbillSummary(data12),
+                sumdataelectricitybill: this.ElectricitybillSum(data12),
+                sumCostdatawaterbill: this.WaterbillSumCount(data12),
+                sumdatacentral: this.CentralSum(data12),
+                sumdatacosts: this.CostsSum(data12),
+                sumCostdataCostCosts: this.centralSumCount(data12),
               };
             });
 
-            (this.maintenanceAllcount =
-              this.sumreportlistAll[0]?.sumdataMaintenance +
-              this.sumreportlistAll2[0]?.sumdataMaintenance +
-              this.sumreportlistAll3[0]?.sumdataMaintenance),
-              (this.maintenancefeeAllcount =
-                this.sumreportlistAll[0]?.sumdataMaintenancefree +
-                this.sumreportlistAll2[0]?.sumdataMaintenancefree +
-                this.sumreportlistAll3[0]?.sumdataMaintenancefree),
-              (this.insuranceAllcount =
-                this.sumreportlistAll[0]?.sumdataInsurance +
-                this.sumreportlistAll2[0]?.sumdataInsurance +
-                this.sumreportlistAll3[0]?.sumdataInsurance),
-              (this.sumAllcount =
-                this.sumreportlistAll[0]?.sumCostdataInsurance +
-                this.sumreportlistAll2[0]?.sumCostdataInsurance +
-                this.sumreportlistAll3[0]?.sumCostdataInsurance);
-            (this.waterbillAllcount =
-              this.sumreportlistAll[0]?.sumdatawaterbill +
-              this.sumreportlistAll2[0]?.sumdatawaterbill +
-              this.sumreportlistAll3[0]?.sumdatawaterbill),
-              (this.electricitybillAllcount =
-                this.sumreportlistAll[0]?.sumdataelectricitybill +
-                this.sumreportlistAll2[0]?.sumdataelectricitybill +
-                this.sumreportlistAll3[0]?.sumdataelectricitybill),
-              (this.Costdatawaterbillcount =
-                this.sumreportlistAll[0]?.sumCostdatawaterbill +
-                this.sumreportlistAll2[0]?.sumCostdatawaterbill +
-                this.sumreportlistAll3[0]?.sumCostdatawaterbill);
-            (this.centralAllcount =
-              this.sumreportlistAll[0]?.sumdatacentral +
-              this.sumreportlistAll2[0]?.sumdatacentral +
-              this.sumreportlistAll3[0]?.sumdatacentral),
-              (this.costsAllcount =
-                this.sumreportlistAll[0]?.sumdatacosts +
-                this.sumreportlistAll2[0]?.sumdatacosts +
-                this.sumreportlistAll3[0]?.sumdatacosts),
-              (this.CostCostsAllcount =
-                this.sumreportlistAll[0]?.sumCostdataCostCosts +
-                this.sumreportlistAll2[0]?.sumCostdataCostCosts +
-                this.sumreportlistAll3[0]?.sumCostdataCostCosts);
+           
+            this.maintenanceAllcount =
+              parseInt(this.sumreportlistAll[0]?.sumdataMaintenance || 0) +
+              parseInt(this.sumreportlistAll2[0]?.sumdataMaintenance  || 0) +
+              parseInt(this.sumreportlistAll3[0]?.sumdataMaintenance  || 0)
+            this.maintenancefeeAllcount =
+              parseInt(this.sumreportlistAll[0]?.sumdataMaintenancefree|| 0) +
+              parseInt(this.sumreportlistAll2[0]?.sumdataMaintenancefree|| 0) +
+              parseInt(this.sumreportlistAll3[0]?.sumdataMaintenancefree|| 0)
+            this.insuranceAllcount =
+              parseInt(this.sumreportlistAll[0]?.sumdataInsurance|| 0) +
+              parseInt(this.sumreportlistAll2[0]?.sumdataInsurance|| 0) +
+              parseInt(this.sumreportlistAll3[0]?.sumdataInsurance|| 0)
+            this.sumAllcount =
+              parseInt(this.sumreportlistAll[0]?.sumCostdataInsurance|| 0) +
+              parseInt(this.sumreportlistAll2[0]?.sumCostdataInsurance|| 0) +
+              parseInt(this.sumreportlistAll3[0]?.sumCostdataInsurance|| 0)
+            this.waterbillAllcount =
+              parseInt(this.sumreportlistAll[0]?.sumdatawaterbill|| 0) +
+              parseInt(this.sumreportlistAll2[0]?.sumdatawaterbill|| 0) +
+              parseInt(this.sumreportlistAll3[0]?.sumdatawaterbill|| 0)
+            this.electricitybillAllcount =
+              parseInt(this.sumreportlistAll[0]?.sumdataelectricitybill|| 0) +
+              parseInt(this.sumreportlistAll2[0]?.sumdataelectricitybill|| 0) +
+              parseInt(this.sumreportlistAll3[0]?.sumdataelectricitybill|| 0)
+            this.Costdatawaterbillcount =
+              parseInt(this.sumreportlistAll[0]?.sumCostdatawaterbill|| 0) +
+              parseInt(this.sumreportlistAll2[0]?.sumCostdatawaterbill|| 0) +
+              parseInt(this.sumreportlistAll3[0]?.sumCostdatawaterbill|| 0)
+            this.centralAllcount =
+              parseInt(this.sumreportlistAll[0]?.sumdatacentral|| 0) +
+              parseInt(this.sumreportlistAll2[0]?.sumdatacentral|| 0) +
+              parseInt(this.sumreportlistAll3[0]?.sumdatacentral|| 0)
+            this.costsAllcount =
+              parseInt(this.sumreportlistAll[0]?.sumdatacosts || 0)+
+              parseInt(this.sumreportlistAll2[0]?.sumdatacosts || 0)+
+              parseInt(this.sumreportlistAll3[0]?.sumdatacosts|| 0)
+            this.CostCostsAllcount =
+              parseInt(this.sumreportlistAll[0]?.sumCostdataCostCosts || 0)+
+              parseInt(this.sumreportlistAll2[0]?.sumCostdataCostCosts|| 0) +
+              parseInt(this.sumreportlistAll3[0]?.sumCostdataCostCosts|| 0)
           })
           .catch((err) => {
             console.log(err);
