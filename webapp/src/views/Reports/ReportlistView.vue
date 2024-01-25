@@ -433,11 +433,8 @@ export default {
         if (newValue?.label !== undefined) {
           if (newValue.label != "ทั้งหมด") {
             this.Affiliation = newValue.value;
-            console.log(this.AffiliationListOld);
             let x = this.AffiliationListOld.findIndex((el) => el.label == newValue.label);
-            console.log(x);
             this.AffiliationLable = this.AffiliationListOld[x].value;
-            console.log(this.Affiliation);
             this.getReportAffiliation(this.mountLable, this.yearNumber, this.Affiliation);
           } else {
             this.AffiliationLable = "";
@@ -986,24 +983,23 @@ export default {
             let data8 = [];
             let data9 = [];
             let dataTR = []
-            let arr = [];
-            let arr2 = [];
-            let arr3 = [];
-            let arr4 = [];
-            let arr5 = [];
             let data3 = res.data;
             let data4 = res.data;
-            this.reportList = res.data;
 
             data = data3.filter(
               (el) =>
                 el.typeUser == "บช.ตชด." &&
                 el.monthly == this.dateNow &&
-                el.years == this.yearNow
+                el.years == this.yearNow &&
+                el.affiliation == Affiliation
             );
             data2 = data4.filter(
-              (ele2) =>
-                ele2.typeUser == "ตร." && ele2.monthly == this.mountCT && ele2.years == y
+              (el2) =>
+                el2.typeUser == "ตร." && 
+                el2.typeContract == "หักได้" && 
+                el2.monthly == this.mountCT && 
+                el2.years == y && 
+                el2.affiliation == Affiliation
             );
 
             data8 = data4.filter(
@@ -1011,30 +1007,28 @@ export default {
                 el8.typeUser == "ตร." &&
                 el8.typeContract == "หักไม่ได้" &&
                 el8.monthly == this.mountCT &&
-                el8.years == y
+                el8.years == y &&
+                el8.affiliation == Affiliation
             );
 
             dataTR = data4.filter(
-              (el2) =>
-                el2.typeUser == "ตร." &&
-                el2.typeContract == "หักได้" &&
-                el2.monthly == this.mountTR &&
-                el2.years == this.yearNumberTR
+              (el7) =>
+                el7.typeUser == "ตร." &&
+                el7.typeContract == "หักได้" &&
+                el7.monthly == this.mountTR &&
+                el7.years == this.yearNumberTR &&
+                el7.affiliation == Affiliation
             );
 
             data9 = data3.filter(
               (el9) =>
                 el9.typeUser == "บช.ตชด." &&
                 el9.monthly == this.mountCT &&
-                el9.years == this.yearNow
+                el9.years == this.yearNow &&
+                el9.affiliation == Affiliation
             );
 
-            arr = data.filter((ele) => ele.affiliation === Affiliation);
-            arr2 = data2.filter((el2) => el2.affiliation === Affiliation);
-            arr3 = data8.filter((ele3) => ele3.affiliation == Affiliation);
-            arr4 = data9.filter((el4) => el4.affiliation == Affiliation);
-            arr5 = dataTR.filter((el5) => el5.affiliation == Affiliation);
-            this.mapData(arr, arr2, arr3, arr4,arr5);
+            this.mapData(data, data2, data8, data9, dataTR);
             // this.reportlistTD = data2;
             // console.log(this.reportlistCTD);
           })
@@ -1053,25 +1047,55 @@ export default {
           .then((res) => {
             let data = [];
             let data2 = [];
-            let arr = [];
-            let arr2 = [];
+            let data8 = [];
+            let data9 = [];
+            let dataTR = []
             let data3 = res.data;
             let data4 = res.data;
-            this.reportList = res.data;
 
             data = data3.filter(
               (el) =>
                 el.typeUser == "บช.ตชด." &&
                 el.monthly == this.dateNow &&
-                el.years == this.yearNow
+                el.years == this.yearNow &&
+                el.rank == ranksType
             );
             data2 = data4.filter(
-              (ele2) => ele2.typeUser == "ตร." && ele2.monthly == m && ele2.years == y
+              (el2) =>
+                el2.typeUser == "ตร." && 
+                el2.typeContract == "หักได้" && 
+                el2.monthly == this.mountCT && 
+                el2.years == y && 
+                el2.rank == ranksType
             );
 
-            arr = data.filter((ele) => ele.rank == ranksType);
-            arr2 = data2.filter((el3) => el3.rank == ranksType);
-            this.mapData(arr, arr2);
+            data8 = data4.filter(
+              (el8) =>
+                el8.typeUser == "ตร." &&
+                el8.typeContract == "หักไม่ได้" &&
+                el8.monthly == this.mountCT &&
+                el8.years == y &&
+                el8.rank == ranksType
+            );
+
+            dataTR = data4.filter(
+              (el7) =>
+                el7.typeUser == "ตร." &&
+                el7.typeContract == "หักได้" &&
+                el7.monthly == this.mountTR &&
+                el7.years == this.yearNumberTR &&
+                el7.rank == ranksType
+            );
+
+            data9 = data3.filter(
+              (el9) =>
+                el9.typeUser == "บช.ตชด." &&
+                el9.monthly == this.mountCT &&
+                el9.years == this.yearNow &&
+                el9.rank == ranksType
+            );
+
+            this.mapData(data, data2, data8, data9, dataTR);
             // this.reportlistTD = data2;
             // console.log(this.reportlistCTD);
           })
@@ -2543,10 +2567,7 @@ export default {
           costs: el.costs || 0,
           waterbill: el.waterbill || 0,
           electricitybill: el.electricitybill || 0,
-          Installmenttime: this.checkMonth(
-            el.dateApproved || new Date(),
-            el.installments
-          ),
+          Installmenttime: el.installmentsTime
         };
       });
 
@@ -2572,10 +2593,7 @@ export default {
           maintenance: el2.maintenance || 0,
           waterbill: el2.waterbill || 0,
           electricitybill: el2.electricitybill || 0,
-          Installmenttime: this.checkMonth(
-            el2.dateApproved || new Date(),
-            el2.installments
-          ),
+          Installmenttime: el2.installmentsTime
         };
       });
 
@@ -2601,10 +2619,7 @@ export default {
           maintenance: el3.maintenance || 0,
           waterbill: el3.waterbill || 0,
           electricitybill: el3.electricitybill || 0,
-          Installmenttime: this.checkMonth(
-            el3.dateApproved || new Date(),
-            el3.installments
-          ),
+          Installmenttime: el3.installmentsTime
         };
       });
 
@@ -2630,10 +2645,7 @@ export default {
           maintenance: el4.maintenance || 0,
           waterbill: el4.waterbill || 0,
           electricitybill: el4.electricitybill || 0,
-          Installmenttime: this.checkMonth(
-            el4.dateApproved || new Date(),
-            el4.installments
-          ),
+          Installmenttime: el4.installmentsTime
         };
       });
 
@@ -2659,13 +2671,16 @@ export default {
           maintenance: el5.maintenance || 0,
           waterbill: el5.waterbill || 0,
           electricitybill: el5.electricitybill || 0,
-          Installmenttime: this.checkMonth(
-            el5.dateApproved || new Date(),
-            el5.installments
-          ),
+          Installmenttime: el5.installmentsTime
         };
       });
-      let arr6 = arr.filter(ee=> ee.accumulated != ee.amountPaid )
+
+      let arr6 = arr.map(er => {
+        if(er.accumulated == er.amountPaid){
+            er.accumulated = "-"
+        }
+        return er
+      })
       let arr7 = arr4.filter(ee=> ee.accumulated != ee.amountPaid )
 
       await this.mapsumAll(arr6, arr2, arr3, arr7,arr5);
@@ -2680,14 +2695,13 @@ export default {
       arr = await data.map((el, i) => {
         return {
           ...el,
-          amountPaidSum: this.AmountPaidSum(data),
           waterbillSum: this.WaterbillSum(data),
           electricitybillSum: this.ElectricitybillSum(data),
           centralSum: this.CentralSum(data),
           costsSum: this.CostsSum(data),
           InsuranceSum: this.InsuranceSum(data),
           MaintenanceSum: this.MaintenanceSum(data),
-          accumulatedSum: this.AccumulatedSum(data),
+          accumulatedSum: this.AccumulatedSumTwo(data),
           maintenancefeeSum: this.maintenancefeeCount(data),
           
         };
@@ -2697,7 +2711,6 @@ export default {
         return {
           ...el2,
           accumulated: this.countSumAccumulated(el2),
-          amountPaidSum: this.AmountPaidSum(data2),
           waterbillSum: this.WaterbillSum(data2),
           maintenancefeeSum: this.maintenancefeeCount(data2),
           electricitybillSum: this.ElectricitybillSum(data2),
@@ -2713,7 +2726,6 @@ export default {
       arr3 = await data3.map((el3, i) => {
         return {
           ...el3,
-          amountPaidSum: this.AmountPaidSum(data3),
           waterbillSum: this.WaterbillSum(data3),
           maintenancefeeSum: this.maintenancefeeCount(data3),
           electricitybillSum: this.ElectricitybillSum(data3),
@@ -2729,7 +2741,6 @@ export default {
       arr4 = await data4.map((el4, i) => {
         return {
           ...el4,
-          amountPaidSum: this.AmountPaidSum(data4),
           waterbillSum: this.WaterbillSum(data4),
           maintenancefeeSum: this.maintenancefeeCount(data4),
           electricitybillSum: this.ElectricitybillSum(data4),
@@ -2746,7 +2757,6 @@ export default {
         return {
           ...el5,
           accumulated: this.countSumAccumulated(el5),
-          amountPaidSum: this.AmountPaidSum(dataTR),
           waterbillSum: this.WaterbillSum(dataTR),
           maintenancefeeSum: this.maintenancefeeCount(dataTR),
           electricitybillSum: this.ElectricitybillSum(dataTR),
@@ -2758,6 +2768,7 @@ export default {
        
         };
       });
+
      
       await this.mapdataSum(arr, arr2, arr3, arr4,arr5);
     },
@@ -2799,6 +2810,7 @@ export default {
       arr = await data.map((el) => {
         return {
           ...el,
+          amountPaidSum: this.countSumAccmulated(el),
           sumCostwaterbill: this.countSumWaterbill(el),
           sumCostCentral: this.countSumcentral(el),
           sumCostCosts: this.countSumcosts(el),
@@ -2808,6 +2820,7 @@ export default {
       arr2 = await data2.map((el2) => {
         return {
           ...el2,
+          // amountPaidSum: this.countSumAccmulated(el2),
           sumCostwaterbill: this.countSumWaterbill(el2),
           sumCostCentral: this.countSumcentral(el2),
           sumCostCosts: this.countSumcosts(el2),
@@ -2817,6 +2830,7 @@ export default {
       arr3 = await data3.map((el3) => {
         return {
           ...el3,
+          // amountPaidSum: this.countSumAccmulated(el3),
           sumCostwaterbill: this.countSumWaterbill(el3),
           sumCostCentral: this.countSumcentral(el3),
           sumCostCosts: this.countSumcosts(el3),
@@ -2826,6 +2840,7 @@ export default {
       arr4 = await data4.map((el4) => {
         return {
           ...el4,
+          // amountPaidSum: this.countSumAccmulated(el4),
           sumCostwaterbill: this.countSumWaterbill(el4),
           sumCostCentral: this.countSumcentral(el4),
           sumCostCosts: this.countSumcosts(el4),
@@ -2835,6 +2850,7 @@ export default {
       arr5 = await data5.map((el5) => {
         return {
           ...el5,
+          amountPaidSum: this.countSumAccmulated(el5),
           sumCostwaterbill: this.countSumWaterbill(el5),
           sumCostCentral: this.countSumcentral(el5),
           sumCostCosts: this.countSumcosts(el5),
@@ -2962,7 +2978,6 @@ export default {
           central: this.numberWithCommas(el3.central) || 0,
           costs: this.numberWithCommas(el3.costs) || 0,
           insurance: this.numberWithCommas(el3.insurance) || 0,
-          amountPaidSum: this.numberWithCommas(el3.amountPaidSum) || 0,
           waterbillSum: this.numberWithCommas(el3.waterbillSum) || 0,
           electricitybillSum: this.numberWithCommas(el3.electricitybillSum) || 0,
           maintenance: this.numberWithCommas(el3.maintenance) || 0,
@@ -2994,7 +3009,6 @@ export default {
           central: this.numberWithCommas(ele.central) || 0,
           costs: this.numberWithCommas(ele.costs) || 0,
           insurance: this.numberWithCommas(ele.insurance) || 0,
-          amountPaidSum: this.numberWithCommas(ele.amountPaidSum) || 0,
           waterbillSum: this.numberWithCommas(ele.waterbillSum) || 0,
           electricitybillSum: this.numberWithCommas(ele.electricitybillSum) || 0,
           maintenance: this.numberWithCommas(ele.maintenance) || 0,
@@ -3026,7 +3040,6 @@ export default {
           central: this.numberWithCommas(el4.central) || 0,
           costs: this.numberWithCommas(el4.costs) || 0,
           insurance: this.numberWithCommas(el4.insurance) || 0,
-          amountPaidSum: this.numberWithCommas(el4.amountPaidSum) || 0,
           waterbillSum: this.numberWithCommas(el4.waterbillSum) || 0,
           electricitybillSum: this.numberWithCommas(el4.electricitybillSum) || 0,
           maintenance: this.numberWithCommas(el4.maintenance) || 0,
@@ -3057,7 +3070,6 @@ export default {
           central: this.numberWithCommas(el5.central) || 0,
           costs: this.numberWithCommas(el5.costs) || 0,
           insurance: this.numberWithCommas(el5.insurance) || 0,
-          amountPaidSum: this.numberWithCommas(el5.amountPaidSum) || 0,
           waterbillSum: this.numberWithCommas(el5.waterbillSum) || 0,
           electricitybillSum: this.numberWithCommas(el5.electricitybillSum) || 0,
           maintenance: this.numberWithCommas(el5.maintenance) || 0,
@@ -3078,7 +3090,7 @@ export default {
     },
 
     mapTypeContact(data, data2, data3, data4,data5) {
-      let arr1 = [];
+      let arr1 = []; 
       let arr2 = [];
       let arr3 = [];
       let arr4 = [];
@@ -3334,6 +3346,12 @@ export default {
       return parseInt(item.maintenance || 0) + parseInt(item.insurance) || 0;
     },
 
+    countSumAccmulated(item) {
+      let ss = parseInt(item.MaintenanceSum || 0) + parseInt(item.accumulatedSum || 0) 
+      return ss 
+    },
+   
+
     OGCount(items) {
       return items.reduce((insuranceSum, ele) => {
         let c = parseInt(ele.insurance || 0) / parseInt(ele.installments || 0);
@@ -3372,7 +3390,7 @@ export default {
       }, 0);
     },
 
-    AmountPaidSum(items) {
+    AmountPaidSums(items) {
       return items.reduce((amountPaidSum, ele) => {
         if (ele.amountPaid !== undefined) return amountPaidSum + parseInt(ele.amountPaid);
         else return amountPaidSum;
@@ -3394,16 +3412,45 @@ export default {
           ele.installments !== undefined &&
           ele.installments !== " " &&
           ele.installments !== ""
-        )
+        ){
           if (parseInt(ele.installments) !== 0) {
             return (
               accumulatedSum +
               (parseInt(ele.insurance) || 0) / (parseInt(ele.installments) || 0)
             );
-          } else {
+          } 
+          else {
             return accumulatedSum + parseInt(ele.insurance) || 0;
           }
-        else return accumulatedSum;
+        }
+        return accumulatedSum ;
+      }, 0);
+    },
+
+
+    AccumulatedSumTwo(items) {
+      return items.reduce((accumulatedSum, ele) => {
+        if (
+          ele.insurance !== undefined &&
+          ele.installments !== undefined &&
+          ele.installments !== " " &&
+          ele.installments !== ""
+        )
+        if(parseInt(ele.amountPaid) !== parseInt(ele.insurance)){
+          if (parseInt(ele.installments) !== 0) {
+            return (
+              accumulatedSum +
+              (parseInt(ele.insurance) || 0) / (parseInt(ele.installments) || 0)
+            );
+          } 
+          else {
+            return accumulatedSum + parseInt(ele.insurance) || 0;
+          }
+        
+        }else{
+          return accumulatedSum  ;
+        }
+         
       }, 0);
     },
 
@@ -3492,7 +3539,7 @@ export default {
     MaintenanceSum(items) {
       return items.reduce((MaintenanceSum, ele) => {
         if (ele.maintenance !== undefined)
-          return MaintenanceSum + parseInt(ele.maintenance || 0);
+          return MaintenanceSum + parseInt(ele.maintenance);
         else return MaintenanceSum;
       }, 0);
     },
@@ -5175,7 +5222,7 @@ export default {
           "",
           { text: thaiNum[0].MaintenanceSum, style: "header", alignment: "right" },
           { text: thaiNum[0].accumulatedSum, style: "header", alignment: "right" },
-          { text: thaiNum[0].amountPaidSum, style: "header", alignment: "right" },
+          { text: thaiNum[0].amountPaidSum, colSpan: 2, style: "header", alignment: "right" },
           "",
         ],
       ];
@@ -7290,7 +7337,7 @@ export default {
                                   )
                                 }}
                               </th>
-                              <th data-t="n" data-z="#,##">
+                              <th data-t="n" data-z="#,##" >
                                 {{
                                   numberWithCommas(
                                     AffiliationListCTD[0]?.countCostSumAll || "-"
@@ -7378,7 +7425,7 @@ export default {
                                     )
                                   }}
                                 </th>
-                                <th data-t="n" data-z="#,##">
+                                <th colspan="2" data-t="n" data-z="#,##" >
                                   {{
                                     numberWithCommas(
                                       reportlistCTD[0]?.amountPaidSum || "-"

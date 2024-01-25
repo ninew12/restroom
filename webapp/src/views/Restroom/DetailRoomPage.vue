@@ -88,7 +88,8 @@ export default {
       vehicleNumber: "",
       numberPeople: "",
       roomconditionsCause: "",
-      roomconditions: ""
+      roomconditions: "",
+      installmentsTime: ""
     };
   },
   created() {
@@ -177,6 +178,7 @@ export default {
               this.bookNumber = data.bookNumber;
               this.vehicleNumber = data.vehicleNumber
               this.numberPeople = data.numberPeople
+              this.installmentsTime = data.installmentsTime
           })
           .catch((err) => {
             console.log(err);
@@ -198,6 +200,7 @@ export default {
           this.Affiliation = this.data.affiliation;
           this.roomconditionsCause = this.data.roomconditionsCause
           this.roomconditions = this.data.roomconditions;
+          this.installmentsTime = this.data.installmentsTime
           if (this.data.userId) {
             this.getAllusersByid(this.data.userId);
           }
@@ -291,6 +294,7 @@ export default {
         numberPeople: this.numberPeople,
         dateApproved: this.dateApp.toISOString(),
         roomStatus: this.statusRoom,
+        installmentsTime : this.installmentsTime
       };
       await axios
         .post(`http://localhost:3897/history`, body, {
@@ -339,6 +343,7 @@ export default {
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
         roomStatus: this.statusRoom,
+        installmentsTime : this.installmentsTime,
         no: "",
       };
       await axios.put(`http://localhost:3897/users/${this.userId}`, body, {
@@ -381,6 +386,7 @@ export default {
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
         roomStatus: this.statusRoom,
+        installmentsTime : this.installmentsTime
       };
 
       await axios.post(`http://localhost:3897/report`, body, {
@@ -407,6 +413,7 @@ export default {
         years: this.years,
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
+        installmentsTime : this.installmentsTime
       };
 
       await axios.put(`http://localhost:3897/report/${this.reportId}`, body, {
@@ -440,6 +447,7 @@ export default {
         insurance: this.insurance,
         installments: this.installments,
         amountPaid: this.amountPaid,
+        installmentsTime : this.installmentsTime,
         no: "",
       };
       await axios.put(`http://localhost:3897/queue/${this.userId}`, body, {
@@ -478,6 +486,7 @@ export default {
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
         dateApproved: this.dateApp.toISOString(),
+        installmentsTime : this.installmentsTime
       };
       await axios
         .put(`http://localhost:3897/rooms/${this.id}`, body, {
@@ -531,6 +540,7 @@ export default {
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
         dateApproved: this.dateApp.toISOString(),
+        installmentsTime : this.installmentsTime
       };
 
       await axios
@@ -565,6 +575,7 @@ export default {
         contract: this.contract,
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
+        installmentsTime : this.installmentsTime,
         no: "",
       };
       // console.log(body);
@@ -580,6 +591,11 @@ export default {
             title: "แก้ไขข้อมูลสำเร็จ",
             type: "success",
           });
+          if (this.reportType == "havedata") {
+            this.editToreport();
+          } else if (this.reportType == "none") {
+            this.submitForm2();
+          }
           setTimeout(() => {
             this.getAllusersByid(this.userId);
           }, 500);
@@ -704,6 +720,10 @@ export default {
                         <p class="card-text">
                           งวดค่าประกัน : {{ data?.maintenanceCost }}
                         </p>
+                        <p class="card-text">
+                          เดือนที่เริ่มผ่อนถึงเดือนที่สิ้นสุดการผ่อน : {{ installmentsTime ||"-" }} 
+                        </p>
+                        
                         <p class="card-text">จำนวนคนเข้าพักอาศัย : {{ numberPeople }}</p>
                         <p class="card-text">เลขทะเบียนรถ : {{ vehicleNumber }}</p>
                       </div>
@@ -845,6 +865,16 @@ export default {
                   placeholder="จำนวนงวดเงินค่าประกัน(กรอก 0 กรณีชำระครบแล้ว)"
                 />
               </div>
+              <div class="mb-3">
+              <label>เดือนที่เริ่มผ่อนถึงเดือนที่สิ้นสุดการผ่อน (เช่น มกราคม 2566 - ธันว่าคม 2566)</label>
+              <MaterialInput
+                :value="installmentsTime"
+                @input="(event) => (installmentsTime = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="เดือนที่เริ่มผ่อนถึงเดือนที่สิ้นสุดการผ่อน"
+              />
+            </div>
             </div>
           </div>
           <div class="modal-footer">
@@ -1121,6 +1151,16 @@ export default {
                 placeholder="จำนวนงวดเงินค่าประกัน(กรอก 0 กรณีชำระครบแล้ว)"
               />
             </div>
+            <div class="mb-3">
+              <label>เดือนที่เริ่มผ่อนถึงเดือนที่สิ้นสุดการผ่อน (เช่น มกราคม 2566 - ธันว่าคม 2566)</label>
+              <MaterialInput
+                :value="installmentsTime"
+                @input="(event) => (installmentsTime = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="เดือนที่เริ่มผ่อนถึงเดือนที่สิ้นสุดการผ่อน"
+              />
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -1340,6 +1380,16 @@ export default {
                 class="input-group-static"
                 type="text"
                 placeholder="เลขทะเบียนรถ"
+              />
+            </div>
+            <div class="mb-3">
+              <label>เดือนที่เริ่มผ่อนถึงเดือนที่สิ้นสุดการผ่อน (เช่น มกราคม 2566 - ธันว่าคม 2566)</label>
+              <MaterialInput
+                :value="installmentsTime"
+                @input="(event) => (installmentsTime = event.target.value)"
+                class="input-group-static"
+                type="text"
+                placeholder="เดือนที่เริ่มผ่อนถึงเดือนที่สิ้นสุดการผ่อน"
               />
             </div>
           </div>

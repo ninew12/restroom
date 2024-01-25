@@ -145,6 +145,8 @@ app.put('/users/:id', (req, res) => {
     if (req.body.position) parsedData.position = req.body.position
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
     if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus
+    if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
+    
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata), (err) => {
         if (err) {
@@ -327,6 +329,7 @@ app.put('/expenses/:id', (req, res) => {
     if (req.body.position) parsedData.position = req.body.position
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
     if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus
+    if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
     filterdata.push(parsedData)
     fs.writeFileSync('./fixtest.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -432,6 +435,7 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
     if (req.body.firstnumber) parsedData.firstnumber = req.body.firstnumber
     if (req.body.lastnumber) parsedData.lastnumber = req.body.lastnumber
+    if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
     filterdata.push(parsedData)
     fs.writeFileSync('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -506,6 +510,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.numberPeople) parsedData.numberPeople = req.body.numberPeople
     if (req.body.position) parsedData.position = req.body.position
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
+    if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
     
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -606,6 +611,7 @@ app.put('/history/:id', (req, res) => {
     if (req.body.costs) parsedData.costs = req.body.costs
     if (req.body.sumCost) parsedData.sumCost = req.body.sumCost
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
+    if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
     filterdata.push(parsedData)
     fs.writeFileSync('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -767,6 +773,7 @@ app.put('/report/:id', (req, res) => {
     if (req.body.costs) parsedData.costs = req.body.costs
     if (req.body.sumCost) parsedData.sumCost = req.body.sumCost
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
+    if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
 
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -843,6 +850,7 @@ app.put('/reportUser/:id', (req, res) => {
     if (req.body.costs) parsedData.costs = req.body.costs
     if (req.body.sumCost) parsedData.sumCost = req.body.sumCost
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
+    if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
