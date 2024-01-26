@@ -5843,7 +5843,7 @@ export default {
             </div>
             <div class="col-lg-9">
               <div>
-                <div v-if="submenus == 'submenu4'">
+                <div v-show="submenus == 'submenu4'">
                   <div>
                     <div class="pt-4 text-start">
                       <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
@@ -6121,7 +6121,7 @@ export default {
                   </div>
                 </div>
 
-                <div v-if="submenus == 'submenu3'">
+                <div v-show="submenus == 'submenu3'">
                   <div class="pt-4 text-start">
                     <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
                     <div class="mb-3">
@@ -6429,7 +6429,7 @@ export default {
                   </div>
                 </div>
 
-                <div v-if="submenus == 'submenu5'">
+                <div v-show="submenus == 'submenu5'">
                   <div class="pt-4 text-start">
                     <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
                     <div class="mb-3">
@@ -6704,7 +6704,7 @@ export default {
                   </div>
                 </div>
 
-                <div v-if="submenus == 'submenu6'">
+                <div v-show="submenus == 'submenu6'">
                   <div class="pt-4 text-start">
                     <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
 
@@ -7150,7 +7150,7 @@ export default {
                   </div>
                 </div>
 
-                <div v-if="submenus == 'submenu1'">
+                <div v-show="submenus == 'submenu1'">
                   <div class="text-center pt-4 table-responsive">
                     <div>
                       <div class="pt-4 text-start">
@@ -7441,7 +7441,7 @@ export default {
                   </div>
                 </div>
 
-                <div v-if="submenus == 'submenu2'">
+                <div v-show="submenus == 'submenu2'">
                   <div class="pt-4 text-start">
                     <!-- <h5>รวมค่าใช้จ่ายทั้งหมด : 950</h5> -->
                     <div class="mb-3">
