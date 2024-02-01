@@ -7693,8 +7693,8 @@ export default {
                           <th data-t="n" data-z="#,##">
                             {{
                               numberWithCommas(
-                                AffiliationListTD[0]?.countCostwaterbillAll
-                              ) || "-"
+                                AffiliationListTD[0]?.countCostwaterbillAll || "-"
+                              ) 
                             }}
                           </th>
                         </tr>

@@ -683,9 +683,10 @@ app.delete('/layout/:id', (req, res) => {
     res.send(`Delete user '${users[deletedIndex].username}' completed.`)
 })
 
-app.get('/report', (req, res) => {
+app.get('/report', (req, res) => { 
+    let finddata = reports.filter(report => report.roomStatus !== "special") 
     res.header("Access-Control-Allow-Origin", "*");
-    res.json(reports)
+    res.json(finddata)
 })
 app.get('/report/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");

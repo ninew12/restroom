@@ -608,6 +608,8 @@ export default {
     clearData(){
       this.vehicleNumber ="",
       this.numberPeople = ""
+      this.firstName = "",
+      this.lastName = ""
     },
     Previous() {
       window.history.back();
@@ -675,6 +677,7 @@ export default {
                 color="danger"
                 data-bs-toggle="modal"
                 data-bs-target="#userBackdrop"
+                @click="clearData"
                 >กรณีพิเศษ</MaterialButton
               >
               <MaterialButton
@@ -1206,7 +1209,7 @@ export default {
               <div class="mb-1">
                 <label class="starRed">สังกัด</label>
                 <v-select
-                  :options="masterData?.typeAffiliation"
+                  :options="masterData?.typeAffiliation2"
                   v-model="typeAffiliation"
                 ></v-select>
               </div>
