@@ -109,11 +109,12 @@
     "amountPaid": "600",
     "roomId": "81b977bc-283c-4bf1-832c-d9e3c1dfcd92",
     "roomnumber": "1279/120",
-    "dateApproved": "2023-12-11T08:36:56.808Z",
+    "dateApproved": "2024-01-31T03:54:44.584Z",
     "buildingName": "อาคารแฟลต 1/11",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "4524fc70-a379-4a47-a019-e5e570242439",
@@ -138,11 +139,12 @@
     "amountPaid": "600",
     "roomId": "ca3b8e3d-01be-4359-91a0-1edd93cb58bb",
     "roomnumber": " 1279/123",
-    "dateApproved": "2023-12-11T08:38:32.015Z",
+    "dateApproved": "2024-01-31T03:59:19.931Z",
     "buildingName": "อาคารแฟลต 1/11",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "e1ee6887-bb5c-4a62-9135-9d17b63988eb",
@@ -213,10 +215,10 @@
     "rankNumber": 16,
     "idcard": "5800100013337",
     "phone": "",
-    "rank": "ด.ต.",
+    "rank": "ร.ต.ต.",
     "selectedDataObtion": "โสด",
     "typeAffiliation": "บก.อก.",
-    "typeRanks": "ประทวน",
+    "typeRanks": "สัญญาบัตร",
     "typeUser": "บช.ตชด.",
     "queue": "inroom",
     "maintenance": "60",
@@ -229,7 +231,8 @@
     "buildingName": "อาคารแฟลต 1/11",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "status": "โสด"
   },
   {
     "id": "a9f2f21a-6d49-450a-8928-6b58fb4c543a",
@@ -283,11 +286,12 @@
     "amountPaid": "600",
     "roomId": "d9e57366-588b-4272-a795-44f10b61415d",
     "roomnumber": "1279/111",
-    "dateApproved": "2023-12-11T08:43:20.374Z",
+    "dateApproved": "2024-01-31T04:09:36.686Z",
     "buildingName": "อาคารแฟลต 1/11",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "35cad0f3-3f91-4c2e-ac1f-502ee8206446",
@@ -428,11 +432,12 @@
     "amountPaid": "1200",
     "roomId": "bb0489eb-9bee-43be-971d-2bded39345e4",
     "roomnumber": "1279/107",
-    "dateApproved": "2023-12-11T08:46:08.710Z",
+    "dateApproved": "2024-01-31T04:14:02.177Z",
     "buildingName": "อาคารแฟลต 1/11",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ก.ค.66 - เม.ย.67"
   },
   {
     "id": "5e3c38c6-9ff4-46c0-9d5d-3f596dfe4cd6",
@@ -457,11 +462,12 @@
     "amountPaid": "400",
     "roomId": "cce39dd1-a851-4b91-9925-889e5acba1ed",
     "roomnumber": "1279/112",
-    "dateApproved": "2023-12-11T08:47:03.406Z",
+    "dateApproved": "2024-01-31T04:16:43.122Z",
     "buildingName": "อาคารแฟลต 1/11",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "พ.ย.66 - ส.ค.67"
   },
   {
     "id": "c81f3bdd-ff4a-471f-9274-4579ab8f70ac",
@@ -631,11 +637,12 @@
     "amountPaid": "600",
     "roomId": "0e83f05e-892c-41fd-a015-ee9daa94cc67",
     "roomnumber": "1279/113",
-    "dateApproved": "2023-12-11T08:52:31.426Z",
+    "dateApproved": "2024-01-31T04:26:19.383Z",
     "buildingName": "อาคารแฟลต 1/11",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "15e08943-4d84-48c5-af3b-bd1fad75e3a2",
@@ -835,11 +842,12 @@
     "amountPaid": "400",
     "roomId": "d87f1558-ed18-4617-9b49-2f7c70f2a194",
     "roomnumber": "1279/216",
-    "dateApproved": "2023-12-11T09:05:02.611Z",
+    "dateApproved": "2024-01-31T03:58:38.093Z",
     "buildingName": "อาคารแฟลต 1/12",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "พ.ย.66 - ส.ค.67"
   },
   {
     "id": "29ce8064-6ade-408d-9469-f3372e8b01ff",
@@ -1157,11 +1165,12 @@
     "amountPaid": "600",
     "roomId": "21f9703d-ea82-4412-9718-31277bc3c3af",
     "roomnumber": "1279/313",
-    "dateApproved": "2023-12-11T13:06:15.196Z",
+    "dateApproved": "2024-01-31T03:51:35.937Z",
     "buildingName": "อาคารแฟลต 1/13",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "849a711b-7a3f-4f69-aecc-5335d39de34a",
@@ -1273,11 +1282,12 @@
     "amountPaid": "600",
     "roomId": "bbf01e84-ff53-4fa5-9b7e-f82ffcbac0e6",
     "roomnumber": "1279/306",
-    "dateApproved": "2023-12-11T13:12:24.594Z",
+    "dateApproved": "2024-01-31T03:59:58.641Z",
     "buildingName": "อาคารแฟลต 1/13",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "7f56b5e0-9ce2-4bf2-b898-3f26fec5c1fe",
@@ -1302,11 +1312,12 @@
     "amountPaid": "400",
     "roomId": "8647ce01-71a3-4e8c-b448-4f33f7c8e8b5",
     "roomnumber": "1279/ 310",
-    "dateApproved": "2023-12-11T13:14:49.709Z",
+    "dateApproved": "2024-01-31T04:02:58.256Z",
     "buildingName": "อาคารแฟลต 1/13",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "พ.ย.66 - ส.ค.67"
   },
   {
     "id": "cb568079-7b96-4e54-8679-303ca7d571db",
@@ -2093,6 +2104,36 @@
     "roomStatus": "ว่าง"
   },
   {
+    "id": "b4f814ca-66d5-4c87-81e9-d77069707364",
+    "userId": "e58dcbb6-9a8c-4e2a-a8ad-406aff3917ac",
+    "firstName": "บดินทร์",
+    "lastName": "ร้อยพรหมมา",
+    "selectedAffiliation": "ฝอ.3",
+    "affiliation": "ฝอ.7",
+    "selectedRanks": "พ.ต.ท.",
+    "rankNumber": 6,
+    "idcard": "",
+    "phone": "",
+    "rank": "พ.ต.ท.",
+    "selectedDataObtion": "โสด",
+    "typeAffiliation": "บก.อก.",
+    "typeRanks": "สัญญาบัตร",
+    "typeUser": "บช.ตชด.",
+    "queue": "inroom",
+    "maintenance": "100",
+    "insurance": "2000",
+    "installments": "10",
+    "amountPaid": "1600",
+    "roomId": "1ac33610-81cf-4685-a1ba-3cc6d0a15901",
+    "roomnumber": "1279/263",
+    "dateApproved": "2023-12-12T15:25:06.774Z",
+    "buildingName": "อาคารแฟลต 1/15",
+    "monthly": "มกราคม",
+    "years": 2024,
+    "roomStatus": "ว่าง",
+    "status": "โสด"
+  },
+  {
     "id": "9521f29b-fca5-4252-91ea-3569543bb167",
     "userId": "36430675-313d-480e-a44a-f687925a0773",
     "firstName": "วรพจน์",
@@ -2115,11 +2156,12 @@
     "amountPaid": "600",
     "roomId": "2518deca-75fa-4062-94ee-22857ffc4e0f",
     "roomnumber": "1279/256",
-    "dateApproved": "2023-12-12T15:25:33.672Z",
+    "dateApproved": "2024-01-31T04:06:39.502Z",
     "buildingName": "อาคารแฟลต 1/15",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "348a0c6d-f449-4209-89e3-20df6ed0c130",
@@ -2376,11 +2418,12 @@
     "amountPaid": "600",
     "roomId": "19ee4fb3-285f-4b9d-8723-1ba367305593",
     "roomnumber": "1279/244",
-    "dateApproved": "2023-12-12T15:31:35.387Z",
+    "dateApproved": "2024-01-31T04:11:47.080Z",
     "buildingName": "อาคารแฟลต 1/15",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "888dc99c-5712-4688-bfd6-e160f34f90d1",
@@ -3449,11 +3492,12 @@
     "amountPaid": "600",
     "roomId": "77844301-ede6-4403-bca2-e054ca016432",
     "roomnumber": "1279/606",
-    "dateApproved": "2023-12-12T16:08:41.231Z",
+    "dateApproved": "2024-01-31T03:53:21.491Z",
     "buildingName": "อาคารแฟลต 1/17",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "a5339a18-5c64-4c58-84fc-2229017777a6",
@@ -3478,11 +3522,12 @@
     "amountPaid": "600",
     "roomId": "16b56072-6de1-454a-a048-64747f241410",
     "roomnumber": "1279/621",
-    "dateApproved": "2023-12-12T16:09:19.201Z",
+    "dateApproved": "2024-01-31T03:53:55.508Z",
     "buildingName": "อาคารแฟลต 1/17",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "42b11d50-549f-454e-bd43-99eb331735b5",
@@ -3652,11 +3697,12 @@
     "amountPaid": "400",
     "roomId": "6b29695b-6c26-4dc8-b156-3a8fe1410eac",
     "roomnumber": "1279/630",
-    "dateApproved": "2023-12-12T16:18:42.613Z",
+    "dateApproved": "2024-01-31T04:08:28.857Z",
     "buildingName": "อาคารแฟลต 1/17",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "พ.ย.66 - ส.ค.67"
   },
   {
     "id": "192c6b56-9f40-49c3-b59b-d29118e0cac5",
@@ -3681,11 +3727,12 @@
     "amountPaid": "600",
     "roomId": "c2752ba7-39f1-4ae3-87bc-51ca90f1f603",
     "roomnumber": "1279/615",
-    "dateApproved": "2023-12-12T16:19:51.469Z",
+    "dateApproved": "2024-01-31T04:10:13.700Z",
     "buildingName": "อาคารแฟลต 1/17",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "4f564649-8d48-4f83-b452-d9a5bd4f485e",
@@ -4029,11 +4076,12 @@
     "amountPaid": "400",
     "roomId": "6343ff4e-5962-4b64-90a8-bebd4e416f78",
     "roomnumber": "1279/627",
-    "dateApproved": "2023-12-12T16:31:11.728Z",
+    "dateApproved": "2024-01-31T04:22:32.786Z",
     "buildingName": "อาคารแฟลต 1/17",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "พ.ย.66 - ส.ค.67"
   },
   {
     "id": "26eb3d74-585e-4a75-afd8-486ab66c4f81",
@@ -4319,11 +4367,12 @@
     "amountPaid": "1400",
     "roomId": "6c658c82-1fa6-48fc-91cc-fed06ee0393f",
     "roomnumber": "1279/721",
-    "dateApproved": "2023-12-12T16:46:56.750Z",
+    "dateApproved": "2024-01-31T03:57:28.729Z",
     "buildingName": "อาคารแฟลต 1/18",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "มิ.ย.66 - มี.ค.67"
   },
   {
     "id": "6825208d-d3d2-41b8-b3f1-3a72a5c5ecf7",
@@ -4348,11 +4397,12 @@
     "amountPaid": "600",
     "roomId": "b8807e54-3703-47bd-8b3a-6f9c8d5455c3",
     "roomnumber": "1279/709",
-    "dateApproved": "2023-12-12T16:47:36.728Z",
+    "dateApproved": "2024-01-31T04:03:33.408Z",
     "buildingName": "อาคารแฟลต 1/18",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "c66c5ca5-b13c-4f38-ac3b-55f028b31e53",
@@ -4365,7 +4415,7 @@
     "rankNumber": 6,
     "idcard": "3100504449005",
     "phone": "",
-    "rank": "พ.ต.ท.",
+    "rank": "พ.ต.อ.",
     "selectedDataObtion": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
@@ -4381,7 +4431,8 @@
     "buildingName": "อาคารแฟลต 1/18",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "status": "โสด"
   },
   {
     "id": "cc224c31-7abe-4cce-8bab-a93054ebbea0",
@@ -4725,11 +4776,12 @@
     "amountPaid": "600",
     "roomId": "bed9111e-7f83-4712-9f2b-ae934191ac15",
     "roomnumber": " 1279/715",
-    "dateApproved": "2023-12-12T17:14:28.571Z",
+    "dateApproved": "2024-01-31T04:11:12.602Z",
     "buildingName": "อาคารแฟลต 1/18",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "651acf60-9c31-42c0-bf69-bafe6fc9806b",
@@ -5013,11 +5065,12 @@
     "amountPaid": "600",
     "roomId": "08b7e6fd-7f38-4950-a389-d8fb097115be",
     "roomnumber": " 1279/726",
-    "dateApproved": "2023-12-12T18:06:14.226Z",
+    "dateApproved": "2024-01-31T04:20:19.864Z",
     "buildingName": "อาคารแฟลต 1/18",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "67cd99d9-aaf3-42de-8ac5-3b1e5bfa5265",
@@ -5564,11 +5617,12 @@
     "amountPaid": "400",
     "roomId": "ebc06063-a1eb-43db-84ca-95fde2a193dd",
     "roomnumber": "62/46",
-    "dateApproved": "2023-12-12T18:34:36.204Z",
+    "dateApproved": "2024-01-31T04:01:46.804Z",
     "buildingName": "ลือชา 1",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "พ.ย.66 - ส.ค.67"
   },
   {
     "id": "e6d2eb67-9b26-478c-8240-22eded197995",
@@ -6205,11 +6259,12 @@
     "amountPaid": "1000",
     "roomId": "231c587d-d039-48ea-9c4d-9012989d838a",
     "roomnumber": " 62/10",
-    "dateApproved": "2023-12-13T05:04:12.737Z",
+    "dateApproved": "2024-01-31T04:23:40.383Z",
     "buildingName": "ลือชา 1",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ส.ค.66 - พ.ค.67"
   },
   {
     "id": "cec40061-b274-4a45-8555-6dc4909e2e16",
@@ -6263,11 +6318,12 @@
     "amountPaid": "1400",
     "roomId": "399be654-7f9c-45bc-bb7a-36234ae8bd73",
     "roomnumber": "62/25",
-    "dateApproved": "2023-12-13T05:06:36.161Z",
+    "dateApproved": "2024-01-31T04:24:44.196Z",
     "buildingName": "ลือชา 1",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "มิ.ย.66 - มี.ค.67"
   },
   {
     "id": "fc79f665-0224-47e5-ae40-0680a5f83951",
@@ -7223,11 +7279,12 @@
     "amountPaid": "600",
     "roomId": "883dda1c-685c-4318-ba58-afa97483ae21",
     "roomnumber": "62/115",
-    "dateApproved": "2023-12-13T06:11:23.568Z",
+    "dateApproved": "2024-01-31T04:22:59.073Z",
     "buildingName": "ลือชา 2",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "97a7f372-0f46-43f2-802d-9ce597ce7152",
@@ -7835,11 +7892,12 @@
     "amountPaid": "1000",
     "roomId": "597cc4de-fee9-44d1-aed7-65d329b81f8d",
     "roomnumber": "62/483",
-    "dateApproved": "2023-12-13T06:52:01.003Z",
+    "dateApproved": "2024-01-31T04:04:08.838Z",
     "buildingName": "อาคารแฟลต (3) ซอยลือชา",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ส.ค.66 - พ.ค.67"
   },
   {
     "id": "56804624-09fa-49c9-ba01-9c13c4f6bd97",
@@ -7864,11 +7922,12 @@
     "amountPaid": "1200",
     "roomId": "d9a2a9f2-56bf-4586-977a-2f374aa87eb5",
     "roomnumber": "62/488",
-    "dateApproved": "2023-12-13T11:17:09.144Z",
+    "dateApproved": "2024-01-31T04:05:35.442Z",
     "buildingName": "อาคารแฟลต (3) ซอยลือชา",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ก.ค.66 - เม.ย.67"
   },
   {
     "id": "d1e1cbf4-ad4b-42f7-8e93-3debd1143dd2",
@@ -7951,11 +8010,12 @@
     "amountPaid": "600",
     "roomId": "b6232b4d-5139-4302-b83c-7b8379c069e8",
     "roomnumber": "62/484",
-    "dateApproved": "2023-12-13T11:39:35.012Z",
+    "dateApproved": "2024-01-31T04:07:52.131Z",
     "buildingName": "อาคารแฟลต (3) ซอยลือชา",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "cd9a7439-3f70-4c61-b294-db58eaecae28",
@@ -8183,11 +8243,12 @@
     "amountPaid": "1000",
     "roomId": "033f5ba2-b40d-4b14-80d9-c93a15b312a5",
     "roomnumber": "62/461",
-    "dateApproved": "2023-12-13T11:49:57.688Z",
+    "dateApproved": "2024-01-31T04:21:49.548Z",
     "buildingName": "อาคารแฟลต (3) ซอยลือชา",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ส.ค.66 - พ.ค.67"
   },
   {
     "id": "b6fd1b59-5858-4506-91c2-6327228c5f08",
@@ -8415,11 +8476,12 @@
     "amountPaid": "600",
     "roomId": "f67c5c0b-1367-4230-b473-38425a02e77f",
     "roomnumber": "89/105",
-    "dateApproved": "2023-12-13T12:00:23.330Z",
+    "dateApproved": "2024-01-31T03:58:04.719Z",
     "buildingName": "อาคารแฟลต (1) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "f3e88582-9838-4a44-97db-1b04e86ec750",
@@ -8473,11 +8535,12 @@
     "amountPaid": "600",
     "roomId": "fb07a0b8-3e13-45cb-b8d0-d58772b837de",
     "roomnumber": " 89/134",
-    "dateApproved": "2023-12-13T12:01:23.850Z",
+    "dateApproved": "2024-01-31T04:00:34.195Z",
     "buildingName": "อาคารแฟลต (1) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "e30344eb-f3d4-4e07-b4b1-03dd9da1bd4b",
@@ -8665,7 +8728,7 @@
     "rankNumber": 16,
     "idcard": "3300900924081",
     "phone": "",
-    "rank": "ด.ต.",
+    "rank": "ร.ต.ต.",
     "selectedDataObtion": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "ประทวน",
@@ -8681,7 +8744,8 @@
     "buildingName": "อาคารแฟลต (1) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "status": "โสด"
   },
   {
     "id": "914f7780-6611-4754-944f-e0a1fe3e2895",
@@ -8851,11 +8915,12 @@
     "amountPaid": "600",
     "roomId": "d075d09e-c084-4c82-9b92-e870837d8dca",
     "roomnumber": "89/109",
-    "dateApproved": "2023-12-13T12:07:44.689Z",
+    "dateApproved": "2024-01-31T04:12:13.696Z",
     "buildingName": "อาคารแฟลต (1) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "6ae4bbb6-e1ec-4439-b073-6b4983674af9",
@@ -9286,11 +9351,12 @@
     "amountPaid": "600",
     "roomId": "75e86d3e-7eb9-4700-8212-420c994c3bba",
     "roomnumber": " 89/1373",
-    "dateApproved": "2023-12-13T12:42:17.978Z",
+    "dateApproved": "2024-01-31T03:55:25.222Z",
     "buildingName": "อาคารแฟลต (2) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "eb132cf9-0bea-4b20-8697-34dadeb2655b",
@@ -9315,11 +9381,12 @@
     "amountPaid": "600",
     "roomId": "e95adf50-4e5b-428d-a8b4-e67aeafe9764",
     "roomnumber": " 89/1379",
-    "dateApproved": "2023-12-13T12:42:49.009Z",
+    "dateApproved": "2024-01-31T03:56:01.388Z",
     "buildingName": "อาคารแฟลต (2) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "376218ea-d8f4-4de0-89a9-e12bdf4f5e2d",
@@ -9779,11 +9846,12 @@
     "amountPaid": "800",
     "roomId": "94052f4b-91c7-4cb9-b221-c9a0c5eecdde",
     "roomnumber": " 89/1370",
-    "dateApproved": "2023-12-13T12:53:49.682Z",
+    "dateApproved": "2024-01-31T04:13:18.716Z",
     "buildingName": "อาคารแฟลต (2) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ก.ย.66 - มิ.ย.67"
   },
   {
     "id": "45613e1c-5827-401d-987d-2e55cf182c69",
@@ -9895,11 +9963,12 @@
     "amountPaid": "600",
     "roomId": "62bc4a2e-58c0-4482-9552-44e2864e5a43",
     "roomnumber": "89/1345",
-    "dateApproved": "2023-12-13T12:55:37.552Z",
+    "dateApproved": "2024-01-31T04:19:04.084Z",
     "buildingName": "อาคารแฟลต (2) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "df57fa2e-e8d3-4463-bde7-1839bf912c96",
@@ -10156,11 +10225,12 @@
     "amountPaid": "400",
     "roomId": "5743eb55-6ef2-4dcf-ac3d-fdba4ba8e233",
     "roomnumber": "89/117",
-    "dateApproved": "2023-12-13T13:04:29.235Z",
+    "dateApproved": "2024-01-31T04:06:13.928Z",
     "buildingName": "อาคารแฟลต (1) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "พ.ย.66 - ส.ค.67"
   },
   {
     "id": "b77616b7-d2db-4879-91fa-4a31dd582ff1",
@@ -10359,11 +10429,12 @@
     "amountPaid": "600",
     "roomId": "192c3e0d-8ab3-462e-9b73-4b9a833acc0a",
     "roomnumber": "89/1352",
-    "dateApproved": "2023-12-14T16:15:02.317Z",
+    "dateApproved": "2024-01-31T04:01:09.575Z",
     "buildingName": "อาคารแฟลต (2) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "b4c626c0-53eb-43bc-b0f2-725e6c5afecb",
@@ -10446,11 +10517,12 @@
     "amountPaid": "200",
     "roomId": "1aa0c669-0706-450b-a9d2-befe0934b5bd",
     "roomnumber": "1279/748",
-    "dateApproved": "2023-12-15T04:44:00.174Z",
+    "dateApproved": "2024-01-31T04:09:03.521Z",
     "buildingName": "อาคารแฟลต 1/18",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ม.ค.67 - ต.ค.67"
   },
   {
     "id": "b797dce6-75d4-4270-9e0d-07b9c5916f6a",
@@ -10591,11 +10663,12 @@
     "amountPaid": "600",
     "roomId": "e58e8bc8-463b-4110-bf98-fd2ebc5eca00",
     "roomnumber": "1279/734",
-    "dateApproved": "2023-12-15T07:01:24.074Z",
+    "dateApproved": "2024-01-31T04:24:08.550Z",
     "buildingName": "อาคารแฟลต 1/18",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ค.ต.66 - ก.ค.67"
   },
   {
     "id": "ef8f7828-6a62-4b12-9978-6996b5efbfe2",
@@ -10768,11 +10841,12 @@
     "amountPaid": "600",
     "roomId": "9745af9b-d816-4d2d-a9c6-cf93253dea7e",
     "roomnumber": "89/125",
-    "dateApproved": "2023-12-15T07:15:30.624Z",
+    "dateApproved": "2024-01-31T04:19:45.730Z",
     "buildingName": "อาคารแฟลต (1) บางเขน",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ต.ค.66 - ก.ค.67"
   },
   {
     "id": "92aa18ee-8e5c-4391-bf26-dc3b853f8cc4",
@@ -10858,11 +10932,12 @@
     "amountPaid": "200",
     "roomId": "2232b896-084e-4cc4-8070-1dc60fa6025b",
     "roomnumber": "62/27",
-    "dateApproved": "2023-12-15T07:52:54.189Z",
+    "dateApproved": "2024-01-31T04:02:19.371Z",
     "buildingName": "ลือชา 1",
     "monthly": "มกราคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "ว่าง",
+    "installmentsTime": "ม.ค.67 - ต.ค.67"
   },
   {
     "id": "755b3ffd-9686-40dc-98b8-d9b10b04c2d0",
@@ -10887,14 +10962,15 @@
     "amountPaid": "300",
     "roomId": "a2012cdb-cafd-41c9-9e88-9c7783f6dd4b",
     "roomnumber": "1279/237",
-    "dateApproved": "2023-12-15T08:02:57.160Z",
+    "dateApproved": "2024-01-31T03:49:53.813Z",
     "buildingName": "อาคารแฟลต 1/14",
     "monthly": "มกราคม",
     "years": 2024,
     "roomStatus": "ว่าง",
     "contract": " ",
     "vehicleNumber": " ",
-    "numberPeople": " "
+    "numberPeople": " ",
+    "installmentsTime": "ม.ค.67-ต.ค.67"
   },
   {
     "id": "9c6cd9d8-fc99-47cc-b59b-22904fd6e50e",
@@ -10940,7 +11016,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 12,
+    "rankNumber": 13,
     "roomnumber": "74/97",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลือชา",
@@ -10970,7 +11046,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 8,
+    "rankNumber": 9,
     "roomnumber": "31",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "เฉลิมลาภ",
@@ -11000,7 +11076,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "ประทวน",
-    "rankNumber": 17,
+    "rankNumber": 16,
     "roomnumber": "4/045",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลาดยาว",
@@ -11030,7 +11106,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 8,
+    "rankNumber": 9,
     "roomnumber": "58/060",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลือชา",
@@ -11090,7 +11166,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 14,
+    "rankNumber": 15,
     "roomnumber": "31/293",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "เฉลิมลาภ",
@@ -11120,7 +11196,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "ประทวน",
-    "rankNumber": 21,
+    "rankNumber": 20,
     "roomnumber": "74/37",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลือชา",
@@ -11150,7 +11226,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 13,
+    "rankNumber": 12,
     "roomnumber": "8/040",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลาดยาว",
@@ -11180,7 +11256,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 14,
+    "rankNumber": 15,
     "roomnumber": "74/109",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลือชา",
@@ -11210,7 +11286,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 14,
+    "rankNumber": 15,
     "roomnumber": "72/245",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลือชา",
@@ -11240,7 +11316,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "ประทวน",
-    "rankNumber": 21,
+    "rankNumber": 20,
     "roomnumber": "1/075",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลาดยาว",
@@ -11270,7 +11346,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 8,
+    "rankNumber": 9,
     "roomnumber": "33/243",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "เฉลิมลาภ",
@@ -11300,7 +11376,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 12,
+    "rankNumber": 13,
     "roomnumber": "05/082",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "อุดมสุข",
@@ -11330,7 +11406,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.สสน.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 12,
+    "rankNumber": 13,
     "roomnumber": "01/044",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "อุดมสุข",
@@ -11390,7 +11466,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.สสน.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 15,
+    "rankNumber": 14,
     "roomnumber": "68/400",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลือชา",
@@ -11420,7 +11496,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 12,
+    "rankNumber": 13,
     "roomnumber": "10/081",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "อุดมสุข",
@@ -11450,7 +11526,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 9,
+    "rankNumber": 8,
     "roomnumber": "60/58",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลือชา",
@@ -11480,7 +11556,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.สสน.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 13,
+    "rankNumber": 12,
     "roomnumber": "08/069",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "อุดมสุข",
@@ -11510,7 +11586,7 @@
     "status": "โสด",
     "typeAffiliation": "บก.อก.",
     "typeRanks": "สัญญาบัตร",
-    "rankNumber": 12,
+    "rankNumber": 13,
     "roomnumber": "4/065",
     "pickedBook": "2023-12-25T07:39:03.070Z",
     "buildingType": "ลาดยาว",
@@ -11613,43 +11689,134 @@
     "amountPaid": "200",
     "roomId": "540d8877-2f7c-4733-a635-c0aa3850fc99",
     "roomnumber": "62/144",
-    "dateApproved": "2024-01-08T09:06:52.928Z",
+    "dateApproved": "2024-01-31T04:12:44.717Z",
     "buildingName": "ลือชา 2",
     "monthly": "มกราคม",
     "years": 2024,
     "roomStatus": "ว่าง",
     "contract": " ",
     "vehicleNumber": " ",
-    "numberPeople": " "
+    "numberPeople": " ",
+    "installmentsTime": "ม.ค. - ต.ค.67"
   },
   {
-    "id": "b4f814ca-66d5-4c87-81e9-d77069707364",
-    "userId": "e58dcbb6-9a8c-4e2a-a8ad-406aff3917ac",
-    "firstName": "บดินทร์",
-    "lastName": "พรหมมา",
-    "selectedAffiliation": "ฝอ.3",
-    "affiliation": "ฝอ.3",
-    "selectedRanks": "พ.ต.ท.",
-    "rankNumber": 6,
-    "idcard": "",
+    "id": "191e067b-d514-4d1b-bc71-81d300922576",
+    "userId": "f7bc50b3-d52b-47bc-878f-6c1ae66b9ac5",
+    "firstName": "ธนายุทธ",
+    "lastName": "วงศ์เทวัญ",
+    "selectedAffiliation": "ฝสสน.1",
+    "affiliation": "ฝสสน.1",
+    "selectedRanks": "ส.ต.อ.",
+    "rankNumber": 20,
+    "idcard": "1449900376271",
     "phone": "",
-    "rank": "พ.ต.ท.",
+    "rank": "ส.ต.อ.",
     "selectedDataObtion": "โสด",
-    "typeAffiliation": "บก.อก.",
-    "typeRanks": "สัญญาบัตร",
+    "typeAffiliation": "บก.สสน.",
+    "typeRanks": "ประทวน",
     "typeUser": "บช.ตชด.",
     "queue": "inroom",
-    "maintenance": "100",
+    "maintenance": "60",
     "insurance": "2000",
     "installments": "10",
-    "amountPaid": "1600",
-    "roomId": "1ac33610-81cf-4685-a1ba-3cc6d0a15901",
-    "roomnumber": "1279/263",
-    "dateApproved": "2023-12-12T15:25:06.774Z",
-    "buildingName": "อาคารแฟลต 1/15",
-    "monthly": "มกราคม",
+    "amountPaid": "800",
+    "roomId": "1667b641-ac91-484f-9971-f4f65e37288d",
+    "roomnumber": "62/17",
+    "dateApproved": "2024-01-31T06:41:45.354Z",
+    "buildingName": "ลือชา 1",
+    "monthly": 0,
     "years": 2024,
     "roomStatus": "ว่าง",
-    "status": "โสด"
+    "installmentsTime": "ต.ค.66-ก.ค.67"
+  },
+  {
+    "id": "b4a4b1f7-d7c7-439d-9457-e4783e9859e9",
+    "userId": "48d0fae6-8a80-4f5b-a2fa-4a5be9829d31",
+    "firstName": "กำพล",
+    "lastName": "หนูนารถ",
+    "selectedAffiliation": "ฝสสน.2",
+    "affiliation": "ฝสสน.2",
+    "selectedRanks": "ด.ต.",
+    "rankNumber": 16,
+    "idcard": "3801300892151",
+    "phone": "",
+    "rank": "ด.ต.",
+    "selectedDataObtion": "โสด",
+    "typeAffiliation": "บก.สสน.",
+    "typeRanks": "ประทวน",
+    "typeUser": "บช.ตชด.",
+    "queue": "inroom",
+    "maintenance": "60",
+    "insurance": "2000",
+    "installments": "0",
+    "amountPaid": "2000",
+    "roomId": "955fa2b5-43b3-4347-95b7-83d8311e3ca4",
+    "roomnumber": " 62/40",
+    "dateApproved": "2024-01-31T09:13:49.317Z",
+    "buildingName": "ลือชา 1",
+    "monthly": 0,
+    "years": 2024,
+    "roomStatus": "ว่าง"
+  },
+  {
+    "id": "1ba5e61a-0244-4600-955d-2b5a3a851401",
+    "userId": "cad676e2-82cc-449c-9ba1-c413598d0526",
+    "firstName": "ไสว",
+    "lastName": "ชาติฉลาด",
+    "selectedAffiliation": "ฝสสน.2",
+    "affiliation": "ฝสสน.2",
+    "selectedRanks": "ด.ต.",
+    "rankNumber": 16,
+    "idcard": "3320100729349",
+    "phone": "",
+    "rank": "ด.ต.",
+    "selectedDataObtion": "โสด",
+    "typeAffiliation": "บก.สสน.",
+    "typeRanks": "ประทวน",
+    "typeUser": "บช.ตชด.",
+    "queue": "inroom",
+    "maintenance": "60",
+    "insurance": "2000",
+    "installments": "0",
+    "amountPaid": "2000",
+    "roomId": "1d5cfe55-8b33-408f-9f56-27814ff417bf",
+    "roomnumber": "62/15",
+    "dateApproved": "2024-01-31T09:18:05.455Z",
+    "buildingName": "ลือชา 1",
+    "monthly": 0,
+    "years": 2024,
+    "roomStatus": "ว่าง"
+  },
+  {
+    "id": "eb8be692-109e-4a5a-ad87-05c8b2c30e85",
+    "userId": "27e39516-6cf5-4ed5-9867-43d3d6b386c7",
+    "firstName": "ธนาวุฒิ",
+    "lastName": "แก้วขาว",
+    "selectedAffiliation": "ฝสสน.3",
+    "affiliation": "ฝสสน.3",
+    "selectedRanks": "ส.ต.อ.",
+    "rankNumber": 20,
+    "idcard": "1450200163811",
+    "phone": "",
+    "rank": "ส.ต.อ.",
+    "selectedDataObtion": "โสด",
+    "typeAffiliation": "บก.สสน.",
+    "typeRanks": "ประทวน",
+    "typeUser": "บช.ตชด.",
+    "queue": "inroom",
+    "contract": " ",
+    "maintenance": "60",
+    "insurance": "2000",
+    "installments": "0",
+    "amountPaid": "2000",
+    "roomId": "990c17f8-e599-40ab-9432-295c97353f12",
+    "roomnumber": "62/466",
+    "dateApproved": "2024-01-31T09:21:00.319Z",
+    "buildingName": "อาคารแฟลต (3) ซอยลือชา",
+    "monthly": 0,
+    "years": 2024,
+    "vehicleNumber": " ",
+    "numberPeople": " ",
+    "roomStatus": "ว่าง"
   }
 ]
