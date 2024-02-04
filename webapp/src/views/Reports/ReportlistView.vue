@@ -467,11 +467,9 @@ export default {
           this.yearNumber = y;
           this.mountLable = newValue.label;
           this.dateNow = newValue.label;
-
           if (this.optionMonth[x - 1] !== undefined) {
             let today = new Date();
             this.yearNow = y;
-            this.yearNumber = y;
             this.yearNumber = y;
             this.mountCT = this.optionMonth[x - 1].label;
             result = today.toLocaleDateString("th-TH", {
@@ -493,7 +491,6 @@ export default {
               let m = tday.getMonth();
               tday2.setMonth(m - 1);
               this.mountTR = "ธันวาคม";
-              this.yearNumber = (this.dateData.getFullYear() - 1);
               this.yearNumberTR = (this.dateData.getFullYear() - 1);
               result2 = tday.toLocaleDateString("th-TH", {
                 year: "numeric",
@@ -503,6 +500,7 @@ export default {
               });
             }
           } else {
+          
             let tday = new Date();
             let tday2 = new Date();
             let m = tday.getMonth();
@@ -571,7 +569,6 @@ export default {
             let today = new Date();
             this.yearNow = y;
             this.yearNumber = y;
-            this.yearNumber = y;
             this.mountCT = this.optionMonth[x - 1].label;
             result = today.toLocaleDateString("th-TH", {
               year: "numeric",
@@ -592,7 +589,6 @@ export default {
               let m = tday.getMonth();
               tday2.setMonth(m - 1);
               this.mountTR = "ธันวาคม";
-              this.yearNumber = (this.dateData.getFullYear() - 1);
               this.yearNumberTR = (this.dateData.getFullYear() - 1);
               result2 = tday.toLocaleDateString("th-TH", {
                 year: "numeric",
@@ -621,6 +617,7 @@ export default {
                 year: "numeric",
               });
           }
+         
       this.monthYear = this.mountCT + " " + this.thaiNumber(result2, "year");
       this.monthYearNow = this.dateNow + " " + this.thaiNumber(result, "year");
       this.monthYearNowTR = this.mountTR + " " + this.thaiNumber(result3, "year");
@@ -761,8 +758,7 @@ export default {
                 el9.monthly == this.mountCT &&
                 el9.years == this.yearNow
             );
-            // console.log(data); typeContract: el.typeContract || "-",;
-   
+
             data10 = data5.filter(ee => ee.amountPaid != ee.insurance);
             data11 = data6.filter(ee2 => ee2.amountPaid != ee2.insurance);
             data12 = data7.filter(ee3 => ee3.amountPaid != ee3.insurance);
