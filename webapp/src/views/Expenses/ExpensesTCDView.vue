@@ -96,7 +96,7 @@ export default {
       if(this.optionMonth[d.getMonth()] == 'มกราคม'){
         m = "มกราคม"
       }else{
-        m = this.optionMonth[d.getMonth() - 1];
+        m = this.optionMonth[d.getMonth()];
       }
       let y = d.getFullYear();
       this.months = m;

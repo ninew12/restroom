@@ -500,7 +500,6 @@ export default {
               });
             }
           } else {
-          
             let tday = new Date();
             let tday2 = new Date();
             let m = tday.getMonth();
@@ -520,6 +519,7 @@ export default {
                 year: "numeric",
               });
           }
+
           let m = newValue.label;
           this.monthYear = this.mountCT + " " + this.thaiNumber(result2, "year");
           this.monthYearNow = newValue.label + " " + this.thaiNumber(result, "year");
