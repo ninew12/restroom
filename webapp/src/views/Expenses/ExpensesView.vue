@@ -167,7 +167,7 @@ export default {
             this.lastName = this.userByid.lastName;
             this.Insurancecost = this.userByid.insurancecost,
             this.installmentsRooom = this.userByid.installmentsRooom,
-            this.lastnumber = this.userByid.lastnumber,
+            this.lastnumber = "",
             this.Waterbill = this.userByid.Waterbill,
             this.Electricitybill = this.userByid.electricitybill,
             this.Central = this.userByid.Central,
