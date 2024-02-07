@@ -2,7 +2,7 @@
 echo Opening web browser...
 
 cd /d C:\Users\PC\Application\V2.0\restroom\webapp
-pm2 start --name "webapp" index.js
+npm run dev
 
 
 timeout /t 5
