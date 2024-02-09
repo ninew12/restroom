@@ -2099,7 +2099,7 @@ export default {
 
     async filterAffiliation2(listdata) {
       let listCTD = [];
-      listCTD = listdata;
+      listCTD = listdata.filter(ee3 => ee3.amountPaid != ee3.insurance);
       let data,
         data2,
         data3,

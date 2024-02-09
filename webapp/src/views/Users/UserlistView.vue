@@ -39,6 +39,7 @@ export default {
       phone: "",
       birthday: "14/07/2534",
       typeAffiliation: "",
+      selecttypeAffiliation: "",
       typeRanks: "",
       dataUser: [],
       olddata: [],
@@ -66,9 +67,32 @@ export default {
     selectedColor: function (newValue) {
       console.log(newValue);
     },
-    typeAffiliation: function (newValue) {
-      console.log(newValue);
+
+    selectedRanks: function (newValue) {
+      if(newValue.label !== undefined){
+        this.rank = newValue.label
+        this.rankNumber = newValue.value
+      }
     },
+    
+    typeAffiliation: function (newValue) {
+      if(newValue.label !== undefined){
+         if(newValue.label == "ลูกจ้าง") {
+          this.selecttypeAffiliation = "ลูกจ้าง"
+         }else if(newValue.label == "บช.ตชด."){
+          this.selecttypeAffiliation = "บช.ตชด."
+         }else{
+          this.selecttypeAffiliation = newValue.label
+         }
+      }
+    },
+
+    selectedAffiliation: function (newValue) {
+      if(newValue.label !== undefined){
+          this.Affiliation = newValue.label
+      }
+    },
+
   },
   computed: {
     dataUser() {
@@ -259,22 +283,16 @@ export default {
     //   },
 
     async editForm() {
-      let typeA;
-      this.typeAffiliation.label == "ลูกจ้าง"
-        ? (typeA = "ลูกจ้าง")
-        : this.typeAffiliation.label == "บช.ตชด."
-        ? (typeA = "บช.ตชด.")
-        : (typeA = this.selectedAffiliation.label);
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
-        affiliation: typeA,
-        rank: this.selectedRanks.label,
-        rankNumber: this.selectedRanks.value,
+        affiliation: this.Affiliation,
+        rank: this.rank,
+        rankNumber: this.rankNumber,
         idcard: this.idcard,
         phone: this.phone,
         status: this.selectedDataObtion.value || "โสด",
-        typeAffiliation: this.typeAffiliation.value,
+        typeAffiliation: this.selecttypeAffiliation,
         typeRanks: this.typeRanks.value,
         queue: this.queue,
       };
@@ -304,26 +322,21 @@ export default {
     },
 
     async saveToreport() {
-      let typeA;
-      this.typeAffiliation.label == "ลูกจ้าง"
-        ? (typeA = "ลูกจ้าง")
-        : this.typeAffiliation.label == "บช.ตชด."
-        ? (typeA = "บช.ตชด.")
-        : (typeA = this.selectedAffiliation.label);
+
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
-        affiliation: typeA,
-        rank: this.selectedRanks.label,
-        rankNumber: this.selectedRanks.value,
+        affiliation: this.Affiliation,
+        rank: this.rank,
+        rankNumber: this.rankNumber,
         idcard: this.idcard,
         phone: this.phone,
         status: this.selectedDataObtion.value || "โสด",
-        typeAffiliation: this.typeAffiliation.value,
+        typeAffiliation: this.selecttypeAffiliation,
         typeRanks: this.typeRanks.value,
         queue: this.queue,
       };
-      console.log(body);
+      // console.log(body);
       await axios.put(`http://localhost:3897/reportUser/${this.id}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
@@ -333,22 +346,16 @@ export default {
     },
 
     async updateRoom() {
-      let typeA;
-      this.typeAffiliation.label == "ลูกจ้าง"
-        ? (typeA = "ลูกจ้าง")
-        : this.typeAffiliation.label == "บช.ตชด."
-        ? (typeA = "บช.ตชด.")
-        : (typeA = this.selectedAffiliation.label);
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
-        affiliation: typeA,
+        affiliation: this.Affiliation,
         rank: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
         status: this.selectedDataObtion.value || "โสด",
-        typeAffiliation: this.typeAffiliation.value,
+        typeAffiliation: this.selecttypeAffiliation,
         typeRanks: this.typeRanks.value,
         queue: this.queue,
       };
@@ -363,26 +370,20 @@ export default {
     },
 
     async submitForm() {
-      let typeA;
       let maintenance;
-      this.typeAffiliation.label == "ลูกจ้าง"
-        ? (typeA = "ลูกจ้าง")
-        : this.typeAffiliation.label == "บช.ตชด."
-        ? (typeA = "บช.ตชด.")
-        : (typeA = this.selectedAffiliation.label);
       if (this.typeRanks == "ประทวน") maintenance = "60";
       if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
-        affiliation: typeA,
+        affiliation: this.Affiliation,
         rank: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
         queue: "none",
         status: this.selectedDataObtion.value || "โสด",
-        typeAffiliation: this.typeAffiliation.value,
+        typeAffiliation: this.selecttypeAffiliation,
         typeRanks: this.typeRanks.value,
         typeUser: this.typeUser,
         maintenance: maintenance,
