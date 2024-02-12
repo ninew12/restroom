@@ -5185,7 +5185,11 @@ export default {
       var body = [];
       var body2 = []
       let arr = [];
+      console.log(data);
       var thaiNum = data.map((e) => {
+        let tt 
+        if(e.Installmenttime == undefined) tt = '-'
+        else if(e.Installmenttime !== undefined) tt = e.Installmenttime
         return {
           ...e,
           numberNo: this.thaiNumber(e.numberNo),
@@ -5206,7 +5210,7 @@ export default {
           accumulated: this.thaiNumber(e.accumulated),
           amountPaid: this.thaiNumber(e.amountPaid),
           roomnumber: this.thaiNumberNew(e.roomnumber),
-          Installmenttime: e.Installmenttime,
+          Installmenttime: tt,
           InsuranceSum: this.thaiNumber(e.InsuranceSum),
         };
       });

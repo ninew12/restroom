@@ -283,6 +283,9 @@ export default {
     //   },
 
     async editForm() {
+      let maintenance;
+      if (this.typeRanks == "ประทวน") maintenance = "60";
+      if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -295,6 +298,7 @@ export default {
         typeAffiliation: this.selecttypeAffiliation,
         typeRanks: this.typeRanks.value,
         queue: this.queue,
+        maintenance: maintenance,
       };
 
       axios
@@ -322,7 +326,9 @@ export default {
     },
 
     async saveToreport() {
-
+      let maintenance;
+      if (this.typeRanks == "ประทวน") maintenance = "60";
+      if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -335,6 +341,7 @@ export default {
         typeAffiliation: this.selecttypeAffiliation,
         typeRanks: this.typeRanks.value,
         queue: this.queue,
+        maintenance: maintenance,
       };
       // console.log(body);
       await axios.put(`http://localhost:3897/reportUser/${this.id}`, body, {
