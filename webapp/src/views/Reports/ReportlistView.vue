@@ -550,7 +550,7 @@ export default {
       if (this.dataMonth[d.getMonth() - 1] == undefined) {
         m = "มกราคม";
       } else {
-        m = this.dataMonth[d.getMonth() - 1];
+        m = this.dataMonth[d.getMonth()];
       }
 
       let y = this.dateData.getFullYear();
@@ -630,7 +630,7 @@ export default {
     async getExpenses() {
       try {
         await axios
-          .get("http://localhost:3897/expenses")
+          .get("http://localhost:3896/expenses")
           .then((res) => {
             this.expensesList = res.data;
             // console.log(res.data);
@@ -657,7 +657,7 @@ export default {
       this.sumreportlistAll3 = [];
       try {
         axios
-          .get("http://localhost:3897/report")
+          .get("http://localhost:3896/report")
           .then((res) => {
             let data = [];
             let data2 = [];
@@ -782,8 +782,9 @@ export default {
       }
     },
 
-    mapSummerry(arr1 , arr2, arr3, arr4, arr5, arr6){
-      this.sumreportlistAll = arr1.map((x1) => {
+    mapSummerry(arr11 , arr22, arr33, arr4, arr5, arr6){
+      this.sumreportlistAll = arr11.map((x1) => {
+        let arr1 = arr11.filter(ee3 => ee3.amountPaid != 0 && ee3.amountPaid !== undefined)
               return {
                 ...x1,
                 type: "อำนวยการ",
@@ -800,7 +801,8 @@ export default {
               };
             });
 
-            this.sumreportlistAll2 = arr2.map((x2) => {
+            this.sumreportlistAll2 = arr22.map((x2) => {
+            let arr2 = arr22.filter(ee4 => ee4.amountPaid != 0 && ee4.amountPaid !== undefined)
               return {
                 ...x2,
                 type: "สนับสนุน",
@@ -816,7 +818,8 @@ export default {
                 sumCostdataCostCosts: this.centralSumCount(arr2),
               };
             });
-            this.sumreportlistAll3 = arr3.map((x3) => {
+            this.sumreportlistAll3 = arr33.map((x3) => {
+            let arr3 = arr33.filter(ee5 => ee5.amountPaid != 0 && ee5.amountPaid !== undefined)
               return {
                 ...x3,
                 type: "ลูกจ้าง",
@@ -972,7 +975,7 @@ export default {
     getReportAffiliation(m, y, Affiliation) {
       try {
         axios
-          .get("http://localhost:3897/report")
+          .get("http://localhost:3896/report")
           .then((res) => {
             let data = [];
             let data2 = [];
@@ -1039,7 +1042,7 @@ export default {
     getReportRanksAll(m, y, ranksType) {
       try {
         axios
-          .get("http://localhost:3897/report")
+          .get("http://localhost:3896/report")
           .then((res) => {
             let data = [];
             let data2 = [];
@@ -1977,7 +1980,7 @@ export default {
 
     MaintenanceSumAll(items) {
       return items.reduce((MaintenanceSumAll, ele) => {
-        if (ele.maintenance !== undefined)
+        if (ele.maintenance !== undefined && ele.amountPaid != 0)
           return MaintenanceSumAll + parseInt(ele.maintenance);
         else return MaintenanceSumAll;
       }, 0);
@@ -1992,13 +1995,14 @@ export default {
 
     InsuranceSumAll(items) {
       return items.reduce((InsuranceSumAll, ele) => {
-        if (ele.insurance !== undefined) return InsuranceSumAll + parseInt(ele.insurance);
+        if (ele.insurance !== undefined && ele.amountPaid != 0) return InsuranceSumAll + parseInt(ele.insurance);
         else return InsuranceSumAll;
       }, 0);
     },
+
     SumCostSumInsuranceAll(items) {
       return items.reduce((sumCostSumInsuranceAll, ele) => {
-        if (ele.insurance !== undefined)
+        if (ele.insurance !== undefined && ele.amountPaid !== 0)
           return (
             sumCostSumInsuranceAll +
             (parseInt(ele.insurance) + parseInt(ele.maintenance || 0))
@@ -2009,7 +2013,7 @@ export default {
 
     SumCostSummaintenanceAll(items) {
       return items.reduce((SumCostSummaintenanceAll, ele) => {
-        if (ele.insurance !== undefined)
+        if (ele.insurance !== undefined )
           return (
             SumCostSummaintenanceAll +
             (parseInt(ele.insurance) + parseInt(ele.maintenancefree || 0))
@@ -2100,6 +2104,7 @@ export default {
     async filterAffiliation2(listdata) {
       let listCTD = [];
       listCTD = listdata.filter(ee3 => ee3.amountPaid != ee3.insurance);
+      // listCTD = listdata
       let data,
         data2,
         data3,
@@ -2912,6 +2917,10 @@ export default {
       });
       this.datalistCTD = arr;
       this.datalistTD = arr2;
+      // .filter(ee3 => ee3.amountPaid != ee3.insurance)
+      // let tt = arr.filter(ee3 => ee3.amountPaid != ee3.insurance)
+      // let tt2 = arr2.filter(ee4 => ee4.amountPaid != ee4.insurance)
+      // let tt3 = arr5.filter(ee5 => ee5.amountPaid != ee5.insurance)
       this.filterAffiliation(arr2);
       this.filterAffiliation2(arr);
       this.filterAffiliationTR(arr5);
@@ -3163,6 +3172,7 @@ export default {
       this.reportlistTR = arr5.sort((a, b) => a.rankNumber - b.rankNumber);
       this.deductibleTD = arr3.sort((a, b) => a.rankNumber - b.rankNumber);
       this.deductibleCTD = arr4.sort((a, b) => a.rankNumber - b.rankNumber);
+      // console.log(this.reportlistCTD)
     },
     // numberWithCommas
 
@@ -3373,7 +3383,7 @@ export default {
 
     maintenancefeeCount(items) {
       return items.reduce((maintenancefeeSum, ele) => {
-        if (ele.maintenancefee !== undefined)
+        if (ele.maintenancefee !== undefined )
           return maintenancefeeSum + parseInt(ele.maintenancefee || 0);
         else return maintenancefeeSum;
       }, 0);
@@ -3416,7 +3426,7 @@ export default {
             );
           } 
           else {
-            return accumulatedSum + parseInt(ele.insurance) || 0;
+            return accumulatedSum + parseInt(ele.insurance || 0) ;
           }
         }
         return accumulatedSum ;
@@ -3435,17 +3445,17 @@ export default {
         if(parseInt(ele.amountPaid) !== parseInt(ele.insurance)){
           if (parseInt(ele.installments) !== 0) {
             return (
-              accumulatedSum +
-              (parseInt(ele.insurance) || 0) / (parseInt(ele.installments) || 0)
+              accumulatedSum + (parseInt(ele.insurance) || 0) / (parseInt(ele.installments) || 0)
             );
           } 
-          else {
-            return accumulatedSum + parseInt(ele.insurance) || 0;
+          if (parseInt(ele.installments) == 0){
+            return accumulatedSum + parseInt(ele.insurance  || 0);
           }
         
-        }else{
-          return accumulatedSum  ;
         }
+        // else{
+          return accumulatedSum  || 0 ;
+        // }
          
       }, 0);
     },
@@ -5185,7 +5195,7 @@ export default {
       var body = [];
       var body2 = []
       let arr = [];
-      console.log(data);
+
       var thaiNum = data.map((e) => {
         let tt 
         if(e.Installmenttime == undefined) tt = '-'
@@ -6294,33 +6304,33 @@ export default {
                             {{ numberWithCommas(item?.sumCostdatawaterbill || "-") }}
                           </td>
                         </tr>
-                        <tr v-if="AffiliationListTD?.length > 0">
+                        <tr v-if="AffiliationListTR?.length > 0">
                           <th scope="row" colspan="2">รวมเงิน</th>
                           <th data-t="n" data-z="#,##">
                             {{
                               numberWithCommas(
-                                AffiliationListTD[0]?.countMaintenancefeeAll || "-"
+                                AffiliationListTR[0]?.countMaintenancefeeAll || "-"
                               )
                             }}
                           </th>
                           <th data-t="n" data-z="#,##">
                             {{
                               numberWithCommas(
-                                AffiliationListTD[0]?.countwaterbilAll || "-"
+                                AffiliationListTR[0]?.countwaterbilAll || "-"
                               )
                             }}
                           </th>
                           <th data-t="n" data-z="#,##">
                             {{
                               numberWithCommas(
-                                AffiliationListTD[0]?.countelectricitybillAll || "-"
+                                AffiliationListTR[0]?.countelectricitybillAll || "-"
                               )
                             }}
                           </th>
                           <th data-t="n" data-z="#,##">
                             {{
                               numberWithCommas(
-                                AffiliationListTD[0]?.countCostwaterbillAll || "-"
+                                AffiliationListTR[0]?.countCostwaterbillAll || "-"
                               )
                             }}
                           </th>

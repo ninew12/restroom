@@ -99,6 +99,7 @@ export default {
       return this.dataUser.filter((item) => item.firstName.includes(this.searchName));
     },
   },
+
   methods: {
     typeUserfilter(e) {
       if (e.target) this.typeUserBytype = e.target.value;
@@ -183,7 +184,7 @@ export default {
 
     async editUser(id) {
       await axios
-        .get(`http://localhost:3897/users/${id}`)
+        .get(`http://localhost:3896/users/${id}`)
         .then((res) => {
           let data = res.data;
           this.id = id;
@@ -208,7 +209,7 @@ export default {
     getAlluser() {
       try {
         axios
-          .get("http://localhost:3897/users")
+          .get("http://localhost:3896/users")
           .then((res) => {
             let arr = res.data;
             let dataFind = [];
@@ -273,7 +274,7 @@ export default {
 
     //   syncDataUser(data){
     //     axios
-    //       .put(`http://localhost:3897/users/${data.id}`, data, {
+    //       .put(`http://localhost:3896/users/${data.id}`, data, {
     //         headers: {
     //           // remove headers
     //           "Access-Control-Allow-Origin": "*",
@@ -284,8 +285,8 @@ export default {
 
     async editForm() {
       let maintenance;
-      if (this.typeRanks == "ประทวน") maintenance = "60";
-      if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
+      if (this.typeRanks.value == "ประทวน") {maintenance = 60}
+      else if (this.typeRanks.value == "สัญญาบัตร") {maintenance = 100}
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -302,7 +303,7 @@ export default {
       };
 
       axios
-        .put(`http://localhost:3897/users/${this.id}`, body, {
+        .put(`http://localhost:3896/users/${this.id}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -327,8 +328,8 @@ export default {
 
     async saveToreport() {
       let maintenance;
-      if (this.typeRanks == "ประทวน") maintenance = "60";
-      if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
+      if (this.typeRanks.value == "ประทวน") {maintenance = 60}
+      else if (this.typeRanks.value == "สัญญาบัตร") {maintenance = 100}
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -343,8 +344,7 @@ export default {
         queue: this.queue,
         maintenance: maintenance,
       };
-      // console.log(body);
-      await axios.put(`http://localhost:3897/reportUser/${this.id}`, body, {
+      await axios.put(`http://localhost:3896/reportUser/${this.id}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -353,6 +353,9 @@ export default {
     },
 
     async updateRoom() {
+      let maintenance;
+      if (this.typeRanks.value == "ประทวน") {maintenance = 60}
+      else if (this.typeRanks.value == "สัญญาบัตร") {maintenance = 100}
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -365,9 +368,10 @@ export default {
         typeAffiliation: this.selecttypeAffiliation,
         typeRanks: this.typeRanks.value,
         queue: this.queue,
+        maintenance: maintenance,
       };
 
-      axios.put(`http://localhost:3897/rooms/${this.roomId}`, body, {
+      axios.put(`http://localhost:3896/rooms/${this.roomId}`, body, {
         headers: {
           // remove headers
           "Access-Control-Allow-Origin": "*",
@@ -378,8 +382,8 @@ export default {
 
     async submitForm() {
       let maintenance;
-      if (this.typeRanks == "ประทวน") maintenance = "60";
-      if (this.typeRanks == "สัญญาบัตร") maintenance = "100";
+      if (this.typeRanks.value == "ประทวน") {maintenance = 60}
+      else if (this.typeRanks.value == "สัญญาบัตร") {maintenance = 100}
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
@@ -396,7 +400,7 @@ export default {
         maintenance: maintenance,
       };
       axios
-        .post(`http://localhost:3897/users`, body, {
+        .post(`http://localhost:3896/users`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -420,7 +424,7 @@ export default {
 
     submitDelete() {
       axios
-        .delete(`http://localhost:3897/users/${this.userId}`)
+        .delete(`http://localhost:3896/users/${this.userId}`)
         .then((res) => {
           this.loader = true
           setTimeout(() => {
@@ -441,7 +445,7 @@ export default {
     getAlluser2() {
       try {
         axios
-          .get("http://localhost:3897/users")
+          .get("http://localhost:3896/users")
           .then((res) => {
             let arr = res.data;
             let dataFind = [];

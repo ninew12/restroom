@@ -137,7 +137,7 @@ export default {
         
       };
       await axios
-        .post(`http://localhost:3897/buildings`, body, {
+        .post(`http://localhost:3896/buildings`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -164,7 +164,7 @@ export default {
       // let body = floorsList
       floorsLoop = floorsList;
       // await floorsLoop.forEach((x) => {
-        axios.post(`http://localhost:3897/rooms`, floorsLoop, {
+        axios.post(`http://localhost:3896/rooms`, floorsLoop, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -181,7 +181,7 @@ export default {
     getBuildings() {
       try {
         axios
-          .get("http://localhost:3897/buildings")
+          .get("http://localhost:3896/buildings")
           .then((res) => {
             let data = res.data
             this.buildingList = data.sort((a, b) => a.position - b.position);
@@ -197,7 +197,7 @@ export default {
     async getBuildingByid(id) {
       try {
         await axios
-          .get(`http://localhost:3897/buildings/${id}`)
+          .get(`http://localhost:3896/buildings/${id}`)
           .then((res) => {
             let data = res.data;
             this.building_Id = data.buildingId;
@@ -224,7 +224,7 @@ export default {
 
     submitDelete() {
       axios
-        .delete(`http://localhost:3897/buildings/${this.builId}`)
+        .delete(`http://localhost:3896/buildings/${this.builId}`)
         .then((res) => {
           setTimeout(() => {
             this.getAlluser();
@@ -244,7 +244,7 @@ export default {
       this.buildingList = []
       try {
         axios
-          .get("http://localhost:3897/buildings")
+          .get("http://localhost:3896/buildings")
           .then((res) => {
             this.buildingList = res.data;
           })
