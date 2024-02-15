@@ -490,6 +490,19 @@ export default {
       }
     },
 
+    clerData(){
+          this.firstName = "";
+            this.lastName = "";
+            this.typeAffiliation = "";
+            this.selectedRanks = "";
+            this.idcard = "";
+            this.phone = "";
+            this.selectedDataObtion = "โสด";
+            this.typeAffiliation = "";
+            this.typeRanks = "";
+            this.typeUser = "ตร.";
+    },
+
     Previous() {
       window.history.back();
     },
@@ -612,6 +625,7 @@ export default {
                 color="success"
                 data-bs-toggle="modal"
                 data-bs-target="#userBackdrop"
+                @click="clerData()"
                 >เพิ่มสมาชิก</MaterialButton
               >
             </div>
