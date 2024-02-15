@@ -2,9 +2,9 @@ var Service = require('node-windows').Service;
 
 // Create a new service object
 var svc = new Service({
-  name:'appserver',
+  name:'appserverApi',
   description: 'The nodejs.org example web server.',
-  script: 'C:\\Users\\newyear\\Documents\\restroom\\appserver\\index.js',
+  script: 'C:\\Users\\PC\\Application\\V2.0\\restroom\\appserver\\index.js',
   nodeOptions: [
     '--harmony',
     '--max_old_space_size=4096'
@@ -20,3 +20,4 @@ svc.on('install',function(){
 });
 
 svc.install();
+

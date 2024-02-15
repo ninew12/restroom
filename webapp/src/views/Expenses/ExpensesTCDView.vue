@@ -106,7 +106,7 @@ export default {
     async getExpenses() {
       try {
         await axios
-          .get("http://localhost:3897/expenses")
+          .get("http://localhost:3896/expenses")
           .then((res) => {
             let data = [];
             let arr = [];
@@ -208,7 +208,7 @@ export default {
       this.id = id;
       try {
         await axios
-          .get(`http://localhost:3897/users/${id}`)
+          .get(`http://localhost:3896/users/${id}`)
           .then((res) => {
             this.userByid = res.data;
             this.rank = this.userByid.rank;
@@ -290,7 +290,7 @@ export default {
         years: this.years,
       };
       await axios
-        .put(`http://localhost:3897/users/${id}`, body, {
+        .put(`http://localhost:3896/users/${id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -317,7 +317,7 @@ export default {
         monthly: this.months,
         years: this.years,
       };
-      await axios.put(`http://localhost:3897/rooms/${id}`, body, {
+      await axios.put(`http://localhost:3896/rooms/${id}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -333,7 +333,7 @@ export default {
         years: this.years,
         rankNumber: this.rankNumber,
       };
-      await axios.put(`http://localhost:3897/reportUser/${id}`, body, {
+      await axios.put(`http://localhost:3896/reportUser/${id}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -349,7 +349,7 @@ export default {
         years: this.years,
         rankNumber: this.rankNumber,
       };
-      await axios.put(`http://localhost:3897/reportUser/${id}`, body, {
+      await axios.put(`http://localhost:3896/reportUser/${id}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",

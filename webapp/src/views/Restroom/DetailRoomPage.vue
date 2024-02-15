@@ -113,7 +113,7 @@ export default {
     getAllqueue() {
       try {
         axios
-          .get(`http://localhost:3897/queue/inqueue`)
+          .get(`http://localhost:3896/queue/inqueue`)
           .then((res) => {
             this.queueList = res.data;
             this.queuefilter = this.queueList.filter((e) => e.typeRoom === this.typeroom);
@@ -130,7 +130,7 @@ export default {
     getAllinqueue() {
       try {
         axios
-          .get(`http://localhost:3897/users`)
+          .get(`http://localhost:3896/users`)
           .then((res) => {
             let arr = res.data;
             let arr2 = [];
@@ -154,7 +154,7 @@ export default {
       this.userId = id;
       try {
         axios
-          .get(`http://localhost:3897/users/${id}`)
+          .get(`http://localhost:3896/users/${id}`)
           .then((res) => {
             this.getreportByid(id);
             let data = res.data;
@@ -190,7 +190,7 @@ export default {
 
     async getroomByid(id) {
       try {
-        axios.get(`http://localhost:3897/rooms/${id}`).then((res) => {
+        axios.get(`http://localhost:3896/rooms/${id}`).then((res) => {
           this.data = res.data;
           this.dateApproved = this.convertDateTolocal(this.data.dateApproved);
           this.typeroom = this.data.typeRoom;
@@ -220,7 +220,7 @@ export default {
     async getreportByid(id) {
       try {
         await axios
-          .get(`http://localhost:3897/reportId/${id}`)
+          .get(`http://localhost:3896/reportId/${id}`)
           .then((res) => {
             if (res.data !== "") this.reportId = res.data.id;
             let data = res.data;
@@ -297,7 +297,7 @@ export default {
         installmentsTime : this.installmentsTime
       };
       await axios
-        .post(`http://localhost:3897/history`, body, {
+        .post(`http://localhost:3896/history`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -346,7 +346,7 @@ export default {
         installmentsTime : this.installmentsTime,
         no: "",
       };
-      await axios.put(`http://localhost:3897/users/${this.userId}`, body, {
+      await axios.put(`http://localhost:3896/users/${this.userId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -389,7 +389,7 @@ export default {
         installmentsTime : this.installmentsTime
       };
 
-      await axios.post(`http://localhost:3897/report`, body, {
+      await axios.post(`http://localhost:3896/report`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -416,7 +416,7 @@ export default {
         installmentsTime : this.installmentsTime
       };
 
-      await axios.put(`http://localhost:3897/report/${this.reportId}`, body, {
+      await axios.put(`http://localhost:3896/report/${this.reportId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -450,7 +450,7 @@ export default {
         installmentsTime : this.installmentsTime,
         no: "",
       };
-      await axios.put(`http://localhost:3897/queue/${this.userId}`, body, {
+      await axios.put(`http://localhost:3896/queue/${this.userId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -489,7 +489,7 @@ export default {
         installmentsTime : this.installmentsTime
       };
       await axios
-        .put(`http://localhost:3897/rooms/${this.id}`, body, {
+        .put(`http://localhost:3896/rooms/${this.id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -544,7 +544,7 @@ export default {
       };
 
       await axios
-        .put(`http://localhost:3897/rooms/${this.id}`, body, {
+        .put(`http://localhost:3896/rooms/${this.id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -580,7 +580,7 @@ export default {
       };
       // console.log(body);
      await axios
-        .put(`http://localhost:3897/users/${this.userId}`, body, {
+        .put(`http://localhost:3896/users/${this.userId}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",

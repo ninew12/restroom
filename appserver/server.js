@@ -14,7 +14,7 @@ const fixdata = require('./fixtest.json')
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = process.env.PORT || 3897;
+const port = process.env.PORT || 3896;
 const fs = require("fs");
 const { v4: uuidv4 } = require('uuid');
 // - เวอร์ชั่น Express 4.16.0+ ขึ้นไป
@@ -684,7 +684,7 @@ app.delete('/layout/:id', (req, res) => {
 })
 
 app.get('/report', (req, res) => { 
-    let finddata = reports.filter(report => report.roomStatus !== "special") 
+    let finddata = reports.filter(report => report.roomStatus !== "special" && report.queue !== "none") 
     res.header("Access-Control-Allow-Origin", "*");
     res.json(finddata)
 })
@@ -789,11 +789,9 @@ app.put('/report/:id', (req, res) => {
 
 app.put('/reportUser/:id', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
-    // console.log(req.params.id);
     const updateIndex = reports.findIndex(user => user.userId === (req.params.id))
     let dataOld = reports[updateIndex]
     let filterdata = reports.filter(user => user.userId !== (req.params.id))
-    console.log("filterdata",filterdata);
     const parsedData = dataOld;
     if (req.body.firstName) parsedData.firstName = req.body.firstName
     if (req.body.lastName) parsedData.lastName = req.body.lastName
