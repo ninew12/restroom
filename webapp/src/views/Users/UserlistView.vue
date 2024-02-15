@@ -790,20 +790,21 @@ export default {
                   v-model="typeAffiliation"
                 ></v-select>
               </div>
-              <div class="mb-3" v-if="typeAffiliation.label == 'บก.อก.'">
+              <div class="mb-3" v-if="typeAffiliation.label == 'บก.อก.' || this.typeAffiliation == 'บก.อก.'">
                 <label>สังกัด {{ typeAffiliation.label }}</label>
                 <v-select
                   :options="masterData?.Affiliation"
                   v-model="selectedAffiliation"
                 ></v-select>
               </div>
-              <div class="mb-3" v-if="typeAffiliation.label == 'บก.สสน.'">
+              <div class="mb-3" v-if="typeAffiliation.label == 'บก.สสน.' || this.typeAffiliation == 'บก.สสน.'">
                 <label>สังกัด {{ typeAffiliation.label }}</label>
                 <v-select
                   :options="masterData?.Affiliation2"
                   v-model="selectedAffiliation"
                 ></v-select>
               </div>
+              
               <div class="mb-1">
                 <label class="starRed">ลำดับยศ</label>
                 <v-select :options="masterData?.typeranks" v-model="typeRanks"></v-select>
