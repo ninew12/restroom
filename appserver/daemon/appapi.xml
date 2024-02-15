@@ -1,6 +1,6 @@
 <service>
-	<id>appserverapi.exe</id>
-	<name>appserverApi</name>
+	<id>appapi.exe</id>
+	<name>appApi</name>
 	<description>The nodejs.org example web server.</description>
 	<executable>C:\Program Files\nodejs\node.exe</executable>
 	<argument>--harmony</argument>
@@ -10,7 +10,7 @@
 	<argument>C:\Users\PC\Application\V2.0\restroom\appserver\index.js</argument>
 	<argument>--scriptoptions=</argument>
 	<argument>--log</argument>
-	<argument>appserverApi wrapper</argument>
+	<argument>appApi wrapper</argument>
 	<argument>--grow</argument>
 	<argument>0.25</argument>
 	<argument>--wait</argument>
