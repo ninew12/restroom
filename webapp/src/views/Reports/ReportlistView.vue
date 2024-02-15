@@ -784,7 +784,7 @@ export default {
 
     mapSummerry(arr11 , arr22, arr33, arr4, arr5, arr6){
       this.sumreportlistAll = arr11.map((x1) => {
-        let arr1 = arr11.filter(ee3 => ee3.amountPaid != 0 && ee3.amountPaid !== undefined)
+        let arr1 = arr11.filter(ee3 => ee3.amountPaid != ee3.insurance && ee3.amountPaid !== undefined)
               return {
                 ...x1,
                 type: "อำนวยการ",
@@ -802,7 +802,7 @@ export default {
             });
 
             this.sumreportlistAll2 = arr22.map((x2) => {
-            let arr2 = arr22.filter(ee4 => ee4.amountPaid != 0 && ee4.amountPaid !== undefined)
+            let arr2 = arr22.filter(ee4 => ee4.amountPaid != ee4.insurance && ee4.amountPaid !== undefined)
               return {
                 ...x2,
                 type: "สนับสนุน",
@@ -819,7 +819,7 @@ export default {
               };
             });
             this.sumreportlistAll3 = arr33.map((x3) => {
-            let arr3 = arr33.filter(ee5 => ee5.amountPaid != 0 && ee5.amountPaid !== undefined)
+            let arr3 = arr33.filter(ee5 => ee5.amountPaid !=  ee5.insurance && ee5.amountPaid !== undefined)
               return {
                 ...x3,
                 type: "ลูกจ้าง",
@@ -1980,8 +1980,11 @@ export default {
 
     MaintenanceSumAll(items) {
       return items.reduce((MaintenanceSumAll, ele) => {
-        if (ele.maintenance !== undefined && ele.amountPaid != 0)
-          return MaintenanceSumAll + parseInt(ele.maintenance);
+        let mapnum
+        if(ele.maintenance == "-")  mapnum = 0
+          else mapnum = ele.maintenance
+        if (mapnum !== undefined )
+          return MaintenanceSumAll + parseInt(mapnum);
         else return MaintenanceSumAll;
       }, 0);
     },
@@ -1994,31 +1997,43 @@ export default {
     },
 
     InsuranceSumAll(items) {
+      let mapnum1 , mapnum2
       return items.reduce((InsuranceSumAll, ele) => {
-        if (ele.insurance !== undefined && ele.amountPaid != 0) return InsuranceSumAll + parseInt(ele.insurance);
+        if(ele.accumulated == "-")  mapnum2 = 0
+          else mapnum2 = ele.accumulated
+          if(ele.insurance == "-")  mapnum1 = 0
+          else mapnum1 = ele.insurance
+        if ( (mapnum2 !== mapnum1) ) return InsuranceSumAll + parseInt(mapnum2);
         else return InsuranceSumAll;
       }, 0);
     },
 
     SumCostSumInsuranceAll(items) {
+      let mapnum , mapnum2
       return items.reduce((sumCostSumInsuranceAll, ele) => {
-        if (ele.insurance !== undefined && ele.amountPaid !== 0)
+        if (ele.maintenance !== undefined ){
+          if(ele.accumulated == "-")  mapnum = 0
+          else mapnum = ele.accumulated
+          if(ele.maintenance == "-")  mapnum2 = 0
+          else mapnum2 = ele.maintenance
           return (
             sumCostSumInsuranceAll +
-            (parseInt(ele.insurance) + parseInt(ele.maintenance || 0))
+            (parseInt(mapnum) + parseInt(mapnum2))
           );
-        else return sumCostSumInsuranceAll;
+        }
+          else{return sumCostSumInsuranceAll;} 
       }, 0);
     },
 
     SumCostSummaintenanceAll(items) {
       return items.reduce((SumCostSummaintenanceAll, ele) => {
-        if (ele.insurance !== undefined )
+        if (ele.insurance !== undefined ){
           return (
             SumCostSummaintenanceAll +
             (parseInt(ele.insurance) + parseInt(ele.maintenancefree || 0))
           );
-        else return sumCostSumInsuranceAll;
+        }
+        else {return sumCostSumInsuranceAll;}
       }, 0);
     },
 
@@ -2103,8 +2118,8 @@ export default {
 
     async filterAffiliation2(listdata) {
       let listCTD = [];
-      listCTD = listdata.filter(ee3 => ee3.amountPaid != ee3.insurance);
-      // listCTD = listdata
+      listCTD = listdata
+      // listCTD = listdata .filter(ee3 => ee3.amountPaid != ee3.insurance);
       let data,
         data2,
         data3,
@@ -2478,6 +2493,7 @@ export default {
           el["sumCostdataCostCosts"] = sumdata14CostCostsSumAll;
           el["sumdataCostCentralAllSum"] = sumdata14CostCentralSumAll;
         }
+        
         if (el.label == "ฝสสน.4") {
           el["sumdataMaintenance"] = sumdata15MaintenanceSumAll;
           el["sumdataInsurance"] = sumdata15InsuranceAll;
@@ -2770,7 +2786,7 @@ export default {
         };
       });
 
-     
+     console.log(arr);
       await this.mapdataSum(arr, arr2, arr3, arr4,arr5);
     },
 
@@ -3166,13 +3182,14 @@ export default {
         }
         return a5;
       });
-
+      let arr25 = arr1.filter(e8 => e8.affiliation == "ฝสสน.1")
+      // .filter((el) => el.affiliation == "ฝสสน.1"
       this.reportlistCTD = arr1.sort((a, b) => a.rankNumber - b.rankNumber);
       this.reportlistTD = arr2.sort((a, b) => a.rankNumber - b.rankNumber);
       this.reportlistTR = arr5.sort((a, b) => a.rankNumber - b.rankNumber);
       this.deductibleTD = arr3.sort((a, b) => a.rankNumber - b.rankNumber);
       this.deductibleCTD = arr4.sort((a, b) => a.rankNumber - b.rankNumber);
-      // console.log(this.reportlistCTD)
+     
     },
     // numberWithCommas
 
@@ -3436,26 +3453,18 @@ export default {
 
     AccumulatedSumTwo(items) {
       return items.reduce((accumulatedSum, ele) => {
-        if (
-          ele.insurance !== undefined &&
-          ele.installments !== undefined &&
-          ele.installments !== " " &&
-          ele.installments !== ""
-        )
-        if(parseInt(ele.amountPaid) !== parseInt(ele.insurance)){
-          if (parseInt(ele.installments) !== 0) {
-            return (
-              accumulatedSum + (parseInt(ele.insurance) || 0) / (parseInt(ele.installments) || 0)
+        let mapnum
+        if(ele.accumulated == "-")  mapnum = 0
+          else mapnum = ele.accumulated
+        if(ele.accumulated !== undefined){
+          
+          return (
+              accumulatedSum + (parseInt(mapnum) || 0)
             );
-          } 
-          if (parseInt(ele.installments) == 0){
-            return accumulatedSum + parseInt(ele.insurance  || 0);
-          }
-        
         }
-        // else{
+        else{
           return accumulatedSum  || 0 ;
-        // }
+        }
          
       }, 0);
     },
@@ -3483,6 +3492,7 @@ export default {
         else return SumCostSumMaintenancefee;
       }, 0);
     },
+
 
     SumCostSumCosts(items) {
       return items.reduce((SumCostSumCosts, ele) => {
@@ -3542,10 +3552,14 @@ export default {
       }, 0);
     },
 
+    
     MaintenanceSum(items) {
       return items.reduce((MaintenanceSum, ele) => {
-        if (ele.maintenance !== undefined)
-          return MaintenanceSum + parseInt(ele.maintenance);
+        let mapnum
+        if(ele.maintenance == "-")  mapnum = 0
+          else mapnum = ele.maintenance
+        if (mapnum !== undefined)
+          return MaintenanceSum + parseInt(mapnum);
         else return MaintenanceSum;
       }, 0);
     },
