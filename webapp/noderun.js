@@ -4,7 +4,7 @@ var Service = require('node-windows').Service;
 var svc = new Service({
   name:'webapp',
   description: 'The nodejs.org example web server.',
-  script: 'C:\\Users\\newyear\\Documents\\restroom\\webapp\\index.js',
+  script: 'C:\\Users\\PC\\Application\\V2.0\\restroom\\webapp\\index.js',
   nodeOptions: [
     '--harmony',
     '--max_old_space_size=4096'
