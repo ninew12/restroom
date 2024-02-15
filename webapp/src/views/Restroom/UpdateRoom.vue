@@ -296,7 +296,7 @@ export default {
           });
           this.updatedataUser();
           this.updatedataHistory();
-          this.updateReport()
+          this.submitDeleteReport()
           this.getRooms(this.id);
           this.$router.push({ path: `/room/` });
         })
@@ -331,6 +331,17 @@ export default {
           "Content-Type": "application/json",
         },
       });
+    },
+
+    submitDeleteReport() {
+      axios
+        .delete(`http://localhost:3896/report/${this.userId}`)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
 

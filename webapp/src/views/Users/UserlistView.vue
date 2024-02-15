@@ -285,7 +285,7 @@ export default {
 
     async editForm() {
       let maintenance;
-      if (this.typeRanks.value == "ประทวน") {maintenance = 60}
+      if (this.typeRanks.value == "ประทวน" || this.typeRanks.value == "ลูกจ้าง" ) {maintenance = 60}
       else if (this.typeRanks.value == "สัญญาบัตร") {maintenance = 100}
       let body = {
         firstName: this.firstName,
@@ -328,7 +328,7 @@ export default {
 
     async saveToreport() {
       let maintenance;
-      if (this.typeRanks.value == "ประทวน") {maintenance = 60}
+      if (this.typeRanks.value == "ประทวน" || this.typeRanks.value == "ลูกจ้าง" ) {maintenance = 60}
       else if (this.typeRanks.value == "สัญญาบัตร") {maintenance = 100}
       let body = {
         firstName: this.firstName,
@@ -382,7 +382,7 @@ export default {
 
     async submitForm() {
       let maintenance;
-      if (this.typeRanks.value == "ประทวน") {maintenance = 60}
+      if (this.typeRanks.value == "ประทวน" || this.typeRanks.value == "ลูกจ้าง"  ) {maintenance = 60}
       else if (this.typeRanks.value == "สัญญาบัตร") {maintenance = 100}
       let body = {
         firstName: this.firstName,
@@ -427,6 +427,7 @@ export default {
         .delete(`http://localhost:3896/users/${this.userId}`)
         .then((res) => {
           this.loader = true
+          this.submitDeleteReport()
           setTimeout(() => {
             this.getAlluser2();
             this.loader = false
@@ -436,6 +437,18 @@ export default {
             title: "ลบข้อมูลสำเร็จ",
             type: "success",
           });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+
+    submitDeleteReport() {
+      axios
+        .delete(`http://localhost:3896/report/${this.userId}`)
+        .then((res) => {
+          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -625,7 +638,7 @@ export default {
                 color="success"
                 data-bs-toggle="modal"
                 data-bs-target="#userBackdrop"
-                @click="clerData()"
+                @click="clerData( )"
                 >เพิ่มสมาชิก</MaterialButton
               >
             </div>

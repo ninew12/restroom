@@ -862,8 +862,20 @@ app.put('/reportUser/:id', (req, res) => {
 })
 
 app.delete('/report/:id', (req, res) => {
-    const deletedIndex = reports.findIndex(user => user.id === Number(req.params.id))
-    res.send(`Delete user '${users[deletedIndex].username}' completed.`)
+    res.header("Access-Control-Allow-Origin", "*");
+    let deletedIndex = reports.findIndex(report => report.userId === (req.params.id))
+    if (deletedIndex > -1) { // only splice array when item is found
+        reports.splice(deletedIndex, 1); // 2nd parameter means remove one item only
+      }
+    let parsedData = reports;
+    fs.writeFile('./users.json', JSON.stringify(parsedData, null, 2), (err) => {
+        if (err) {
+            console.log("Failed to write updated data to file");
+            return;
+        }
+        console.log("Updated file successfully");
+    });
+    res.json("delete report successfully")
 })
 
 app.get('/utilitie', (req, res) => {
