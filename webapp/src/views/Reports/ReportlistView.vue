@@ -491,7 +491,7 @@ export default {
               let m = tday.getMonth();
               tday2.setMonth(m - 1);
               this.mountTR = "ธันวาคม";
-              this.yearNumberTR = (this.dateData.getFullYear() - 1);
+              this.yearNumberTR = this.dateData.getFullYear() - 1;
               result2 = tday.toLocaleDateString("th-TH", {
                 year: "numeric",
               });
@@ -506,8 +506,8 @@ export default {
             this.mountCT = "ธันวาคม";
             this.mountTR = "พฤศจิกายน";
             this.yearNow = y;
-            this.yearNumber = (this.dateData.getFullYear() - 1);
-            this.yearNumberTR = (this.dateData.getFullYear() - 1);
+            this.yearNumber = this.dateData.getFullYear() - 1;
+            this.yearNumberTR = this.dateData.getFullYear() - 1;
             result = tday.toLocaleDateString("th-TH", {
               year: "numeric",
             });
@@ -516,8 +516,8 @@ export default {
               year: "numeric",
             });
             result3 = tday2.toLocaleDateString("th-TH", {
-                year: "numeric",
-              });
+              year: "numeric",
+            });
           }
 
           let m = newValue.label;
@@ -566,58 +566,58 @@ export default {
       today.setMonth(month - 1);
       this.dateNow = this.dataMonth[todaynew.getMonth()];
       if (this.optionMonth[x - 1] !== undefined) {
-            let today = new Date();
-            this.yearNow = y;
-            this.yearNumber = y;
-            this.mountCT = this.optionMonth[x - 1].label;
-            result = today.toLocaleDateString("th-TH", {
-              year: "numeric",
-            });
-            result2 = today.toLocaleDateString("th-TH", {
-              year: "numeric",
-            });
-            result3 = today.toLocaleDateString("th-TH", {
-              year: "numeric",
-            });
+        let today = new Date();
+        this.yearNow = y;
+        this.yearNumber = y;
+        this.mountCT = this.optionMonth[x - 1].label;
+        result = today.toLocaleDateString("th-TH", {
+          year: "numeric",
+        });
+        result2 = today.toLocaleDateString("th-TH", {
+          year: "numeric",
+        });
+        result3 = today.toLocaleDateString("th-TH", {
+          year: "numeric",
+        });
 
-            if (this.optionMonth[x - 2] !== undefined) {
-              this.mountTR = this.optionMonth[x - 2].label;
-              this.yearNumberTR = this.dateData.getFullYear();
-            } else {
-              let tday = new Date();
-              let tday2 = new Date();
-              let m = tday.getMonth();
-              tday2.setMonth(m - 1);
-              this.mountTR = "ธันวาคม";
-              this.yearNumberTR = (this.dateData.getFullYear() - 1);
-              result2 = tday.toLocaleDateString("th-TH", {
-                year: "numeric",
-              });
-              result3 = tday2.toLocaleDateString("th-TH", {
-                year: "numeric",
-              });
-            }
-          } else {
-            let tday = new Date();
-            let tday2 = new Date();
-            let m = tday.getMonth();
-            this.mountCT = "ธันวาคม";
-            this.mountTR = "พฤศจิกายน";
-            this.yearNow = y;
-            this.yearNumber = (this.dateData.getFullYear() - 1);
-            this.yearNumberTR = (this.dateData.getFullYear() - 1);
-            result = tday.toLocaleDateString("th-TH", {
-              year: "numeric",
-            });
-            tday2.setMonth(m - 1);
-            result2 = tday2.toLocaleDateString("th-TH", {
-              year: "numeric",
-            });
-            result3 = tday2.toLocaleDateString("th-TH", {
-                year: "numeric",
-              });
-          }
-         
+        if (this.optionMonth[x - 2] !== undefined) {
+          this.mountTR = this.optionMonth[x - 2].label;
+          this.yearNumberTR = this.dateData.getFullYear();
+        } else {
+          let tday = new Date();
+          let tday2 = new Date();
+          let m = tday.getMonth();
+          tday2.setMonth(m - 1);
+          this.mountTR = "ธันวาคม";
+          this.yearNumberTR = this.dateData.getFullYear() - 1;
+          result2 = tday.toLocaleDateString("th-TH", {
+            year: "numeric",
+          });
+          result3 = tday2.toLocaleDateString("th-TH", {
+            year: "numeric",
+          });
+        }
+      } else {
+        let tday = new Date();
+        let tday2 = new Date();
+        let m = tday.getMonth();
+        this.mountCT = "ธันวาคม";
+        this.mountTR = "พฤศจิกายน";
+        this.yearNow = y;
+        this.yearNumber = this.dateData.getFullYear() - 1;
+        this.yearNumberTR = this.dateData.getFullYear() - 1;
+        result = tday.toLocaleDateString("th-TH", {
+          year: "numeric",
+        });
+        tday2.setMonth(m - 1);
+        result2 = tday2.toLocaleDateString("th-TH", {
+          year: "numeric",
+        });
+        result3 = tday2.toLocaleDateString("th-TH", {
+          year: "numeric",
+        });
+      }
+
       this.monthYear = this.mountCT + " " + this.thaiNumber(result2, "year");
       this.monthYearNow = this.dateNow + " " + this.thaiNumber(result, "year");
       this.monthYearNowTR = this.mountTR + " " + this.thaiNumber(result3, "year");
@@ -667,9 +667,6 @@ export default {
             let data8 = [];
             let data9 = [];
             let dataTR = [];
-            let data10 = [];
-            let data11 = [];
-            let data12 = [];
             let data13 = [];
             let data14 = [];
             let data15 = [];
@@ -679,8 +676,7 @@ export default {
             data5 = data3.filter(
               (el6) =>
                 el6.typeUser == "บช.ตชด." &&
-                (el6.typeAffiliation == "บช.ตชด." ||
-                el6.typeAffiliation == "บก.อก.") &&
+                (el6.typeAffiliation == "บช.ตชด." || el6.typeAffiliation == "บก.อก.") &&
                 el6.monthly == this.dateNow &&
                 el6.years == this.yearNow
             );
@@ -702,8 +698,7 @@ export default {
             data13 = data4.filter(
               (el7) =>
                 el7.typeUser == "ตร." &&
-                (el7.typeAffiliation == "บช.ตชด." ||
-                el7.typeAffiliation == "บก.อก." ) &&
+                (el7.typeAffiliation == "บช.ตชด." || el7.typeAffiliation == "บก.อก.") &&
                 el7.monthly == this.mountCT &&
                 el7.years == y
             );
@@ -717,7 +712,7 @@ export default {
             data15 = data4.filter(
               (el9) =>
                 el9.typeUser == "ตร." &&
-                el9.typeAffiliation  == "ลูกจ้าง"  &&
+                el9.typeAffiliation == "ลูกจ้าง" &&
                 el9.monthly == this.mountCT &&
                 el9.years == y
             );
@@ -759,20 +754,8 @@ export default {
                 el9.years == this.yearNow
             );
 
-            data10 = data5.filter(ee => ee.amountPaid != ee.insurance);
-            data11 = data6.filter(ee2 => ee2.amountPaid != ee2.insurance);
-            data12 = data7.filter(ee3 => ee3.amountPaid != ee3.insurance);
-
-            this.mapData(data, data2, data8, data9 , dataTR);
-            this.reportlistok = data10
-            this.reportListssn = data11
-            this.reportlistlj = data12
-            this.reportlistokTD = data13
-            this.reportListssnTD = data14
-            this.reportlistljTD = data15
-            this.mapSummerry(data10, data11 , data12 , data13, data14, data15)
-
-  
+            this.mapData(data, data2, data8, data9, dataTR);
+            this.mapData2(data5, data6, data7, data13, data14, data15);
           })
           .catch((err) => {
             console.log(err);
@@ -780,196 +763,6 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    },
-
-    mapSummerry(arr11 , arr22, arr33, arr4, arr5, arr6){
-      this.sumreportlistAll = arr11.map((x1) => {
-        let arr1 = arr11.filter(ee3 => ee3.amountPaid != ee3.insurance && ee3.amountPaid !== undefined)
-              return {
-                ...x1,
-                type: "อำนวยการ",
-                sumdataMaintenance: this.MaintenanceSumAll(arr1),
-                sumdataMaintenancefree: this.maintenancefeeCount(arr1),
-                sumdataInsurance: this.InsuranceSumAll(arr1),
-                sumCostdataInsurance: this.SumCostSumInsuranceAll(arr1),
-                sumdatawaterbill: this.waterbillSummary(arr1),
-                sumdataelectricitybill: this.ElectricitybillSum(arr1),
-                sumCostdatawaterbill: this.WaterbillSumCount(arr1),
-                sumdatacentral: this.CentralSum(arr1),
-                sumdatacosts: this.CostsSum(arr1),
-                sumCostdataCostCosts: this.centralSumCount(arr1),
-              };
-            });
-
-            this.sumreportlistAll2 = arr22.map((x2) => {
-            let arr2 = arr22.filter(ee4 => ee4.amountPaid != ee4.insurance && ee4.amountPaid !== undefined)
-              return {
-                ...x2,
-                type: "สนับสนุน",
-                sumdataMaintenance: this.MaintenanceSumAll(arr2),
-                sumdataInsurance: this.InsuranceSumAll(arr2),
-                sumdataMaintenancefree: this.maintenancefeeCount(arr2),
-                sumCostdataInsurance: this.SumCostSumInsuranceAll(arr2),
-                sumdatawaterbill: this.waterbillSummary(arr2),
-                sumdataelectricitybill: this.ElectricitybillSum(arr2),
-                sumCostdatawaterbill: this.WaterbillSumCount(arr2),
-                sumdatacentral: this.CentralSum(arr2),
-                sumdatacosts: this.CostsSum(arr2),
-                sumCostdataCostCosts: this.centralSumCount(arr2),
-              };
-            });
-            this.sumreportlistAll3 = arr33.map((x3) => {
-            let arr3 = arr33.filter(ee5 => ee5.amountPaid !=  ee5.insurance && ee5.amountPaid !== undefined)
-              return {
-                ...x3,
-                type: "ลูกจ้าง",
-                sumdataMaintenance: this.MaintenanceSumAll(arr3),
-                sumdataMaintenancefree: this.maintenancefeeCount(arr3),
-                sumdataInsurance: this.InsuranceSumAll(arr3),
-                sumCostdataInsurance: this.SumCostSumInsuranceAll(arr3),
-                sumdatawaterbill: this.waterbillSummary(arr3),
-                sumdataelectricitybill: this.ElectricitybillSum(arr3),
-                sumCostdatawaterbill: this.WaterbillSumCount(arr3),
-                sumdatacentral: this.CentralSum(arr3),
-                sumdatacosts: this.CostsSum(arr3),
-                sumCostdataCostCosts: this.centralSumCount(arr3),
-              };
-            });
-
-           
-            this.maintenanceAllcount =
-              parseInt(this.sumreportlistAll[0]?.sumdataMaintenance || 0) +
-              parseInt(this.sumreportlistAll2[0]?.sumdataMaintenance  || 0) +
-              parseInt(this.sumreportlistAll3[0]?.sumdataMaintenance  || 0)
-            this.maintenancefeeAllcount =
-              parseInt(this.sumreportlistAll[0]?.sumdataMaintenancefree|| 0) +
-              parseInt(this.sumreportlistAll2[0]?.sumdataMaintenancefree|| 0) +
-              parseInt(this.sumreportlistAll3[0]?.sumdataMaintenancefree|| 0)
-            this.insuranceAllcount =
-              parseInt(this.sumreportlistAll[0]?.sumdataInsurance|| 0) +
-              parseInt(this.sumreportlistAll2[0]?.sumdataInsurance|| 0) +
-              parseInt(this.sumreportlistAll3[0]?.sumdataInsurance|| 0)
-            this.sumAllcount =
-              parseInt(this.sumreportlistAll[0]?.sumCostdataInsurance|| 0) +
-              parseInt(this.sumreportlistAll2[0]?.sumCostdataInsurance|| 0) +
-              parseInt(this.sumreportlistAll3[0]?.sumCostdataInsurance|| 0)
-            this.waterbillAllcount =
-              parseInt(this.sumreportlistAll[0]?.sumdatawaterbill|| 0) +
-              parseInt(this.sumreportlistAll2[0]?.sumdatawaterbill|| 0) +
-              parseInt(this.sumreportlistAll3[0]?.sumdatawaterbill|| 0)
-            this.electricitybillAllcount =
-              parseInt(this.sumreportlistAll[0]?.sumdataelectricitybill|| 0) +
-              parseInt(this.sumreportlistAll2[0]?.sumdataelectricitybill|| 0) +
-              parseInt(this.sumreportlistAll3[0]?.sumdataelectricitybill|| 0)
-            this.Costdatawaterbillcount =
-              parseInt(this.sumreportlistAll[0]?.sumCostdatawaterbill|| 0) +
-              parseInt(this.sumreportlistAll2[0]?.sumCostdatawaterbill|| 0) +
-              parseInt(this.sumreportlistAll3[0]?.sumCostdatawaterbill|| 0)
-            this.centralAllcount =
-              parseInt(this.sumreportlistAll[0]?.sumdatacentral|| 0) +
-              parseInt(this.sumreportlistAll2[0]?.sumdatacentral|| 0) +
-              parseInt(this.sumreportlistAll3[0]?.sumdatacentral|| 0)
-            this.costsAllcount =
-              parseInt(this.sumreportlistAll[0]?.sumdatacosts || 0)+
-              parseInt(this.sumreportlistAll2[0]?.sumdatacosts || 0)+
-              parseInt(this.sumreportlistAll3[0]?.sumdatacosts|| 0)
-            this.CostCostsAllcount =
-              parseInt(this.sumreportlistAll[0]?.sumCostdataCostCosts || 0)+
-              parseInt(this.sumreportlistAll2[0]?.sumCostdataCostCosts|| 0) +
-              parseInt(this.sumreportlistAll3[0]?.sumCostdataCostCosts|| 0)
-
-
-              this.sumreportlistAll4 = arr4.map((x4) => {
-              return {
-                ...x4,
-                type: "อำนวยการ",
-                sumdataMaintenance: this.MaintenanceSumAll(arr4),
-                sumdataMaintenancefree: this.maintenancefeeCount(arr4),
-                sumdataInsurance: this.InsuranceSumAll(arr4),
-                sumCostdataInsurance: this.SumCostSumInsuranceAll(arr4),
-                sumdatawaterbill: this.waterbillSummary(arr4),
-                sumdataelectricitybill: this.ElectricitybillSum(arr4),
-                sumCostdatawaterbill: this.WaterbillSumCount(arr4),
-                sumdatacentral: this.CentralSum(arr4),
-                sumdatacosts: this.CostsSum(arr4),
-                sumCostdataCostCosts: this.centralSumCount(arr4),
-              };
-            });
-
-            this.sumreportlistAll5 = arr5.map((x5) => {
-              return {
-                ...x5,
-                type: "สนับสนุน",
-                sumdataMaintenance: this.MaintenanceSumAll(arr5),
-                sumdataInsurance: this.InsuranceSumAll(arr5),
-                sumdataMaintenancefree: this.maintenancefeeCount(arr5),
-                sumCostdataInsurance: this.SumCostSumInsuranceAll(arr5),
-                sumdatawaterbill: this.waterbillSummary(arr5),
-                sumdataelectricitybill: this.ElectricitybillSum(arr5),
-                sumCostdatawaterbill: this.WaterbillSumCount(arr5),
-                sumdatacentral: this.CentralSum(arr5),
-                sumdatacosts: this.CostsSum(arr5),
-                sumCostdataCostCosts: this.centralSumCount(arr5),
-              };
-            });
-            this.sumreportlistAll6 = arr6.map((x6) => {
-              return {
-                ...x6,
-                type: "ลูกจ้าง",
-                sumdataMaintenance: this.MaintenanceSumAll(arr6),
-                sumdataMaintenancefree: this.maintenancefeeCount(arr6),
-                sumdataInsurance: this.InsuranceSumAll(arr6),
-                sumCostdataInsurance: this.SumCostSumInsuranceAll(arr6),
-                sumdatawaterbill: this.waterbillSummary(arr6),
-                sumdataelectricitybill: this.ElectricitybillSum(arr6),
-                sumCostdatawaterbill: this.WaterbillSumCount(arr6),
-                sumdatacentral: this.CentralSum(arr6),
-                sumdatacosts: this.CostsSum(arr6),
-                sumCostdataCostCosts: this.centralSumCount(arr6),
-              };
-            });
-
-           
-            this.maintenanceAllcountTD =
-              parseInt(this.sumreportlistAll4[0]?.sumdataMaintenance || 0) +
-              parseInt(this.sumreportlistAll5[0]?.sumdataMaintenance  || 0) +
-              parseInt(this.sumreportlistAll6[0]?.sumdataMaintenance  || 0)
-            this.maintenancefeeAllcountTD =
-              parseInt(this.sumreportlistAll4[0]?.sumdataMaintenancefree|| 0) +
-              parseInt(this.sumreportlistAll5[0]?.sumdataMaintenancefree|| 0) +
-              parseInt(this.sumreportlistAll6[0]?.sumdataMaintenancefree|| 0)
-            this.insuranceAllcountTD =
-              parseInt(this.sumreportlistAll4[0]?.sumdataInsurance|| 0) +
-              parseInt(this.sumreportlistAll5[0]?.sumdataInsurance|| 0) +
-              parseInt(this.sumreportlistAll6[0]?.sumdataInsurance|| 0)
-            this.sumAllcountTD =
-              parseInt(this.sumreportlistAll4[0]?.sumCostdataInsurance|| 0) +
-              parseInt(this.sumreportlistAll5[0]?.sumCostdataInsurance|| 0) +
-              parseInt(this.sumreportlistAll6[0]?.sumCostdataInsurance|| 0)
-            this.waterbillAllcountTD =
-              parseInt(this.sumreportlistAll4[0]?.sumdatawaterbill|| 0) +
-              parseInt(this.sumreportlistAll5[0]?.sumdatawaterbill|| 0) +
-              parseInt(this.sumreportlistAll6[0]?.sumdatawaterbill|| 0)
-            this.electricitybillAllcountTD =
-              parseInt(this.sumreportlistAll4[0]?.sumdataelectricitybill|| 0) +
-              parseInt(this.sumreportlistAll5[0]?.sumdataelectricitybill|| 0) +
-              parseInt(this.sumreportlistAll6[0]?.sumdataelectricitybill|| 0)
-            this.CostdatawaterbillcountTD =
-              parseInt(this.sumreportlistAll4[0]?.sumCostdatawaterbill|| 0) +
-              parseInt(this.sumreportlistAll5[0]?.sumCostdatawaterbill|| 0) +
-              parseInt(this.sumreportlistAll6[0]?.sumCostdatawaterbill|| 0)
-            this.centralAllcountTD =
-              parseInt(this.sumreportlistAll4[0]?.sumdatacentral|| 0) +
-              parseInt(this.sumreportlistAll5[0]?.sumdatacentral|| 0) +
-              parseInt(this.sumreportlistAll6[0]?.sumdatacentral|| 0)
-            this.costsAllcountTD =
-              parseInt(this.sumreportlistAll4[0]?.sumdatacosts || 0)+
-              parseInt(this.sumreportlistAll5[0]?.sumdatacosts || 0)+
-              parseInt(this.sumreportlistAll6[0]?.sumdatacosts|| 0)
-            this.CostCostsAllcountTD =
-              parseInt(this.sumreportlistAll4[0]?.sumCostdataCostCosts || 0)+
-              parseInt(this.sumreportlistAll5[0]?.sumCostdataCostCosts|| 0) +
-              parseInt(this.sumreportlistAll6[0]?.sumCostdataCostCosts|| 0)
     },
 
     getReportAffiliation(m, y, Affiliation) {
@@ -981,7 +774,7 @@ export default {
             let data2 = [];
             let data8 = [];
             let data9 = [];
-            let dataTR = []
+            let dataTR = [];
             let data3 = res.data;
             let data4 = res.data;
 
@@ -994,10 +787,10 @@ export default {
             );
             data2 = data4.filter(
               (el2) =>
-                el2.typeUser == "ตร." && 
-                el2.typeContract == "หักได้" && 
-                el2.monthly == this.mountCT && 
-                el2.years == y && 
+                el2.typeUser == "ตร." &&
+                el2.typeContract == "หักได้" &&
+                el2.monthly == this.mountCT &&
+                el2.years == y &&
                 el2.affiliation == Affiliation
             );
 
@@ -1048,7 +841,7 @@ export default {
             let data2 = [];
             let data8 = [];
             let data9 = [];
-            let dataTR = []
+            let dataTR = [];
             let data3 = res.data;
             let data4 = res.data;
 
@@ -1061,10 +854,10 @@ export default {
             );
             data2 = data4.filter(
               (el2) =>
-                el2.typeUser == "ตร." && 
-                el2.typeContract == "หักได้" && 
-                el2.monthly == this.mountCT && 
-                el2.years == y && 
+                el2.typeUser == "ตร." &&
+                el2.typeContract == "หักได้" &&
+                el2.monthly == this.mountCT &&
+                el2.years == y &&
                 el2.rank == ranksType
             );
 
@@ -1980,11 +1773,10 @@ export default {
 
     MaintenanceSumAll(items) {
       return items.reduce((MaintenanceSumAll, ele) => {
-        let mapnum
-        if(ele.maintenance == "-")  mapnum = 0
-          else mapnum = ele.maintenance
-        if (mapnum !== undefined )
-          return MaintenanceSumAll + parseInt(mapnum);
+        let mapnum;
+        if (ele.maintenance == "-" || ele.maintenance == undefined) mapnum = 0;
+        else mapnum = ele.maintenance;
+        if (mapnum !== undefined) return MaintenanceSumAll + parseInt(mapnum);
         else return MaintenanceSumAll;
       }, 0);
     },
@@ -1997,53 +1789,56 @@ export default {
     },
 
     InsuranceSumAll(items) {
-      let mapnum1 , mapnum2
+      let mapnum1, mapnum2;
       return items.reduce((InsuranceSumAll, ele) => {
-        if(ele.accumulated == "-")  mapnum2 = 0
-          else mapnum2 = ele.accumulated
-          if(ele.insurance == "-")  mapnum1 = 0
-          else mapnum1 = ele.insurance
-        if ( (mapnum2 !== mapnum1) ) return InsuranceSumAll + parseInt(mapnum2);
+        if (ele.accumulated == "-" || ele.accumulated == undefined) mapnum2 = 0;
+        else mapnum2 = ele.accumulated;
+        if (ele.insurance == "-" || ele.insurance == undefined) mapnum1 = 0;
+        else mapnum1 = ele.insurance;
+        if (mapnum2 !== mapnum1) return InsuranceSumAll + parseInt(mapnum2);
         else return InsuranceSumAll;
       }, 0);
     },
 
     SumCostSumInsuranceAll(items) {
-      let mapnum , mapnum2
+      let mapnum, mapnum2;
       return items.reduce((sumCostSumInsuranceAll, ele) => {
-        if (ele.maintenance !== undefined ){
-          if(ele.accumulated == "-")  mapnum = 0
-          else mapnum = ele.accumulated
-          if(ele.maintenance == "-")  mapnum2 = 0
-          else mapnum2 = ele.maintenance
-          return (
-            sumCostSumInsuranceAll +
-            (parseInt(mapnum) + parseInt(mapnum2))
-          );
+        if (ele.accumulated == "-" || ele.accumulated == undefined) mapnum = 0;
+        else mapnum = ele.accumulated;
+        if (ele.maintenance == "-" || ele.maintenance == undefined) mapnum2 = 0;
+        else mapnum2 = ele.maintenance;
+        if (ele.maintenance !== undefined) {
+          return sumCostSumInsuranceAll + (parseInt(mapnum) + parseInt(mapnum2));
+        } else {
+          return sumCostSumInsuranceAll;
         }
-          else{return sumCostSumInsuranceAll;} 
       }, 0);
     },
 
     SumCostSummaintenanceAll(items) {
       return items.reduce((SumCostSummaintenanceAll, ele) => {
-        if (ele.insurance !== undefined ){
+        if (ele.insurance !== undefined) {
           return (
             SumCostSummaintenanceAll +
             (parseInt(ele.insurance) + parseInt(ele.maintenancefree || 0))
           );
+        } else {
+          return sumCostSumInsuranceAll;
         }
-        else {return sumCostSumInsuranceAll;}
       }, 0);
     },
 
     countMaintenanceAll(items) {
+      let mapnum2;
       return items.reduce((sumCostSumInsuranceAll, ele) => {
-        if (ele.sumdataMaintenance !== undefined)
-          return sumCostSumInsuranceAll + parseInt(ele.sumdataMaintenance);
+        if (ele.sumdataMaintenance == "-" || ele.sumdataMaintenance == undefined)
+          mapnum2 = 0;
+        else mapnum2 = ele.sumdataMaintenance;
+        if (mapnum2 !== undefined) return sumCostSumInsuranceAll + parseInt(mapnum2);
         else return sumCostSumInsuranceAll;
       }, 0);
     },
+
     countMaintenancefeeAll(items) {
       return items.reduce((sumCostSumMaintenancefeeAll, ele) => {
         if (ele.sumdataMaintenancefee !== undefined)
@@ -2117,8 +1912,9 @@ export default {
     },
 
     async filterAffiliation2(listdata) {
-      let listCTD = [];
-      listCTD = listdata
+      let listCTD,
+        sumCTD = [];
+      listCTD = listdata;
       // listCTD = listdata .filter(ee3 => ee3.amountPaid != ee3.insurance);
       let data,
         data2,
@@ -2324,7 +2120,7 @@ export default {
       let sumdata17costsSumAll = this.CostsSum(data17);
       let sumdata17CostCostsSumAll = this.SumCostSumCentral(data17);
       let sumdata17CostCentralSumAll = this.CentralSumallCount(data17);
-      await this.AffiliationListCTD.map((el) => {
+      sumCTD = await this.AffiliationListCTD.map((el) => {
         if (el.label == "บช.ตชด.") {
           el["sumdataMaintenance"] = sumdataMaintenanceSumAll;
           el["sumdataInsurance"] = sumdataInsuranceAll;
@@ -2493,7 +2289,7 @@ export default {
           el["sumCostdataCostCosts"] = sumdata14CostCostsSumAll;
           el["sumdataCostCentralAllSum"] = sumdata14CostCentralSumAll;
         }
-        
+
         if (el.label == "ฝสสน.4") {
           el["sumdataMaintenance"] = sumdata15MaintenanceSumAll;
           el["sumdataInsurance"] = sumdata15InsuranceAll;
@@ -2533,35 +2329,27 @@ export default {
 
         return el;
       });
-      this.AffiliationListCTD.map((e) => {
-        e["countMaintenanceAll"] = this.countMaintenanceAll(this.AffiliationListCTD);
-        e["countInsuranceAll"] = this.countInsuranceAll(this.AffiliationListCTD);
-        e["countCostSumAll"] = this.countCostSumAll(this.AffiliationListCTD);
-        e["countwaterbilAll"] = this.countWaterbillAll(this.AffiliationListCTD);
-        e["countelectricitybillAll"] = this.countelectricitybillAll(
-          this.AffiliationListCTD
-        );
-        e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(
-          this.AffiliationListCTD
-        );
-        e["countcentraAll"] = this.countcentralAll(this.AffiliationListCTD);
-        e["countcostsAll"] = this.countcostsAll(this.AffiliationListCTD);
-        e["countCostCostsSumAll"] = this.countCostCostsSumAll(this.AffiliationListCTD);
-        e["countdataCostCentralAllSum"] = this.countsumdataCostCentralAllSum(
-          this.AffiliationListCTD
-        );
+      await this.AffiliationListCTD.map((e) => {
+        e["countMaintenanceAll"] = this.countMaintenanceAll(sumCTD);
+        e["countInsuranceAll"] = this.countInsuranceAll(sumCTD);
+        e["countCostSumAll"] = this.countCostSumAll(sumCTD);
+        e["countwaterbilAll"] = this.countWaterbillAll(sumCTD);
+        e["countelectricitybillAll"] = this.countelectricitybillAll(sumCTD);
+        e["countCostwaterbillAll"] = this.countCostwaterbillSumAll(sumCTD);
+        e["countcentraAll"] = this.countcentralAll(sumCTD);
+        e["countcostsAll"] = this.countcostsAll(sumCTD);
+        e["countCostCostsSumAll"] = this.countCostCostsSumAll(sumCTD);
+        e["countdataCostCentralAllSum"] = this.countsumdataCostCentralAllSum(sumCTD);
         return e;
       });
     },
-
- 
 
     async mapData(data, data2, data3, data4, dataTR) {
       let arr = [];
       let arr2 = [];
       let arr3 = [];
       let arr4 = [];
-      let arr5 = []
+      let arr5 = [];
       arr = await data.map((el, i) => {
         return {
           ...el,
@@ -2584,7 +2372,7 @@ export default {
           costs: el.costs || 0,
           waterbill: el.waterbill || 0,
           electricitybill: el.electricitybill || 0,
-          Installmenttime: el.installmentsTime
+          Installmenttime: el.installmentsTime,
         };
       });
 
@@ -2610,7 +2398,7 @@ export default {
           maintenance: el2.maintenance || 0,
           waterbill: el2.waterbill || 0,
           electricitybill: el2.electricitybill || 0,
-          Installmenttime: el2.installmentsTime
+          Installmenttime: el2.installmentsTime,
         };
       });
 
@@ -2636,7 +2424,7 @@ export default {
           maintenance: el3.maintenance || 0,
           waterbill: el3.waterbill || 0,
           electricitybill: el3.electricitybill || 0,
-          Installmenttime: el3.installmentsTime
+          Installmenttime: el3.installmentsTime,
         };
       });
 
@@ -2662,7 +2450,7 @@ export default {
           maintenance: el4.maintenance || 0,
           waterbill: el4.waterbill || 0,
           electricitybill: el4.electricitybill || 0,
-          Installmenttime: el4.installmentsTime
+          Installmenttime: el4.installmentsTime,
         };
       });
 
@@ -2688,27 +2476,405 @@ export default {
           maintenance: el5.maintenance || 0,
           waterbill: el5.waterbill || 0,
           electricitybill: el5.electricitybill || 0,
-          Installmenttime: el5.installmentsTime
+          Installmenttime: el5.installmentsTime,
         };
       });
 
-      let arr6 = arr.map(er => {
-        if(er.accumulated == er.amountPaid){
-            er.accumulated = "-"
+      let arr6 = arr.map((er) => {
+        if (er.accumulated == er.amountPaid) {
+          er.accumulated = "-";
         }
-        return er
-      })
-      let arr7 = arr4.filter(ee=> ee.accumulated != ee.amountPaid )
+        return er;
+      });
+      let arr7 = arr4.filter((ee) => ee.accumulated != ee.amountPaid);
 
-      await this.mapsumAll(arr6, arr2, arr3, arr7,arr5);
+      await this.mapsumAll(arr6, arr2, arr3, arr7, arr5);
     },
 
-    async mapsumAll(data, data2, data3, data4, dataTR){
+    async mapData2(data, data2, data3, data4, data5, data6) {
       let arr = [];
       let arr2 = [];
       let arr3 = [];
       let arr4 = [];
-      let arr5 = []
+      let arr5 = [];
+      let arr6 = [];
+      arr = await data.map((el, i) => {
+        return {
+          ...el,
+          numberNo: i + 1,
+          lastnumber: el.lastnumber || 0,
+          firstnumber: el.firstnumber || 0,
+          central: el.central || 0,
+          typeAffiliation: el.typeAffiliation || "-",
+          typeContract: el.typeContract || "-",
+          contractExpenses: el.contractExpenses || "-",
+          buildingName: el.buildingName || "-",
+          maintenance: el.maintenance || 0,
+          insurance: el.insurance || 0,
+          accumulated: this.countSumAccumulated(el),
+          roomnumber: el.roomnumber,
+          amountPaid: el.amountPaid || 0,
+          maintenancefee: el.maintenancefee || 0,
+          fullname: (el.rank || "") + " " + el?.firstName + " " + el?.lastName,
+          unitWater: el.lastnumber - el.firstnumber || 0,
+          costs: el.costs || 0,
+          waterbill: el.waterbill || 0,
+          electricitybill: el.electricitybill || 0,
+          Installmenttime: el.installmentsTime,
+        };
+      });
+
+      arr2 = await data2.map((el2, i) => {
+        return {
+          ...el2,
+          numberNo: i + 1,
+          lastnumber: el2.lastnumber || 0,
+          firstnumber: el2.firstnumber || 0,
+          central: el2.central || 0,
+          typeAffiliation: el2.typeAffiliation || "-",
+          accumulated: this.countSumAccumulated(el2),
+          typeContract: el2.typeContract || "-",
+          contractExpenses: el2.contractExpenses || "-",
+          buildingName: el2.buildingName || "-",
+          costs: el2.costs || 0,
+          insurance: el2.insurance || 0,
+          maintenancefee: el2.maintenancefee || 0,
+          roomnumber: el2.roomnumber,
+          amountPaid: el2.amountPaid || 0,
+          fullname: (el2.rank || "") + " " + el2?.firstName + " " + el2?.lastName,
+          unitWater: el2.lastnumber - el2.firstnumber || 0,
+          maintenance: el2.maintenance || 0,
+          waterbill: el2.waterbill || 0,
+          electricitybill: el2.electricitybill || 0,
+          Installmenttime: el2.installmentsTime,
+        };
+      });
+
+      arr3 = await data3.map((el3, i) => {
+        return {
+          ...el3,
+          numberNo: i + 1,
+          lastnumber: el3.lastnumber || 0,
+          firstnumber: el3.firstnumber || 0,
+          central: el3.central || 0,
+          typeAffiliation: el3.typeAffiliation || "-",
+          accumulated: this.countSumAccumulated(el3),
+          typeContract: el3.typeContract || "-",
+          contractExpenses: el3.contractExpenses || "-",
+          buildingName: el3.buildingName || "-",
+          costs: el3.costs || 0,
+          insurance: el3.insurance || 0,
+          maintenancefee: el3.maintenancefee || 0,
+          roomnumber: el3.roomnumber,
+          amountPaid: el3.amountPaid || 0,
+          fullname: (el3.rank || "") + " " + el3?.firstName + " " + el3?.lastName,
+          unitWater: el3.lastnumber - el3.firstnumber || 0,
+          maintenance: el3.maintenance || 0,
+          waterbill: el3.waterbill || 0,
+          electricitybill: el3.electricitybill || 0,
+          Installmenttime: el3.installmentsTime,
+        };
+      });
+
+      arr4 = await data4.map((el4, i) => {
+        return {
+          ...el4,
+          numberNo: i + 1,
+          lastnumber: el4.lastnumber || 0,
+          firstnumber: el4.firstnumber || 0,
+          central: el4.central || 0,
+          typeAffiliation: el4.typeAffiliation || "-",
+          accumulated: this.countSumAccumulated(el4),
+          typeContract: el4.typeContract || "-",
+          contractExpenses: el4.contractExpenses || "-",
+          buildingName: el4.buildingName || "-",
+          costs: el4.costs || 0,
+          insurance: el4.insurance || 0,
+          maintenancefee: el4.maintenancefee || 0,
+          roomnumber: el4.roomnumber,
+          amountPaid: el4.amountPaid || 0,
+          fullname: (el4.rank || "") + " " + el4?.firstName + " " + el4?.lastName,
+          unitWater: el4.lastnumber - el4.firstnumber || 0,
+          maintenance: el4.maintenance || 0,
+          waterbill: el4.waterbill || 0,
+          electricitybill: el4.electricitybill || 0,
+          Installmenttime: el4.installmentsTime,
+        };
+      });
+
+      arr5 = await data5.map((el5, i) => {
+        return {
+          ...el5,
+          numberNo: i + 1,
+          lastnumber: el5.lastnumber || 0,
+          firstnumber: el5.firstnumber || 0,
+          central: el5.central || 0,
+          typeAffiliation: el5.typeAffiliation || "-",
+          accumulated: this.countSumAccumulated(el5),
+          typeContract: el5.typeContract || "-",
+          contractExpenses: el5.contractExpenses || "-",
+          buildingName: el5.buildingName || "-",
+          costs: el5.costs || 0,
+          insurance: el5.insurance || 0,
+          maintenancefee: el5.maintenancefee || 0,
+          roomnumber: el5.roomnumber,
+          amountPaid: el5.amountPaid || 0,
+          fullname: (el5.rank || "") + " " + el5?.firstName + " " + el5?.lastName,
+          unitWater: el5.lastnumber - el5.firstnumber || 0,
+          maintenance: el5.maintenance || 0,
+          waterbill: el5.waterbill || 0,
+          electricitybill: el5.electricitybill || 0,
+          Installmenttime: el5.installmentsTime,
+        };
+      });
+
+      arr6 = await data6.map((el6, i) => {
+        return {
+          ...el6,
+          numberNo: i + 1,
+          lastnumber: el6.lastnumber || 0,
+          firstnumber: el6.firstnumber || 0,
+          central: el6.central || 0,
+          typeAffiliation: el6.typeAffiliation || "-",
+          accumulated: this.countSumAccumulated(el6),
+          typeContract: el6.typeContract || "-",
+          contractExpenses: el6.contractExpenses || "-",
+          buildingName: el6.buildingName || "-",
+          costs: el6.costs || 0,
+          insurance: el6.insurance || 0,
+          maintenancefee: el6.maintenancefee || 0,
+          roomnumber: el6.roomnumber,
+          amountPaid: el6.amountPaid || 0,
+          fullname: (el6.rank || "") + " " + el6?.firstName + " " + el6?.lastName,
+          unitWater: el6.lastnumber - el6.firstnumber || 0,
+          maintenance: el6.maintenance || 0,
+          waterbill: el6.waterbill || 0,
+          electricitybill: el6.electricitybill || 0,
+          Installmenttime: el6.installmentsTime,
+        };
+      });
+
+      arr.map((er) => {
+        if (er.accumulated == er.amountPaid) {
+          er.accumulated = "-";
+        }
+        return er;
+      });
+      arr2.map((er) => {
+        if (er.accumulated == er.amountPaid) {
+          er.accumulated = "-";
+        }
+        return er;
+      });
+      arr3.map((er) => {
+        if (er.accumulated == er.amountPaid) {
+          er.accumulated = "-";
+        }
+        return er;
+      });
+
+      this.reportlistok = arr;
+      this.reportListssn = arr2;
+      this.reportlistlj = arr3;
+      this.reportlistokTD = arr4;
+      this.reportListssnTD = arr5;
+      this.reportlistljTD = arr6;
+      await this.mapSummerry(arr, arr2, arr3, arr4, arr5, arr6);
+    },
+
+    mapSummerry(arr11, arr22, arr33, arr4, arr5, arr6) {
+      this.sumreportlistAll = arr11.map((x1) => {
+        let arr1 = arr11;
+        return {
+          ...x1,
+          type: "อำนวยการ",
+          sumdataMaintenance: this.MaintenanceSumAll(arr1),
+          sumdataMaintenancefree: this.maintenancefeeCount(arr1),
+          sumdataInsurance: this.InsuranceSumAll(arr1),
+          sumCostdataInsurance: this.SumCostSumInsuranceAll(arr1),
+          sumdatawaterbill: this.waterbillSummary(arr1),
+          sumdataelectricitybill: this.ElectricitybillSum(arr1),
+          sumCostdatawaterbill: this.WaterbillSumCount(arr1),
+          sumdatacentral: this.CentralSum(arr1),
+          sumdatacosts: this.CostsSum(arr1),
+          sumCostdataCostCosts: this.centralSumCount(arr1),
+        };
+      });
+
+      this.sumreportlistAll2 = arr22.map((x2) => {
+        let arr2 = arr22;
+        return {
+          ...x2,
+          type: "สนับสนุน",
+          sumdataMaintenance: this.MaintenanceSumAll(arr2),
+          sumdataInsurance: this.InsuranceSumAll(arr2),
+          sumdataMaintenancefree: this.maintenancefeeCount(arr2),
+          sumCostdataInsurance: this.SumCostSumInsuranceAll(arr2),
+          sumdatawaterbill: this.waterbillSummary(arr2),
+          sumdataelectricitybill: this.ElectricitybillSum(arr2),
+          sumCostdatawaterbill: this.WaterbillSumCount(arr2),
+          sumdatacentral: this.CentralSum(arr2),
+          sumdatacosts: this.CostsSum(arr2),
+          sumCostdataCostCoasts: this.centralSumCount(arr2),
+        };
+      });
+      this.sumreportlistAll3 = arr33.map((x3) => {
+        let arr3 = arr33;
+        return {
+          ...x3,
+          type: "ลูกจ้าง",
+          sumdataMaintenance: this.MaintenanceSumAll(arr3),
+          sumdataMaintenancefree: this.maintenancefeeCount(arr3),
+          sumdataInsurance: this.InsuranceSumAll(arr3),
+          sumCostdataInsurance: this.SumCostSumInsuranceAll(arr3),
+          sumdatawaterbill: this.waterbillSummary(arr3),
+          sumdataelectricitybill: this.ElectricitybillSum(arr3),
+          sumCostdatawaterbill: this.WaterbillSumCount(arr3),
+          sumdatacentral: this.CentralSum(arr3),
+          sumdatacosts: this.CostsSum(arr3),
+          sumCostdataCostCosts: this.centralSumCount(arr3),
+        };
+      });
+
+      this.maintenanceAllcount =
+        parseInt(this.sumreportlistAll[0]?.sumdataMaintenance || 0) +
+        parseInt(this.sumreportlistAll2[0]?.sumdataMaintenance || 0) +
+        parseInt(this.sumreportlistAll3[0]?.sumdataMaintenance || 0);
+      this.maintenancefeeAllcount =
+        parseInt(this.sumreportlistAll[0]?.sumdataMaintenancefree || 0) +
+        parseInt(this.sumreportlistAll2[0]?.sumdataMaintenancefree || 0) +
+        parseInt(this.sumreportlistAll3[0]?.sumdataMaintenancefree || 0);
+      this.insuranceAllcount =
+        parseInt(this.sumreportlistAll[0]?.sumdataInsurance || 0) +
+        parseInt(this.sumreportlistAll2[0]?.sumdataInsurance || 0) +
+        parseInt(this.sumreportlistAll3[0]?.sumdataInsurance || 0);
+      this.sumAllcount =
+        parseInt(this.sumreportlistAll[0]?.sumCostdataInsurance || 0) +
+        parseInt(this.sumreportlistAll2[0]?.sumCostdataInsurance || 0) +
+        parseInt(this.sumreportlistAll3[0]?.sumCostdataInsurance || 0);
+      this.waterbillAllcount =
+        parseInt(this.sumreportlistAll[0]?.sumdatawaterbill || 0) +
+        parseInt(this.sumreportlistAll2[0]?.sumdatawaterbill || 0) +
+        parseInt(this.sumreportlistAll3[0]?.sumdatawaterbill || 0);
+      this.electricitybillAllcount =
+        parseInt(this.sumreportlistAll[0]?.sumdataelectricitybill || 0) +
+        parseInt(this.sumreportlistAll2[0]?.sumdataelectricitybill || 0) +
+        parseInt(this.sumreportlistAll3[0]?.sumdataelectricitybill || 0);
+      this.Costdatawaterbillcount =
+        parseInt(this.sumreportlistAll[0]?.sumCostdatawaterbill || 0) +
+        parseInt(this.sumreportlistAll2[0]?.sumCostdatawaterbill || 0) +
+        parseInt(this.sumreportlistAll3[0]?.sumCostdatawaterbill || 0);
+      this.centralAllcount =
+        parseInt(this.sumreportlistAll[0]?.sumdatacentral || 0) +
+        parseInt(this.sumreportlistAll2[0]?.sumdatacentral || 0) +
+        parseInt(this.sumreportlistAll3[0]?.sumdatacentral || 0);
+      this.costsAllcount =
+        parseInt(this.sumreportlistAll[0]?.sumdatacosts || 0) +
+        parseInt(this.sumreportlistAll2[0]?.sumdatacosts || 0) +
+        parseInt(this.sumreportlistAll3[0]?.sumdatacosts || 0);
+      this.CostCostsAllcount =
+        parseInt(this.sumreportlistAll[0]?.sumCostdataCostCosts || 0) +
+        parseInt(this.sumreportlistAll2[0]?.sumCostdataCostCosts || 0) +
+        parseInt(this.sumreportlistAll3[0]?.sumCostdataCostCosts || 0);
+
+      this.sumreportlistAll4 = arr4.map((x4) => {
+        return {
+          ...x4,
+          type: "อำนวยการ",
+          sumdataMaintenance: this.MaintenanceSumAll(arr4),
+          sumdataMaintenancefree: this.maintenancefeeCount(arr4),
+          sumdataInsurance: this.InsuranceSumAll(arr4),
+          sumCostdataInsurance: this.SumCostSumInsuranceAll(arr4),
+          sumdatawaterbill: this.waterbillSummary(arr4),
+          sumdataelectricitybill: this.ElectricitybillSum(arr4),
+          sumCostdatawaterbill: this.WaterbillSumCount(arr4),
+          sumdatacentral: this.CentralSum(arr4),
+          sumdatacosts: this.CostsSum(arr4),
+          sumCostdataCostCosts: this.centralSumCount(arr4),
+        };
+      });
+
+      this.sumreportlistAll5 = arr5.map((x5) => {
+        return {
+          ...x5,
+          type: "สนับสนุน",
+          sumdataMaintenance: this.MaintenanceSumAll(arr5),
+          sumdataInsurance: this.InsuranceSumAll(arr5),
+          sumdataMaintenancefree: this.maintenancefeeCount(arr5),
+          sumCostdataInsurance: this.SumCostSumInsuranceAll(arr5),
+          sumdatawaterbill: this.waterbillSummary(arr5),
+          sumdataelectricitybill: this.ElectricitybillSum(arr5),
+          sumCostdatawaterbill: this.WaterbillSumCount(arr5),
+          sumdatacentral: this.CentralSum(arr5),
+          sumdatacosts: this.CostsSum(arr5),
+          sumCostdataCostCosts: this.centralSumCount(arr5),
+        };
+      });
+      this.sumreportlistAll6 = arr6.map((x6) => {
+        return {
+          ...x6,
+          type: "ลูกจ้าง",
+          sumdataMaintenance: this.MaintenanceSumAll(arr6),
+          sumdataMaintenancefree: this.maintenancefeeCount(arr6),
+          sumdataInsurance: this.InsuranceSumAll(arr6),
+          sumCostdataInsurance: this.SumCostSumInsuranceAll(arr6),
+          sumdatawaterbill: this.waterbillSummary(arr6),
+          sumdataelectricitybill: this.ElectricitybillSum(arr6),
+          sumCostdatawaterbill: this.WaterbillSumCount(arr6),
+          sumdatacentral: this.CentralSum(arr6),
+          sumdatacosts: this.CostsSum(arr6),
+          sumCostdataCostCosts: this.centralSumCount(arr6),
+        };
+      });
+
+      this.maintenanceAllcountTD =
+        parseInt(this.sumreportlistAll4[0]?.sumdataMaintenance || 0) +
+        parseInt(this.sumreportlistAll5[0]?.sumdataMaintenance || 0) +
+        parseInt(this.sumreportlistAll6[0]?.sumdataMaintenance || 0);
+      this.maintenancefeeAllcountTD =
+        parseInt(this.sumreportlistAll4[0]?.sumdataMaintenancefree || 0) +
+        parseInt(this.sumreportlistAll5[0]?.sumdataMaintenancefree || 0) +
+        parseInt(this.sumreportlistAll6[0]?.sumdataMaintenancefree || 0);
+      this.insuranceAllcountTD =
+        parseInt(this.sumreportlistAll4[0]?.sumdataInsurance || 0) +
+        parseInt(this.sumreportlistAll5[0]?.sumdataInsurance || 0) +
+        parseInt(this.sumreportlistAll6[0]?.sumdataInsurance || 0);
+      this.sumAllcountTD =
+        parseInt(this.sumreportlistAll4[0]?.sumCostdataInsurance || 0) +
+        parseInt(this.sumreportlistAll5[0]?.sumCostdataInsurance || 0) +
+        parseInt(this.sumreportlistAll6[0]?.sumCostdataInsurance || 0);
+      this.waterbillAllcountTD =
+        parseInt(this.sumreportlistAll4[0]?.sumdatawaterbill || 0) +
+        parseInt(this.sumreportlistAll5[0]?.sumdatawaterbill || 0) +
+        parseInt(this.sumreportlistAll6[0]?.sumdatawaterbill || 0);
+      this.electricitybillAllcountTD =
+        parseInt(this.sumreportlistAll4[0]?.sumdataelectricitybill || 0) +
+        parseInt(this.sumreportlistAll5[0]?.sumdataelectricitybill || 0) +
+        parseInt(this.sumreportlistAll6[0]?.sumdataelectricitybill || 0);
+      this.CostdatawaterbillcountTD =
+        parseInt(this.sumreportlistAll4[0]?.sumCostdatawaterbill || 0) +
+        parseInt(this.sumreportlistAll5[0]?.sumCostdatawaterbill || 0) +
+        parseInt(this.sumreportlistAll6[0]?.sumCostdatawaterbill || 0);
+      this.centralAllcountTD =
+        parseInt(this.sumreportlistAll4[0]?.sumdatacentral || 0) +
+        parseInt(this.sumreportlistAll5[0]?.sumdatacentral || 0) +
+        parseInt(this.sumreportlistAll6[0]?.sumdatacentral || 0);
+      this.costsAllcountTD =
+        parseInt(this.sumreportlistAll4[0]?.sumdatacosts || 0) +
+        parseInt(this.sumreportlistAll5[0]?.sumdatacosts || 0) +
+        parseInt(this.sumreportlistAll6[0]?.sumdatacosts || 0);
+      this.CostCostsAllcountTD =
+        parseInt(this.sumreportlistAll4[0]?.sumCostdataCostCosts || 0) +
+        parseInt(this.sumreportlistAll5[0]?.sumCostdataCostCosts || 0) +
+        parseInt(this.sumreportlistAll6[0]?.sumCostdataCostCosts || 0);
+    },
+
+    async mapsumAll(data, data2, data3, data4, dataTR) {
+      let arr = [];
+      let arr2 = [];
+      let arr3 = [];
+      let arr4 = [];
+      let arr5 = [];
       arr = await data.map((el, i) => {
         return {
           ...el,
@@ -2717,10 +2883,9 @@ export default {
           centralSum: this.CentralSum(data),
           costsSum: this.CostsSum(data),
           InsuranceSum: this.InsuranceSum(data),
-          MaintenanceSum: this.MaintenanceSum(data),
+          MaintenanceSum: this.MaintenanceSumAll(data),
           accumulatedSum: this.AccumulatedSumTwo(data),
           maintenancefeeSum: this.maintenancefeeCount(data),
-          
         };
       });
 
@@ -2736,7 +2901,6 @@ export default {
           InsuranceSum: this.InsuranceSum(data2),
           MaintenanceSum: this.MaintenanceSum(data2),
           accumulatedSum: this.AccumulatedSum(data2),
-        
         };
       });
 
@@ -2751,7 +2915,6 @@ export default {
           InsuranceSum: this.InsuranceSum(data3),
           MaintenanceSum: this.MaintenanceSum(data3),
           accumulatedSum: this.AccumulatedSum(data3),
-          
         };
       });
 
@@ -2766,7 +2929,6 @@ export default {
           InsuranceSum: this.InsuranceSum(data4),
           MaintenanceSum: this.MaintenanceSum(data4),
           accumulatedSum: this.AccumulatedSum(data4),
-        
         };
       });
 
@@ -2782,12 +2944,10 @@ export default {
           InsuranceSum: this.InsuranceSum(dataTR),
           MaintenanceSum: this.MaintenanceSum(dataTR),
           accumulatedSum: this.AccumulatedSum(dataTR),
-       
         };
       });
 
-     console.log(arr);
-      await this.mapdataSum(arr, arr2, arr3, arr4,arr5);
+      await this.mapdataSum(arr, arr2, arr3, arr4, arr5);
     },
 
     checkMonth(index, installments) {
@@ -2877,7 +3037,7 @@ export default {
       this.mapdataSumTable(arr, arr2, arr3, arr4, arr5);
     },
 
-    async mapdataSumTable(data, data2, data3, data4,data5) {
+    async mapdataSumTable(data, data2, data3, data4, data5) {
       let arr = [];
       let arr2 = [];
       let arr3 = [];
@@ -2940,7 +3100,7 @@ export default {
       this.filterAffiliation(arr2);
       this.filterAffiliation2(arr);
       this.filterAffiliationTR(arr5);
-      this.mapDataComma(arr, arr2, arr3, arr4,arr5);
+      this.mapDataComma(arr, arr2, arr3, arr4, arr5);
     },
 
     async mapDataComma(data, data2, data3, data4, data5) {
@@ -3107,11 +3267,11 @@ export default {
             parseInt(el5.electricitybillSum) + parseInt(el5.costsSum) || 0,
         };
       });
-      this.mapTypeContact(arr3, arr4, arr5, arr6,arr7);
+      this.mapTypeContact(arr3, arr4, arr5, arr6, arr7);
     },
 
-    mapTypeContact(data, data2, data3, data4,data5) {
-      let arr1 = []; 
+    mapTypeContact(data, data2, data3, data4, data5) {
+      let arr1 = [];
       let arr2 = [];
       let arr3 = [];
       let arr4 = [];
@@ -3182,14 +3342,12 @@ export default {
         }
         return a5;
       });
-      let arr25 = arr1.filter(e8 => e8.affiliation == "ฝสสน.1")
-      // .filter((el) => el.affiliation == "ฝสสน.1"
+
       this.reportlistCTD = arr1.sort((a, b) => a.rankNumber - b.rankNumber);
       this.reportlistTD = arr2.sort((a, b) => a.rankNumber - b.rankNumber);
       this.reportlistTR = arr5.sort((a, b) => a.rankNumber - b.rankNumber);
       this.deductibleTD = arr3.sort((a, b) => a.rankNumber - b.rankNumber);
       this.deductibleCTD = arr4.sort((a, b) => a.rankNumber - b.rankNumber);
-     
     },
     // numberWithCommas
 
@@ -3202,6 +3360,9 @@ export default {
     },
 
     async ExportData() {
+      let arr = this.reportlistok.filter((e) => e.accumulated !== e.insurance);
+      let arr2 = this.reportListssn.filter((e2) => e2.accumulated !== e2.insurance);
+      let arr3 = this.reportlistlj.filter((e3) => e3.accumulated !== e3.insurance);
       var ws_data = [
         [
           "รายละเอียดการหักเงิน  ค่าบำรุงฯ ,ค่าประกันฯ , ผู้ได้สิทธิพักอาศัยบ้านพัก บช.ตชด.",
@@ -3214,8 +3375,8 @@ export default {
         aa3,
         aa4,
         aa5 = [];
-      let count = this.OGCount(this.reportlistok);
-      await this.reportlistok.forEach((e, i) => {
+      let count = this.OGCount(arr);
+      await arr.forEach((e, i) => {
         ws_data.push([
           i + 1,
           e.idcard,
@@ -3245,8 +3406,8 @@ export default {
         bb3,
         bb4,
         bb5 = [];
-      let count2 = this.OGCount(this.reportListssn);
-      await this.reportListssn.forEach((el, i) => {
+      let count2 = this.OGCount(arr2);
+      await arr2.forEach((el, i) => {
         ws_data2.push([
           i + 1,
           el.idcard,
@@ -3275,8 +3436,8 @@ export default {
         cc3,
         cc4,
         cc5 = [];
-      let count3 = this.OGCount(this.reportListssn);
-      await this.reportlistlj.forEach((el2, i) => {
+      let count3 = this.OGCount(arr3);
+      await arr3.forEach((el2, i) => {
         ws_data3.push([
           i + 1,
           el2.idcard,
@@ -3309,16 +3470,13 @@ export default {
     },
 
     countSuminstallments(item) {
-      if (parseInt(item.installments) !== 0) {
-        let summery =
-          parseInt(item.insurance || 0) / parseInt(item.installments || 0) +
-            parseInt(item.maintenance || 0) || 0;
-        return this.numberWithCommas(summery);
-      } else {
-        let summery =
-          parseInt(item.insurance || 0) + parseInt(item.maintenance || 0) || 0;
-        return this.numberWithCommas(summery);
-      }
+      let mapnum, mapnum2;
+      if (item.accumulated == "-" || item.accumulated == undefined) mapnum = 0;
+      else mapnum = item.accumulated;
+      if (item.maintenance == "-" || item.maintenance == undefined) mapnum2 = 0;
+      else mapnum2 = item.maintenance;
+      let summery = parseInt(mapnum) + parseInt(mapnum2) || 0;
+      return this.numberWithCommas(summery);
     },
 
     countSumcentral(item) {
@@ -3335,7 +3493,8 @@ export default {
 
     WaterbillSum(items) {
       return items.reduce((waterbillSum, ele) => {
-        if (ele.waterbill !== undefined) return waterbillSum + parseInt(ele.waterbill || 0);
+        if (ele.waterbill !== undefined)
+          return waterbillSum + parseInt(ele.waterbill || 0);
         else return waterbillSum;
       }, 0);
     },
@@ -3370,16 +3529,23 @@ export default {
     },
 
     countSumAccmulated(item) {
-      let ss = parseInt(item.MaintenanceSum || 0) + parseInt(item.accumulatedSum || 0) 
-      return ss 
+      let ss = parseInt(item.MaintenanceSum || 0) + parseInt(item.accumulatedSum || 0);
+      return ss;
     },
-   
 
     OGCount(items) {
+      let mapnum, mapnum2;
       return items.reduce((insuranceSum, ele) => {
-        let c = parseInt(ele.insurance || 0) / parseInt(ele.installments || 0);
-        if (ele.insurance !== undefined) return insuranceSum + c;
-        else return insuranceSum;
+        if (ele.accumulated == "-" || ele.accumulated == undefined) mapnum = 0;
+        else mapnum = ele.accumulated;
+        if (ele.maintenance == "-" || ele.maintenance == undefined) mapnum2 = 0;
+        else mapnum2 = ele.maintenance;
+        if (parseInt(mapnum2) !== parseInt(mapnum)) {
+          let c = parseInt(mapnum) + parseInt(mapnum2);
+          return insuranceSum + c;
+        } else {
+          return insuranceSum;
+        }
       }, 0);
     },
 
@@ -3400,7 +3566,7 @@ export default {
 
     maintenancefeeCount(items) {
       return items.reduce((maintenancefeeSum, ele) => {
-        if (ele.maintenancefee !== undefined )
+        if (ele.maintenancefee !== undefined)
           return maintenancefeeSum + parseInt(ele.maintenancefee || 0);
         else return maintenancefeeSum;
       }, 0);
@@ -3435,37 +3601,30 @@ export default {
           ele.installments !== undefined &&
           ele.installments !== " " &&
           ele.installments !== ""
-        ){
+        ) {
           if (parseInt(ele.installments) !== 0) {
             return (
               accumulatedSum +
               (parseInt(ele.insurance) || 0) / (parseInt(ele.installments) || 0)
             );
-          } 
-          else {
-            return accumulatedSum + parseInt(ele.insurance || 0) ;
+          } else {
+            return accumulatedSum + parseInt(ele.insurance || 0);
           }
         }
-        return accumulatedSum ;
+        return accumulatedSum;
       }, 0);
     },
 
-
     AccumulatedSumTwo(items) {
       return items.reduce((accumulatedSum, ele) => {
-        let mapnum
-        if(ele.accumulated == "-")  mapnum = 0
-          else mapnum = ele.accumulated
-        if(ele.accumulated !== undefined){
-          
-          return (
-              accumulatedSum + (parseInt(mapnum) || 0)
-            );
+        let mapnum;
+        if (ele.accumulated == "-") mapnum = 0;
+        else mapnum = ele.accumulated;
+        if (ele.accumulated !== undefined) {
+          return accumulatedSum + (parseInt(mapnum) || 0);
+        } else {
+          return accumulatedSum || 0;
         }
-        else{
-          return accumulatedSum  || 0 ;
-        }
-         
       }, 0);
     },
 
@@ -3492,7 +3651,6 @@ export default {
         else return SumCostSumMaintenancefee;
       }, 0);
     },
-
 
     SumCostSumCosts(items) {
       return items.reduce((SumCostSumCosts, ele) => {
@@ -3552,14 +3710,12 @@ export default {
       }, 0);
     },
 
-    
     MaintenanceSum(items) {
       return items.reduce((MaintenanceSum, ele) => {
-        let mapnum
-        if(ele.maintenance == "-")  mapnum = 0
-          else mapnum = ele.maintenance
-        if (mapnum !== undefined)
-          return MaintenanceSum + parseInt(mapnum);
+        let mapnum;
+        if (ele.maintenance == "-") mapnum = 0;
+        else mapnum = ele.maintenance;
+        if (mapnum !== undefined) return MaintenanceSum + parseInt(mapnum);
         else return MaintenanceSum;
       }, 0);
     },
@@ -3631,7 +3787,8 @@ export default {
     },
 
     async exportPdfsummary() {
-      let sum = this.sumAllcount + this.CostdatawaterbillcountTD + this.CostCostsAllcountTD;
+      let sum =
+        this.sumAllcount + this.CostdatawaterbillcountTD + this.CostCostsAllcountTD;
       pdfMake.fonts = {
         Roboto: {
           normal:
@@ -4417,9 +4574,9 @@ export default {
       let mss2 = "";
       if (this.submenus == "submenu3") {
         listDataMap = this.AffiliationListTR;
-        } else {
+      } else {
         listDataMap = this.AffiliationListTD;
-        }
+      }
       listData = listDataMap.map((e, i) => {
         return {
           ...e,
@@ -5207,13 +5364,13 @@ export default {
 
     buildTableBodyAccumulated(data, columns) {
       var body = [];
-      var body2 = []
+      var body2 = [];
       let arr = [];
 
       var thaiNum = data.map((e) => {
-        let tt 
-        if(e.Installmenttime == undefined) tt = '-'
-        else if(e.Installmenttime !== undefined) tt = e.Installmenttime
+        let tt;
+        if (e.Installmenttime == undefined) tt = "-";
+        else if (e.Installmenttime !== undefined) tt = e.Installmenttime;
         return {
           ...e,
           numberNo: this.thaiNumber(e.numberNo),
@@ -5246,7 +5403,12 @@ export default {
           "",
           { text: thaiNum[0].MaintenanceSum, style: "header", alignment: "right" },
           { text: thaiNum[0].accumulatedSum, style: "header", alignment: "right" },
-          { text: thaiNum[0].amountPaidSum, colSpan: 2, style: "header", alignment: "right" },
+          {
+            text: thaiNum[0].amountPaidSum,
+            colSpan: 2,
+            style: "header",
+            alignment: "right",
+          },
           "",
         ],
       ];
@@ -7057,7 +7219,9 @@ export default {
                             </td>
                             <td data-t="n" data-z="#,##">
                               {{
-                                numberWithCommas(sumreportlistAll4[0]?.sumdatacosts || "-")
+                                numberWithCommas(
+                                  sumreportlistAll4[0]?.sumdatacosts || "-"
+                                )
                               }}
                             </td>
                             <td data-t="n" data-z="#,##">
@@ -7361,7 +7525,7 @@ export default {
                                   )
                                 }}
                               </th>
-                              <th data-t="n" data-z="#,##" >
+                              <th data-t="n" data-z="#,##">
                                 {{
                                   numberWithCommas(
                                     AffiliationListCTD[0]?.countCostSumAll || "-"
@@ -7429,7 +7593,7 @@ export default {
                                   {{ numberWithCommas(item?.amountPaid || "-") }}
                                 </td>
                                 <td data-t="n" data-z="#,##">
-                                  {{ (item?.Installmenttime || "-") }}
+                                  {{ item?.Installmenttime || "-" }}
                                 </td>
                               </tr>
 
@@ -7449,7 +7613,7 @@ export default {
                                     )
                                   }}
                                 </th>
-                                <th colspan="2" data-t="n" data-z="#,##" >
+                                <th colspan="2" data-t="n" data-z="#,##">
                                   {{
                                     numberWithCommas(
                                       reportlistCTD[0]?.amountPaidSum || "-"
@@ -7718,7 +7882,7 @@ export default {
                             {{
                               numberWithCommas(
                                 AffiliationListTD[0]?.countCostwaterbillAll || "-"
-                              ) 
+                              )
                             }}
                           </th>
                         </tr>
@@ -7787,10 +7951,10 @@ export default {
                             {{ numberWithCommas(item?.waterbill || "-") }}
                           </td>
                           <td data-t="n" data-z="#,##">
-                            {{ numberWithCommas(item?.central || "-") }}
+                            {{ numberWithCommas(item?.electricitybill || "-") }}
                           </td>
                           <td data-t="n" data-z="#,##">
-                            {{ numberWithCommas(item?.sumCostCentral || "-") }}
+                            {{ numberWithCommas(item?.sumCostwaterbill || "-") }}
                           </td>
                           <td>
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
@@ -7812,11 +7976,13 @@ export default {
                             {{ numberWithCommas(reportlistTD[0]?.waterbillSum || "-") }}
                           </th>
                           <th data-t="n" data-z="#,##">
-                            {{ numberWithCommas(reportlistTD[0]?.centralSum || "-") }}
+                            {{
+                              numberWithCommas(reportlistTD[0]?.electricitybillSum || "-")
+                            }}
                           </th>
                           <th data-t="n" data-z="#,##">
                             {{
-                              numberWithCommas(reportlistTD[0]?.SumCostSumCentral || "-")
+                              numberWithCommas(reportlistTD[0]?.SumCostSumwater || "-")
                             }}
                           </th>
                         </tr>
