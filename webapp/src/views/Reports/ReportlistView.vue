@@ -5484,12 +5484,18 @@ export default {
 
     exportPdfAccumulated() {
       let listData = [];
+      let Affiliationmss = "";
       listData = this.reportlistCTD.map((el, i) => {
         return {
           ...el,
           numberNo: i + 1,
         };
       });
+      if (this.AffiliationLable !== "") {
+        Affiliationmss = `หน่วยงาน ${this.AffiliationLable}`;
+      } else {
+        Affiliationmss = `" "`;
+      }
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
@@ -5524,7 +5530,7 @@ export default {
               alignment: "center",
             },
             {
-              text: ` ประจําเดือน ${this.monthYearNowtable} `,
+              text: ` ประจําเดือน ${this.monthYearNowtable} ${Affiliationmss} `,
               style: "subheader",
               alignment: "center",
             },
@@ -7556,6 +7562,8 @@ export default {
                               <tr>
                                 <td colspan="7" style="border: 0">
                                   ประจําเดือน {{ monthYearNowtable }}
+                                  <span v-if="AffiliationLable !== ''">หน่วยงาน</span>
+                                  {{ AffiliationLable || " " }}
                                 </td>
                               </tr>
                               <tr>
