@@ -5493,9 +5493,7 @@ export default {
       });
       if (this.AffiliationLable !== "") {
         Affiliationmss = `หน่วยงาน ${this.AffiliationLable}`;
-      } else {
-        Affiliationmss = `""`;
-      }
+      } 
       if (listData.length > 0) {
         pdfMake.fonts = {
           Roboto: {
