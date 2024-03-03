@@ -79,8 +79,10 @@ export default {
       if(newValue.label !== undefined){
          if(newValue.label == "ลูกจ้าง") {
           this.selecttypeAffiliation = "ลูกจ้าง"
+          this.Affiliation = "ลูกจ้าง"
          }else if(newValue.label == "บช.ตชด."){
           this.selecttypeAffiliation = "บช.ตชด."
+          this.Affiliation = "บช.ตชด."
          }else{
           this.selecttypeAffiliation = newValue.label
          }
@@ -266,23 +268,6 @@ export default {
       }
     },
 
-    // async  submitsync(){
-    //     await this.migratdata.forEach((element) => {
-    //       this.syncDataUser(element);
-    //     });
-    //   },
-
-    //   syncDataUser(data){
-    //     axios
-    //       .put(`http://localhost:3896/users/${data.id}`, data, {
-    //         headers: {
-    //           // remove headers
-    //           "Access-Control-Allow-Origin": "*",
-    //           "Content-Type": "application/json",
-    //         },
-    //       })
-    //   },
-
     async editForm() {
       let maintenance;
       if (this.typeRanks.value == "ประทวน" || this.typeRanks.value == "ลูกจ้าง" ) {maintenance = 60}
@@ -290,7 +275,7 @@ export default {
       let body = {
         firstName: this.firstName,
         lastName: this.lastName,
-        affiliation: this.Affiliation,
+        affiliation: this.Affiliation ,
         rank: this.rank,
         rankNumber: this.rankNumber,
         idcard: this.idcard,
