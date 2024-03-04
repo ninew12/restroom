@@ -4930,10 +4930,14 @@ export default {
       let mss = "";
       let mss2 = "";
       let mss3 = "";
-      AffiliationLable !== ""
+      this.AffiliationLable !== ""
         ? (mss3 = "หน่วยงาน" + " " + this.AffiliationLable)
         : (mss3 = "");
-      listData = this.reportlistTD;
+      if (this.reportType == "หักไม่ได้") {
+        listData = this.deductibleTD;
+      }else {
+        listData = this.reportlistTD;
+      }
       if (listData.length > 0) {
         if (this.reportType == "หักไม่ได้") {
           mss =
