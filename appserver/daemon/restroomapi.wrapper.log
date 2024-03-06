@@ -22,3 +22,9 @@ Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInter
 2024-03-01 10:16:04 - Started 5344
 2024-03-04 08:42:14 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "restRoomApi wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
 2024-03-04 08:42:15 - Started 5704
+2024-03-05 08:40:36 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "restRoomApi wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-03-05 08:40:36 - Started 5364
+2024-03-05 10:03:11 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "restRoomApi wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-03-05 10:03:11 - Started 5860
+2024-03-06 09:29:42 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "restRoomApi wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-03-06 09:29:42 - Started 6032
