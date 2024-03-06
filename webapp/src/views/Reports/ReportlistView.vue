@@ -670,9 +670,33 @@ export default {
             let data13 = [];
             let data14 = [];
             let data15 = [];
+            let data55 = [];
+            let data66 = [];
+            let data77 = [];
             let data3 = res.data;
             let data4 = res.data;
+            let data44 = res.data;
             this.reportList = res.data;
+            
+            data55 = data44.filter(
+              (el55) =>
+                (el55.typeAffiliation == "บช.ตชด." || el55.typeAffiliation == "บก.อก.") &&
+                (el55.monthly == this.dateNow || el55.monthly == this.mountCT) &&
+                (el55.years == this.yearNow || el55.monthly ==  y)
+            );
+            data66 = data44.filter(
+              (el66) =>
+                el66.typeAffiliation == "บก.สสน." &&
+                (el66.monthly == this.dateNow || el66.monthly == this.mountCT) &&
+                (el66.years == this.yearNow || el66.monthly ==  y)
+            );
+            data77 = data44.filter(
+              (el77) =>
+                el77.typeAffiliation == "ลูกจ้าง" &&
+                (el77.monthly == this.dateNow || el77.monthly == this.mountCT) &&
+                (el77.years == this.yearNow || el77.monthly ==  y)
+            );
+
             data5 = data3.filter(
               (el6) =>
                 el6.typeUser == "บช.ตชด." &&
@@ -694,7 +718,7 @@ export default {
                 el4.monthly == this.dateNow &&
                 el4.years == this.yearNow
             );
-
+      
             data13 = data4.filter(
               (el7) =>
                 el7.typeUser == "ตร." &&
@@ -716,7 +740,7 @@ export default {
                 el9.monthly == this.mountCT &&
                 el9.years == y
             );
-
+      
             data = data3.filter(
               (el) =>
                 el.typeUser == "บช.ตชด." &&
@@ -753,9 +777,8 @@ export default {
                 el9.monthly == this.mountCT &&
                 el9.years == this.yearNow
             );
-
             this.mapData(data, data2, data8, data9, dataTR);
-            this.mapData2(data5, data6, data7, data13, data14, data15);
+            this.mapData2(data5, data6, data7, data13, data14, data15, data55, data66, data77);
           })
           .catch((err) => {
             console.log(err);
@@ -2491,13 +2514,16 @@ export default {
       await this.mapsumAll(arr6, arr2, arr3, arr7, arr5);
     },
 
-    async mapData2(data, data2, data3, data4, data5, data6) {
+    async mapData2(data, data2, data3, data4, data5, data6, data55, data66, data77) {
       let arr = [];
       let arr2 = [];
       let arr3 = [];
       let arr4 = [];
       let arr5 = [];
       let arr6 = [];
+      let arr55 = [];
+      let arr66 = [];
+      let arr77 = [];
       arr = await data.map((el, i) => {
         return {
           ...el,
@@ -2653,7 +2679,83 @@ export default {
           Installmenttime: el6.installmentsTime,
         };
       });
+      arr55 = await data55.map((e55, i) => {
+        return {
+          ...e55,
+          numberNo: i + 1,
+          lastnumber: e55.lastnumber || 0,
+          firstnumber: e55.firstnumber || 0,
+          central: e55.central || 0,
+          typeAffiliation: e55.typeAffiliation || "-",
+          accumulated: this.countSumAccumulated(e55),
+          typeContract: e55.typeContract || "-",
+          contractExpenses: e55.contractExpenses || "-",
+          buildingName: e55.buildingName || "-",
+          costs: e55.costs || 0,
+          insurance: e55.insurance || 0,
+          maintenancefee: e55.maintenancefee || 0,
+          roomnumber: e55.roomnumber,
+          amountPaid: e55.amountPaid || 0,
+          fullname: (e55.rank || "") + " " + e55?.firstName + " " + e55?.lastName,
+          unitWater: e55.lastnumber - e55.firstnumber || 0,
+          maintenance: e55.maintenance || 0,
+          waterbill: e55.waterbill || 0,
+          electricitybill: e55.electricitybill || 0,
+          Installmenttime: e55.installmentsTime,
+        };
+      });
 
+      arr66 = await data66.map((e66, i) => {
+        return {
+          ...e66,
+          numberNo: i + 1,
+          lastnumber: e66.lastnumber || 0,
+          firstnumber: e66.firstnumber || 0,
+          central: e66.central || 0,
+          typeAffiliation: e66.typeAffiliation || "-",
+          accumulated: this.countSumAccumulated(e66),
+          typeContract: e66.typeContract || "-",
+          contractExpenses: e66.contractExpenses || "-",
+          buildingName: e66.buildingName || "-",
+          costs: e66.costs || 0,
+          insurance: e66.insurance || 0,
+          maintenancefee: e66.maintenancefee || 0,
+          roomnumber: e66.roomnumber,
+          amountPaid: e66.amountPaid || 0,
+          fullname: (e66.rank || "") + " " + e66?.firstName + " " + e66?.lastName,
+          unitWater: e66.lastnumber - e66.firstnumber || 0,
+          maintenance: e66.maintenance || 0,
+          waterbill: e66.waterbill || 0,
+          electricitybill: e66.electricitybill || 0,
+          Installmenttime: e66.installmentsTime,
+        };
+      });
+
+      arr77 = await data77.map((e77, i) => {
+        return {
+          ...e77,
+          numberNo: i + 1,
+          lastnumber: e77.lastnumber || 0,
+          firstnumber: e77.firstnumber || 0,
+          central: e77.central || 0,
+          typeAffiliation: e77.typeAffiliation || "-",
+          accumulated: this.countSumAccumulated(e77),
+          typeContract: e77.typeContract || "-",
+          contractExpenses: e77.contractExpenses || "-",
+          buildingName: e77.buildingName || "-",
+          costs: e77.costs || 0,
+          insurance: e77.insurance || 0,
+          maintenancefee: e77.maintenancefee || 0,
+          roomnumber: e77.roomnumber,
+          amountPaid: e77.amountPaid || 0,
+          fullname: (e77.rank || "") + " " + e77?.firstName + " " + e77?.lastName,
+          unitWater: e77.lastnumber - e77.firstnumber || 0,
+          maintenance: e77.maintenance || 0,
+          waterbill: e77.waterbill || 0,
+          electricitybill: e77.electricitybill || 0,
+          Installmenttime: e77.installmentsTime,
+        };
+      });
       arr.map((er) => {
         if (er.accumulated == er.amountPaid) {
           er.accumulated = "-";
@@ -2673,9 +2775,28 @@ export default {
         return er;
       });
 
-      this.reportlistok = arr;
-      this.reportListssn = arr2;
-      this.reportlistlj = arr3;
+      arr55.map((er) => {
+        if (er.accumulated == er.amountPaid) {
+          er.accumulated = "-";
+        }
+        return er;
+      });
+      arr66.map((er) => {
+        if (er.accumulated == er.amountPaid) {
+          er.accumulated = "-";
+        }
+        return er;
+      });
+      arr77.map((er) => {
+        if (er.accumulated == er.amountPaid) {
+          er.accumulated = "-";
+        }
+        return er;
+      });
+  
+      this.reportlistok = arr55;
+      this.reportListssn = arr66;
+      this.reportlistlj = arr77;
       this.reportlistokTD = arr4;
       this.reportListssnTD = arr5;
       this.reportlistljTD = arr6;
@@ -3376,14 +3497,20 @@ export default {
         aa4,
         aa5 = [];
       let count = this.OGCount(arr);
+      let sum1
       await arr.forEach((e, i) => {
+        if(e.typeUser == 'บช.ตชด.'){
+          sum1 = this.countSuminstallments(e)
+        }else if(e.typeUser == 'ตร.'){
+          sum1 = this.countSuminstallmentsTD(e)
+        }
         ws_data.push([
           i + 1,
           e.idcard,
           e.firstName + " " + e.lastName,
           ,
           "41001",
-          this.countSuminstallments(e),
+          sum1,
         ]);
       });
       aa = [" ", " ", "รวม อก.", this.numberWithCommas(count)];
@@ -3407,13 +3534,19 @@ export default {
         bb4,
         bb5 = [];
       let count2 = this.OGCount(arr2);
+      let sum2
       await arr2.forEach((el, i) => {
+        if(el.typeUser == 'บช.ตชด.'){
+          sum2 = this.countSuminstallments(el)
+        }else if(el.typeUser == 'ตร.'){
+          sum2 = this.countSuminstallmentsTD(el)
+        }
         ws_data2.push([
           i + 1,
           el.idcard,
           el.firstName + " " + el.lastName,
           "41001",
-          this.countSuminstallments(el),
+          sum2,
         ]);
       });
       bb = [" ", " ", "รวม อก.", this.numberWithCommas(count2)];
@@ -3437,14 +3570,20 @@ export default {
         cc4,
         cc5 = [];
       let count3 = this.OGCount(arr3);
+      let sum
       await arr3.forEach((el2, i) => {
+        if(el2.typeUser == 'บช.ตชด.'){
+          sum = this.countSuminstallments(el2)
+        }else if(el2.typeUser == 'ตร.'){
+          sum = this.countSuminstallmentsTD(el2)
+        }
         ws_data3.push([
           i + 1,
           el2.idcard,
           el2.firstName + " " + el2.lastName,
           ,
           "41001",
-          this.countSuminstallments(el2),
+          sum
         ]);
       });
       cc = [" ", " ", "รวม อก.", this.numberWithCommas(count3)];
@@ -3477,6 +3616,23 @@ export default {
       else mapnum2 = item.maintenance;
       let summery = parseInt(mapnum) + parseInt(mapnum2) || 0;
       return this.numberWithCommas(summery);
+    },
+
+    countSuminstallmentsTD(item) {
+      let mapnum;
+      mapnum = this.countAllbill(item)
+      let summery = mapnum || 0;
+      return this.numberWithCommas(summery);
+    },
+
+    countAllbill(item) {
+      return (
+        parseInt(item.maintenancefee) +
+          parseInt(item.waterbill) +
+          parseInt(item.costs)+
+          parseInt(item.electricitybill)+
+          parseInt(item.central) || 0
+      );
     },
 
     countSumcentral(item) {
@@ -3534,21 +3690,27 @@ export default {
     },
 
     OGCount(items) {
-      let mapnum, mapnum2;
+      let mapnum, mapnum2, mapnum3, mapnum4,mapnum5, mapnum6,mapnum7 ;
       return items.reduce((insuranceSum, ele) => {
         if (ele.accumulated == "-" || ele.accumulated == undefined) mapnum = 0;
         else mapnum = ele.accumulated;
         if (ele.maintenance == "-" || ele.maintenance == undefined) mapnum2 = 0;
         else mapnum2 = ele.maintenance;
-        if (parseInt(mapnum2) !== parseInt(mapnum)) {
-          let c = parseInt(mapnum) + parseInt(mapnum2);
+        if (ele.maintenancefee == "-" || ele.maintenancefee == undefined) mapnum3 = 0;
+        else mapnum3 = ele.maintenancefee;
+        if (ele.waterbill == "-" || ele.waterbill == undefined) mapnum4 = 0;
+        else mapnum4 = ele.waterbill;
+        if (ele.costs == "-" || ele.costs == undefined) mapnum5 = 0;
+        else mapnum5 = ele.costs;
+        if (ele.electricitybill == "-" || ele.electricitybill == undefined) mapnum6 = 0;
+        else mapnum6 = ele.electricitybill;
+        if (ele.central == "-" || ele.central == undefined) mapnum7 = 0;
+        else mapnum7 = ele.central;
+        let c = parseInt(mapnum) + parseInt(mapnum2) + parseInt(mapnum3) + parseInt(mapnum4) + parseInt(mapnum5) + parseInt(mapnum6) + parseInt(mapnum7);
           return insuranceSum + c;
-        } else {
-          return insuranceSum;
-        }
       }, 0);
     },
-
+   
     // insuranceCount(items) {
     //   return items.reduce((insuranceSum, ele) => {
     //     if (ele.insurance !== undefined) return amountPaidSum + parseInt(ele.insurance);
@@ -3811,7 +3973,7 @@ export default {
       const docDefinition = {
         content: [
           {
-            text: "ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิระ บช.ตชด.",
+            text: "ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิสระ บช.ตชด.",
             style: "header",
             alignment: "center",
           },
@@ -6959,7 +7121,7 @@ export default {
                         <thead>
                           <tr>
                             <td colspan="6" style="border: 0">
-                              ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิระ บช.ตชด.
+                              ยอดเงินค่าบํารุงฯ, ค่าประกันฯ อาคารบ้านพักอิสระ บช.ตชด.
                             </td>
                           </tr>
                           <tr>
