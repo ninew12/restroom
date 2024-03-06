@@ -8217,10 +8217,10 @@ export default {
                             {{ numberWithCommas(item?.waterbill || "-") }}
                           </td>
                           <td data-t="n" data-z="#,##">
-                            {{ numberWithCommas(item?.central || "-") }}
+                            {{ numberWithCommas(item?.electricitybill || "-") }}
                           </td>
                           <td data-t="n" data-z="#,##">
-                            {{ numberWithCommas(item?.sumCostCentral || "-") }}
+                            {{ numberWithCommas(item?.sumCostwaterbill || "-") }}
                           </td>
                           <td>
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
@@ -8242,11 +8242,11 @@ export default {
                             {{ numberWithCommas(deductibleTD[0]?.waterbillSum || "-") }}
                           </th>
                           <th data-t="n" data-z="#,##">
-                            {{ numberWithCommas(deductibleTD[0]?.centralSum || "-") }}
+                            {{ numberWithCommas(deductibleTD[0]?.electricitybillSum || "-") }}
                           </th>
                           <th data-t="n" data-z="#,##">
                             {{
-                              numberWithCommas(deductibleTD[0]?.SumCostSumCentral || "-")
+                              numberWithCommas(deductibleTD[0]?.SumCostSumwater || "-")
                             }}
                           </th>
                         </tr>
