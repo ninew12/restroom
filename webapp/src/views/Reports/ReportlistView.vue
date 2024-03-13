@@ -6432,7 +6432,7 @@ export default {
                           <tr v-for="(item, index) in reportlistTD" :key="index">
                             <th scope="row">{{ index + 1 }}</th>
                             <td>{{ item?.buildingType || "-" }}</td>
-                            <td>{{ item?.roomnumber || "-" }}</td>
+                            <td data-t="s">{{ item?.roomnumber || "-" }}</td>
                             <td>
                               {{ item?.rank }} {{ item?.firstName }}
                               {{ item?.lastName }}
@@ -6726,7 +6726,7 @@ export default {
                       <tbody>
                         <tr v-for="(item, index) in reportlistTR" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
-                          <td>{{ item?.roomnumber }}</td>
+                          <td data-t="s">{{ item?.roomnumber }}</td>
                           <td>
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
@@ -7016,7 +7016,7 @@ export default {
                         <tr v-for="(item, index) in reportlistTR" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
                           <td>{{ item?.buildingType || "-" }}</td>
-                          <td>{{ item?.roomnumber || "-" }}</td>
+                          <td data-t="s">{{ item?.roomnumber || "-" }}</td>
                           <td>
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
@@ -7752,7 +7752,7 @@ export default {
                                   {{ item?.lastName }}
                                 </td>
                                 <td>{{ item?.buildingName || "-" }}</td>
-                                <td>{{ item?.roomnumber || "-" }}</td>
+                                <td data-t="s"> {{ item?.roomnumber || "-"}}</td>
                                 <td data-t="n" data-z="#,##">
                                   {{ numberWithCommas(item?.maintenance || "-") }}
                                 </td>
@@ -8101,7 +8101,7 @@ export default {
                       <tbody>
                         <tr v-for="(item, index) in reportlistTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
-                          <td>{{ item?.roomnumber || "-" }}</td>
+                          <td data-t="s">{{ item?.roomnumber || "-" }}</td>
                           <td>
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
@@ -8195,7 +8195,7 @@ export default {
                       <tbody>
                         <tr v-for="(item, index) in deductibleTD" :key="index">
                           <th scope="row">{{ index + 1 }}</th>
-                          <td>{{ item?.roomnumber || "-" }}</td>
+                          <td data-t="s">{{ item?.roomnumber || "-" }}</td>
                           <td>
                             {{ item?.rank }} {{ item?.firstName }}
                             {{ item?.lastName }}
