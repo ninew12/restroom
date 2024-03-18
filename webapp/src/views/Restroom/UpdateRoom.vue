@@ -269,6 +269,7 @@ export default {
         queue: "none",
         vehicleNumber: " ",
         numberPeople: " ",
+        userId: " ",
         roomKey: this.roomKey,
         houseRegistration: this.houseRegistration,
         payMonth: this.payMonth,
