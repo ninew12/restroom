@@ -16,3 +16,17 @@ Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInter
    at winsw.WrapperService.OnShutdown()
 2024-03-15 00:27:43 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "restRoomApiServer wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
 2024-03-15 00:27:43 - Started 5072
+2024-03-29 11:31:05 - Stopping restroomapiserver.exe
+2024-03-29 11:31:05 - ProcessKill 5072
+2024-03-29 11:31:05 - Shutdown exception
+Message:A system shutdown is in progress.
+
+Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   at System.Management.ManagementScope.InitializeGuts(Object o)
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winsw.WrapperService.GetChildPids(Int32 pid)
+   at winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   at winsw.WrapperService.StopIt()
+   at winsw.WrapperService.OnShutdown()
