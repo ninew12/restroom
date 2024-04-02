@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 app.post('/login', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let filterdata = userlogin.filter(user => user.userName === (req.body.userName))
-    
+
     if (filterdata.length > 0) {
         if (filterdata[0].userName === req.body.userName && filterdata[0].password === req.body.password) {
             res.send(`เข้าสู่ระบบสำเร็จ`)
@@ -85,7 +85,7 @@ app.put('/users/:id', (req, res) => {
     if (req.body.lastName) parsedData.lastName = req.body.lastName || ''
     if (req.body.affiliation) parsedData.affiliation = req.body.affiliation || ''
     if (req.body.rank) parsedData.rank = req.body.rank || ''
-    if (req.body.idcard) parsedData.idcard = req.body.idcard || '' 
+    if (req.body.idcard) parsedData.idcard = req.body.idcard || ''
     if (req.body.phone) parsedData.phone = req.body.phone || ''
     if (req.body.status) parsedData.status = req.body.status || ''
     if (req.body.typeAffiliation) parsedData.typeAffiliation = req.body.typeAffiliation || ''
@@ -108,11 +108,11 @@ app.put('/users/:id', (req, res) => {
     if (req.body.sumCost) parsedData.sumCost = req.body.sumCost || ''
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill || ''
     if (req.body.typeContract) parsedData.typeContract = req.body.typeContract || ''
-    if (req.body.contractExpenses) parsedData.contractExpenses = req.body.contractExpenses || '' 
+    if (req.body.contractExpenses) parsedData.contractExpenses = req.body.contractExpenses || ''
     if (req.body.buildingName) parsedData.buildingName = req.body.buildingName || ''
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid || ''
     if (req.body.monthly) parsedData.monthly = req.body.monthly || ''
-    if (req.body.firstnumber) parsedData.firstnumber = req.body.firstnumber  || ''
+    if (req.body.firstnumber) parsedData.firstnumber = req.body.firstnumber || ''
     if (req.body.lastnumber) parsedData.lastnumber = req.body.lastnumber || ''
     if (req.body.houseRegistration) parsedData.houseRegistration = req.body.houseRegistration || ''
     if (req.body.payMonth) parsedData.payMonth = req.body.payMonth || ''
@@ -147,7 +147,7 @@ app.put('/users/:id', (req, res) => {
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter || ''
     if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus || ''
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime || ''
-    if (req.body.summitCost) parsedData.summitCost = req.body.summitCost 
+    if (req.body.summitCost) parsedData.summitCost = req.body.summitCost
 
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata), (err) => {
@@ -166,7 +166,7 @@ app.delete('/users/:id', (req, res) => {
     let deletedIndex = users.findIndex(user => user.userId === (req.params.id))
     if (deletedIndex > -1) { // only splice array when item is found
         users.splice(deletedIndex, 1); // 2nd parameter means remove one item only
-      }
+    }
     let parsedData = users;
     fs.writeFile('./users.json', JSON.stringify(parsedData, null, 2), (err) => {
         if (err) {
@@ -225,7 +225,7 @@ app.delete('/buildings/:builId', (req, res) => {
     let deletedIndex = building.findIndex(buil => buil.buildingId === (req.params.builId))
     if (deletedIndex > -1) { // only splice array when item is found
         building.splice(deletedIndex, 1); // 2nd parameter means remove one item only
-      }
+    }
     let parsedData = building;
     fs.writeFileSync('./building.json', JSON.stringify(parsedData), (err) => {
         if (err) {
@@ -355,7 +355,7 @@ app.get('/rooms/:id', (req, res) => {
 app.post('/rooms', (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     let body = req.body
-    let data =   [...rooms,...body]
+    let data = [...rooms, ...body]
     fs.writeFileSync('./rooms.json', JSON.stringify(data), err => {
         if (err) {
             console.log('Error writing file', err)
@@ -513,7 +513,7 @@ app.put('/queue/:id', (req, res) => {
     if (req.body.position) parsedData.position = req.body.position
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
-    
+
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -685,8 +685,8 @@ app.delete('/layout/:id', (req, res) => {
     res.send(`Delete user '${users[deletedIndex].username}' completed.`)
 })
 
-app.get('/report', (req, res) => { 
-    let finddata = reports.filter(report => report.roomStatus !== "special" && report.queue !== "none") 
+app.get('/report', (req, res) => {
+    let finddata = reports.filter(report => report.roomStatus !== "special" && report.queue !== "none")
     res.header("Access-Control-Allow-Origin", "*");
     res.json(finddata)
 })
@@ -852,7 +852,7 @@ app.put('/reportUser/:id', (req, res) => {
     if (req.body.sumCost) parsedData.sumCost = req.body.sumCost
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
-    if (req.body.summitCost) parsedData.summitCost = req.body.summitCost 
+    if (req.body.summitCost) parsedData.summitCost = req.body.summitCost
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -869,9 +869,9 @@ app.delete('/report/:id', (req, res) => {
     let deletedIndex = reports.findIndex(report => report.userId === (req.params.id))
     if (deletedIndex > -1) { // only splice array when item is found
         reports.splice(deletedIndex, 1); // 2nd parameter means remove one item only
-      }
+    }
     let parsedData = reports;
-    fs.writeFile('./users.json', JSON.stringify(parsedData, null, 2), (err) => {
+    fs.writeFile('./report.json', JSON.stringify(parsedData, null, 2), (err) => {
         if (err) {
             console.log("Failed to write updated data to file");
             return;
@@ -919,7 +919,7 @@ app.put('/utilitie/:id', (req, res) => {
     if (req.body.status) parsedData.status = req.body.status
     if (req.body.typeAffiliation) parsedData.typeAffiliation = req.body.typeAffiliation
     if (req.body.typeRanks) parsedData.typeRanks = req.body.typeRanks
-    
+
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {

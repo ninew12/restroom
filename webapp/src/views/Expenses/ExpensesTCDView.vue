@@ -112,7 +112,7 @@ export default {
             const d = new Date();
             let m = this.optionMonth[d.getMonth()];
             this.openBtn = data.every(t => t.summitCost == m);
-            console.log(this.openBtn);
+   
           })
     },
     
@@ -200,7 +200,16 @@ export default {
     },
 
     countinsamountPaid(e) {
-      return e.insurance - parseInt(e.amountPaid || 0) || 0;
+      if (parseInt(e.installments) !== 0) {
+          let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+          let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+          let b = c / a; //จำนวนงวดคงเหลือ
+          let d = a * (e.installments - b)
+          return d || 0;
+        }else{
+          return 0
+        }
+      // return e.insurance - parseInt(e.amountPaid || 0) || 0;
     },
 
 
@@ -246,7 +255,7 @@ export default {
       data = await arr.map((el) => {
         return {
           ...el,
-          amountPaid: this.callInsurance(el),
+          amountPaid: this.countinsamountPaid(el),
         };
       });
       data2 = data;
@@ -275,12 +284,6 @@ export default {
       await data.forEach((element) => {
         this.saveToreportNobill(element);
       });
-    },
-
-    callInsurance(e) {
-      let a = e.insurance / e.installments; // จำนวนเงินต่องวด
-      let c = parseInt(e.amountPaid || 0) + parseInt(a); // จำนวนจ่ายแล้ว
-      return c;
     },
 
     async submitForm(index) {
