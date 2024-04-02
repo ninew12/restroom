@@ -107,7 +107,9 @@ export default {
       axios
           .get("http://localhost:3896/report")
           .then((res) => {
-            res.data.forEach((element) => {
+            console.log(res.data);
+            let data = res.data
+            data.forEach((element) => {
               if (element.summitCost) {
                 const myString = element.summitCost;
                 if (myString !== undefined) {
