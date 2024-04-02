@@ -142,7 +142,6 @@ export default {
               }
             });
 
-            // this.expensesList = data2;
             this.expensesList = data2;
             if(this.expensesList.length > 200){this.setTimes = 60000}
             // console.log(this.expensesListFix);
