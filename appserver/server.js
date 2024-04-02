@@ -147,7 +147,7 @@ app.put('/users/:id', (req, res) => {
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter || ''
     if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus || ''
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime || ''
-    if (req.body.summitCost) parsedData.summitCost = req.body.summitCost || ''
+    if (req.body.summitCost) parsedData.summitCost = req.body.summitCost 
 
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata), (err) => {
@@ -852,7 +852,7 @@ app.put('/reportUser/:id', (req, res) => {
     if (req.body.sumCost) parsedData.sumCost = req.body.sumCost
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
-    if (req.body.summitCost) parsedData.summitCost = req.body.summitCost || ''
+    if (req.body.summitCost) parsedData.summitCost = req.body.summitCost 
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
