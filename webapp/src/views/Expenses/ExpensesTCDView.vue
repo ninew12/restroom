@@ -299,10 +299,6 @@ export default {
           },
         })
         .then((res) => {
-          // notify({
-          //   title: "คำนวณค่าใช้จ่ายสำเร็จ",
-          //   type: "success",
-          // });
           this.saveToreport(index);
           this.submitRoom(index);
           this.getExpenses();
