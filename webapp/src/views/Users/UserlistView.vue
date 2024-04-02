@@ -190,6 +190,7 @@ export default {
         .then((res) => {
           let data = res.data;
           this.id = id;
+          this.userId = data.userId;
           this.firstName = data.firstName;
           this.lastName = data.lastName;
           this.selectedAffiliation = data.affiliation;
@@ -278,8 +279,8 @@ export default {
         affiliation: this.Affiliation ,
         rank: this.rank,
         rankNumber: this.rankNumber,
-        idcard: this.idcard,
-        phone: this.phone,
+        idcard: this.idcard || " ",
+        phone: this.phone || " ",
         status: this.selectedDataObtion.value || "โสด",
         typeAffiliation: this.selecttypeAffiliation,
         typeRanks: this.typeRanks.value,
@@ -288,7 +289,7 @@ export default {
       };
 
       axios
-        .put(`http://localhost:3896/users/${this.id}`, body, {
+        .put(`http://localhost:3896/users/${this.userId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -329,7 +330,7 @@ export default {
         queue: this.queue,
         maintenance: maintenance,
       };
-      await axios.put(`http://localhost:3896/reportUser/${this.id}`, body, {
+      await axios.put(`http://localhost:3896/reportUser/${this.userId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -713,7 +714,7 @@ export default {
                   <td>{{ item?.phone || "-" }}</td>
                   <td>
                     <a
-                      @click="editUser(item?.id)"
+                      @click="editUser(item?.userId)"
                       data-bs-toggle="modal"
                       data-bs-target="#EdituserBackdrop"
                       ><i
@@ -726,7 +727,7 @@ export default {
                   </td>
                   <td>
                     <a
-                      @click="deleteUser(item?.id)"
+                      @click="deleteUser(item?.userId)"
                       data-bs-toggle="modal"
                       data-bs-target="#deleteuserBackdrop"
                       ><i

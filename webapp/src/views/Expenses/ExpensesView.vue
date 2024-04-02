@@ -239,7 +239,7 @@ export default {
       };
 
       await axios
-        .put(`http://localhost:3896/users/${this.id}`, body, {
+        .put(`http://localhost:3896/users/${this.userId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",

@@ -283,7 +283,7 @@ export default {
     },
 
     async submitForm(index) {
-      let id = index.id;
+      let id = index.userId;
       let body = {
         amountPaid: parseInt(index.amountPaid) || 0,
         monthly: this.months,
@@ -326,7 +326,7 @@ export default {
     },
 
     async saveToreport(index) {
-      let id = index.id;
+      let id = index.userId;
       let body = {
         amountPaid: parseInt(index.amountPaid) || 0,
         monthly: this.months,
@@ -342,7 +342,7 @@ export default {
     },
 
     async saveToreportNobill(index) {
-      let id = index.id;
+      let id = index.userId;
       let body = {
         amountPaid: parseInt(index.amountPaid) || 0,
         monthly: this.months,
