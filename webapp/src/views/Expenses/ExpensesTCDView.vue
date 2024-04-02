@@ -132,8 +132,8 @@ export default {
             });
 
             data2.forEach((element) => {
-              if (element.monthly) {
-                const myString = element.monthly;
+              if (element.summitCost) {
+                const myString = element.summitCost;
                 if (myString !== undefined) {
                   const d = new Date();
                   let m = this.optionMonth[d.getMonth()];
@@ -284,10 +284,12 @@ export default {
 
     async submitForm(index) {
       let id = index.userId;
+      const d = new Date();
       let body = {
         amountPaid: parseInt(index.amountPaid) || 0,
         monthly: this.months,
         years: this.years,
+        summitCost: this.optionMonth[d.getMonth()],
       };
       await axios
         .put(`http://localhost:3896/users/${id}`, body, {
@@ -327,11 +329,13 @@ export default {
 
     async saveToreport(index) {
       let id = index.userId;
+      const d = new Date();
       let body = {
         amountPaid: parseInt(index.amountPaid) || 0,
         monthly: this.months,
         years: this.years,
         rankNumber: this.rankNumber,
+        summitCost: this.optionMonth[d.getMonth()],
       };
       await axios.put(`http://localhost:3896/reportUser/${id}`, body, {
         headers: {
@@ -343,11 +347,13 @@ export default {
 
     async saveToreportNobill(index) {
       let id = index.userId;
+      const d = new Date();
       let body = {
         amountPaid: parseInt(index.amountPaid) || 0,
         monthly: this.months,
         years: this.years,
         rankNumber: this.rankNumber,
+        summitCost: this.optionMonth[d.getMonth()],
       };
       await axios.put(`http://localhost:3896/reportUser/${id}`, body, {
         headers: {
