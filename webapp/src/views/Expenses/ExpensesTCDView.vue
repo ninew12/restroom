@@ -103,6 +103,23 @@ export default {
       this.years = y;
     },
 
+    async getreports() {
+      axios
+          .get("http://localhost:3896/report")
+          .then((res) => {
+            res.data.forEach((element) => {
+              if (element.summitCost) {
+                const myString = element.summitCost;
+                if (myString !== undefined) {
+                  const d = new Date();
+                  let m = this.optionMonth[d.getMonth()];
+                  if (m == myString) {this.openBtn = true};
+                }
+              }
+            });
+          })
+    },
+    
     async getExpenses() {
       try {
         await axios
@@ -130,17 +147,17 @@ export default {
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
-
-            data2.forEach((element) => {
-              if (element.summitCost) {
-                const myString = element.summitCost;
-                if (myString !== undefined) {
-                  const d = new Date();
-                  let m = this.optionMonth[d.getMonth()];
-                  if (m == myString) this.openBtn = true;
-                }
-              }
-            });
+            this.getreports()
+            // data2.forEach((element) => {
+            //   if (element.summitCost) {
+            //     const myString = element.summitCost;
+            //     if (myString !== undefined) {
+            //       const d = new Date();
+            //       let m = this.optionMonth[d.getMonth()];
+            //       if (m == myString) this.openBtn = true;
+            //     }
+            //   }
+            // });
 
             this.expensesList = data2;
             if(this.expensesList.length > 200){this.setTimes = 60000}
