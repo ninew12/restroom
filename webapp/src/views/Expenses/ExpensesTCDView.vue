@@ -71,6 +71,7 @@ export default {
     let userold = localStorage.getItem("user");
     if (userold === null) this.$router.push({ path: `/login` });
     this.getExpenses();
+    this.getreports()
     this.getMonths();
   },
   watch: {
@@ -107,18 +108,11 @@ export default {
       axios
           .get("http://localhost:3896/report")
           .then((res) => {
-            console.log(res.data);
             let data = res.data
-            data.forEach((element) => {
-              if (element.summitCost) {
-                const myString = element.summitCost;
-                if (myString !== undefined) {
-                  const d = new Date();
-                  let m = this.optionMonth[d.getMonth()];
-                  if (m == myString) {this.openBtn = true};
-                }
-              }
-            });
+            const d = new Date();
+            let m = this.optionMonth[d.getMonth()];
+            this.openBtn = data.every(t => t.summitCost == m);
+            console.log(this.openBtn);
           })
     },
     
@@ -149,17 +143,6 @@ export default {
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
-            this.getreports()
-            // data2.forEach((element) => {
-            //   if (element.summitCost) {
-            //     const myString = element.summitCost;
-            //     if (myString !== undefined) {
-            //       const d = new Date();
-            //       let m = this.optionMonth[d.getMonth()];
-            //       if (m == myString) this.openBtn = true;
-            //     }
-            //   }
-            // });
 
             this.expensesList = data2;
             if(this.expensesList.length > 200){this.setTimes = 60000}
