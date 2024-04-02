@@ -103,7 +103,9 @@ export default {
   },
   watch: {
     selectedUser: function (newValue) {
-      if (newValue !== null) this.getAllusersByid(newValue.value);
+      if (newValue !== null) {
+        this.getAllusersByid(newValue.value)
+      };
     },
   },
   methods: {
@@ -138,7 +140,7 @@ export default {
             this.userList = arr2.map((ele) => {
               return {
                 label: ele.rank + " " + ele.firstName + " " + ele.lastName,
-                value: ele.id,
+                value: ele.userId,
               };
             });
           })
@@ -156,8 +158,8 @@ export default {
         axios
           .get(`http://localhost:3896/users/${id}`)
           .then((res) => {
-            this.getreportByid(id);
             let data = res.data;
+            this.getreportByid(id);
             this.userByid = res.data;
             if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
             if (data.typeRanks == "สัญญาบัตร") this.maintenanceFix = "100";
@@ -201,7 +203,7 @@ export default {
           this.roomconditionsCause = this.data.roomconditionsCause
           this.roomconditions = this.data.roomconditions;
           this.installmentsTime = this.data.installmentsTime
-          if (this.data.userId) {
+          if (this.data.userId !== undefined && this.data.userId !== " ") {
             this.getAllusersByid(this.data.userId);
           }
           if (this.data.roomStatus == "return") this.statusRoom = "ผ่อนผัน";
@@ -219,8 +221,8 @@ export default {
 
     async getreportByid(id) {
       try {
-        await axios
-          .get(`http://localhost:3896/reportId/${id}`)
+        await 
+        axios.get(`http://localhost:3896/reportId/${id}`)
           .then((res) => {
             if (res.data !== "") this.reportId = res.data.id;
             let data = res.data;
