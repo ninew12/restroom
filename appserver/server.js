@@ -933,7 +933,7 @@ app.put('/utilitie/:id', (req, res) => {
 app.delete('/utilitie/:id', (req, res) => {
     const deletedIndex = users.findIndex(user => user.id === Number(req.params.id))
     res.send(`Delete user '${users[deletedIndex].username}' completed.`)
-})
+}) 
 app.listen(port, () => {
     console.log(`Starting node.js at port ${port}`);
 });
