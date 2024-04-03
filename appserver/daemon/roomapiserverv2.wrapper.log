@@ -1,0 +1,2 @@
+2024-04-03 10:55:12 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerV2 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-04-03 10:55:12 - Started 3904

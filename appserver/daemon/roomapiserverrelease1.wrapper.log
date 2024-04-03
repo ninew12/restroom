@@ -1,2 +1,36 @@
 2024-03-29 11:41:34 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerRelease1 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
 2024-03-29 11:41:34 - Started 11592
+2024-04-03 10:52:14 - Stopping roomapiserverrelease1.exe
+2024-04-03 10:52:14 - ProcessKill 5580
+2024-04-03 10:52:14 - Found child process: 5608 Name: conhost.exe
+2024-04-03 10:52:14 - Found child process: 3700 Name: node.exe
+2024-04-03 10:52:14 - Stopping process 5608
+2024-04-03 10:52:14 - Send SIGINT 5608
+2024-04-03 10:52:14 - SIGINT to 5608 failed - Killing as fallback
+2024-04-03 10:52:14 - Found child process: 6000 Name: cmd.exe
+2024-04-03 10:52:14 - Found child process: 3644 Name: conhost.exe
+2024-04-03 10:52:15 - Found child process: 6856 Name: node.exe
+2024-04-03 10:52:15 - Stopping process 3644
+2024-04-03 10:52:15 - Send SIGINT 3644
+2024-04-03 10:52:15 - SIGINT to 3644 failed - Killing as fallback
+2024-04-03 10:52:15 - Found child process: 7156 Name: cmd.exe
+2024-04-03 10:52:15 - Found child process: 5732 Name: node.exe
+2024-04-03 10:52:15 - Stopping process 5732
+2024-04-03 10:52:15 - Send SIGINT 5732
+2024-04-03 10:52:15 - SIGINT to 5732 failed - Killing as fallback
+2024-04-03 10:52:15 - Stopping process 7156
+2024-04-03 10:52:15 - Send SIGINT 7156
+2024-04-03 10:52:15 - SIGINT to 7156 failed - Killing as fallback
+2024-04-03 10:52:15 - Stopping process 6856
+2024-04-03 10:52:15 - Send SIGINT 6856
+2024-04-03 10:52:15 - SIGINT to 6856 failed - Killing as fallback
+2024-04-03 10:52:15 - Stopping process 6000
+2024-04-03 10:52:15 - Send SIGINT 6000
+2024-04-03 10:52:15 - SIGINT to 6000 failed - Killing as fallback
+2024-04-03 10:52:15 - Stopping process 3700
+2024-04-03 10:52:15 - Send SIGINT 3700
+2024-04-03 10:52:15 - SIGINT to 3700 failed - Killing as fallback
+2024-04-03 10:52:15 - Stopping process 5580
+2024-04-03 10:52:15 - Send SIGINT 5580
+2024-04-03 10:52:15 - SIGINT to 5580 failed - Killing as fallback
+2024-04-03 10:52:15 - Finished roomapiserverrelease1.exe
