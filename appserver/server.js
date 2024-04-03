@@ -777,6 +777,7 @@ app.put('/report/:id', (req, res) => {
     if (req.body.sumCost) parsedData.sumCost = req.body.sumCost
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
+    if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
 
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -853,6 +854,8 @@ app.put('/reportUser/:id', (req, res) => {
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
     if (req.body.summitCost) parsedData.summitCost = req.body.summitCost
+    if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
+    
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
