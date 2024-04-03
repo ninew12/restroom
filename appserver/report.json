@@ -11505,7 +11505,7 @@
     "maintenance": "60",
     "insurance": "2000",
     "installments": "10",
-    "amountPaid": "0",
+    "amountPaid": 400,
     "roomId": "b41288b6-a2d6-4dd7-a736-06acae5423c2",
     "roomnumber": "62/5",
     "dateApproved": "2024-04-01T08:05:15.814Z",
@@ -12380,6 +12380,7 @@
     "monthly": "เมษายน",
     "years": 2024,
     "roomStatus": "ว่าง",
-    "installmentsTime": "มี.ค.-ธ.ค.67"
+    "installmentsTime": "มี.ค.-ธ.ค.67",
+    "summitCost": "เมษายน"
   }
 ]

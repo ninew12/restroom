@@ -64,14 +64,14 @@ export default {
       openBtn: false,
       expensesListFix: [],
       loader: false,
-      setTimes : 30000
+      setTimes: 30000,
     };
   },
   created() {
     let userold = localStorage.getItem("user");
     if (userold === null) this.$router.push({ path: `/login` });
     this.getExpenses();
-    this.getreports()
+    this.getreports();
     this.getMonths();
   },
   watch: {
@@ -93,10 +93,10 @@ export default {
     },
     getMonths() {
       const d = new Date();
-      let m
-      if(this.optionMonth[d.getMonth()] == 'มกราคม'){
-        m = "มกราคม"
-      }else{
+      let m;
+      if (this.optionMonth[d.getMonth()] == "มกราคม") {
+        m = "มกราคม";
+      } else {
         m = this.optionMonth[d.getMonth()];
       }
       let y = d.getFullYear();
@@ -105,17 +105,16 @@ export default {
     },
 
     async getreports() {
-      axios
-          .get("http://localhost:3896/report")
-          .then((res) => {
-            let data = res.data
-            const d = new Date();
-            let m = this.optionMonth[d.getMonth()];
-            this.openBtn = data.every(t => t.summitCost == m);
-   
-          })
+      axios.get("http://localhost:3896/report").then((res) => {
+        let data = res.data;
+        const d = new Date();
+        let m = this.optionMonth[d.getMonth()];
+        data.forEach((e) => {
+          if (e.summitCost) this.openBtn = e.summitCost.includes(m);
+        });
+      });
     },
-    
+
     async getExpenses() {
       try {
         await axios
@@ -145,7 +144,9 @@ export default {
             });
 
             this.expensesList = data2;
-            if(this.expensesList.length > 200){this.setTimes = 60000}
+            if (this.expensesList.length > 200) {
+              this.setTimes = 60000;
+            }
             // console.log(this.expensesListFix);
           })
           .catch((err) => {
@@ -190,10 +191,9 @@ export default {
           let b = c / a; //จำนวนงวดคงเหลือ
           let d = parseInt(e.installments || 0) - b;
           return d || 0;
-        }else{
+        } else {
           return parseInt(e.insurance || 0);
         }
-      
       } catch (error) {
         console.log(error);
       }
@@ -201,18 +201,16 @@ export default {
 
     countinsamountPaid(e) {
       if (parseInt(e.installments) !== 0) {
-          let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
-          let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
-          let b = c / a; //จำนวนงวดคงเหลือ
-          let d = a * (e.installments - b)
-          return d || 0;
-        }else{
-          return 0
-        }
+        let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
+        let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
+        let b = c / a; //จำนวนงวดคงเหลือ
+        let d = a * (e.installments - b);
+        return d || 0;
+      } else {
+        return 0;
+      }
       // return e.insurance - parseInt(e.amountPaid || 0) || 0;
     },
-
-
 
     async getRoomsByid(id) {
       this.id = id;
@@ -223,18 +221,18 @@ export default {
             this.userByid = res.data;
             this.rank = this.userByid.rank;
             this.firstName = this.userByid.firstName;
-              this.lastName = this.userByid.firstName;
+            this.lastName = this.userByid.firstName;
             this.Insurancecost = this.userByid.insurancecost;
-              this.installmentsRooom = this.userByid.installmentsRooom;
-              this.firstnumber = this.userByid.firstnumber;
-              this.lastnumber = this.userByid.lastnumber;
-              this.Waterbill = this.userByid.Waterbill;
-              this.Electricitybill = this.userByid.Electricitybill;
-              this.Central = this.userByid.Central;
-              this.Costs = this.userByid.Costs;
-              this.typeContract = this.userByid.typeContract;
-              this.contractExpenses = this.userByid.contractExpenses;
-              this.sumCost = this.userByid.sumCost;
+            this.installmentsRooom = this.userByid.installmentsRooom;
+            this.firstnumber = this.userByid.firstnumber;
+            this.lastnumber = this.userByid.lastnumber;
+            this.Waterbill = this.userByid.Waterbill;
+            this.Electricitybill = this.userByid.Electricitybill;
+            this.Central = this.userByid.Central;
+            this.Costs = this.userByid.Costs;
+            this.typeContract = this.userByid.typeContract;
+            this.contractExpenses = this.userByid.contractExpenses;
+            this.sumCost = this.userByid.sumCost;
             this.rankNumber = this.userByid.rankNumber;
           })
           .catch((err) => {
