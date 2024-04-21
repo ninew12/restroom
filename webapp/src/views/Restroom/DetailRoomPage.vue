@@ -381,6 +381,7 @@ export default {
         numberPeople: this.numberPeople,
         roomStatus: this.statusRoom,
         installmentsTime : this.installmentsTime,
+        queue: "inroom",
         no: "",
       };
       await axios.put(`http://localhost:3896/users/${this.userId}`, body, {
@@ -613,6 +614,7 @@ export default {
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
         installmentsTime : this.installmentsTime,
+        queue: "inroom",
         no: "",
       };
       // console.log(body);
@@ -826,7 +828,7 @@ export default {
                               color="success"
                               data-bs-toggle="modal"
                               data-bs-target="#contractBackdrop"
-                              @click="getAllusersByid(item?.id)"
+                              @click="getAllusersByid(item?.userId)"
                               >เพิ่มผู้พักอาศัยเข้าห้องพัก</MaterialButton
                             >
                           </td>

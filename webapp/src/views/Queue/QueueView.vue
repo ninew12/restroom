@@ -138,7 +138,7 @@ export default {
           .then((res) => {
             let data = res.data;
             this.userByid = data;
-            this.userId = this.userByid.id
+            this.userId = this.userByid.userId
           })
           .catch((err) => {
             console.log(err);
@@ -159,7 +159,7 @@ export default {
             this.userList = arr2.map((ele) => {
               return {
                 label: ele.rank + " " + ele.firstName + " " + ele.lastName,
-                value: ele.id,
+                value: ele.userId,
               };
             });
 
@@ -198,7 +198,7 @@ export default {
             this.userList = res.data.map((ele) => {
               return {
                 label: ele.rank + " " + ele.firstName + " " + ele.lastName,
-                value: ele.id,
+                value: ele.userId,
               };
             });
           })

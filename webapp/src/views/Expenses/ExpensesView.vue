@@ -159,7 +159,7 @@ export default {
             this.getreportByid(id);
             this.userByid = res.data;
             this.rank = this.userByid.rank;
-            this.userId = this.userByid.id;
+            this.userId = this.userByid.userId;
             this.typeUser = this.userByid.typeUser;
             this.rankNumber = this.userByid.rankNumber,
             this.buildingType = this.userByid.buildingType;
@@ -201,7 +201,9 @@ export default {
         await axios
           .get(`http://localhost:3896/reportId/${id}`)
           .then((res) => {
-            if(res.data !== "")this.reportId = res.data.id;
+            if(res.data !== ""){
+              this.reportId = res.data.id;
+            }
             let data = res.data;
             if(data !== '' && data !== undefined){
               this.reportType = "havedata"
@@ -453,7 +455,7 @@ export default {
                       color="success"
                       data-bs-toggle="modal"
                       data-bs-target="#staticBackdrop11"
-                      @click="getRoomsByid(item?.id)"
+                      @click="getRoomsByid(item?.userId)"
                       >บันทึกค่าใช้จ่ายรายเดือน</MaterialButton
                     >
                   </td>
