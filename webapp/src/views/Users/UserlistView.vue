@@ -86,12 +86,14 @@ export default {
          }else{
           this.selecttypeAffiliation = newValue.label
          }
+         this.affiliationNo = newValue.index
       }
     },
 
     selectedAffiliation: function (newValue) {
       if(newValue.label !== undefined){
           this.Affiliation = newValue.label
+          this.affiliationNo = newValue.index
       }
     },
 
@@ -202,6 +204,7 @@ export default {
           this.queue = data.queue;
           this.typeRanks = data.typeRanks;
           this.roomId = data.roomId;
+          this.affiliationNo = data.affiliation
           this.modalShow = true;
         })
         .catch((err) => {
@@ -277,6 +280,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: this.Affiliation ,
+        affiliationNo :  this.affiliationNo,
         rank: this.rank,
         rankNumber: this.rankNumber,
         idcard: this.idcard || " ",
@@ -320,6 +324,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: this.Affiliation,
+        affiliationNo :  this.affiliationNo,
         rank: this.rank,
         rankNumber: this.rankNumber,
         idcard: this.idcard,
@@ -346,6 +351,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: this.Affiliation,
+        affiliationNo :  this.affiliationNo,
         rank: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
@@ -374,6 +380,7 @@ export default {
         firstName: this.firstName,
         lastName: this.lastName,
         affiliation: this.Affiliation,
+        affiliationNo :  this.affiliationNo,
         rank: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,

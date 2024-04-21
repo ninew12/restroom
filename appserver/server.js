@@ -148,7 +148,8 @@ app.put('/users/:id', (req, res) => {
     if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus || ''
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime || ''
     if (req.body.summitCost) parsedData.summitCost = req.body.summitCost
-
+    if (req.body.affiliationNo) parsedData.affiliationNo = req.body.affiliationNo
+    
     filterdata.push(parsedData)
     fs.writeFileSync('./users.json', JSON.stringify(filterdata), (err) => {
         if (err) {
@@ -332,6 +333,7 @@ app.put('/expenses/:id', (req, res) => {
     if (req.body.leniencyFilter) parsedData.leniencyFilter = req.body.leniencyFilter
     if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
+    if (req.body.affiliationNo) parsedData.affiliationNo = req.body.affiliationNo
     filterdata.push(parsedData)
     fs.writeFileSync('./fixtest.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -438,6 +440,7 @@ app.put('/rooms/:id', (req, res) => {
     if (req.body.firstnumber) parsedData.firstnumber = req.body.firstnumber
     if (req.body.lastnumber) parsedData.lastnumber = req.body.lastnumber
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
+    if (req.body.affiliationNo) parsedData.affiliationNo = req.body.affiliationNo
     filterdata.push(parsedData)
     fs.writeFileSync('./rooms.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -614,6 +617,7 @@ app.put('/history/:id', (req, res) => {
     if (req.body.sumCost) parsedData.sumCost = req.body.sumCost
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
+    if (req.body.affiliationNo) parsedData.affiliationNo = req.body.affiliationNo
     filterdata.push(parsedData)
     fs.writeFileSync('./history.json', JSON.stringify(filterdata, null, 2), (err) => {
         if (err) {
@@ -778,6 +782,7 @@ app.put('/report/:id', (req, res) => {
     if (req.body.sumbill) parsedData.sumbill = req.body.sumbill
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
+    if (req.body.affiliationNo) parsedData.affiliationNo = req.body.affiliationNo
 
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {
@@ -855,6 +860,7 @@ app.put('/reportUser/:id', (req, res) => {
     if (req.body.installmentsTime) parsedData.installmentsTime = req.body.installmentsTime
     if (req.body.summitCost) parsedData.summitCost = req.body.summitCost
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
+    if (req.body.affiliationNo) parsedData.affiliationNo = req.body.affiliationNo
     
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {

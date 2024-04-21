@@ -243,6 +243,12 @@ export default {
       }
     },
 
+    setaffiliationNo(item){
+      let a = masterData.AffiliationList.find(e=> e.label == item)
+      if(a !== undefined) return a.index
+      else return ''
+    },
+
     async genInsurance() {
       let arr = [];
       let data = [];
@@ -253,6 +259,7 @@ export default {
       data = await arr.map((el) => {
         return {
           ...el,
+          affiliationNo : this.setaffiliationNo(el.affiliation),
           amountPaid: this.countinsamountPaid(el),
         };
       });
@@ -333,6 +340,7 @@ export default {
         monthly: this.months,
         years: this.years,
         rankNumber: this.rankNumber,
+        affiliationNo :  index.affiliationNo,
         summitCost: this.optionMonth[d.getMonth()],
       };
       await axios.put(`http://localhost:3896/reportUser/${id}`, body, {
@@ -351,6 +359,7 @@ export default {
         monthly: this.months,
         years: this.years,
         rankNumber: this.rankNumber,
+        affiliationNo :  index.affiliationNo,
         summitCost: this.optionMonth[d.getMonth()],
       };
       await axios.put(`http://localhost:3896/reportUser/${id}`, body, {

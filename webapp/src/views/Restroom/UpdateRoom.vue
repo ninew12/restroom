@@ -269,7 +269,6 @@ export default {
         queue: "none",
         vehicleNumber: " ",
         numberPeople: " ",
-        userId: " ",
         roomKey: this.roomKey,
         houseRegistration: this.houseRegistration,
         payMonth: this.payMonth,
@@ -349,7 +348,6 @@ export default {
 
     updatedataUser() {
       let body = {
-        userId: " ",
         dateApproved: " ",
         installments: " ",
         contract: " ",

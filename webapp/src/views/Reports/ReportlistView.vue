@@ -2396,6 +2396,7 @@ export default {
           waterbill: el.waterbill || 0,
           electricitybill: el.electricitybill || 0,
           Installmenttime: el.installmentsTime,
+          affiliationNo: el.affiliationNo
         };
       });
 
@@ -2422,6 +2423,7 @@ export default {
           waterbill: el2.waterbill || 0,
           electricitybill: el2.electricitybill || 0,
           Installmenttime: el2.installmentsTime,
+          affiliationNo: el2.affiliationNo
         };
       });
 
@@ -2448,6 +2450,7 @@ export default {
           waterbill: el3.waterbill || 0,
           electricitybill: el3.electricitybill || 0,
           Installmenttime: el3.installmentsTime,
+          affiliationNo: el3.affiliationNo
         };
       });
 
@@ -2474,6 +2477,7 @@ export default {
           waterbill: el4.waterbill || 0,
           electricitybill: el4.electricitybill || 0,
           Installmenttime: el4.installmentsTime,
+          affiliationNo: el4.affiliationNo
         };
       });
 
@@ -2500,6 +2504,7 @@ export default {
           waterbill: el5.waterbill || 0,
           electricitybill: el5.electricitybill || 0,
           Installmenttime: el5.installmentsTime,
+          affiliationNo: el5.affiliationNo
         };
       });
 
@@ -2547,6 +2552,7 @@ export default {
           waterbill: el.waterbill || 0,
           electricitybill: el.electricitybill || 0,
           Installmenttime: el.installmentsTime,
+          affiliationNo: el.affiliationNo
         };
       });
 
@@ -2573,6 +2579,7 @@ export default {
           waterbill: el2.waterbill || 0,
           electricitybill: el2.electricitybill || 0,
           Installmenttime: el2.installmentsTime,
+          affiliationNo: el2.affiliationNo
         };
       });
 
@@ -2599,6 +2606,7 @@ export default {
           waterbill: el3.waterbill || 0,
           electricitybill: el3.electricitybill || 0,
           Installmenttime: el3.installmentsTime,
+          affiliationNo: el3.affiliationNo
         };
       });
 
@@ -2625,6 +2633,7 @@ export default {
           waterbill: el4.waterbill || 0,
           electricitybill: el4.electricitybill || 0,
           Installmenttime: el4.installmentsTime,
+          affiliationNo: el4.affiliationNo
         };
       });
 
@@ -2651,6 +2660,7 @@ export default {
           waterbill: el5.waterbill || 0,
           electricitybill: el5.electricitybill || 0,
           Installmenttime: el5.installmentsTime,
+          affiliationNo: el5.affiliationNo
         };
       });
 
@@ -2677,6 +2687,7 @@ export default {
           waterbill: el6.waterbill || 0,
           electricitybill: el6.electricitybill || 0,
           Installmenttime: el6.installmentsTime,
+          affiliationNo: el6.affiliationNo
         };
       });
       arr55 = await data55.map((e55, i) => {
@@ -2702,6 +2713,7 @@ export default {
           waterbill: e55.waterbill || 0,
           electricitybill: e55.electricitybill || 0,
           Installmenttime: e55.installmentsTime,
+          affiliationNo: e55.affiliationNo
         };
       });
 
@@ -2728,6 +2740,7 @@ export default {
           waterbill: e66.waterbill || 0,
           electricitybill: e66.electricitybill || 0,
           Installmenttime: e66.installmentsTime,
+          affiliationNo: e66.affiliationNo
         };
       });
 
@@ -2754,6 +2767,7 @@ export default {
           waterbill: e77.waterbill || 0,
           electricitybill: e77.electricitybill || 0,
           Installmenttime: e77.installmentsTime,
+          affiliationNo: e77.affiliationNo
         };
       });
       arr.map((er) => {
@@ -3484,6 +3498,22 @@ export default {
       let arr = this.reportlistok.filter((e) => e.accumulated !== e.insurance);
       let arr2 = this.reportListssn.filter((e2) => e2.accumulated !== e2.insurance);
       let arr3 = this.reportlistlj.filter((e3) => e3.accumulated !== e3.insurance);
+
+      arr.sort((a, b) => a.affiliationNo - b.affiliationNo);
+      arr2.sort((a, b) => a.affiliationNo - b.affiliationNo);
+      arr3.sort((a, b) => a.affiliationNo - b.affiliationNo);
+
+      let arrA = arr.filter((e) => e.typeUser == 'บช.ตชด.');
+      let arrA2 = arr.filter((e2) => e2.typeUser == 'ตร.');
+      let arrB = arr2.filter((e) => e.typeUser == 'บช.ตชด.');
+      let arrB2 = arr2.filter((e2) => e2.typeUser == 'ตร.');
+      let arrC = arr3.filter((e) => e.typeUser == 'บช.ตชด.');
+      let arrC2 = arr3.filter((e2) => e2.typeUser == 'ตร.');
+
+      let A1 = arrA2.concat(arrA)
+      let A2 = arrB2.concat(arrB)
+      let A3 = arrC2.concat(arrC)
+    
       var ws_data = [
         [
           "รายละเอียดการหักเงิน  ค่าบำรุงฯ ,ค่าประกันฯ , ผู้ได้สิทธิพักอาศัยบ้านพัก บช.ตชด.",
@@ -3496,9 +3526,9 @@ export default {
         aa3,
         aa4,
         aa5 = [];
-      let count = this.OGCount(arr);
+      let count = this.OGCount(A1);
       let sum1
-      await arr.forEach((e, i) => {
+      await A1.forEach((e, i) => {
         if(e.typeUser == 'บช.ตชด.'){
           sum1 = this.countSuminstallments(e)
         }else if(e.typeUser == 'ตร.'){
@@ -3533,9 +3563,9 @@ export default {
         bb3,
         bb4,
         bb5 = [];
-      let count2 = this.OGCount(arr2);
+      let count2 = this.OGCount(A2);
       let sum2
-      await arr2.forEach((el, i) => {
+      await A2.forEach((el, i) => {
         if(el.typeUser == 'บช.ตชด.'){
           sum2 = this.countSuminstallments(el)
         }else if(el.typeUser == 'ตร.'){
@@ -3569,9 +3599,9 @@ export default {
         cc3,
         cc4,
         cc5 = [];
-      let count3 = this.OGCount(arr3);
+      let count3 = this.OGCount(A3);
       let sum
-      await arr3.forEach((el2, i) => {
+      await A3.forEach((el2, i) => {
         if(el2.typeUser == 'บช.ตชด.'){
           sum = this.countSuminstallments(el2)
         }else if(el2.typeUser == 'ตร.'){
@@ -5153,8 +5183,8 @@ export default {
               "unitWater",
               "maintenancefee",
               "waterbill",
-              "central",
-              "sumCostCentral",
+              "electricitybill",
+              "sumCostwaterbill",
               "typeContractYes",
               "typeContractNo",
               "contractExpenses",

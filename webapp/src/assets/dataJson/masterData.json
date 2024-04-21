@@ -279,113 +279,140 @@
     "Affiliation": [
         {
             "label": "บก.อก.",
-            "value": "บก.อก."
+            "value": "บก.อก.",
+            "index": 2
         },
         {
             "label": "ฝอ.1",
-            "value": "ฝอ.1"
+            "value": "ฝอ.1",
+            "index": 3
         },
         {
             "label": "ฝอ.2",
-            "value": "ฝอ.2"
+            "value": "ฝอ.2",
+            "index": 4
         },
         {
             "label": "ฝอ.3",
-            "value": "ฝอ.3"
+            "value": "ฝอ.3",
+            "index": 5
         },
         {
             "label": "ฝอ.4",
-            "value": "ฝอ.4"
+            "value": "ฝอ.4",
+            "index": 6
         },
         {
             "label": "ฝอ.5",
-            "value": "ฝอ.5"
+            "value": "ฝอ.5",
+            "index": 7
         },
         {
             "label": "ฝอ.6",
-            "value": "ฝอ.6"
+            "value": "ฝอ.6",
+            "index": 7
         },
         {
             "label": "ฝอ.7",
-            "value": "ฝอ.7"
+            "value": "ฝอ.7",
+            "index": 8
         },
         {
             "label": "ฝอ.8",
-            "value": "ฝอ.8"
+            "value": "ฝอ.8",
+            "index": 9
         }
     ],
     "AffiliationList": [
         {
             "label": "ทั้งหมด",
-            "value": "ทั้งหมด"
+            "value": "ทั้งหมด",
+            "index": 0
         },
         {
             "label": "บช.ตชด.",
-            "value": "บช.ตชด."
+            "value": "บช.ตชด.",
+            "index": 1
         },
         {
             "label": "บก.อก.",
-            "value": "บก.อก."
+            "value": "บก.อก.",
+            "index": 2
         },
         {
             "label": "ฝอ.1",
-            "value": "ฝอ.1"
+            "value": "ฝอ.1",
+            "index": 3
         },
         {
             "label": "ฝอ.2",
-            "value": "ฝอ.2"
+            "value": "ฝอ.2",
+            "index": 4
         },
         {
             "label": "ฝอ.3",
-            "value": "ฝอ.3"
+            "value": "ฝอ.3",
+            "index": 5
         },
         {
             "label": "ฝอ.4",
-            "value": "ฝอ.4"
+            "value": "ฝอ.4",
+            "index": 6
         },
         {
             "label": "ฝอ.5",
-            "value": "ฝอ.5"
+            "value": "ฝอ.5",
+            "index": 7
         },
         {
             "label": "ฝอ.6",
-            "value": "ฝอ.6"
+            "value": "ฝอ.6",
+            "index": 7
         },
         {
             "label": "ฝอ.7",
-            "value": "ฝอ.7"
+            "value": "ฝอ.7",
+            "index": 8
         },
         {
             "label": "ฝอ.8",
-            "value": "ฝอ.8"
+            "value": "ฝอ.8",
+            "index": 9
         },
         {
             "label": "บก.สสน.",
-            "value": "บก.สสน."
+            "value": "บก.สสน.",
+            "index": 10
         },
         {
             "label": "ฝสสน.1",
-            "value": "ฝสสน.1"
+            "value": "ฝสสน.1",
+            "index": 11
         },
         {
             "label": "ฝสสน.2",
-            "value": "ฝสสน.2"
+            "value": "ฝสสน.2",
+            "index": 12
         },
         {
             "label": "ฝสสน.3",
-            "value": "ฝสสน.3"
+            "value": "ฝสสน.3",
+            "index": 13
         },
         {
             "label": "ฝสสน.4",
-            "value": "ฝสสน.4"
+            "value": "ฝสสน.4",
+            "index": 14
         },
         {
             "label": "ฝสสน.5",
-            "value": "ฝสสน.5"
+            "value": "ฝสสน.5",
+            "index": 15
         },
         {
             "label": "ลูกจ้าง",
-            "value": "ลูกจ้าง"
+            "value": "ลูกจ้าง",
+            "index": 16
         }
         
     ],
@@ -463,27 +490,33 @@
     "Affiliation2": [
         {
             "label": "บก.สสน.",
-            "value": "บก.สสน."
+            "value": "บก.สสน.",
+            "index": 10
         },
         {
             "label": "ฝสสน.1",
-            "value": "ฝสสน.1"
+            "value": "ฝสสน.1",
+            "index": 11
         },
         {
             "label": "ฝสสน.2",
-            "value": "ฝสสน.2"
+            "value": "ฝสสน.2",
+            "index": 12
         },
         {
             "label": "ฝสสน.3",
-            "value": "ฝสสน.3"
+            "value": "ฝสสน.3",
+            "index": 13
         },
         {
             "label": "ฝสสน.4",
-            "value": "ฝสสน.4"
+            "value": "ฝสสน.4",
+            "index": 14
         },
         {
             "label": "ฝสสน.5",
-            "value": "ฝสสน.5"
+            "value": "ฝสสน.5",
+            "index": 15
         }
     ],
     "building": [
@@ -609,41 +642,50 @@
     "typeAffiliation": [
         {
             "label": "ลูกจ้าง",
-            "value": "ลูกจ้าง"
+            "value": "ลูกจ้าง",
+            "index": 16
         },
         {
             "label": "บช.ตชด.",
-            "value": "บช.ตชด."
+            "value": "บช.ตชด.",
+            "index": 1
         },
         {
             "label": "บก.อก.",
-            "value": "บก.อก."
+            "value": "บก.อก.",
+            "index": 2
         },
         {
             "label": "บก.สสน.",
-            "value": "บก.สสน."
+            "value": "บก.สสน.",
+            "index": 10
         }
     ],
     "typeAffiliation2": [
         {
             "label": "ลูกจ้าง",
-            "value": "ลูกจ้าง"
+            "value": "ลูกจ้าง",
+            "index": 16
         },
         {
             "label": "บช.ตชด.",
-            "value": "บช.ตชด."
+            "value": "บช.ตชด.",
+            "index": 1
         },
         {
             "label": "บก.อก.",
-            "value": "บก.อก."
+            "value": "บก.อก.",
+            "index": 2
         },
         {
             "label": "บก.สสน.",
-            "value": "บก.สสน."
+            "value": "บก.สสน.",
+            "index": 10
         },
         {
             "label": "นอกสังกัด",
-            "value": "นอกสังกัด"
+            "value": "นอกสังกัด",
+            "index": 17
         }
     ]
 }

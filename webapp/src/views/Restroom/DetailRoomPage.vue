@@ -89,7 +89,8 @@ export default {
       numberPeople: "",
       roomconditionsCause: "",
       roomconditions: "",
-      installmentsTime: ""
+      installmentsTime: "",
+      affiliationNo: ""
     };
   },
   created() {
@@ -106,6 +107,35 @@ export default {
       if (newValue !== null) {
         this.getAllusersByid(newValue.value)
       };
+    },
+
+    selectedRanks: function (newValue) {
+      if(newValue.label !== undefined){
+        this.rank = newValue.label
+        this.rankNumber = newValue.value
+      }
+    },
+
+    typeAffiliation: function (newValue) {
+      if(newValue !== undefined && newValue.label !== undefined){
+         if(newValue.label == "ลูกจ้าง") {
+          this.typeAffiliation = "ลูกจ้าง"
+          this.Affiliation = "ลูกจ้าง"
+         }else if(newValue.label == "บช.ตชด."){
+          this.typeAffiliation = "บช.ตชด."
+          this.Affiliation = "บช.ตชด."
+         }else{
+          this.typeAffiliation = newValue.label
+         }
+         this.affiliationNo = newValue.index
+      }
+    },
+
+    selectedAffiliation: function (newValue) {
+      if(newValue !== undefined && newValue.label !== undefined){
+          this.Affiliation = newValue.label
+          this.affiliationNo = newValue.index
+      }
     },
   },
   methods: {
@@ -140,9 +170,10 @@ export default {
             this.userList = arr2.map((ele) => {
               return {
                 label: ele.rank + " " + ele.firstName + " " + ele.lastName,
-                value: ele.userId,
+                value: ele.userId
               };
             });
+            
           })
           .catch((err) => {
             console.log(err);
@@ -161,12 +192,15 @@ export default {
             let data = res.data;
             this.getreportByid(id);
             this.userByid = res.data;
+            console.log(id);
             if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
             if (data.typeRanks == "สัญญาบัตร") this.maintenanceFix = "100";
               this.userId = id,
               this.firstName = data.firstName,
               this.lastName = data.lastName,
               this.affiliation = data.affiliation,
+              this.Affiliation = data.affiliation,
+              this.affiliationNo = this.setaffiliationNo(data.affiliation)
               this.rank = data.rank,
               this.idcard = data.idcard,
               this.phone = data.phone,
@@ -189,6 +223,13 @@ export default {
         console.error(error);
       }
     },
+
+    setaffiliationNo(item){
+      let a = masterData.AffiliationList.find(e=> e.label == item)
+      if(a !== undefined) return a.index
+      else return ''
+    },
+
 
     async getroomByid(id) {
       try {
@@ -311,13 +352,13 @@ export default {
           } else if (this.reportType == "none") {
             this.submitForm2();
           }
-
-          this.submitForm3();
           this.submitFormUser();
           if (index == "spacia") {
             this.submitRoomScapia();
           } else if (index == "normal") {
+            this.submitForm3();
             this.submitFormRoom();
+            
           }
         })
         .catch((err) => {
@@ -326,12 +367,6 @@ export default {
     },
 
     async submitFormUser() {
-      let typeA;
-      this.typeAffiliation.label == "ลูกจ้าง"
-        ? (typeA = "ลูกจ้าง")
-        : this.typeAffiliation.label == "บช.ตชด."
-        ? (typeA = "บช.ตชด.")
-        : (typeA = this.selectedAffiliation.label);
       let body = {
         maintenance: this.maintenanceFix,
         insurance: this.insurance,
@@ -361,8 +396,9 @@ export default {
         userId: this.userId,
         firstName: this.firstName,
         lastName: this.lastName,
-        selectedAffiliation: this.affiliation,
-        affiliation: this.affiliation,
+        selectedAffiliation: this.Affiliation,
+        affiliationNo :  this.affiliationNo,
+        affiliation: this.Affiliation,
         selectedRanks: this.rank,
         rankNumber: this.rankNumber,
         idcard: this.idcard,
@@ -415,7 +451,8 @@ export default {
         years: this.years,
         vehicleNumber: this.vehicleNumber,
         numberPeople: this.numberPeople,
-        installmentsTime : this.installmentsTime
+        installmentsTime : this.installmentsTime,
+        affiliationNo :  this.affiliationNo,
       };
 
       await axios.put(`http://localhost:3896/report/${this.reportId}`, body, {
@@ -431,8 +468,9 @@ export default {
         userId: this.userId,
         firstName: this.firstName,
         lastName: this.lastName,
-        selectedAffiliation: this.affiliation,
-        affiliation: this.affiliation,
+        selectedAffiliation: this.Affiliation,
+        affiliationNo :  this.affiliationNo,
+        affiliation: this.Affiliation,
         selectedRanks: this.rank,
         rankNumber: this.rankNumber,
         idcard: this.idcard,
@@ -464,8 +502,9 @@ export default {
         userId: this.userId,
         firstName: this.firstName,
         lastName: this.lastName,
-        selectedAffiliation: this.affiliation,
-        affiliation: this.affiliation,
+        selectedAffiliation: this.Affiliation,
+        affiliationNo :  this.affiliationNo,
+        affiliation: this.Affiliation,
         selectedRanks: this.rank,
         rankNumber: this.rankNumber,
         idcard: this.idcard,
@@ -511,24 +550,21 @@ export default {
     },
 
     async submitRoomScapia() {
-      let typeA;
-      this.typeAffiliation.label == "ลูกจ้าง"
-        ? (typeA = "ลูกจ้าง")
-        : this.typeAffiliation.label == "บช.ตชด."
-        ? (typeA = "บช.ตชด.")
-        : (typeA = this.selectedAffiliation.label);
+      if (this.typeRanks.value == "ประทวน") this.maintenanceFix = "60";
+      if (this.typeRanks.value == "สัญญาบัตร") this.maintenanceFix = "100";
       let body = {
         userId: this.userId,
         firstName: this.firstName,
         lastName: this.lastName,
-        affiliation: this.affiliation,
+        affiliation: this.Affiliation,
+        affiliationNo : this.affiliationNo,
         rank: this.selectedRanks.label,
         rankNumber: this.selectedRanks.value,
         idcard: this.idcard,
         phone: this.phone,
         typeRoom: this.typeRoom,
         status: this.selectedDataObtion.value || "โสด",
-        typeAffiliation: this.typeAffiliation.value,
+        typeAffiliation: this.typeAffiliation,
         typeRanks: this.typeRanks.value,
         queue: "inroom",
         roomStatus: "special",
@@ -544,7 +580,6 @@ export default {
         dateApproved: this.dateApp.toISOString(),
         installmentsTime : this.installmentsTime
       };
-
       await axios
         .put(`http://localhost:3896/rooms/${this.id}`, body, {
           headers: {
@@ -1215,14 +1250,14 @@ export default {
                   v-model="typeAffiliation"
                 ></v-select>
               </div>
-              <div class="mb-3" v-if="typeAffiliation?.label == 'บก.อก.'">
+              <div class="mb-3" v-if="typeAffiliation == 'บก.อก.'">
                 <label>สังกัด {{ typeAffiliation?.label }}</label>
                 <v-select
                   :options="masterData?.Affiliation"
                   v-model="selectedAffiliation"
                 ></v-select>
               </div>
-              <div class="mb-3" v-if="typeAffiliation?.label == 'บก.สสน.'">
+              <div class="mb-3" v-if="typeAffiliation == 'บก.สสน.'">
                 <label>สังกัด {{ typeAffiliation?.label }}</label>
                 <v-select
                   :options="masterData?.Affiliation2"
