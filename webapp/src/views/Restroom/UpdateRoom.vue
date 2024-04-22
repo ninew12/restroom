@@ -129,6 +129,7 @@ export default {
         }
       }
     },
+    
     async getRooms(id) {
       try {
         await axios
