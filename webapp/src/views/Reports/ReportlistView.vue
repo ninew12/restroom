@@ -3543,10 +3543,10 @@ export default {
           sum1,
         ]);
       });
-      aa = [" ", " ", "รวม อก.", this.numberWithCommas(count)];
+      aa = [" ", " ", "รวม", " " , " " ,this.numberWithCommas(count)];
       aa2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
       aa3 = [" ร.ต.อ.หญิง", " ", "", " "];
-      aa4 = [" ", " ", " (  ศุภลักษณ์  ฤทธิสอน )", " "];
+      aa4 = [" ", " ", "( พิมพลอย ตั้งสิริสงวน )", " "];
       aa5 = [" ", " ", "รอง สว.ฝสสน.๑ บก.สสน.บช.ตชด.", " "];
       ws_data.push(aa, aa2, aa3, aa4, aa5);
       var ws = XLSX.utils.aoa_to_sheet(ws_data);
@@ -3579,10 +3579,10 @@ export default {
           sum2,
         ]);
       });
-      bb = [" ", " ", "รวม อก.", this.numberWithCommas(count2)];
+      bb = [" ", " ", "รวม"," ", this.numberWithCommas(count2)];
       bb2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
       bb3 = [" ร.ต.อ.หญิง", " ", "", " "];
-      bb4 = [" ", " ", " (  ศุภลักษณ์  ฤทธิสอน )", " "];
+      bb4 = [" ", " ", "( พิมพลอย ตั้งสิริสงวน )", " "];
       bb5 = [" ", " ", "รอง สว.ฝสสน.๑ บก.สสน.บช.ตชด.", " "];
       ws_data2.push(bb, bb2, bb3, bb4, bb5);
       var ws2 = XLSX.utils.aoa_to_sheet(ws_data2);
@@ -3616,10 +3616,10 @@ export default {
           sum
         ]);
       });
-      cc = [" ", " ", "รวม อก.", this.numberWithCommas(count3)];
+      cc = [" ", " ", "รวม.", " " , " ", this.numberWithCommas(count3)];
       cc2 = [" ", " ", "ตรวจแล้วถูกต้อง", " "];
       cc3 = [" ร.ต.อ.หญิง", " ", "", " "];
-      cc4 = [" ", " ", " (  ศุภลักษณ์  ฤทธิสอน )", " "];
+      cc4 = [" ", " ", "( พิมพลอย ตั้งสิริสงวน )", " "];
       cc5 = [" ", " ", "รอง สว.ฝสสน.๑ บก.สสน.บช.ตชด.", " "];
       ws_data3.push(cc, cc2, cc3, cc4, cc5);
       var ws3 = XLSX.utils.aoa_to_sheet(ws_data3);
@@ -4901,8 +4901,8 @@ export default {
           "",
           { text: thaiNum[0].maintenancefeeSum, style: "header", alignment: "center" },
           { text: thaiNum[0].waterbillSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].centralSum, style: "header", alignment: "center" },
-          { text: thaiNum[0].SumCostSumCentral, style: "header", alignment: "center" },
+          { text: thaiNum[0].electricitybillSum, style: "header", alignment: "center" },
+          { text: thaiNum[0].SumCostSumwater, style: "header", alignment: "center" },
           "",
           "",
           "",
@@ -5003,8 +5003,8 @@ export default {
               "unitWater",
               "maintenancefee",
               "waterbill",
-              "central",
-              "sumCostCentral",
+              "electricitybill",
+              "sumCostwaterbill",
               "typeContractYes",
               "typeContractNo",
               "contractExpenses",
@@ -6471,7 +6471,7 @@ export default {
                               {{ item?.affiliation || "-" }}
                             </td>
                             <td data-t="n" data-z="#,##">
-                              {{ numberWithCommas(item?.central || "-") }}
+                              {{ numberWithCommas(item?.electricitybill || "-") }}
                             </td>
                             <td data-t="n" data-z="#,##">
                               {{ numberWithCommas(item?.costs || "-") }}
@@ -6490,7 +6490,7 @@ export default {
                           <tr v-if="reportlistTD?.length > 0">
                             <th scope="row" colspan="5">รวมเงิน</th>
                             <th data-t="n" data-z="#,##">
-                              {{ numberWithCommas(reportlistTD[0]?.centralSum || "-") }}
+                              {{ numberWithCommas(reportlistTD[0]?.electricitybillSum || "-") }}
                             </th>
                             <th data-t="n" data-z="#,##">
                               {{ numberWithCommas(reportlistTD[0]?.costsSum || "-") }}
@@ -6774,14 +6774,15 @@ export default {
                               numberWithCommas(parseInt(item?.maintenancefee || 0) || "-")
                             }}
                           </td>
+                          
                           <td data-t="n" data-z="#,##">
                             {{ numberWithCommas(item?.waterbill || "-") }}
                           </td>
                           <td data-t="n" data-z="#,##">
-                            {{ numberWithCommas(item?.central || "-") }}
+                            {{ numberWithCommas(item?.electricitybill || "-") }}
                           </td>
                           <td data-t="n" data-z="#,##">
-                            {{ numberWithCommas(item?.sumCostCentral || "-") }}
+                            {{ numberWithCommas(item?.sumCostwaterbill || "-") }}
                           </td>
                           <td data-t="n" data-z="#,##">
                             <span v-if="item?.typeContract == 'หักได้'">/</span>
@@ -6802,11 +6803,11 @@ export default {
                             {{ numberWithCommas(reportlistTR[0]?.waterbillSum || "-") }}
                           </th>
                           <th data-t="n" data-z="#,##">
-                            {{ numberWithCommas(reportlistTR[0]?.centralSum || "-") }}
+                            {{ numberWithCommas(reportlistTR[0]?.electricitybillSum || "-") }}
                           </th>
                           <th data-t="n" data-z="#,##">
                             {{
-                              numberWithCommas(reportlistTR[0]?.SumCostSumCentral || "-")
+                              numberWithCommas(reportlistTR[0]?.SumCostSumwater || "-")
                             }}
                           </th>
                         </tr>

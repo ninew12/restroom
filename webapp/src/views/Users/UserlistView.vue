@@ -345,7 +345,7 @@ export default {
 
     async updateRoom() {
       let maintenance;
-      if (this.typeRanks.value == "ประทวน") {maintenance = 60}
+      if (this.typeRanks.value == "ประทวน" || this.typeRanks.value == "ลูกจ้าง") {maintenance = 60}
       else if (this.typeRanks.value == "สัญญาบัตร") {maintenance = 100}
       let body = {
         firstName: this.firstName,
