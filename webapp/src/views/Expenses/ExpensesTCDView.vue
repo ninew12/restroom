@@ -138,11 +138,10 @@ export default {
                 ...el,
                 sumCost: this.countSum(el),
                 installmentsCost: this.countinstallments(el),
-                amountPaidCost: this.countinsamountPaid(el),
+                amountPaidCost: this.countinsamountPaidCost(el),
                 maintenanceCost: this.countinsamaintenance(el),
               };
             });
-
             this.expensesList = data2;
             if (this.expensesList.length > 200) {
               this.setTimes = 60000;
@@ -190,7 +189,11 @@ export default {
           let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
           let b = c / a; //จำนวนงวดคงเหลือ
           let d = parseInt(e.installments || 0) - b;
-          return d || 0;
+          if (parseInt(e.insurance) - parseInt(e.amountPaid) == 0) {
+            return 0;
+          } else {
+            return d || 0;
+          }
         } else {
           return parseInt(e.insurance || 0);
         }
@@ -202,14 +205,20 @@ export default {
     countinsamountPaid(e) {
       if (parseInt(e.installments) !== 0) {
         let a = parseInt(e.insurance || 0) / parseInt(e.installments || 0); // จำนวนเงินต่องวด
-        let c = parseInt(e.insurance || 0) - parseInt(e.amountPaid || 0); // จำนวนเงินคงเหลือ
-        let b = c / a; //จำนวนงวดคงเหลือ
-        let d = a * (e.installments - b);
+        let d = parseInt(e.amountPaid) + a;
         return d || 0;
       } else {
         return 0;
       }
-      // return e.insurance - parseInt(e.amountPaid || 0) || 0;
+    },
+
+    countinsamountPaidCost(e) {
+      if (parseInt(e.installments) !== 0) {
+        let d = parseInt(e.insurance) - parseInt(e.amountPaid);
+        return d || 0;
+      } else {
+        return 0;
+      }
     },
 
     async getRoomsByid(id) {
@@ -243,10 +252,10 @@ export default {
       }
     },
 
-    setaffiliationNo(item){
-      let a = masterData.AffiliationList.find(e=> e.label == item)
-      if(a !== undefined) return a.index
-      else return ''
+    setaffiliationNo(item) {
+      let a = masterData.AffiliationList.find((e) => e.label == item);
+      if (a !== undefined) return a.index;
+      else return "";
     },
 
     async genInsurance() {
@@ -259,7 +268,7 @@ export default {
       data = await arr.map((el) => {
         return {
           ...el,
-          affiliationNo : this.setaffiliationNo(el.affiliation),
+          affiliationNo: this.setaffiliationNo(el.affiliation),
           amountPaid: this.countinsamountPaid(el),
         };
       });
@@ -340,7 +349,7 @@ export default {
         monthly: this.months,
         years: this.years,
         rankNumber: this.rankNumber,
-        affiliationNo :  index.affiliationNo,
+        affiliationNo: index.affiliationNo,
         summitCost: this.optionMonth[d.getMonth()],
       };
       await axios.put(`http://localhost:3896/reportUser/${id}`, body, {
@@ -359,7 +368,7 @@ export default {
         monthly: this.months,
         years: this.years,
         rankNumber: this.rankNumber,
-        affiliationNo :  index.affiliationNo,
+        affiliationNo: index.affiliationNo,
         summitCost: this.optionMonth[d.getMonth()],
       };
       await axios.put(`http://localhost:3896/reportUser/${id}`, body, {
@@ -461,10 +470,12 @@ export default {
                   <td>{{ item?.insurance || "-" }}</td>
                   <td>{{ item?.installmentsCost || 0 }}</td>
                   <td>
-                    <span v-if="item?.installments > 0">
+                    <span v-if="item?.installments > 0 && item?.amountPaidCost !== 0">
                       {{ item?.maintenanceCost }}/{{ item?.installments }}
                     </span>
-                    <span v-if="item?.installments == 0"> 0 </span>
+                    <span v-if="item?.installments == 0 || item?.amountPaidCost == 0">
+                      0
+                    </span>
                   </td>
                   <td>{{ item?.amountPaidCost || 0 }}</td>
                 </tr>
