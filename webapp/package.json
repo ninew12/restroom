@@ -3,8 +3,8 @@
   "version": "2.0.0",
   "scripts": {
     "db:serve": " json-server --watch db.json --port=3002",
-    "start": "vite --port 3889",
-    "dev": "vite --port 3889",
+    "start": "vite --port 3887",
+    "dev": "vite --port 3887",
     "build": "vite build",
     "preview": "vite preview --port 4173",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
