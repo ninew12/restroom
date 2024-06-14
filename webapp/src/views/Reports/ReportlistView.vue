@@ -630,7 +630,7 @@ export default {
     async getExpenses() {
       try {
         await axios
-          .get("http://localhost:3896/expenses")
+          .get("http://localhost:3899/expenses")
           .then((res) => {
             this.expensesList = res.data;
             // console.log(res.data);
@@ -657,7 +657,7 @@ export default {
       this.sumreportlistAll3 = [];
       try {
         axios
-          .get("http://localhost:3896/report")
+          .get("http://localhost:3899/report")
           .then((res) => {
             let data = [];
             let data2 = [];
@@ -791,7 +791,7 @@ export default {
     getReportAffiliation(m, y, Affiliation) {
       try {
         axios
-          .get("http://localhost:3896/report")
+          .get("http://localhost:3899/report")
           .then((res) => {
             let data = [];
             let data2 = [];
@@ -858,7 +858,7 @@ export default {
     getReportRanksAll(m, y, ranksType) {
       try {
         axios
-          .get("http://localhost:3896/report")
+          .get("http://localhost:3899/report")
           .then((res) => {
             let data = [];
             let data2 = [];

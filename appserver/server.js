@@ -14,7 +14,7 @@ const fixdata = require('./fixtest.json')
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const port = process.env.PORT || 3896;
+const port = process.env.PORT || 3899;
 const fs = require("fs");
 const { v4: uuidv4 } = require('uuid');
 // - เวอร์ชั่น Express 4.16.0+ ขึ้นไป

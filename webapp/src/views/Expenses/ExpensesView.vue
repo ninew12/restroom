@@ -117,7 +117,7 @@ export default {
     async getExpenses() {
       try {
         await axios
-          .get("http://localhost:3896/expenses")
+          .get("http://localhost:3899/expenses")
           .then((res) => {
             let data = [];
             let data2 = [];
@@ -154,7 +154,7 @@ export default {
       this.id = id;
       try {
         await axios
-          .get(`http://localhost:3896/users/${id}`)
+          .get(`http://localhost:3899/users/${id}`)
           .then((res) => {
             this.getreportByid(id);
             this.userByid = res.data;
@@ -199,7 +199,7 @@ export default {
     async getreportByid(id) {
       try {
         await axios
-          .get(`http://localhost:3896/reportId/${id}`)
+          .get(`http://localhost:3899/reportId/${id}`)
           .then((res) => {
             if(res.data !== ""){
               this.reportId = res.data.id;
@@ -241,7 +241,7 @@ export default {
       };
 
       await axios
-        .put(`http://localhost:3896/users/${this.userId}`, body, {
+        .put(`http://localhost:3899/users/${this.userId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -297,7 +297,7 @@ export default {
         monthly: this.months,
         years: this.years,
       };
-      await axios.post(`http://localhost:3896/report/`, body, {
+      await axios.post(`http://localhost:3899/report/`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -327,7 +327,7 @@ export default {
         years: this.years,
       };
  
-      await axios.put(`http://localhost:3896/report/${this.reportId}`, body, {
+      await axios.put(`http://localhost:3899/report/${this.reportId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -344,7 +344,7 @@ export default {
         queue: typeroom
       };
       axios
-        .put(`http://localhost:3896/users/${this.userId}`, body, {
+        .put(`http://localhost:3899/users/${this.userId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",

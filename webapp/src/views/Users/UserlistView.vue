@@ -188,7 +188,7 @@ export default {
 
     async editUser(id) {
       await axios
-        .get(`http://localhost:3896/users/${id}`)
+        .get(`http://localhost:3899/users/${id}`)
         .then((res) => {
           let data = res.data;
           this.id = id;
@@ -215,7 +215,7 @@ export default {
     getAlluser() {
       try {
         axios
-          .get("http://localhost:3896/users")
+          .get("http://localhost:3899/users")
           .then((res) => {
             let arr = res.data;
             let dataFind = [];
@@ -293,7 +293,7 @@ export default {
       };
 
       axios
-        .put(`http://localhost:3896/users/${this.userId}`, body, {
+        .put(`http://localhost:3899/users/${this.userId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -335,7 +335,7 @@ export default {
         queue: this.queue,
         maintenance: maintenance,
       };
-      await axios.put(`http://localhost:3896/reportUser/${this.userId}`, body, {
+      await axios.put(`http://localhost:3899/reportUser/${this.userId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -363,7 +363,7 @@ export default {
         maintenance: maintenance,
       };
 
-      axios.put(`http://localhost:3896/rooms/${this.roomId}`, body, {
+      axios.put(`http://localhost:3899/rooms/${this.roomId}`, body, {
         headers: {
           // remove headers
           "Access-Control-Allow-Origin": "*",
@@ -393,7 +393,7 @@ export default {
         maintenance: maintenance,
       };
       axios
-        .post(`http://localhost:3896/users`, body, {
+        .post(`http://localhost:3899/users`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -417,7 +417,7 @@ export default {
 
     submitDelete() {
       axios
-        .delete(`http://localhost:3896/users/${this.userId}`)
+        .delete(`http://localhost:3899/users/${this.userId}`)
         .then((res) => {
           this.loader = true
           this.submitDeleteReport()
@@ -439,7 +439,7 @@ export default {
 
     submitDeleteReport() {
       axios
-        .delete(`http://localhost:3896/report/${this.userId}`)
+        .delete(`http://localhost:3899/report/${this.userId}`)
         .then((res) => {
           console.log(res);
         })
@@ -451,7 +451,7 @@ export default {
     getAlluser2() {
       try {
         axios
-          .get("http://localhost:3896/users")
+          .get("http://localhost:3899/users")
           .then((res) => {
             let arr = res.data;
             let dataFind = [];
