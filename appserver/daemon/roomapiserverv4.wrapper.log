@@ -1,0 +1,60 @@
+2024-06-14 09:59:16 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerV4 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-06-14 09:59:16 - Started 9624
+2024-06-15 00:44:35 - Stopping roomapiserverv4.exe
+2024-06-15 00:44:35 - ProcessKill 9624
+2024-06-15 00:44:35 - Shutdown exception
+Message:A system shutdown is in progress.
+
+Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   at System.Management.ManagementScope.InitializeGuts(Object o)
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winsw.WrapperService.GetChildPids(Int32 pid)
+   at winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   at winsw.WrapperService.StopIt()
+   at winsw.WrapperService.OnShutdown()
+2024-06-15 00:45:13 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerV4 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-06-15 00:45:14 - Started 4848
+2024-06-20 14:41:38 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerV4 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-06-20 14:41:38 - Started 5824
+2024-07-03 16:53:09 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerV4 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-07-03 16:53:09 - Started 6100
+2024-07-07 07:36:11 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerV4 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-07-07 07:36:11 - Started 5980
+2024-07-10 23:58:48 - Stopping roomapiserverv4.exe
+2024-07-10 23:58:48 - ProcessKill 5980
+2024-07-10 23:58:48 - Shutdown exception
+Message:A system shutdown is in progress.
+
+Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   at System.Management.ManagementScope.InitializeGuts(Object o)
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winsw.WrapperService.GetChildPids(Int32 pid)
+   at winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   at winsw.WrapperService.StopIt()
+   at winsw.WrapperService.OnShutdown()
+2024-07-10 23:59:08 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerV4 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-07-10 23:59:08 - Started 5216
+2024-07-10 23:59:36 - Stopping roomapiserverv4.exe
+2024-07-10 23:59:36 - ProcessKill 5216
+2024-07-10 23:59:37 - Shutdown exception
+Message:A system shutdown is in progress.
+
+Stacktrace:   at System.Runtime.InteropServices.Marshal.ThrowExceptionForHRInternal(Int32 errorCode, IntPtr errorInfo)
+   at System.Management.ManagementScope.InitializeGuts(Object o)
+   at System.Management.ManagementScope.Initialize()
+   at System.Management.ManagementObjectSearcher.Initialize()
+   at System.Management.ManagementObjectSearcher.Get()
+   at winsw.WrapperService.GetChildPids(Int32 pid)
+   at winsw.WrapperService.StopProcessAndChildren(Int32 pid)
+   at winsw.WrapperService.StopIt()
+   at winsw.WrapperService.OnShutdown()
+2024-07-10 23:59:53 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerV4 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-07-10 23:59:53 - Started 5068
+2024-07-17 08:45:54 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerV4 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-07-17 08:45:54 - Started 7392
+2024-07-20 12:53:17 - Starting C:\Program Files\nodejs\node.exe  --harmony --max_old_space_size=4096 C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js --file C:\Users\PC\Application\V2.0\restroom\appserver\index.js --scriptoptions= --log "RoomApiServerV4 wrapper" --grow 0.25 --wait 1 --maxrestarts 3 --abortonerror n --stopparentfirst undefined
+2024-07-20 12:53:17 - Started 6200
