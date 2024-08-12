@@ -193,7 +193,7 @@ export default {
             this.getreportByid(id);
             this.userByid = res.data;
             console.log(id);
-            if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
+            if (data.typeRanks == "ประทวน" || this.typeRanks.value == "ลูกจ้าง") this.maintenanceFix = "60";
             if (data.typeRanks == "สัญญาบัตร") this.maintenanceFix = "100";
               this.userId = id,
               this.firstName = data.firstName,
@@ -454,6 +454,7 @@ export default {
         numberPeople: this.numberPeople,
         installmentsTime : this.installmentsTime,
         affiliationNo :  this.affiliationNo,
+        roomStatus: this.statusRoom,
       };
 
       await axios.put(`http://localhost:3899/report/${this.reportId}`, body, {
@@ -551,7 +552,7 @@ export default {
     },
 
     async submitRoomScapia() {
-      if (this.typeRanks.value == "ประทวน") this.maintenanceFix = "60";
+      if (this.typeRanks.value == "ประทวน" || this.typeRanks.value == "ลูกจ้าง") this.maintenanceFix = "60";
       if (this.typeRanks.value == "สัญญาบัตร") this.maintenanceFix = "100";
       let body = {
         userId: this.userId,
@@ -615,6 +616,7 @@ export default {
         numberPeople: this.numberPeople,
         installmentsTime : this.installmentsTime,
         queue: "inroom",
+        roomStatus: this.statusRoom,
         no: "",
       };
       // console.log(body);

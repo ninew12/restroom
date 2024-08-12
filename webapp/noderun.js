@@ -2,7 +2,7 @@ var Service = require('node-windows').Service;
 
 // Create a new service object
 var svc = new Service({
-  name:'RestRoomClientV4',
+  name:'RestRoomClientV5',
   description: 'The nodejs.org example web server.',
   script: 'C:\\Users\\PC\\Application\\V2.0\\restroom\\webapp\\index.js',
   nodeOptions: [

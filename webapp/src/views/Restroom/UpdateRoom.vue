@@ -243,6 +243,7 @@ export default {
             type: "success",
           });
           this.updateUserStatus();
+          this.updateStatusReport()
           setTimeout(() => {
             this.getRooms(this.id);
           }, 1000);
@@ -325,6 +326,18 @@ export default {
         installments: " ",
         contract: " ",
         customerOld: "คืนห้องพักแล้ว",
+      };
+      axios.put(`http://localhost:3899/reportUser/${this.userId}`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
+    },
+
+    updateStatusReport() {
+      let body = {
+        roomStatus: this.statusRoom,
       };
       axios.put(`http://localhost:3899/reportUser/${this.userId}`, body, {
         headers: {

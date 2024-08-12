@@ -1,0 +1,34 @@
+2024-07-23 15:37:53 - Stopping roomapiserverv4.exe
+2024-07-23 15:37:53 - ProcessKill 6200
+2024-07-23 15:37:53 - Found child process: 6656 Name: conhost.exe
+2024-07-23 15:37:53 - Found child process: 7532 Name: node.exe
+2024-07-23 15:37:53 - Stopping process 6656
+2024-07-23 15:37:53 - Send SIGINT 6656
+2024-07-23 15:37:53 - SIGINT to 6656 failed - Killing as fallback
+2024-07-23 15:37:53 - Found child process: 7664 Name: cmd.exe
+2024-07-23 15:37:53 - Found child process: 7700 Name: conhost.exe
+2024-07-23 15:37:53 - Found child process: 8260 Name: node.exe
+2024-07-23 15:37:53 - Stopping process 7700
+2024-07-23 15:37:53 - Send SIGINT 7700
+2024-07-23 15:37:53 - SIGINT to 7700 failed - Killing as fallback
+2024-07-23 15:37:53 - Found child process: 9880 Name: cmd.exe
+2024-07-23 15:37:53 - Found child process: 9984 Name: node.exe
+2024-07-23 15:37:54 - Stopping process 9984
+2024-07-23 15:37:54 - Send SIGINT 9984
+2024-07-23 15:37:54 - SIGINT to 9984 failed - Killing as fallback
+2024-07-23 15:37:54 - Stopping process 9880
+2024-07-23 15:37:54 - Send SIGINT 9880
+2024-07-23 15:37:54 - SIGINT to 9880 failed - Killing as fallback
+2024-07-23 15:37:54 - Stopping process 8260
+2024-07-23 15:37:54 - Send SIGINT 8260
+2024-07-23 15:37:54 - SIGINT to 8260 failed - Killing as fallback
+2024-07-23 15:37:54 - Stopping process 7664
+2024-07-23 15:37:54 - Send SIGINT 7664
+2024-07-23 15:37:54 - SIGINT to 7664 failed - Killing as fallback
+2024-07-23 15:37:54 - Stopping process 7532
+2024-07-23 15:37:54 - Send SIGINT 7532
+2024-07-23 15:37:54 - SIGINT to 7532 failed - Killing as fallback
+2024-07-23 15:37:54 - Stopping process 6200
+2024-07-23 15:37:54 - Send SIGINT 6200
+2024-07-23 15:37:54 - SIGINT to 6200 failed - Killing as fallback
+2024-07-23 15:37:54 - Finished roomapiserverv4.exe
