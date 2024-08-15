@@ -690,7 +690,7 @@ app.delete('/layout/:id', (req, res) => {
 })
 
 app.get('/report', (req, res) => {
-    let finddata = reports.filter(report => report.roomStatus !== "special" && report.queue !== "none")
+    let finddata = reports.filter(report => (report.roomStatus !== "special") && report.roomStatus !== "return" && report.queue !== "none")
     res.header("Access-Control-Allow-Origin", "*");
     res.json(finddata)
 })
@@ -861,6 +861,7 @@ app.put('/reportUser/:id', (req, res) => {
     if (req.body.summitCost) parsedData.summitCost = req.body.summitCost
     if (req.body.amountPaid) parsedData.amountPaid = req.body.amountPaid
     if (req.body.affiliationNo) parsedData.affiliationNo = req.body.affiliationNo
+    if (req.body.roomStatus) parsedData.roomStatus = req.body.roomStatus || ''
     
     filterdata.push(parsedData)
     fs.writeFileSync('./report.json', JSON.stringify(filterdata, null, 2), (err) => {

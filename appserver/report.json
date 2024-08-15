@@ -5869,7 +5869,7 @@
     "buildingName": "อาคารแฟลต 1/18",
     "monthly": "กรกฎาคม",
     "years": 2024,
-    "roomStatus": "ว่าง",
+    "roomStatus": "return",
     "installmentsTime": "ต.ค.66-ก.ค.67",
     "summitCost": "กรกฎาคม"
   },
@@ -9083,7 +9083,7 @@
     "buildingName": "อาคารแฟลต (3) ซอยลือชา",
     "monthly": "กรกฎาคม",
     "years": 2024,
-    "roomStatus": "ว่าง",
+    "roomStatus": "return",
     "summitCost": "กรกฎาคม"
   },
   {
@@ -11675,7 +11675,7 @@
     "buildingName": "อาคารแฟลต (1) บางเขน",
     "monthly": "กรกฎาคม",
     "years": 2024,
-    "roomStatus": "ว่าง",
+    "roomStatus": "return",
     "installmentsTime": "มิ.ย.67-มี.ค.68",
     "summitCost": "กรกฎาคม"
   },
@@ -12098,7 +12098,7 @@
     "years": 2024,
     "vehicleNumber": " ",
     "numberPeople": " ",
-    "roomStatus": "ว่าง",
+    "roomStatus": "return",
     "installmentsTime": "ก.ค.67-เม.ย.68",
     "summitCost": "กรกฎาคม"
   },
@@ -13607,7 +13607,7 @@
     "buildingName": "ลือชา 1",
     "monthly": "กรกฎาคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "return"
   },
   {
     "id": "c7eec428-fca9-46e8-aee0-513a92f80e7c",
@@ -13637,7 +13637,7 @@
     "buildingName": "อาคารแฟลต (3) ซอยลือชา",
     "monthly": "กรกฎาคม",
     "years": 2024,
-    "roomStatus": "ว่าง"
+    "roomStatus": "return"
   },
   {
     "id": "215ce121-e015-499c-a38f-ceed2ff8bf26",
@@ -13734,7 +13734,7 @@
     "buildingName": "ลือชา 2",
     "monthly": "สิงหาคม",
     "years": 2024,
-    "roomStatus": "ว่าง",
+    "roomStatus": "return",
     "installmentsTime": "ส.ค.67-พ.ค.68",
     "summitCost": "สิงหาคม"
   },
