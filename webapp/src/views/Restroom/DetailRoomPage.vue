@@ -454,6 +454,7 @@ export default {
         numberPeople: this.numberPeople,
         installmentsTime : this.installmentsTime,
         affiliationNo :  this.affiliationNo,
+        roomStatus: this.statusRoom,
       };
 
       await axios.put(`http://localhost:3899/report/${this.reportId}`, body, {
@@ -615,6 +616,7 @@ export default {
         numberPeople: this.numberPeople,
         installmentsTime : this.installmentsTime,
         queue: "inroom",
+        roomStatus: this.statusRoom,
         no: "",
       };
       // console.log(body);
