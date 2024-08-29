@@ -133,7 +133,7 @@ export default {
     async getRooms(id) {
       try {
         await axios
-          .get(`http://localhost:3896/rooms/${id}`)
+          .get(`http://localhost:3899/rooms/${id}`)
           .then((res) => {
             this.roomData = res.data;
             this.numberRoom = this.roomData.numberRoom;
@@ -161,7 +161,7 @@ export default {
     async getHistoryRoom(id) {
       try {
         await axios
-          .get(`http://localhost:3896/history/${id}`)
+          .get(`http://localhost:3899/history/${id}`)
           .then((res) => {
             if (res.data.customerOld == "คืนห้องพักแล้ว") {
               this.historyOld = res.data;
@@ -205,7 +205,7 @@ export default {
         roomconditionsCause: this.roomconditionsCause,
       };
       axios
-        .put(`http://localhost:3896/rooms/${this.id}`, body, {
+        .put(`http://localhost:3899/rooms/${this.id}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -232,7 +232,7 @@ export default {
         roomStatus: this.statusRoom,
       };
       axios
-        .put(`http://localhost:3896/rooms/${this.id}`, body, {
+        .put(`http://localhost:3899/rooms/${this.id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -244,6 +244,7 @@ export default {
             type: "success",
           });
           this.updateUserStatus();
+          this.updateStatusReport()
           setTimeout(() => {
             this.getRooms(this.id);
           }, 1000);
@@ -284,7 +285,7 @@ export default {
         bankbookNumber: this.bankbookNumber,
       };
       axios
-        .put(`http://localhost:3896/rooms/${this.id}`, body, {
+        .put(`http://localhost:3899/rooms/${this.id}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
@@ -311,7 +312,7 @@ export default {
       let body = {
         roomStatus: this.statusRoom,
       };
-      axios.put(`http://localhost:3896/users/${this.userId}`, body, {
+      axios.put(`http://localhost:3899/users/${this.userId}`, body, {
         headers: {
           // remove headers
           "Access-Control-Allow-Origin": "*",
@@ -327,7 +328,19 @@ export default {
         contract: " ",
         customerOld: "คืนห้องพักแล้ว",
       };
-      axios.put(`http://localhost:3896/reportUser/${this.userId}`, body, {
+      axios.put(`http://localhost:3899/reportUser/${this.userId}`, body, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type": "application/json",
+        },
+      });
+    },
+
+    updateStatusReport() {
+      let body = {
+        roomStatus: this.statusRoom,
+      };
+      axios.put(`http://localhost:3899/reportUser/${this.userId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -337,7 +350,7 @@ export default {
 
     submitDeleteReport() {
       axios
-        .delete(`http://localhost:3896/report/${this.userId}`)
+        .delete(`http://localhost:3899/report/${this.userId}`)
         .then((res) => {
           console.log(res);
         })
@@ -364,7 +377,7 @@ export default {
         bankbookName: this.bankbookName,
         bankbookNumber: this.bankbookNumber,
       };
-      axios.put(`http://localhost:3896/users/${this.userId}`, body, {
+      axios.put(`http://localhost:3899/users/${this.userId}`, body, {
         headers: {
           // remove headers
           "Access-Control-Allow-Origin": "*",
@@ -392,7 +405,7 @@ export default {
         bankbookName: this.bankbookName,
         bankbookNumber: this.bankbookNumber,
       };
-      axios.put(`http://localhost:3896/history/${this.id}`, body, {
+      axios.put(`http://localhost:3899/history/${this.id}`, body, {
         headers: {
           // remove headers
           "Access-Control-Allow-Origin": "*",

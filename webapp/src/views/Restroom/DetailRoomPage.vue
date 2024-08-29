@@ -145,7 +145,7 @@ export default {
     getAllqueue() {
       try {
         axios
-          .get(`http://localhost:3896/queue/inqueue`)
+          .get(`http://localhost:3899/queue/inqueue`)
           .then((res) => {
             this.queueList = res.data;
             this.queuefilter = this.queueList.filter((e) => e.typeRoom === this.typeroom);
@@ -162,7 +162,7 @@ export default {
     getAllinqueue() {
       try {
         axios
-          .get(`http://localhost:3896/users`)
+          .get(`http://localhost:3899/users`)
           .then((res) => {
             let arr = res.data;
             let arr2 = [];
@@ -187,13 +187,13 @@ export default {
       this.userId = id;
       try {
         axios
-          .get(`http://localhost:3896/users/${id}`)
+          .get(`http://localhost:3899/users/${id}`)
           .then((res) => {
             let data = res.data;
             this.getreportByid(id);
             this.userByid = res.data;
             console.log(id);
-            if (data.typeRanks == "ประทวน") this.maintenanceFix = "60";
+            if (data.typeRanks == "ประทวน" || this.typeRanks.value == "ลูกจ้าง") this.maintenanceFix = "60";
             if (data.typeRanks == "สัญญาบัตร") this.maintenanceFix = "100";
               this.userId = id,
               this.firstName = data.firstName,
@@ -233,7 +233,7 @@ export default {
 
     async getroomByid(id) {
       try {
-        axios.get(`http://localhost:3896/rooms/${id}`).then((res) => {
+        axios.get(`http://localhost:3899/rooms/${id}`).then((res) => {
           this.data = res.data;
           this.dateApproved = this.convertDateTolocal(this.data.dateApproved);
           this.typeroom = this.data.typeRoom;
@@ -263,7 +263,7 @@ export default {
     async getreportByid(id) {
       try {
         await 
-        axios.get(`http://localhost:3896/reportId/${id}`)
+        axios.get(`http://localhost:3899/reportId/${id}`)
           .then((res) => {
             if (res.data !== "") this.reportId = res.data.id;
             let data = res.data;
@@ -340,7 +340,7 @@ export default {
         installmentsTime : this.installmentsTime
       };
       await axios
-        .post(`http://localhost:3896/history`, body, {
+        .post(`http://localhost:3899/history`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -384,7 +384,7 @@ export default {
         queue: "inroom",
         no: "",
       };
-      await axios.put(`http://localhost:3896/users/${this.userId}`, body, {
+      await axios.put(`http://localhost:3899/users/${this.userId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -428,7 +428,7 @@ export default {
         installmentsTime : this.installmentsTime
       };
 
-      await axios.post(`http://localhost:3896/report`, body, {
+      await axios.post(`http://localhost:3899/report`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -454,9 +454,10 @@ export default {
         numberPeople: this.numberPeople,
         installmentsTime : this.installmentsTime,
         affiliationNo :  this.affiliationNo,
+        roomStatus: this.statusRoom,
       };
 
-      await axios.put(`http://localhost:3896/report/${this.reportId}`, body, {
+      await axios.put(`http://localhost:3899/report/${this.reportId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -491,7 +492,7 @@ export default {
         installmentsTime : this.installmentsTime,
         no: "",
       };
-      await axios.put(`http://localhost:3896/queue/${this.userId}`, body, {
+      await axios.put(`http://localhost:3899/queue/${this.userId}`, body, {
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
@@ -531,7 +532,7 @@ export default {
         installmentsTime : this.installmentsTime
       };
       await axios
-        .put(`http://localhost:3896/rooms/${this.id}`, body, {
+        .put(`http://localhost:3899/rooms/${this.id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -551,7 +552,7 @@ export default {
     },
 
     async submitRoomScapia() {
-      if (this.typeRanks.value == "ประทวน") this.maintenanceFix = "60";
+      if (this.typeRanks.value == "ประทวน" || this.typeRanks.value == "ลูกจ้าง") this.maintenanceFix = "60";
       if (this.typeRanks.value == "สัญญาบัตร") this.maintenanceFix = "100";
       let body = {
         userId: this.userId,
@@ -582,7 +583,7 @@ export default {
         installmentsTime : this.installmentsTime
       };
       await axios
-        .put(`http://localhost:3896/rooms/${this.id}`, body, {
+        .put(`http://localhost:3899/rooms/${this.id}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",
@@ -615,11 +616,12 @@ export default {
         numberPeople: this.numberPeople,
         installmentsTime : this.installmentsTime,
         queue: "inroom",
+        roomStatus: this.statusRoom,
         no: "",
       };
       // console.log(body);
      await axios
-        .put(`http://localhost:3896/users/${this.userId}`, body, {
+        .put(`http://localhost:3899/users/${this.userId}`, body, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json",

@@ -1,16 +1,16 @@
 <service>
-	<id>roomapiserverv2.exe</id>
-	<name>RoomApiServerV2</name>
+	<id>restroomclientv5.exe</id>
+	<name>RestRoomClientV5</name>
 	<description>The nodejs.org example web server.</description>
 	<executable>C:\Program Files\nodejs\node.exe</executable>
 	<argument>--harmony</argument>
 	<argument>--max_old_space_size=4096</argument>
 	<argument>C:\Users\PC\AppData\Roaming\npm\node_modules\node-windows\lib\wrapper.js</argument>
 	<argument>--file</argument>
-	<argument>C:\Users\PC\Application\V2.0\restroom\appserver\index.js</argument>
+	<argument>C:\Users\PC\Application\V2.0\restroom\webapp\index.js</argument>
 	<argument>--scriptoptions=</argument>
 	<argument>--log</argument>
-	<argument>RoomApiServerV2 wrapper</argument>
+	<argument>RestRoomClientV5 wrapper</argument>
 	<argument>--grow</argument>
 	<argument>0.25</argument>
 	<argument>--wait</argument>
@@ -28,5 +28,5 @@
 		<user>LocalSystem</user>
 		<password></password>
 	</serviceaccount>
-	<workingdirectory>C:\Users\PC\Application\V2.0\restroom\appserver</workingdirectory>
+	<workingdirectory>C:\Users\PC\Application\V2.0\restroom\webapp</workingdirectory>
 </service>

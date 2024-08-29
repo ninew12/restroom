@@ -75,7 +75,7 @@ export default {
     let userold = localStorage.getItem("user");
     if (userold === null) this.$router.push({ path: `/login` });
     try {
-      axios.get(`http://localhost:3896/users/`).then();
+      axios.get(`http://localhost:3899/users/`).then();
     } catch (e) {
       console.error(e);
     }
@@ -158,7 +158,7 @@ export default {
     async roomType() {
       this.dataBuilding["listRoom"] = [];
       let buildingList = [];
-      let datalist = await axios.get(`http://localhost:3896/buildings/`);
+      let datalist = await axios.get(`http://localhost:3899/buildings/`);
       buildingList = await datalist.data.find(
         (el) => el.name == this.selectedlistRoom.value
       );
@@ -178,7 +178,7 @@ export default {
     async getRooms() {
       try {
         await axios
-          .get("http://localhost:3896/rooms")
+          .get("http://localhost:3899/rooms")
           .then((res) => {
             this.roomData = res.data;
             this.oldData = this.roomData;
@@ -193,7 +193,7 @@ export default {
     },
     async buildById(id) {
       try {
-        axios.get(`http://localhost:3896/rooms/`).then((res) => {
+        axios.get(`http://localhost:3899/rooms/`).then((res) => {
           let broom = [];
           let datalist = [];
           let arr = [];
@@ -221,7 +221,7 @@ export default {
       let data = [];
       let arr = [];
       try {
-        axios.get(`http://localhost:3896/buildings/`).then((res) => {
+        axios.get(`http://localhost:3899/buildings/`).then((res) => {
           let listData = [];
           arr = res.data;
           this.typeRoomselect = res.data;
@@ -254,7 +254,7 @@ export default {
 
     getBuildingsByid(id) {
       try {
-        axios.get(`http://localhost:3896/buildings/${id}`).then((res) => {
+        axios.get(`http://localhost:3899/buildings/${id}`).then((res) => {
           this.committee = res.data.committee;
         });
       } catch (e) {
@@ -267,7 +267,7 @@ export default {
         committee: this.committee,
       };
       await axios
-        .put(`http://localhost:3896/buildings/${this.buidingId}`, body, {
+        .put(`http://localhost:3899/buildings/${this.buidingId}`, body, {
           headers: {
             // remove headers
             "Access-Control-Allow-Origin": "*",
